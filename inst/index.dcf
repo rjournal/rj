@@ -1,0 +1,54 @@
+ID: 2012-01
+Authors: "Tina D. Richardson" <TinaDRichardson@teleworm.us>,
+   Brian Marshall
+Title: An exciting new R package
+Editor: John Smith
+Reviewers:
+  Cynthia Scott <cynthia@gmail.com>,
+  William Brumfield <WilliamMBrumfield@gmail.com>
+Status: 
+  2012-01-24 submitted, 
+  2012-02-03 acknowledged,
+  2012-03-22 sent to reviewers,
+  2012-06-07 minor revisions, 
+  2012-08-13 accepted
+
+ID: 2012-02
+Authors: Liang Mao <LiangMao@dayrep.com>
+Title: Another R package
+Editor: Numan Dreijer
+Reviewers: 
+  Ye Yeh <YeYeh@teleworm.us>,
+  Hua Ch'iu <asfsadu@har.com>
+Status: 
+  2012-02-01 submitted, 
+  2012-02-03 acknowledged,  
+  2012-07-12 R1 due,
+  2012-10-16 accepted with minor revisions,
+  2012-10-24 needs proofing
+
+ID: 2012-03
+Authors: "Dian Bottenberg" <bottenberg@freenet.de>, Jisca Kwarten
+Title: Innovations in R
+Editor: Numan Dreijer
+Reviewers: 
+  Vasiliki van der Voorn <vasiliki@debian.org>
+Status: 
+  2012-03-16 acknowledged,
+  2012-02-17 received, 
+  2012-04-12 updated version received, 
+  2012-06-08 committed,
+  2012-09-04 rejected.
+
+ID: 2012-04
+Authors: Abdo Perales Vallejo <abdo@vallejo.org>
+Title: How to write great R code
+Editor: John Smith
+Reviewers: 
+  Elbio Tejada Carrillo <Elbio@Carrillo.name>,
+  Camille Rolón <camille.rolón@boku.ac.at>
+Status:
+  2012-02-20 Received, 
+  2012-03-16 acknowledged, 
+  2012-03-30 Out for review, 
+  2012-06-06 Rejected 
