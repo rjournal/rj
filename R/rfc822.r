@@ -22,8 +22,10 @@ parse_address_list <- function(x) {
 #' address("h.wickham@@gmail.com", "Hadley Wickham")
 #' parse_address("<h.wickham@@gmail.com> Hadley Wickham")
 #' parse_address("<h.wickham@@gmail.com>")
-address <- function(email, name = NULL) {
-  if (str_length(name) == 0) name <- NULL
+address <- function(email = NULL, name = NULL) {
+  if (is.null(email) && is.null(name)) {
+    stop("Address must have name or email", call. = FALSE)
+  }
 
   structure(list(name = name, email = email), class = "address")
 }
@@ -40,7 +42,15 @@ print.address <- function(x, ...) {
 parse_address <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
 
-  pieces <- str_match(x, "<(.*)> ?(.*)?")[1, ]
-  address(pieces[2], str_trim(pieces[3]))
+  pieces <- str_match(x, "(?:<.*>) ?(.*)?")[1, ]
+
+  email <- str_trim(pieces[2])
+  email <- str_replace_all(email, "<|>", "")
+
+  name <- str_trim(pieces[3])
+  name <- str_replace_all(name, fixed('"'), "")
+  if (is.na(name) || str_length(name) == 0) name <- NULL
+
+  address(email, name)
 }
 
