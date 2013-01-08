@@ -8,6 +8,8 @@ Maintainer: Hadley Wickham <h.wickham@gmail.com>
 License: MIT
 Imports:
     stringr
+Suggests:
+    testthat
 Depends:
     R (>= 2.15.1)
 Collate:
