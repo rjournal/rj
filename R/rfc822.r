@@ -20,7 +20,7 @@ parse_address_list <- function(x) {
 #' @examples
 #' address("h.wickham@@gmail.com")
 #' address("h.wickham@@gmail.com", "Hadley Wickham")
-#' parse_address("<h.wickham@@gmail.com> Hadley Wickham")
+#' parse_address("Hadley Wickham <h.wickham@@gmail.com>")
 #' parse_address("<h.wickham@@gmail.com>")
 address <- function(email = NULL, name = NULL) {
   if (is.null(email) && is.null(name)) {
@@ -31,23 +31,23 @@ address <- function(email = NULL, name = NULL) {
 }
 
 print.address <- function(x, ...) {
-  if (is.null(x$name)) {
-    cat("<", x$email, ">\n", sep = "")
-  } else {
-    cat('"', x$name, '"', " <", x$email, ">\n", sep = "")
-  }
+  name <- if (!is.null(x$name))    paste('"', x$name, '"', sep = "")
+  email <- if (!is.null(x$email))  paste("<", x$email, ">\n", sep = "")
+
+  cat(paste(c(name, email)), collapse = " ")
 }
 
 #' @rdname address
 parse_address <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
 
-  pieces <- str_match(x, "(?:<.*>) ?(.*)?")[1, ]
+  pieces <- str_match(x, "^\\s*([^<>]*) ?(<.*>)?")[1, ]
 
-  email <- str_trim(pieces[2])
+  email <- str_trim(pieces[3])
   email <- str_replace_all(email, "<|>", "")
+  if (is.na(email) || str_length(email) == 0) email <- NULL
 
-  name <- str_trim(pieces[3])
+  name <- str_trim(pieces[2])
   name <- str_replace_all(name, fixed('"'), "")
   if (is.na(name) || str_length(name) == 0) name <- NULL
 
