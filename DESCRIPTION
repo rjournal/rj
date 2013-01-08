@@ -2,9 +2,17 @@ Type: Package
 Package: rj
 Version: 0.01
 Title: Tools for managing the R journal
-Description:
+Description: 
 Author: Hadley Wickham <h.wickham@gmail.com>
 Maintainer: Hadley Wickham <h.wickham@gmail.com>
 License: MIT
+Imports:
+    stringr
 Depends:
     R (>= 2.15.1)
+Collate:
+    'article.r'
+    'index.r'
+    'rfc822.r'
+    'rj.r'
+    'sample.r'
