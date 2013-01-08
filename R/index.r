@@ -1,16 +1,12 @@
-read.index <- function(name = "index.dcf") {
-  ix <- as.data.frame(read.dcf(name), stringsAsFactors=FALSE)
-  ix$Status <- tolower(ix$Status)
+#' Parse the index.dcf file.
+#'
+#' @examples
+#' parse_index(sample())
+parse_index <- function(path = "index.dcf") {
+  dcf <- read.dcf(path,
+    fields = c("ID", "Authors", "Title", "Editor", "Reviewers", "Status"))
+  colnames(dcf) <- tolower(colnames(dcf))
 
-  ix
-  # class(ix) <- c("RJindex", class(ix))
-  # subset(
-  #        within(ix, {
-  #          Status <- tolower(Status)
-  #          Status[is.na(Status)] <- "need editor"
-  #          Editor[is.na(Editor)] <- ""
-  #          Stage <- Stage(Status)
-  #        }),
-  #        Refno != ""
-  #        )
+  n <- nrow(dcf)
+  lapply(seq_len(n), function(i) do.call(article, as.list(dcf[i, ])))
 }
