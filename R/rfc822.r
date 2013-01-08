@@ -4,8 +4,12 @@
 #'
 #' @param string to parse
 #' @return a list of \code{\link{address}}es
+#' @examples
+#' parse_address_list("<a@@b.com> Alison, <c@@d.com> Colin")
 parse_address_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
+
+  lapply(str_split(x, ",")[[1]], parse_address)
 }
 
 #' An S3 class to represent email addresses.
@@ -17,7 +21,10 @@ parse_address_list <- function(x) {
 #' address("h.wickham@@gmail.com")
 #' address("h.wickham@@gmail.com", "Hadley Wickham")
 #' parse_address("<h.wickham@@gmail.com> Hadley Wickham")
+#' parse_address("<h.wickham@@gmail.com>")
 address <- function(email, name = NULL) {
+  if (str_length(name) == 0) name <- NULL
+
   structure(list(name = name, email = email), class = "address")
 }
 
@@ -28,3 +35,12 @@ print.address <- function(x, ...) {
     cat('"', x$name, '"', " <", x$email, ">\n", sep = "")
   }
 }
+
+#' @rdname address
+parse_address <- function(x) {
+  stopifnot(is.character(x), length(x) == 1)
+
+  pieces <- str_match(x, "<(.*)> ?(.*)?")[1, ]
+  address(pieces[2], str_trim(pieces[3]))
+}
+
