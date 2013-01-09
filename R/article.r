@@ -1,23 +1,20 @@
 #' Create a new article (S3 class)
 #'
+#' This function will always succeed: if the article is not parseable it will
+#' print an error message and return a unparsed blob. This ensures that
+#' information is not lost even if some articles have parsing errors.
+#'
 #' @param ... Named arguments giving the components of an article:
 #'   id, authors, title, editor, reviewers, status
-#' @param .recover If \code{TRUE}, will always succeed: if the article is not
-#'   parseable it will return a unparsed blob. This ensures that information
-#'   is not lost if some articles have parsing errors.
 #' @export
-article <- function(..., .recover = TRUE) {
-  if (.recover) {
-    tryCatch(make_article(...),
-      error = function(e) {
-        article <- unparsed(...)
-        message("Failed to parse: ")
-        print(article)
-        message(e, "\n")
-      })
-  } else {
-    make_article(...)
-  }
+article <- function(...) {
+  tryCatch(make_article(...),
+    error = function(e) {
+      article <- unparsed(...)
+      message("Failed to parse: ")
+      print(article)
+      message(e, "\n")
+    })
 }
 
 is.article <- function(x) inherits(x, "article")
