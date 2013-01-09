@@ -1,7 +1,21 @@
 #' Create a new article (S3 class)
 #'
+#' @param ... Named arguments giving the components of an article:
+#'   id, authors, title, editor, reviewers, status
+#' @param .recover If \code{TRUE}, will always succeed: if the article is not
+#'   parseable it will return a unparsed blob. This ensures that information
+#'   is not lost if some articles have parsing errors.
 #' @export
-article <- function(id, authors, title, editor, reviewers, status) {
+article <- function(..., .recover = TRUE) {
+  if (.recover) {
+    tryCatch(make_article(...),
+      error = function(e) unparsed(...))
+  } else {
+    make_article(...)
+  }
+}
+
+make_article <- function(id, authors, title, editor, reviewers, status) {
   structure(list(
     id = id,
     authors = parse_address_list(authors),
@@ -10,3 +24,24 @@ article <- function(id, authors, title, editor, reviewers, status) {
     reviewers = parse_address_list(reviewers),
     status = status), class = "article")
 }
+
+unparsed <- function(...) {
+  structure(list(...), class = c("unparsed", "article"))
+}
+
+format.article <- function(x, ...) {
+  paste(
+    "ID: ", x$id, "\n",
+    "Authors: ", format(x$authors), "\n",
+    "Title: ", x$title, "\n",
+    "Editor: ", x$editor, "\n",
+    "Reviewers: ", format(x$reviewers), "\n",
+    "Status: ", format(x$status), "\n",
+    sep = ""
+  )
+}
+
+print.article <- function(x, ...) cat(format(x), "\n")
+
+
+
