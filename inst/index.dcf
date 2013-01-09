@@ -9,8 +9,8 @@ Reviewers:
 Status: 
   2012-01-24 submitted, 
   2012-02-03 acknowledged,
-  2012-03-22 sent to reviewers,
-  2012-06-07 minor revisions, 
+  2012-03-22 under review,
+  2012-06-07 minor revision, 
   2012-08-13 accepted
 
 ID: 2012-02
@@ -23,9 +23,9 @@ Reviewers:
 Status: 
   2012-02-01 submitted, 
   2012-02-03 acknowledged,  
-  2012-07-12 R1 due,
-  2012-10-16 accepted with minor revisions,
-  2012-10-24 needs proofing
+  2012-07-12 under review,
+  2012-10-16 minor revision,
+  2012-10-24 accepted
 
 ID: 2012-03
 Authors: "Dian Bottenberg" <bottenberg@freenet.de>, Jisca Kwarten
@@ -34,11 +34,10 @@ Editor: Numan Dreijer
 Reviewers: 
   Vasiliki van der Voorn <vasiliki@debian.org>
 Status: 
+  2012-02-17 submitted, 
   2012-03-16 acknowledged,
-  2012-02-17 received, 
-  2012-04-12 updated version received, 
-  2012-06-08 committed,
-  2012-09-04 rejected.
+  2012-04-12 updated, 
+  2012-09-04 rejected
 
 ID: 2012-04
 Authors: Abdo Perales Vallejo <abdo@vallejo.org>
@@ -48,7 +47,7 @@ Reviewers:
   Elbio Tejada Carrillo <Elbio@Carrillo.name>,
   Camille Rolón <camille.rolón@boku.ac.at>
 Status:
-  2012-02-20 Received, 
+  2012-02-20 submitted, 
   2012-03-16 acknowledged, 
-  2012-03-30 Out for review, 
+  2012-03-30 under review, 
   2012-06-06 Rejected 

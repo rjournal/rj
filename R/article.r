@@ -27,7 +27,7 @@ make_article <- function(id, authors = "", title = "", editor = "",
     title = title,
     editor = editor,
     reviewers = parse_address_list(reviewers),
-    status = status), class = "article")
+    status = parse_status_list(status)), class = "article")
 }
 
 unparsed <- function(...) {
@@ -37,6 +37,7 @@ unparsed <- function(...) {
 format.article <- function(x, ...) {
   authors <- format(x$authors)
   reviewers <- format(x$reviewers)
+  status <- format(x$status)
 
   paste(
     "ID: ", format(x$id), "\n",
@@ -44,7 +45,7 @@ format.article <- function(x, ...) {
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
     "Reviewers:", if (!empty(reviewers)) "\n  ", reviewers, "\n",
-    "Status: ", format(x$status),
+    "Status: ", if (!empty(status)) "\n  ", status,
     sep = ""
   )
 }

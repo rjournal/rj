@@ -7,6 +7,7 @@ final_status <- c(
 valid_status <- c(
   "Submitted",
   "Acknowledged",
+  "Updated",
   "Needs editor",
   "Needs reviewers",
   "Under review",
@@ -18,12 +19,22 @@ valid_status <- c(
   final_status
 )
 
-parse_statuses <- function(x) {
+parse_status_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
   statuses <- str_split(x, ",")[[1]]
 
-  lapply(statuses, parse_status)
+  status_list(lapply(statuses, parse_status))
 }
+
+status_list <- function(x) {
+  structure(list(status = x), class = "status_list")
+}
+
+format.status_list <- function(x, ...) {
+  statuses <- lapply(x$status, format)
+  paste(statuses, collapse = ",\n  ")
+}
+print.status_list <- function(x, ...) cat(format(x), "\n")
 
 parse_status <- function(x) {
   x <- str_trim(x)
@@ -47,8 +58,14 @@ parse_status <- function(x) {
 
   status <- str_trim(status)
   if (!(status %in% valid_status)) {
-    warning(status, " is not a known status. ",
-      "Did you mean ", amatch_status(status), "?", call. = FALSE)
+    guess <- amatch_status(status)
+    if (tolower(status) == tolower(guess)) {
+      status <- guess
+    } else {
+      warning(status, " is not a known status. ",
+        "Did you mean ", amatch_status(status), "?", call. = FALSE)
+    }
+
   }
 
   status(date, status, comments)
@@ -64,8 +81,8 @@ status <- function(date, status, comments = "") {
 }
 
 format.status <- function(x, ...) {
-  paste(format(x$date), x$status,
-    if (!empty(x$comments)) paste("[", x$comments, "]", sep = ""))
+  paste(format(x$date), " ", x$status,
+    if (!empty(x$comments)) paste(" [", x$comments, "]", sep = ""), sep = "")
 }
 print.status <- function(x, ...) cat(format(x), "\n")
 
