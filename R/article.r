@@ -17,7 +17,7 @@ article <- function(..., .recover = TRUE) {
 
 make_article <- function(id, authors, title, editor, reviewers, status) {
   structure(list(
-    id = id,
+    id = paste_id(id),
     authors = parse_address_list(authors),
     title = title,
     editor = editor,
