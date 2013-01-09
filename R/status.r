@@ -1,17 +1,20 @@
-# Initial statuses:
+final_status <- c(
+  "Published",
+  "Withdrawn",
+  "Rejected"
+)
 
-# * Needs editor
-# * Needs reviewers
-
-# In progress:
-
-# * Under review
-# * Major revision
-# * Minor revision
-
-# Final statuses:
-
-# * Accepted
-# * Rejected
-# * Published = Year-Issue
+valid_status <- c(
+  "Submitted",
+  "Acknowledged",
+  "Needs editor",
+  "Needs reviewers",
+  "Under review",
+  "Major revision",
+  "Minor revision",
+  "Accepted",
+  "Copy edited",
+  "Proofed",
+  final_status
+)
 
