@@ -1,53 +1,58 @@
 ID: 2012-01
-Authors: "Tina D. Richardson" <TinaDRichardson@teleworm.us>,
-   Brian Marshall
 Title: An exciting new R package
+Authors:
+  "Tina D. Richardson" <TinaDRichardson@teleworm.us>,
+  "Brian Marshall"
 Editor: John Smith
 Reviewers:
-  Cynthia Scott <cynthia@gmail.com>,
-  William Brumfield <WilliamMBrumfield@gmail.com>
+  "Cynthia Scott" <cynthia@gmail.com>,
+  "William Brumfield" <WilliamMBrumfield@gmail.com>
 Status: 
-  2012-01-24 submitted, 
-  2012-02-03 acknowledged,
-  2012-03-22 under review,
-  2012-06-07 minor revision, 
-  2012-08-13 accepted
+  2012-01-24 Submitted,
+  2012-02-03 Acknowledged,
+  2012-03-22 Under review,
+  2012-06-07 Minor revision,
+  2012-08-13 Accepted
 
 ID: 2012-02
-Authors: Liang Mao <LiangMao@dayrep.com>
 Title: Another R package
+Authors:
+  "Liang Mao" <LiangMao@dayrep.com>
 Editor: Numan Dreijer
-Reviewers: 
-  Ye Yeh <YeYeh@teleworm.us>,
-  Hua Ch'iu <asfsadu@har.com>
+Reviewers:
+  "Ye Yeh" <YeYeh@teleworm.us>,
+  "Hua Ch'iu" <asfsadu@har.com>
 Status: 
-  2012-02-01 submitted, 
-  2012-02-03 acknowledged,  
-  2012-07-12 under review,
-  2012-10-16 minor revision,
-  2012-10-24 accepted
+  2012-02-01 Submitted,
+  2012-02-03 Acknowledged,
+  2012-07-12 Under review,
+  2012-10-16 Minor revision,
+  2012-10-24 Accepted
 
 ID: 2012-03
-Authors: "Dian Bottenberg" <bottenberg@freenet.de>, Jisca Kwarten
 Title: Innovations in R
+Authors:
+  "Dian Bottenberg" <bottenberg@freenet.de>,
+  "Jisca Kwarten"
 Editor: Numan Dreijer
-Reviewers: 
-  Vasiliki van der Voorn <vasiliki@debian.org>
+Reviewers:
+  "Vasiliki van der Voorn" <vasiliki@debian.org>
 Status: 
-  2012-02-17 submitted, 
-  2012-03-16 acknowledged,
-  2012-04-12 updated, 
-  2012-09-04 rejected
+  2012-02-17 Submitted,
+  2012-03-16 Acknowledged,
+  2012-04-12 Updated,
+  2012-09-04 Rejected
 
 ID: 2012-04
-Authors: Abdo Perales Vallejo <abdo@vallejo.org>
 Title: How to write great R code
+Authors:
+  "Abdo Perales Vallejo" <abdo@vallejo.org>
 Editor: John Smith
-Reviewers: 
-  Elbio Tejada Carrillo <Elbio@Carrillo.name>,
-  Camille Rolón <camille.rolón@boku.ac.at>
-Status:
-  2012-02-20 submitted, 
-  2012-03-16 acknowledged, 
-  2012-03-30 under review, 
+Reviewers:
+  "Elbio Tejada Carrillo" <Elbio@Carrillo.name>,
+  "Camille Rolón" <camille.rolón@boku.ac.at>
+Status: 
+  2012-02-20 Submitted,
+  2012-03-16 Acknowledged,
+  2012-03-30 Under review,
   2012-06-06 Rejected 

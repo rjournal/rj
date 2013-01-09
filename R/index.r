@@ -1,7 +1,9 @@
 #' Parse the index.dcf file.
 #'
 #' @examples
-#' parse_index(sample())
+#' index <- parse_index(sample())
+#' index
+#' save_index(index)
 parse_index <- function(path = "index.dcf") {
   dcf <- read.dcf(path,
     fields = c("ID", "Authors", "Title", "Editor", "Reviewers", "Status"))
