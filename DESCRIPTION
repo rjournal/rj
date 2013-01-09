@@ -18,3 +18,6 @@ Collate:
     'rfc822.r'
     'rj.r'
     'sample.r'
+    'id.r'
+    'status.r'
+    'utils.r'
