@@ -35,12 +35,15 @@ unparsed <- function(...) {
 }
 
 format.article <- function(x, ...) {
+  authors <- format(x$authors)
+  reviewers <- format(x$reviewers)
+
   paste(
     "ID: ", format(x$id), "\n",
     "Title: ", x$title, "\n",
-    "Authors: \n  ", format(x$authors), "\n",
+    "Authors: ", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
-    "Reviewers: \n  ", format(x$reviewers), "\n",
+    "Reviewers: ", if (!empty(reviewers)) "\n  ", reviewers, "\n",
     "Status: ", format(x$status), "\n",
     sep = ""
   )
@@ -48,5 +51,12 @@ format.article <- function(x, ...) {
 
 print.article <- function(x, ...) cat(format(x), "\n")
 
+#' Generate a new article.
+#'
+#' @param index parsed index file
+new_article <- function(index) {
+  stopifnot(is.index(index))
 
-
+  id <- new_id(index)
+  unparsed(id = id, authors = "", reviewers = "", status = "")
+}

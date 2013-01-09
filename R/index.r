@@ -24,6 +24,8 @@ index <- function(articles) {
   x$articles[[i]]
 }
 
+is.index <- function(x) inherits(x, "index")
+
 length.index <- function(x) length(x$articles)
 
 format.index <- function(x, ...) {

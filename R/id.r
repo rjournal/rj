@@ -16,7 +16,7 @@ parse_id <- function(x) {
   if (year > year()) stop("Year must be in the present or past")
   if (year < 2002) stop("Year must be >= 2002")
 
-  id(as.numeric(year), as.numeric(seq))
+  id(as.integer(year), as.integer(seq))
 }
 
 id <- function(year, seq) {
@@ -35,4 +35,20 @@ year <- function() as.POSIXlt(Sys.Date())$year + 1900
 
 is.number <- function(x) {
   suppressWarnings(!is.na(as.numeric(x)))
+}
+
+#' Generate a new id value.
+#'
+#' @param parsed index file
+new_id <- function(index) {
+  stopifnot(is.index(index))
+
+  this_year <- Filter(function(x) x$id$year == year(), index)
+
+  if (length(this_year) == 0) {
+    id(year(), 1)
+  } else {
+    seqs <- vapply(this_year, function(x) x$id$seq, integer(1))
+    id(year(), max(seqs) + 1)
+  }
 }
