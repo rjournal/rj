@@ -47,7 +47,7 @@ format.article <- function(x, ...) {
     "Authors: ", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
     "Reviewers: ", if (!empty(reviewers)) "\n  ", reviewers, "\n",
-    "Status: ", format(x$status), "\n",
+    "Status: ", format(x$status),
     sep = ""
   )
 }
