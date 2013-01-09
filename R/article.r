@@ -44,9 +44,9 @@ format.article <- function(x, ...) {
   paste(
     "ID: ", format(x$id), "\n",
     "Title: ", x$title, "\n",
-    "Authors: ", if (!empty(authors)) "\n  ", authors, "\n",
+    "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
-    "Reviewers: ", if (!empty(reviewers)) "\n  ", reviewers, "\n",
+    "Reviewers:", if (!empty(reviewers)) "\n  ", reviewers, "\n",
     "Status: ", format(x$status),
     sep = ""
   )

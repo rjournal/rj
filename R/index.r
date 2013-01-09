@@ -9,11 +9,17 @@ parse_index <- function(path = "index.dcf") {
 
   n <- nrow(dcf)
   articles <- lapply(seq_len(n), function(i) do.call(article, as.list(dcf[i, ])))
-  index(articles)
+  index(articles, path)
 }
 
-index <- function(articles) {
-  structure(list(articles = articles), class = "index")
+save_index <- function(index) {
+  stopifnot(is.index(index))
+
+  cat(format(index), "\n", file = index$path)
+}
+
+index <- function(articles, path) {
+  structure(list(articles = articles, path = path), class = "index")
 }
 
 "[.index" <- function(x, i) {
