@@ -8,5 +8,16 @@ parse_index <- function(path = "index.dcf") {
   colnames(dcf) <- tolower(colnames(dcf))
 
   n <- nrow(dcf)
-  lapply(seq_len(n), function(i) do.call(article, as.list(dcf[i, ])))
+  articles <- lapply(seq_len(n), function(i) do.call(article, as.list(dcf[i, ])))
+  index(articles)
 }
+
+index <- function(articles) {
+  structure(list(articles = articles), class = "index")
+}
+
+format.index <- function(x, ...) {
+  articles <- lapply(x$articles, format)
+  paste(articles, collapse = "\n\n")
+}
+print.index <- function(x, ...) cat(format(x), "\n")
