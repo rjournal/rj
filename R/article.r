@@ -32,10 +32,10 @@ unparsed <- function(...) {
 format.article <- function(x, ...) {
   paste(
     "ID: ", x$id, "\n",
-    "Authors: ", format(x$authors), "\n",
     "Title: ", x$title, "\n",
+    "Authors: \n  ", format(x$authors), "\n",
     "Editor: ", x$editor, "\n",
-    "Reviewers: ", format(x$reviewers), "\n",
+    "Reviewers: \n  ", format(x$reviewers), "\n",
     "Status: ", format(x$status), "\n",
     sep = ""
   )

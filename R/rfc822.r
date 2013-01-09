@@ -9,8 +9,18 @@
 parse_address_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
 
-  lapply(str_split(x, ",")[[1]], parse_address)
+  address_list(lapply(str_split(x, ",")[[1]], parse_address))
 }
+
+address_list <- function(addresses) {
+  structure(addresses, class = "address_list")
+}
+
+format.address_list <- function(x, ...) {
+  addresses <- vapply(x, format, character(1))
+  paste(addresses, collapse = ",\n  ")
+}
+print.address_list <- function(x, ...) cat(format(x), "\n")
 
 #' An S3 class to represent email addresses.
 #'
@@ -30,12 +40,14 @@ address <- function(email = NULL, name = NULL) {
   structure(list(name = name, email = email), class = "address")
 }
 
-print.address <- function(x, ...) {
+format.address <- function(x, ...) {
   name <- if (!is.null(x$name))    paste('"', x$name, '"', sep = "")
-  email <- if (!is.null(x$email))  paste("<", x$email, ">\n", sep = "")
+  email <- if (!is.null(x$email))  paste("<", x$email, ">", sep = "")
 
-  cat(paste(c(name, email)), collapse = " ")
+  paste(c(name, email), collapse = " ")
 }
+
+print.address <- function(x, ...) cat(format(x), "\n")
 
 #' @rdname address
 parse_address <- function(x) {
