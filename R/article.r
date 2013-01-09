@@ -20,7 +20,10 @@ article <- function(..., .recover = TRUE) {
   }
 }
 
-make_article <- function(id, authors, title, editor, reviewers, status) {
+is.article <- function(x) inherits(x, "article")
+
+make_article <- function(id, authors = "", title = "", editor = "",
+                         reviewers = "", status = "") {
   structure(list(
     id = parse_id(id),
     authors = parse_address_list(authors),
@@ -58,5 +61,5 @@ new_article <- function(index) {
   stopifnot(is.index(index))
 
   id <- new_id(index)
-  unparsed(id = id, authors = "", reviewers = "", status = "")
+  make_article(id = id)
 }

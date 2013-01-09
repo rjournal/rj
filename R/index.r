@@ -24,6 +24,24 @@ index <- function(articles) {
   x$articles[[i]]
 }
 
+c.index <- function(..., recursive = FALSE) {
+  pieces <- list(...)
+
+  index <- pieces[[1]]
+  for(i in seq.int(2L, length(pieces))) {
+    piece <- pieces[[i]]
+    if (is.index(piece)) {
+      index$articles <- c(index$articles, piece$articles)
+    } else if (is.article(piece)) {
+      index$articles <- c(index$articles, list(piece))
+    } else {
+      stop("Don't know how to combine")
+    }
+  }
+
+  index
+}
+
 is.index <- function(x) inherits(x, "index")
 
 length.index <- function(x) length(x$articles)

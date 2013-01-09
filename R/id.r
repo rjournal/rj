@@ -1,5 +1,7 @@
 #' Validate ID
 parse_id <- function(x) {
+  if (is.id(x)) return(x)
+
   re <- "^([0-9]{4})-([0-9]{2,3})$"
 
   x <- str_trim(x)
@@ -23,8 +25,13 @@ id <- function(year, seq) {
   stopifnot(is.numeric(year), length(year) == 1)
   stopifnot(is.numeric(seq), length(seq) == 1)
 
+  year <- as.integer(year)
+  seq <- as.integer(seq)
+
   structure(list(year = year, seq = seq), class = "id")
 }
+
+is.id <- function(x) inherits(x, "id")
 
 format.id <- function(x, ...) {
   paste(x$year, sprintf("%02d", x$seq), sep = "-")
@@ -43,12 +50,12 @@ is.number <- function(x) {
 new_id <- function(index) {
   stopifnot(is.index(index))
 
-  this_year <- Filter(function(x) x$id$year == year(), index)
+  this_year <- Filter(function(x) x$id$year == year(), index$articles)
 
   if (length(this_year) == 0) {
     id(year(), 1)
   } else {
     seqs <- vapply(this_year, function(x) x$id$seq, integer(1))
-    id(year(), max(seqs) + 1)
+    id(year(), max(seqs) + 1L)
   }
 }
