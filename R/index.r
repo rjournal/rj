@@ -7,6 +7,7 @@
 parse_index <- function(path = "index.dcf") {
   dcf <- read.dcf(path,
     fields = c("ID", "Authors", "Title", "Editor", "Reviewers", "Status"))
+  dcf[is.na(dcf)] <- ""
   colnames(dcf) <- tolower(colnames(dcf))
 
   n <- nrow(dcf)
