@@ -21,12 +21,14 @@ valid_status <- c(
 
 parse_status_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
+  if (empty(x)) return(status_list())
+
   statuses <- str_split(x, ",")[[1]]
 
   status_list(lapply(statuses, parse_status))
 }
 
-status_list <- function(x) {
+status_list <- function(x = list()) {
   structure(list(status = x), class = "status_list")
 }
 
