@@ -14,11 +14,12 @@ parse_index <- function(path = "index.dcf") {
 
 save_index <- function(index) {
   stopifnot(is.index(index))
+  stopifnot(!is.null(index$path))
 
   cat(format(index), "\n", file = index$path)
 }
 
-index <- function(articles, path) {
+index <- function(articles, path = NULL) {
   structure(list(articles = articles, path = path), class = "index")
 }
 
