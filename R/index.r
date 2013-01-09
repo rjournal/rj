@@ -16,6 +16,16 @@ index <- function(articles) {
   structure(list(articles = articles), class = "index")
 }
 
+"[.index" <- function(x, i) {
+  index(x$articles[i])
+}
+
+"[[.index" <- function(x, i) {
+  x$articles[[i]]
+}
+
+length.index <- function(x) length(x$articles)
+
 format.index <- function(x, ...) {
   articles <- lapply(x$articles, format)
   paste(articles, collapse = "\n\n")

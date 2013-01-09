@@ -9,7 +9,12 @@
 article <- function(..., .recover = TRUE) {
   if (.recover) {
     tryCatch(make_article(...),
-      error = function(e) unparsed(...))
+      error = function(e) {
+        article <- unparsed(...)
+        message("Failed to parse: ")
+        print(article)
+        message(e, "\n")
+      })
   } else {
     make_article(...)
   }
@@ -17,7 +22,7 @@ article <- function(..., .recover = TRUE) {
 
 make_article <- function(id, authors, title, editor, reviewers, status) {
   structure(list(
-    id = paste_id(id),
+    id = parse_id(id),
     authors = parse_address_list(authors),
     title = title,
     editor = editor,
@@ -31,7 +36,7 @@ unparsed <- function(...) {
 
 format.article <- function(x, ...) {
   paste(
-    "ID: ", x$id, "\n",
+    "ID: ", format(x$id), "\n",
     "Title: ", x$title, "\n",
     "Authors: \n  ", format(x$authors), "\n",
     "Editor: ", x$editor, "\n",
