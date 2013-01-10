@@ -7,14 +7,18 @@
 #' @param ... Named arguments giving the components of an article:
 #'   id, authors, title, editor, reviewers, status
 #' @export
-article <- function(...) {
+article <- function(..., quiet = FALSE) {
   tryCatch(make_article(...),
     error = function(e) {
       article <- unparsed(...)
-      message("Failed to parse: ")
-      print(article)
-      message(e, "\n")
-    })
+      if (!quiet) {
+        message("Failed to parse: ")
+        print(article)
+        message(e, "\n")
+      }
+      article
+    }
+  )
 }
 
 is.article <- function(x) inherits(x, "article")
@@ -28,10 +32,6 @@ make_article <- function(id, authors = "", title = "", editor = "",
     editor = editor,
     reviewers = parse_address_list(reviewers),
     status = parse_status_list(status)), class = "article")
-}
-
-unparsed <- function(...) {
-  structure(list(...), class = c("unparsed", "article"))
 }
 
 format.article <- function(x, ...) {
@@ -51,6 +51,22 @@ format.article <- function(x, ...) {
 }
 
 print.article <- function(x, ...) cat(format(x), "\n")
+
+unparsed <- function(...) {
+  structure(list(...), class = c("unparsed", "article"))
+}
+
+format.unparsed <- function(x, ...) {
+  paste(
+    "ID:", x$id, "\n",
+    "Title:", x$title, "\n",
+    "Authors:", x$authors, "\n",
+    "Editor:", x$editor, "\n",
+    "Reviewers:", x$reviewers, "\n",
+    "Status:", x$status,
+    sep = ""
+  )
+}
 
 #' Generate a new article.
 #'

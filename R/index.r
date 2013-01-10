@@ -4,14 +4,24 @@
 #' index <- parse_index(sample())
 #' index
 #' save_index(index)
-parse_index <- function(path = "index.dcf") {
-  dcf <- read.dcf(path,
-    fields = c("ID", "Authors", "Title", "Editor", "Reviewers", "Status"))
+parse_index <- function(path = "index.dcf", quiet = FALSE) {
+  fields <- c("ID", "Authors", "Title", "Editor", "Reviewers", "Status")
+  dcf <- read.dcf(path, fields = fields, keep.white = fields)
+
+  # Remove field names that keep.white incorrectly preserves
+  for(field in fields) {
+    dcf[, field] <- gsub(paste(field, ":", sep = ""), "", dcf[, field],
+      fixed = TRUE)
+  }
+  # Convert missing values to empty strings
   dcf[is.na(dcf)] <- ""
   colnames(dcf) <- tolower(colnames(dcf))
 
   n <- nrow(dcf)
-  articles <- lapply(seq_len(n), function(i) do.call(article, as.list(dcf[i, ])))
+  articles <- lapply(seq_len(n), function(i) {
+    args <- c(as.list(dcf[i, ]), list(quiet = quiet))
+    do.call(article, args)
+  })
   index(articles, path)
 }
 
