@@ -1,10 +1,10 @@
-#' Parse the index.dcf file.
+#' Read/write the index.dcf file.
 #'
 #' @examples
-#' index <- parse_index(sample())
+#' index <- load_index(sample())
 #' index
 #' save_index(index)
-parse_index <- function(path = "index.dcf", quiet = FALSE) {
+load_index <- function(path = "index.dcf", quiet = FALSE) {
   message("Reading ", path)
 
   fields <- c("ID", "Authors", "Title", "Editor", "Reviewers", "Status")
@@ -31,7 +31,7 @@ as.index <- function(index) {
   if (is.index(index)) return(index)
 
   path <- find_index(index)
-  parse_index(path)
+  load_index(path)
 }
 
 #' Find the index file.
@@ -52,6 +52,7 @@ find_index <- function(path = NULL) {
   stop("Can't find index.dcf", call. = FALSE)
 }
 
+#' @rdname load_index
 save_index <- function(index) {
   stopifnot(is.index(index))
   stopifnot(!is.null(index$path))
