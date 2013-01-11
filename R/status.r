@@ -21,9 +21,10 @@ valid_status <- c(
 
 parse_status_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
-  if (empty(x)) return(status_list())
+  if (empty(str_trim(x))) return(status_list())
 
-  statuses <- str_split(x, ",")[[1]]
+  statuses <- str_trim(str_split(x, ",")[[1]])
+  statuses <- statuses[statuses != ""]
 
   status_list(lapply(statuses, parse_status))
 }
@@ -37,13 +38,15 @@ format.status_list <- function(x, ...) {
   paste(statuses, collapse = ",\n  ")
 }
 print.status_list <- function(x, ...) cat(format(x), "\n")
+is.status_list <- function(x) inherits(x, "status_list")
 
 parse_status <- function(x) {
   x <- str_trim(x)
 
   re <- "^(\\d{4}-\\d{2}-\\d{2}) ([^\\[]*)(?: \\[([^\\[]+)\\])?$"
   if (!str_detect(x, re)) {
-    stop("ID must have form 'yyyy-mm-dd status [optional comments]'")
+    stop("Status must have form 'yyyy-mm-dd status [optional comments]'",
+      call. = FALSE)
   }
 
   pieces <- str_match(x, re)[1, ]
@@ -70,16 +73,32 @@ parse_status <- function(x) {
 
   }
 
-  status(date, status, comments)
+  status(status = status, date = date, comments = comments)
 }
 
-status <- function(date, status, comments = "") {
+status <- function(status, date = Sys.Date(), comments = "") {
   stopifnot(is.Date(date), length(date) == 1)
   stopifnot(is.character(status), length(status) == 1)
   stopifnot(is.character(comments), length(comments) == 1)
 
   structure(list(date = date, status = status, comments = comments),
     class = "status")
+}
+
+is.status <- function(x) inherits(x, "status")
+
+c.status <- c.status_list <- function(..., recursive = FALSE) {
+  pieces <- list(...)
+  statuses <- lapply(pieces, function(x) {
+    if (is.status(x)) {
+      list(x)
+    } else if (is.status_list(x)) {
+      x$status
+    } else {
+      stop("Don't know how to combine with ", class(x)[1])
+    }
+  })
+  status_list(unlist(statuses, recursive = FALSE))
 }
 
 format.status <- function(x, ...) {

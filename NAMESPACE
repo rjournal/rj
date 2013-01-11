@@ -1,5 +1,6 @@
 export(address)
 export(article)
+export(find_index)
 export(sample)
 import(stringr)
 importFrom(utils,adist)

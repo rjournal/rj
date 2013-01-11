@@ -2,9 +2,9 @@ context("Status")
 
 test_that("parsing matches manual creation", {
   expect_equal(parse_status("2005-01-01 Accepted [test]"),
-    status(as.Date("2005-01-01"), "Accepted", "test"))
+    status("Accepted", as.Date("2005-01-01"), "test"))
   expect_equal(parse_status("2005-01-01 Accepted"),
-    status(as.Date("2005-01-01"), "Accepted"))
+    status("Accepted", as.Date("2005-01-01")))
 })
 
 test_that("status must have at least two components", {

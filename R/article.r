@@ -28,8 +28,8 @@ make_article <- function(id, authors = "", title = "", editor = "",
   structure(list(
     id = parse_id(id),
     authors = parse_address_list(authors),
-    title = title,
-    editor = editor,
+    title = str_trim(title),
+    editor = str_trim(editor),
     reviewers = parse_address_list(reviewers),
     status = parse_status_list(status)), class = "article")
 }

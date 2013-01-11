@@ -21,3 +21,4 @@ Collate:
     'id.r'
     'status.r'
     'utils.r'
+    'actions.r'
