@@ -2,35 +2,32 @@
 
 ## Overall goals
 
-* Minimal set of changes to index.dcf that makes it easier to compute with
+* A minimal set of functions to automate manual tasks
 
-* Minimal set of functions to automate manual tasks
+* Index.dcf still maintainable by hand, if desired
 
-* Index.dcf still maintainable by hand
+## Index.dcf format
 
-## Submissions
+The `index.dcf` is a DCF (debian control file) file, made up of entries of the following form.
 
-Could use `wufoo` form to accept submissions - this would make it easier to collect details to a common standard, and would be possible to automate using wufoo's REST API. 
+    ID: 2012-01
+    Title: Exploring the wonderful world of R
+    Authors: 
+      "John Smith" <john.smith@gmail.com>
+    Editor: Hadley Wickham
+    Reviewers: 
+      "Marleen Harris" <marline.harris@hotmail.com>, 
+      "Roger Swansong" <iloveswans52@yahoo.com>
+    Status: 
+      2012-05-04 Received,
+      2012-05-18 Acknowledged,
+      2012-09-12 Under review
+      2012-10-12 Minor revision,
+      2012-11-12 Accepted,
+      2012-12-12 Proofed,
+      2013-01-01 Published
 
-Would need additional field in local data to record unique wufoo id, used to prevent duplicate submissions.
-
-## Contact details
-
-I suggest we move to the standard email format (http://tools.ietf.org/html/rfc2822#section-3.4, `name-addr`) to describe name and email address: `"Hadley Wickham" <h.wickham@gmail.com>`. This makes it easier to copy and paste into emails, and remedies the normalisation problem with the current system.
-
-This has a few consequences: 
-
-* Create a new field `Reviewers` which replaces `Reviewer1`, `R1email` etc with a comma separated list
-
-* Combine `Author` and `Email` to give a comma separated list of corresponding author(s).
-
-* Replace `Editor` should be replaced with name-email combo, to make it easier to automate.  Alternatively, we could have a separate csv file giving names of editors, their email address and a abbreviate name for them.
-
-These changes will considerably simplify the underlying object model.
-
-Validating each of these fields would involve splitting by commas, and then confirming each element matched the expression `$"[^]+" <[^>]+>^`.
-
-## Status
+### Status
 
 Some statuses can be automatically determined:
 
@@ -41,7 +38,7 @@ Otherwise we have the following possibilities
 
 * Initial:
   * Received
-  * Acknolwedged
+  * Acknowledged
 
 * In progress:
   * Under review
@@ -50,55 +47,8 @@ Otherwise we have the following possibilities
 
 * Terminal:
   * Rejected
-  * Published = Year-Issue
+  * Published
   * Withdrawn
-
-Currently the status is recorded in two places, `Status` and `Comments`.  This is a duplication of data that leads to inconsistencies.  I suggest we combine  single status and comments fields. The status field becomes a comma separated list of dates (Y-M-D) and statuses with optional comments in square brackets.
-
-So this:
-
-    Status: under review
-    Comments: Received 2012-05-04. Acknowledged 2012-05-18.
-              Needs a bit of editing. R1 received 2012-09-12.
-
-Would be become
-
-    Status: 
-      2012-05-04 received,
-      2012-05-18 acknowledged,
-      2012-09-12 revision recieved [needs a bit of editing]
-
-To valid: split by `,`, match `(.*?) (.*?) (\\[.*?\\])?`. Check first piece is valid date, second piece is known string.
-
-## Example formatting
-
-    Refno: 2012-18
-    Authors: Mathieu Colleter, Jerome Guitton and Didier Gascuel
-    Email: m.colleter@fisheries.ubc.ca
-    Title: An Introduction to the EcoTroph R package: Analyzing aquatic ecosystem trophic network
-    Editor: Heather Turner
-    Reviewer1: Karline Soetaert
-    R1email: Karline.Soetaert@nioz.nl
-    Reviewer2: Cameron Ainsworth
-    R2email: ainsworth@usf.edu
-    Status: under review
-    Comments: Received 2012-05-04. Acknowledged 2012-05-18.
-              Needs a bit of editing. R1 received 2012-09-12.
-
-Becomes:
-
-    ID: 2012-18
-    Author: "Mathieu Colleter" <m.colleter@fisheries.ubc.ca>
-    Title: An Introduction to the EcoTroph R package: Analyzing aquatic 
-      ecosystem trophic network
-    Editor: Heather Turner
-    Reviewers: 
-      "Karline Soetaert" <Karline.Soetaert@nioz.nl>, 
-      "Cameron Ainsworth" <ainsworth@usf.edu>
-    Status: 
-      2012-05-04 received,
-      2012-05-18 acknowledged,
-      2012-09-12 revision recieved, Needs a bit of editing
 
 ## Example code
 
@@ -112,9 +62,8 @@ Need to make it easier to compute on, so we could do (e.g.):
     withdraw("2010-15")
     # all of these would have manual confirmation question
 
-    assign_editor("2010-15")
+    assign_editor("2010-15", "HW")
     add_reviewers("2010-15")
-    process_submission() # uses wufoo api
 
     review("2010-15", "major") # partially matched to major revision
     review("2010-15", "minor")
@@ -140,3 +89,10 @@ Need to make it easier to compute on, so we could do (e.g.):
     validate()
     validate("2012-15")
     validate(find("2012-15")$authors)
+
+## Submissions
+
+Could use `wufoo` form to accept submissions - this would make it easier to collect details to a common standard, and would be possible to automate using wufoo's REST API. 
+
+Would need additional field in local data to record unique wufoo id, used to prevent duplicate submissions.
+
