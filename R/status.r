@@ -1,21 +1,20 @@
 final_status <- c(
-  "Published",
-  "Withdrawn",
-  "Rejected"
+  "published",
+  "withdrawn",
+  "rejected"
 )
 
 valid_status <- c(
-  "Submitted",
-  "Acknowledged",
-  "Updated",
-  "Needs editor",
-  "Needs reviewers",
-  "Under review",
-  "Major revision",
-  "Minor revision",
-  "Accepted",
-  "Copy edited",
-  "Proofed",
+  "submitted",
+  "acknowledged",
+  "updated",
+  "out for review",
+  "major revision",
+  "minor revision",
+  "accepted",
+  "copy edited",
+  "proofed",
+  "online",
   final_status
 )
 
