@@ -32,6 +32,9 @@ status_list <- function(x = list()) {
   structure(list(status = x), class = "status_list")
 }
 
+length.status_list <- function(x) length(x$status)
+"[[.status_list" <- function(x, i) x$status[[i]]
+
 format.status_list <- function(x, ...) {
   statuses <- lapply(x$status, format)
   paste(statuses, collapse = ",\n  ")
