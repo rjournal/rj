@@ -7,12 +7,13 @@ last_status <- function(x) {
 summary_status <- function(x) {
   stopifnot(is.article(x))
 
-  if (empty(x$editor)) return("needs editor")
-  if (empty(x$reviewers)) return("needs reviewers")
-
   status <- last_status(x)$status
   if (status %in% final_status) {
     "complete"
+  } else if (empty(x$editor)) {
+    "needs editor"
+  } else if (empty(x$reviewers)) {
+    "needs reviewers"
   } else {
     status
   }
@@ -98,7 +99,8 @@ deadlines <- function(sstatus) {
   special <- c(
     "needs editor" = c(7L, 14L),
     "needs reviewer" = c(7L, 14L),
-    "submitted" = c(3L, 7L)
+    "submitted" = c(3L, 7L),
+    "proofed" = c(7L, 14L)
   )
   if (sstatus %in% names(special)) {
     special[[sstatus]]
