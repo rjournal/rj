@@ -1,16 +1,17 @@
 # RJ
 
+This package provides tools for dealing with the metadata for the R Journal.
+
 ## Overall goals
 
 * A minimal set of functions to automate manual tasks
 
-* Index.dcf still maintainable by hand, if desired
+* `DESCRIPTION` files still maintainable by hand
 
-## Index.dcf format
+## `DESCRIPTION` format
 
-The `index.dcf` is a DCF (debian control file) file, made up of entries of the following form.
+Each submission consists of a directory containing the submission, any correspondence, and a `DESCRIPTION` file.  The `DESCRIPTION` is a DCF (debian control file) file, made up of entries of the following form.
 
-    ID: 2012-01
     Title: Exploring the wonderful world of R
     Authors: 
       "John Smith" <john.smith@gmail.com>
@@ -19,17 +20,15 @@ The `index.dcf` is a DCF (debian control file) file, made up of entries of the f
       "Marleen Harris" <marline.harris@hotmail.com>, 
       "Roger Swansong" <iloveswans52@yahoo.com>
     Status: 
-      2012-05-04 Received,
-      2012-05-18 Acknowledged,
-      2012-09-12 Under review
-      2012-10-12 Minor revision,
-      2012-11-12 Accepted,
-      2012-12-12 Proofed,
-      2013-01-01 Published
+      2012-05-04 received,
+      2012-05-18 acknowledged [optional comment],
+      2012-09-12 out for review
+      2012-10-12 minor revision,
+      2012-11-12 accepted,
+      2012-12-12 proofed,
+      2013-01-01 published
 
-### Status
-
-Some statuses can be automatically determined:
+Most of these fields are self-explanatory, apart from the `Status` field, which needs a little more detail. Some statuses can be automatically determined:
 
 * If editor field is blank, then status is "Needs editor"
 * If reviewers field is blank, then status is "Needs reviewers"
@@ -37,18 +36,21 @@ Some statuses can be automatically determined:
 Otherwise we have the following possibilities
 
 * Initial:
-  * Received
-  * Acknowledged
+  * received
+  * acknowledged
 
 * In progress:
-  * Under review
-  * Major revision
-  * Minor revision
+  * out for review
+  * major revision
+  * minor revision
+  * updated
+  * proofed
+  * online
 
 * Terminal:
-  * Rejected
-  * Published
-  * Withdrawn
+  * rejected
+  * published
+  * withdrawn
 
 ## Example code
 

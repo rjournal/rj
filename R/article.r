@@ -40,7 +40,6 @@ format.article <- function(x, ...) {
   status <- format(x$status)
 
   paste(
-    "ID: ", format(x$id), "\n",
     "Title: ", x$title, "\n",
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
