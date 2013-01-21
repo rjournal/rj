@@ -15,7 +15,6 @@ Depends:
     R (>= 2.15.1)
 Collate:
     'article.r'
-    'index.r'
     'rfc822.r'
     'rj.r'
     'sample.r'

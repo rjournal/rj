@@ -8,3 +8,5 @@ empty.address_list <- function(x) length(x) == 0
 str_trunc <- function(x, width = getOption("width")) {
   ifelse(str_length(x) <= width, x, str_c(str_sub(x, 1, width - 3), "..."))
 }
+
+is.dir <- function(x) file.info(x)$isdir

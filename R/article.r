@@ -21,12 +21,70 @@ article <- function(..., quiet = FALSE) {
   )
 }
 
+#' Convert input into an article.
+#'
+#' @param a path to a DESCRIPTION, a path to a directory containing DESCRIPTION,
+#'   or a article name, found in a sub-directory rejected, accepted or
+#'   submissions
+#' @export
+#' @examples
+#' # Usually the best way to use is to have your working directory set to the
+#' # admin repo, and refer to articles by their id.
+#' \dontrun{
+#' as.article("2012-01")
+#' as.article("2012-02")
+#' }
+as.article <- function(id) {
+  if (is.article(id)) return(id)
+
+  # Check to see if it's an existing directory
+  if (file.exists(id)) {
+    if (is.dir(id)) {
+      return(file.path(id, "DESCRIPTION"))
+    } else {
+      return(id)
+    }
+  }
+
+  # Otherwise, assume we're in the admin directory
+  base <- c("Rejected", "Accepted", "Submissions")
+  pos <- file.exists(file.path(base, id))
+
+  if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
+  if (sum(pos) > 1) stop(id, " found in multiple locations", call. = FALSE)
+
+  path <- file.path(base[pos], id, "DESCRIPTION")
+  load_article(path)
+}
+
+load_article <- function(path, quiet = FALSE) {
+  fields <- c("ID", "Authors", "Title", "Editor", "Reviewers", "Status")
+  dcf <- read.dcf(path, fields = fields, keep.white = fields)
+  stopifnot(nrow(dcf) == 1)
+
+  # Remove field names that keep.white incorrectly preserves
+  for(field in fields) {
+    dcf[, field] <- gsub(paste(field, ":", sep = ""), "", dcf[, field],
+      fixed = TRUE)
+  }
+  # Convert missing values to empty strings
+  dcf[is.na(dcf)] <- ""
+  colnames(dcf) <- tolower(colnames(dcf))
+
+  dcf <- as.list(as.data.frame(dcf, stringsAsFactors = FALSE))
+  dcf$id <- basename(dirname(path))
+  dcf$path <- dirname(path)
+
+  do.call(make_article, dcf)
+}
+
 is.article <- function(x) inherits(x, "article")
 
 make_article <- function(id, authors = "", title = "", editor = "",
-                         reviewers = "", status = "") {
+                         reviewers = "", status = "", path = "") {
   structure(list(
     id = parse_id(id),
+    path = path,
     authors = parse_address_list(authors),
     title = str_trim(title),
     editor = str_trim(editor),
@@ -48,6 +106,16 @@ format.article <- function(x, ...) {
     sep = ""
   )
 }
+
+save_article <- function(article, quiet = FALSE) {
+  stopifnot(is.index(article))
+  stopifnot(!is.null(article$path))
+
+  path <- file.path(article$path, "DESCRIPTION")
+  if (!quiet) message("Writing ", path)
+  cat(format(article), "\n", file = path)
+}
+
 
 print.article <- function(x, ...) cat(format(x), "\n")
 
