@@ -1,6 +1,8 @@
+export(active_articles)
 export(address)
 export(article)
 export(as.article)
+export(report)
 export(sample)
 import(stringr)
 importFrom(utils,adist)

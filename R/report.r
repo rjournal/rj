@@ -1,3 +1,8 @@
+#' Generate a status report.
+#'
+#' @param articles list of articles to generate report for. Defaults to
+#'   all active reports in \file{Submissions/}.
+#' @export
 report <- function(articles = active_articles()) {
   rpt <- do.call("rbind", lapply(articles, report_line))
   rpt <- rpt[order(rpt$date, rpt$ed), ]
@@ -5,10 +10,8 @@ report <- function(articles = active_articles()) {
   structure(rpt, class = c("report", "data.frame"))
 }
 
-
 last_status <- function(x) {
   stopifnot(is.article(x))
-
   x$status[[length(x$status)]]
 }
 
@@ -77,9 +80,6 @@ print.report <- function(x, ...) {
       right = FALSE))
     cat(paste(out[-1], collapse = "\n"), "\n\n")
   }
-
-
-
 }
 
 order_status <- function(x) {
@@ -107,7 +107,6 @@ deadlines <- function(sstatus) {
     c(4L, 6L) * 7L
   }
 }
-
 
 editor_abbr <- function(x) {
   if (empty(x)) return("")
