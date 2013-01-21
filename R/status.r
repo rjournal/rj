@@ -7,6 +7,8 @@ final_status <- c(
 valid_status <- c(
   "submitted",
   "acknowledged",
+  "needs reviewers",
+  "needs editor",
   "updated",
   "out for review",
   "major revision",
