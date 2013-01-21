@@ -2,6 +2,7 @@
 \alias{accept}
 \alias{reject}
 \alias{update_status}
+\alias{withdraw}
 \title{Update the status of an article.}
 \usage{
   update_status(article, status, comments = "",
@@ -10,6 +11,8 @@
   reject(article, comments = "", date = Sys.Date())
 
   accept(article, comments = "", date = Sys.Date())
+
+  withdraw(article, comments = "", date = Sys.Date())
 }
 \arguments{
   \item{article}{as \code{\link{article}} object, path, or

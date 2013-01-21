@@ -18,7 +18,7 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
   }
 
   article$status <- c(article$status, status(status, date, comments))
-  save_article(article)
+  save_article(article, quiet = TRUE)
 }
 
 
@@ -26,6 +26,7 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
 #' @export
 reject <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
+  message("Rejecting ", article$id)
   update_status(article, "rejected", comments = comments, date = date)
 
   file.rename(article$path, file.path("Rejected", basename(article$path)))
@@ -36,8 +37,20 @@ reject <- function(article, comments = "", date = Sys.Date()) {
 #' @export
 accept <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
+  message("Accepting ", article$id)
   update_status(article, "accepted", comments = comments, date = date)
 
   file.rename(article$path, file.path("Accepted", basename(article$path)))
+  invisible()
+}
+
+#' @rdname action
+#' @export
+withdraw <- function(article, comments = "", date = Sys.Date()) {
+  article <- as.article(article)
+  message("Withdrawing ", article$id)
+  update_status(article, "withdrawn", comments = comments, date = date)
+
+  file.rename(article$path, file.path("Rejected", basename(article$path)))
   invisible()
 }

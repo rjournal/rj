@@ -57,12 +57,11 @@ Otherwise we have the following possibilities
 Need to make it easier to compute on, so we could do (e.g.):
 
     library(rj)
-    find("2010-15")
+    as.article("2010-15")
 
     accept("2010-15")
     reject("2010-15")
     withdraw("2010-15")
-    # all of these would have manual confirmation question
 
     assign_editor("2010-15", "HW")
     add_reviewers("2010-15")
