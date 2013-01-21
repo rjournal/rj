@@ -52,44 +52,20 @@ Otherwise we have the following possibilities
   * published
   * withdrawn
 
-## Example code
-
-Need to make it easier to compute on, so we could do (e.g.):
-
+## Examples
+  
     library(rj)
-    as.article("2010-15")
+    # Make sure your working directory is set correct, then:
 
+    as.article("2010-15")
+    new_id()
+    report()
+
+    # These are easy to do by hand, but this will set the date 
+    # correctly and move to the correct location
     accept("2010-15")
     reject("2010-15")
     withdraw("2010-15")
-
-    assign_editor("2010-15", "HW")
-    add_reviewers("2010-15")
-
-    review("2010-15", "major") # partially matched to major revision
-    review("2010-15", "minor")
-    proof("2010-15")
-
-    # These are all implemented using
-    add_status("2010-15", "major", today(), "comments")
-
-    next_id()
-    # [1] "2012-38"
-
-    status()
-    # prints status of all articles, suitable for inclusion in an email
-    # broken down by articles and by editors
-    email_status()
-    # emails R-journal-editors list
-
-    update_author("2012-38")
-    # emails author current status of article
-    # using browseURL("mailto:...")
-    # if no acknowledgement status is present, this would add it.
-
-    validate()
-    validate("2012-15")
-    validate(find("2012-15")$authors)
 
 ## Submissions
 
