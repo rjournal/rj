@@ -38,22 +38,22 @@ as.article <- function(id) {
   if (is.article(id)) return(id)
 
   # Check to see if it's an existing directory
+  if (file.exists(id) && is.dir(id)) {
+    id <- file.path(id, "DESCRIPTION")
+  }
   if (file.exists(id)) {
-    if (is.dir(id)) {
-      return(file.path(id, "DESCRIPTION"))
-    } else {
-      return(id)
-    }
+    path <- id
+  } else {
+    # Otherwise, assume we're in the admin directory
+    base <- c("Rejected", "Accepted", "Submissions")
+    pos <- file.exists(file.path(base, id))
+
+    if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
+    if (sum(pos) > 1) stop(id, " found in multiple locations", call. = FALSE)
+
+    path <- file.path(base[pos], id, "DESCRIPTION")
   }
 
-  # Otherwise, assume we're in the admin directory
-  base <- c("Rejected", "Accepted", "Submissions")
-  pos <- file.exists(file.path(base, id))
-
-  if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
-  if (sum(pos) > 1) stop(id, " found in multiple locations", call. = FALSE)
-
-  path <- file.path(base[pos], id, "DESCRIPTION")
   load_article(path)
 }
 

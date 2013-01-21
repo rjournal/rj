@@ -1,5 +1,3 @@
-
-
 empty <- function(x) UseMethod("empty")
 empty.character <- function(x) str_length(x) == 0
 empty.address_list <- function(x) length(x) == 0

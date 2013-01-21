@@ -1,3 +1,11 @@
+report <- function(articles = active_articles()) {
+  rpt <- do.call("rbind", lapply(articles, report_line))
+  rpt <- rpt[order(rpt$date, rpt$ed), ]
+  rpt$status <- factor(rpt$status, order_status(rpt$status))
+  structure(rpt, class = c("report", "data.frame"))
+}
+
+
 last_status <- function(x) {
   stopifnot(is.article(x))
 
@@ -38,15 +46,6 @@ report_line <- function(x) {
     stars = str_dup("*", stars),
     stringsAsFactors = FALSE
   )
-}
-
-report <- function(x) {
-  stopifnot(is.index(x))
-
-  rpt <- do.call("rbind", lapply(x$articles, report_line))
-  rpt <- rpt[order(rpt$date, rpt$ed), ]
-  rpt$status <- factor(rpt$status, order_status(rpt$status))
-  structure(rpt, class = c("report", "data.frame"))
 }
 
 print.report <- function(x, ...) {
