@@ -2,7 +2,7 @@
 parse_id <- function(x) {
   if (is.id(x)) return(x)
 
-  re <- "^([0-9]{4})-([0-9]{2,3})$"
+  re <- "^([0-9]{4})-([0-9]{2,3})[a-z]?$"
 
   x <- str_trim(x)
 
@@ -42,20 +42,4 @@ year <- function() as.POSIXlt(Sys.Date())$year + 1900
 
 is.number <- function(x) {
   suppressWarnings(!is.na(as.numeric(x)))
-}
-
-#' Generate a new id value.
-#'
-#' @param parsed index file
-new_id <- function(index) {
-  stopifnot(is.index(index))
-
-  this_year <- Filter(function(x) x$id$year == year(), index$articles)
-
-  if (length(this_year) == 0) {
-    id(year(), 1)
-  } else {
-    seqs <- vapply(this_year, function(x) x$id$seq, integer(1))
-    id(year(), max(seqs) + 1L)
-  }
 }

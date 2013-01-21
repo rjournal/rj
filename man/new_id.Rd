@@ -2,10 +2,7 @@
 \alias{new_id}
 \title{Generate a new id value.}
 \usage{
-  new_id(index)
-}
-\arguments{
-  \item{parsed}{index file}
+  new_id()
 }
 \description{
   Generate a new id value.
