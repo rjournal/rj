@@ -22,7 +22,6 @@ Collate:
     'status.r'
     'utils.r'
     'actions.r'
-    'index-article.r'
     'report.r'
     'submissions.r'
     'articles.r'

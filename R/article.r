@@ -108,7 +108,7 @@ format.article <- function(x, ...) {
 }
 
 save_article <- function(article, quiet = FALSE) {
-  stopifnot(is.index(article))
+  stopifnot(is.article(article))
   stopifnot(!is.null(article$path))
 
   path <- file.path(article$path, "DESCRIPTION")
