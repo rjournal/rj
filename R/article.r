@@ -75,7 +75,7 @@ load_article <- function(path, quiet = FALSE) {
   dcf$id <- basename(dirname(path))
   dcf$path <- dirname(path)
 
-  do.call(make_article, dcf)
+  do.call(article, dcf)
 }
 
 is.article <- function(x) inherits(x, "article")
