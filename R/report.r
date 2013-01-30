@@ -97,7 +97,7 @@ deadlines <- function(sstatus) {
 
   special <- list(
     "needs editor" = c(7L, 14L),
-    "needs reviewer" = c(7L, 14L),
+    "needs reviewers" = c(7L, 14L),
     "submitted" = c(3L, 7L),
     "proofed" = c(7L, 14L),
     "major revision" = c(60L, 90L)
