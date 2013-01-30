@@ -95,11 +95,12 @@ deadlines <- function(sstatus) {
     return(c(Inf, Inf))
   }
 
-  special <- c(
+  special <- list(
     "needs editor" = c(7L, 14L),
     "needs reviewer" = c(7L, 14L),
     "submitted" = c(3L, 7L),
-    "proofed" = c(7L, 14L)
+    "proofed" = c(7L, 14L),
+    "major revision" = c(60L, 90L)
   )
   if (sstatus %in% names(special)) {
     special[[sstatus]]
