@@ -1,4 +1,5 @@
 final_status <- c(
+  "reject and resubmit",
   "published",
   "withdrawn",
   "rejected"
@@ -12,7 +13,6 @@ valid_status <- c(
   "updated",
   "out for review",
   "major revision",
-  "reject and resubmit",
   "minor revision",
   "accepted",
   "copy edited",
