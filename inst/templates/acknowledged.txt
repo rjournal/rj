@@ -1,0 +1,18 @@
+To: {{email}}
+Subject: R journal submission {{id}}
+---
+Dear {{name}},
+
+We are pleased to recieve your submission "{{title}}" to the R journal. It has been given id {{id}}.
+
+The process for submission proceeds as follows:
+
+* associate editor assigned (~1 week)
+* reviewers solicited (+1-2 weeks)
+* reviews recieved (+1 month)
+
+So you should expect to hear from us again within 2 months (at the latest).
+
+Regards,
+
+{{editor}}

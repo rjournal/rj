@@ -1,0 +1,25 @@
+To: {{email}}
+Subject: Review for the R journal {{id}}
+---
+Dear {{name}},
+
+Would you be interested in reviewing the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise.
+
+The structure of the review is up to you, but is typically around a page in length and will include comments on the following topics:
+
+* Overall recommendation: Accept with minor revisions (you won't see it again), accept with major revisions (you'll be asked to review the revisions), or rejected.
+
+* Overview: Is this article of importance to R community? Have the authors taken a sensible approach? Are technology and methods up-to-date?
+
+* Article: Is anything unclear? Is anything missing (e.g. references, key features of package)? Are the examples helpful? IS there sufficient background (including alternative approaches in R)? Is the approach statistically sound?
+
+* Package: Could the functions presented be improved (user interface, output)? You're not required to test the package, but authors typically appreciate efforts to check their code.
+
+The review should be anonymous and returned to me by email in plain text, or as a pdf. 
+
+Please let me know if you are willing to take on this review. I would
+like to receive the review, if possible, by {{date}}.
+
+Regards,
+
+{{editor}}
