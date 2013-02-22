@@ -60,7 +60,7 @@ as.article <- function(id) {
 load_article <- function(path, quiet = FALSE) {
   fields <- c("ID", "Authors", "Title", "Editor", "Reviewers", "Status")
   dcf <- read.dcf(path, fields = fields, keep.white = fields)
-  stopifnot(nrow(dcf) == 1)
+  if (nrow(dcf) != 1) stop("DCF parsing error: ", path, call. = FALSE)
 
   # Remove field names that keep.white incorrectly preserves
   for(field in fields) {
