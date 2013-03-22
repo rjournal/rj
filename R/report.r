@@ -85,7 +85,7 @@ print.report <- function(x, ...) {
 order_status <- function(x) {
   x <- unique(x)
   first <- intersect(c("needs editor", "needs reviewers", "out for review"), x)
-  last <- intersect(c("accepted", "online", "complete"), x)
+  last <- intersect(c("accepted", "proofed", "online", "complete"), x)
   c(first, setdiff(x, c(first, last)), last)
 }
 
