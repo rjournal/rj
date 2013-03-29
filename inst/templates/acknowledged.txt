@@ -3,15 +3,15 @@ Subject: R journal submission {{id}}
 ---
 Dear {{name}},
 
-We are pleased to recieve your submission "{{title}}" to the R journal. It has been given id {{id}}.
+We are pleased to recieve your submission "{{title}}" to the R journal. It has been given id {{id}}; please use that in future correspondence.
 
-The process for submission proceeds as follows:
+The submission process proceeds as follows:
 
-* associate editor assigned (~1 week)
+* review by editorial board & assignment of associate editor (~1 week)
 * reviewers solicited (+1-2 weeks)
 * reviews recieved (+1 month)
 
-So you should expect to hear from us again within 2 months (at the latest).
+You should expect to hear from us again within 2 months (at the latest).
 
 Regards,
 
