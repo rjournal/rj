@@ -8,7 +8,8 @@ Maintainer: Hadley Wickham <h.wickham@gmail.com>
 License: MIT
 Imports:
     stringr,
-    httr
+    httr,
+    whisker
 Suggests:
     testthat
 Depends:
@@ -24,3 +25,5 @@ Collate:
     'report.r'
     'submissions.r'
     'articles.r'
+    'templates.r'
+    'email.r'
