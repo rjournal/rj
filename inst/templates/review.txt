@@ -1,6 +1,9 @@
 To: {{email}}
 Subject: Review for the R journal {{id}}
 ---
+TODO: change from address
+TODO: attach file
+
 Dear {{name}},
 
 Would you be interested in reviewing the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise.

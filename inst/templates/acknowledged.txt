@@ -2,6 +2,7 @@ To: {{email}}
 Subject: R journal submission {{id}}
 ---
 TODO: change from address
+
 Dear {{name}},
 
 We are pleased to recieve your submission "{{title}}" to the R journal. It has been given id {{id}}; please use that in future correspondence.
