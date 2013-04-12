@@ -9,9 +9,11 @@ License: MIT
 Imports:
     stringr,
     httr,
-    whisker
+    whisker,
+    downloader
 Suggests:
-    testthat
+    testthat,
+    rjson
 Depends:
     R (>= 2.15.1)
 Collate:
