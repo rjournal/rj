@@ -58,6 +58,8 @@ get_submission <- function(subm) {
   unzip(temp_home, exdir = dest, setTimes = TRUE)
   writeLines(toJSON(subm), file.path(dest, "submission.json"))
   write_description(dest, subm)
+
+  email_template(dest, "acknowledged")
 }
 
 write_description <- function(path, subm) {
@@ -65,31 +67,17 @@ write_description <- function(path, subm) {
 
   desc <- list(
     Title = subm$title,
-    Authors = paste(c(
-        paste0(subm$name, " <", subm$email, ">"),
-        authors),
-      collapse = ",\n"),
-    Editor = "",
-    Reviewers = "",
+    Authors = paste0("\n", paste(c(
+        paste0('"', subm$name, "\" <", subm$email, ">"),
+        paste0('"', authors, "'"),
+      collapse = ",\n  "))),
+    Editor = character(),
+    Reviewers = character(),
     Status = format(c(
-      status("Recieved", as.Date(subm$DateCreated)),
-      status("Acknowledged")
+      status("submitted", as.Date(subm$DateCreated)),
+      status("acknowledged")
     ))
   )
   write.dcf(desc, file.path(path, "DESCRIPTION"), keep.white = names(desc))
 
 }
-
-# Find new article id
-#
-# Assume existing forms (greater than x) are already processed
-#
-# For each new entry (after id 14):
-# http://www.wufoo.com/docs/api/v3/entries/get/
-#
-#  * Download json into submission.json
-#
-#  * Parse json & initialise DESCRIPTION
-#
-
-

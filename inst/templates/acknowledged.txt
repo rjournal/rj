@@ -1,6 +1,7 @@
 To: {{email}}
 Subject: R journal submission {{id}}
 ---
+TODO: change from address
 Dear {{name}},
 
 We are pleased to recieve your submission "{{title}}" to the R journal. It has been given id {{id}}; please use that in future correspondence.
@@ -8,8 +9,8 @@ We are pleased to recieve your submission "{{title}}" to the R journal. It has b
 The submission process proceeds as follows:
 
 * review by editorial board & assignment of associate editor (~1 week)
-* reviewers solicited (+1-2 weeks)
-* reviews recieved (+1 month)
+* reviewers solicited (~1-2 weeks)
+* reviews recieved (~1 month)
 
 You should expect to hear from us again within 2 months (at the latest).
 
