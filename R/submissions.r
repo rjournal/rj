@@ -64,16 +64,17 @@ get_submission <- function(subm) {
 }
 
 write_description <- function(path, subm) {
-  authors <- setdiff(str_trim(str_split(subm$authors, ",")[[1]]), subm$name)
+  authors <- setdiff(str_trim(str_split(subm$authors, ",")[[1]]),
+    c(subm$name, ""))
 
   desc <- list(
     Title = subm$title,
-    Authors = paste0("\n", paste(c(
+    Authors = paste0("\n", paste0(c(
         paste0('"', subm$name, "\" <", subm$email, ">"),
-        paste0('"', authors, "'"),
-      collapse = ",\n  "))),
-    Editor = character(),
-    Reviewers = character(),
+        if (length(authors) > 0) paste0('"', authors, "'")),
+      collapse = ",\n  ")),
+    Editor = "",
+    Reviewers = "",
     Status = format(c(
       status("submitted", as.Date(subm$DateCreated)),
       status("acknowledged")
