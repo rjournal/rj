@@ -45,6 +45,7 @@ fix_names <- c(
 )
 
 
+#' @importFrom downloader download
 get_submission <- function(subm) {
   id <- format(new_id())
   dest <- file.path("Submissions", id)
