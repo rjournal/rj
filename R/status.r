@@ -16,8 +16,8 @@ valid_status <- c(
   "minor revision",
   "accepted",
   "copy edited",
-  "proofed",
   "online",
+  "proofed",
   final_status
 )
 
