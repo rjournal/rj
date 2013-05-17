@@ -64,7 +64,7 @@ load_article <- function(path, quiet = FALSE) {
 
   # Remove field names that keep.white incorrectly preserves
   for(field in fields) {
-    dcf[, field] <- gsub(paste(field, ":", sep = ""), "", dcf[, field],
+    dcf[, field] <- gsub(paste(field, ": ", sep = ""), "", dcf[, field],
       fixed = TRUE)
   }
   # Convert missing values to empty strings

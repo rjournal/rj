@@ -71,7 +71,7 @@ write_description <- function(path, subm) {
     Title = subm$title,
     Authors = paste0("\n", paste0(c(
         paste0('"', subm$name, "\" <", subm$email, ">"),
-        if (length(authors) > 0) paste0('"', authors, "'")),
+        if (length(authors) > 0) paste0('"', authors, '"')),
       collapse = ",\n  ")),
     Editor = "",
     Reviewers = "",

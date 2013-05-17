@@ -10,7 +10,8 @@ parse_address_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
   if (empty(x)) return(address_list())
 
-  address_list(lapply(str_split(x, ",")[[1]], parse_address))
+  addresses <- str_trim(str_split(x, ",")[[1]])
+  address_list(lapply(addresses, parse_address))
 }
 
 address_list <- function(addresses = list()) {

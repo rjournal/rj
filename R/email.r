@@ -28,6 +28,7 @@ email_text <- function(text) {
 
 
 email_template <- function(article, template) {
+  article <- as.article(article)
   text <- render_template(article, template)
   email_text(text)
 }
