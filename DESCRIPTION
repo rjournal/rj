@@ -29,3 +29,4 @@ Collate:
     'articles.r'
     'templates.r'
     'email.r'
+    'publish.r'

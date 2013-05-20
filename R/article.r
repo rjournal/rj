@@ -58,7 +58,7 @@ as.article <- function(id) {
 }
 
 load_article <- function(path, quiet = FALSE) {
-  fields <- c("ID", "Authors", "Title", "Editor", "Reviewers", "Status")
+  fields <- c("ID", "Slug", "Authors", "Title", "Editor", "Reviewers", "Status")
   dcf <- read.dcf(path, fields = fields, keep.white = fields)
   if (nrow(dcf) != 1) stop("DCF parsing error: ", path, call. = FALSE)
 
@@ -79,10 +79,11 @@ load_article <- function(path, quiet = FALSE) {
 
 is.article <- function(x) inherits(x, "article")
 
-make_article <- function(id, authors = "", title = "", editor = "",
+make_article <- function(id, slug = "", authors = "", title = "", editor = "",
                          reviewers = "", status = "", path = "") {
   structure(list(
     id = parse_id(id),
+    slug = slug,
     path = path,
     authors = parse_address_list(authors),
     title = str_trim(title),
@@ -99,6 +100,7 @@ format.article <- function(x, ...) {
 
   paste(
     "Title: ", x$title, "\n",
+    if (!empty(x$slug)) paste0("Slug: ", x$slug, "\n"),
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
     "Reviewers:", if (!empty(reviewers)) "\n  ", reviewers, "\n",

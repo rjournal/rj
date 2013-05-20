@@ -8,6 +8,13 @@ active_articles <- function() {
   lapply(paths, as.article)
 }
 
+#' @rdname active_articles
+#' @export
+accepted_articles <- function() {
+  paths <- dir("Accepted", full.names = TRUE)
+  lapply(paths, as.article)
+}
+
 #' Generate a new id value.
 #'
 #' @export
