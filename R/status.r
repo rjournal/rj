@@ -35,13 +35,17 @@ status_list <- function(x = list()) {
   structure(list(status = x), class = "status_list")
 }
 
+#' @S3method length status_list
 length.status_list <- function(x) length(x$status)
+#' @S3method [[ status_list
 "[[.status_list" <- function(x, i) x$status[[i]]
 
+#' @S3method format status_list
 format.status_list <- function(x, ...) {
   statuses <- lapply(x$status, format)
   paste(statuses, collapse = ",\n  ")
 }
+#' @S3method print status_list
 print.status_list <- function(x, ...) cat(format(x), "\n")
 is.status_list <- function(x) inherits(x, "status_list")
 
@@ -92,6 +96,8 @@ status <- function(status, date = Sys.Date(), comments = "") {
 
 is.status <- function(x) inherits(x, "status")
 
+#' @S3method c status_list
+#' @S3method c status
 c.status <- c.status_list <- function(..., recursive = FALSE) {
   pieces <- list(...)
   statuses <- lapply(pieces, function(x) {
@@ -106,10 +112,12 @@ c.status <- c.status_list <- function(..., recursive = FALSE) {
   status_list(unlist(statuses, recursive = FALSE))
 }
 
+#' @S3method format status
 format.status <- function(x, ...) {
   paste(format(x$date), " ", x$status,
     if (!empty(x$comments)) paste(" [", x$comments, "]", sep = ""), sep = "")
 }
+#' @S3method print status
 print.status <- function(x, ...) cat(format(x), "\n")
 
 #' @importFrom utils adist

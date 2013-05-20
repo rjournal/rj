@@ -51,6 +51,7 @@ report_line <- function(x) {
   )
 }
 
+#' @S3method print report
 print.report <- function(x, ...) {
 
   cat("BY STATUS:\n")

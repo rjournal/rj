@@ -91,6 +91,7 @@ make_article <- function(id, authors = "", title = "", editor = "",
     status = parse_status_list(status)), class = "article")
 }
 
+#' @S3method format article
 format.article <- function(x, ...) {
   authors <- format(x$authors)
   reviewers <- format(x$reviewers)
@@ -116,12 +117,14 @@ save_article <- function(article, quiet = FALSE) {
 }
 
 
+#' @S3method print article
 print.article <- function(x, ...) cat(format(x), "\n")
 
 unparsed <- function(...) {
   structure(list(...), class = c("unparsed", "article"))
 }
 
+#' @S3method format unparsed
 format.unparsed <- function(x, ...) {
   paste(
     "ID:", x$id, "\n",

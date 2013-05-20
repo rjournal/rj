@@ -19,10 +19,12 @@ address_list <- function(addresses = list()) {
   structure(addresses, class = "address_list")
 }
 
+#' @S3method format address_list
 format.address_list <- function(x, ...) {
   addresses <- vapply(x, format, character(1))
   paste(addresses, collapse = ",\n  ")
 }
+#' @S3method print address_list
 print.address_list <- function(x, ...) cat(format(x), "\n")
 
 #' An S3 class to represent email addresses.
@@ -43,6 +45,7 @@ address <- function(email = NULL, name = NULL) {
   structure(list(name = name, email = email), class = "address")
 }
 
+#' @S3method format address
 format.address <- function(x, ...) {
   name <- if (!is.null(x$name))    paste('"', x$name, '"', sep = "")
   email <- if (!is.null(x$email))  paste("<", x$email, ">", sep = "")
@@ -50,6 +53,7 @@ format.address <- function(x, ...) {
   paste(c(name, email), collapse = " ")
 }
 
+#' @S3method print address
 print.address <- function(x, ...) cat(format(x), "\n")
 
 #' @rdname address

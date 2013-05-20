@@ -1,5 +1,7 @@
 empty <- function(x) UseMethod("empty")
+#' @S3method empty character
 empty.character <- function(x) str_length(x) == 0
+#' @S3method empty address_list
 empty.address_list <- function(x) length(x) == 0
 
 str_trunc <- function(x, width = getOption("width")) {
