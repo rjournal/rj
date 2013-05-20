@@ -18,7 +18,7 @@ publish <- function(article, home = getwd()) {
 
   message("Publishing ", format(article$id))
   # Build latex and copy to new home
-  build_latex(article)
+  build_latex(article, share_path)
   slug <- article$slug %||% make_slug(article$authors)
 
   from <- file.path(article$path, "RJwrapper.pdf")
@@ -34,7 +34,7 @@ publish <- function(article, home = getwd()) {
   invisible(TRUE)
 }
 
-build_latex <- function(article) {
+build_latex <- function(article, share_path) {
   article <- as.article(article)
 
   # Check RJournal.sty does not exist
@@ -57,5 +57,8 @@ make_slug <- function(authors) {
   if (length(family) > 3) {
     family <- c(family[1:3], "et-al")
   }
+
+  family <- iconv(family, to = "ASCII//translit")
+  family <- gsub("[^A-Za-z]", "", family)
   paste0(family, collapse = "-")
 }
