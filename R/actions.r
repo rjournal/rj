@@ -26,10 +26,12 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
 #' @export
 reject <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
-  message("Rejecting ", article$id)
+  message("Rejecting ", format(article$id))
   update_status(article, "rejected", comments = comments, date = date)
 
   file.rename(article$path, file.path("Rejected", basename(article$path)))
+
+  email_template(article, "reject-editorial")
   invisible()
 }
 
@@ -37,7 +39,7 @@ reject <- function(article, comments = "", date = Sys.Date()) {
 #' @export
 accept <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
-  message("Accepting ", article$id)
+  message("Accepting ", format(article$id))
   update_status(article, "accepted", comments = comments, date = date)
 
   file.rename(article$path, file.path("Accepted", basename(article$path)))
@@ -48,7 +50,7 @@ accept <- function(article, comments = "", date = Sys.Date()) {
 #' @export
 withdraw <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
-  message("Withdrawing ", article$id)
+  message("Withdrawing ", format(article$id))
   update_status(article, "withdrawn", comments = comments, date = date)
 
   file.rename(article$path, file.path("Rejected", basename(article$path)))
