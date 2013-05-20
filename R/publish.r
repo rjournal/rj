@@ -49,6 +49,22 @@ build_latex <- function(article, share_path) {
   )
 }
 
+#' @importFrom yaml as.yaml
+accepted_metadata <- function() {
+  articles <- accepted_articles()
+  out <- lapply(articles, function(x) {
+    names <- vapply(x$authors, function(x) {
+      format(as.person(x), include = c("given", "family"))[[1]]
+    }, FUN.VALUE = character(1))
+
+    list(
+      title = x$title,
+      slug = x$slug,
+      author = names
+    )
+  })
+  as.yaml(out)
+}
 
 make_slug <- function(authors) {
   names <- unlist(lapply(authors, "[[", "name"))

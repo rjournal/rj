@@ -13,7 +13,8 @@ Imports:
     downloader
 Suggests:
     testthat,
-    rjson
+    rjson,
+    yaml
 Depends:
     R (>= 2.15.1)
 Collate:
