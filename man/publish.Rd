@@ -11,6 +11,8 @@
 \dontrun{
 arts <- accepted_articles()
 for(art in arts) publish(art)
+for(art in arts) bundle(art, "~/desktop")
+for(art in arts) email_template(art, "copy-edit")
 }
 }
 

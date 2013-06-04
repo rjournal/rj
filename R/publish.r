@@ -5,6 +5,8 @@
 #' \dontrun{
 #' arts <- accepted_articles()
 #' for(art in arts) publish(art)
+#' for(art in arts) bundle(art, "~/desktop")
+#' for(art in arts) email_template(art, "copy-edit")
 #' }
 publish <- function(article, home = getwd()) {
   article <- as.article(article)
@@ -23,7 +25,7 @@ publish <- function(article, home = getwd()) {
 
   from <- file.path(article$path, "RJwrapper.pdf")
   to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
-  file.copy(from, to)
+  file.copy(from, to, overwrite = TRUE)
   message("Creating ", basename(to))
 
   article$slug <- slug
@@ -78,3 +80,21 @@ make_slug <- function(authors) {
   family <- gsub("[^A-Za-z]", "", family)
   paste0(family, collapse = "-")
 }
+
+bundle <- function(article, dest_path) {
+  article <- as.article(article)
+  dest <- file.path(dest_path, paste0(format(article$id), ".zip"))
+
+  # Check confidential files are present, but don't include in zip file
+  files <- dir(article$path)
+  conf <- c("DESCRIPTION", "correspondence")
+
+  if (length(intersect(files, conf)) != 2) {
+    stop(paste(setdiff(conf, files), collapse = ", "), "not found in ", article$path)
+  }
+  files <- setdiff(files, conf)
+
+  # Create zip file
+  in_dir(article$path, zip(dest, files))
+}
+

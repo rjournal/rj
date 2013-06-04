@@ -9,4 +9,4 @@ The editorial board has discussed your submission and ...
 
 Regards,
 
-{{editor}}
+{{me}}

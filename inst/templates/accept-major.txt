@@ -8,9 +8,8 @@ Dear {{name}},
 
 We are pleased to accept your paper "{{title}}" subject to the major revisions described below.
 
-
-Please acknowledge receipt of this email and confirm you intend to submit a revision. We would appreciate a revised verson and point-by-point response to the reviewers comments within 2 months.
+Please acknowledge receipt of this email and confirm you intend to submit a revision. We would appreciate a revised verson and point-by-point response to the reviewers comments within 2 months.  We recommend following the strategy described at http://matt.might.net/articles/peer-review-rebuttals/.
 
 Regards,
 
-{{editor}}
+{{me}}

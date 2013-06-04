@@ -11,11 +11,20 @@ as.data <- function(x) {
   data <- lapply(x, format)
   data$name <- x$authors[[1]]$name
   data$email <- x$authors[[1]]$email
-  data$editor <- Sys.getenv("RJ_NAME",
+  if (!empty(x$editor)) data$editor <- editors[[x$editor]]
+  data$me <- Sys.getenv("RJ_NAME",
     unset = "Use RJ_NAME envname to set your name")
 
   data
 }
+
+editors <- c(
+  "Hadley Wickham" = "h.wickham@gmail.com",
+  "Heather Turner" = "ht@heatherturner.net",
+  "Martyn Plummer" = "Martyn.Plummer@r-project.org",
+  "Deepayan Sarkar" = "deepayan.sarkar@r-project.org",
+  "Bettina Grün" = "Bettina.Gruen@jku.at"
+)
 
 #' @importFrom whisker whisker.render
 render_template <- function(article, template) {

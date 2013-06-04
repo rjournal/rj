@@ -46,6 +46,7 @@ fix_names <- c(
 
 
 #' @importFrom downloader download
+#' @importFrom rjson toJSON
 get_submission <- function(subm) {
   id <- format(new_id())
   dest <- file.path("Submissions", id)

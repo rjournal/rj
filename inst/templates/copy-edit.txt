@@ -1,0 +1,27 @@
+To: {{email}}
+CC: {{editor}}
+Subject: R journal article scheduled for publication {{id}}
+---
+Dear {{name}},
+
+Your article is scheduled to be published in the next volume of the R journal. However, since you have submitted your article, we have tweaked a number of aspects of the submission process and the RJournal style file and we need a final round of proof reading. You can find an updated version of the author guidelines at http://rjournal.github.io/share/author-guide.pdf. In particular, please make sure that your submission:
+
+* Includes a .bib file
+
+* Looks good in the new one-column style. You may need to switch figures from columns to rows, and please note the presence of the widefigure and widetable environments.
+
+* Does not include any large pdf files that take a long time to render.
+
+Feel free to fix any either small errors you spot at this time, and if you haven't already, work through the author checklist attached to this email.
+
+By Friday June 14, please either:
+
+* Acknowledge that the existing article looks ok, you're happy for it to be published, and you've worked through the attached checklist.
+
+* Return a modified tex file, along with a bulleted list of the changes you've made.
+
+Please feel free to contact me if you have any questions.
+
+Regards,
+
+Hadley

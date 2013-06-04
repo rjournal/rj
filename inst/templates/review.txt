@@ -25,4 +25,4 @@ like to receive the review, if possible, by {{date}}.
 
 Regards,
 
-{{editor}}
+{{me}}
