@@ -31,3 +31,4 @@ Collate:
     'templates.r'
     'email.r'
     'publish.r'
+    'postmark.r'

@@ -21,7 +21,12 @@ publish <- function(article, home = getwd()) {
   message("Publishing ", format(article$id))
   # Build latex and copy to new home
   build_latex(article, share_path)
-  slug <- article$slug %||% make_slug(article$authors)
+  if (is.null(article$slug)) {
+    names <- unlist(lapply(authors, "[[", "name"))
+    slug <- make_slug(names)
+  } else {
+    slug <- article$slug
+  }
 
   from <- file.path(article$path, "RJwrapper.pdf")
   to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
@@ -68,8 +73,8 @@ accepted_metadata <- function() {
   as.yaml(out)
 }
 
-make_slug <- function(authors) {
-  names <- unlist(lapply(authors, "[[", "name"))
+#' @export
+make_slug <- function(names) {
   people <- as.person(names)
   family <- unlist(lapply(people, function(x) x[[1]]$family))
   if (length(family) > 3) {

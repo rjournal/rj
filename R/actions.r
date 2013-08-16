@@ -43,6 +43,8 @@ accept <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "accepted", comments = comments, date = date)
 
   file.rename(article$path, file.path("Accepted", basename(article$path)))
+  email_template(article, "accept-final")
+
   invisible()
 }
 

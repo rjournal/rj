@@ -16,7 +16,7 @@ The structure of the review is up to you, but is typically around a page in leng
 
 * Article: Is anything unclear? Is anything missing (e.g. references, key features of package)? Are the examples helpful? IS there sufficient background (including alternative approaches in R)? Is the approach statistically sound?
 
-* Package: Could the functions presented be improved (user interface, output)? You're not required to test the package, but authors typically appreciate efforts to check their code.
+* Package: Could the functions presented be improved (user interface, output)? You're not required to test the package, but authors typically appreciate efforts to check their code.  You may want to review http://carlboettiger.info/2013/06/13/what-I-look-for-in-software-papers.html for some useful things to review.
 
 The review should be anonymous and returned to me by email in plain text, or as a pdf. 
 
