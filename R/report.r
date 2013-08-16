@@ -22,12 +22,25 @@ summary_status <- function(x) {
   if (status %in% final_status) {
     "complete"
   } else if (empty(x$editor)) {
-    "needs editor"
+    "needs editor (editor-in-chief)"
   } else if (empty(x$reviewers)) {
-    "needs reviewers"
+    "needs reviewers (editor)"
   } else {
-    status
+    todo(status)
   }
+}
+
+todo <- function(status) {
+  switch(status,
+    "major revision" = "waiting (author)",
+    "minor revision" = "waiting (author)",
+    "out for review" = "waiting (reviewers)",
+    "updated" = "waiting (editor)",
+    "accepted" = "needs proofing (author)",
+    "proofed" = "needs online (editor-in-chief)",
+    "online" = "needs copy-editing (editor)",
+    "copy-edited" = "ready for publication (editor-in-chief)"
+  )
 }
 
 report_line <- function(x) {
