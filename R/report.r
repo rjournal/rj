@@ -98,9 +98,10 @@ print.report <- function(x, ...) {
 
 order_status <- function(x) {
   x <- unique(x)
-  first <- intersect(c("needs editor", "needs reviewers", "out for review"), x)
-  last <- intersect(c("accepted", "copy edited", "online", "proofed", "complete"), x)
-  c(first, setdiff(x, c(first, last)), last)
+  eic <- x[grepl("editor-in-chief", x)]
+  editors <- setdiff(x[grepl("editor", x)], eic)
+  others <- setdiff(x, c(eic, editors)) 
+  c(eic, editors, others)
 }
 
 # Takes a summary status as input, and returns number of days before it's due

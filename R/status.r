@@ -21,6 +21,7 @@ valid_status <- c(
   final_status
 )
 
+
 parse_status_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
   if (empty(str_trim(x))) return(status_list())
