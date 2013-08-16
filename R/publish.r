@@ -7,6 +7,7 @@
 #' for(art in arts) publish(art)
 #' for(art in arts) bundle(art, "~/desktop")
 #' for(art in arts) email_template(art, "copy-edit")
+#' online_metadata()
 #' }
 publish <- function(article, home = getwd()) {
   article <- as.article(article)
@@ -15,14 +16,14 @@ publish <- function(article, home = getwd()) {
   if (basename(home) != "articles") {
     stop("Publish should be run from articles directory", call. = FALSE)
   }
-  web_path <- normalizePath("../web2", mustWork = TRUE)
+  web_path <- normalizePath("../web", mustWork = TRUE)
   share_path <- normalizePath("../share", mustWork = TRUE)
 
   message("Publishing ", format(article$id))
   # Build latex and copy to new home
   build_latex(article, share_path)
-  if (is.null(article$slug)) {
-    names <- unlist(lapply(authors, "[[", "name"))
+  if (empty(article$slug)) {
+    names <- unlist(lapply(article$authors, "[[", "name"))
     slug <- make_slug(names)
   } else {
     slug <- article$slug
@@ -57,8 +58,10 @@ build_latex <- function(article, share_path) {
 }
 
 #' @importFrom yaml as.yaml
-accepted_metadata <- function() {
+#' @export
+online_metadata <- function() {
   articles <- accepted_articles()
+  articles <- Filter(function(x) !empty(x$slug), articles)
   out <- lapply(articles, function(x) {
     names <- vapply(x$authors, function(x) {
       format(as.person(x), include = c("given", "family"))[[1]]
@@ -70,8 +73,11 @@ accepted_metadata <- function() {
       author = names
     )
   })
-  as.yaml(out)
+  structure(as.yaml(out), class = "catout")
 }
+
+#' @S3method print catout
+print.catout <- function(x) cat(x, "\n", sep = "")
 
 #' @export
 make_slug <- function(names) {
@@ -83,7 +89,7 @@ make_slug <- function(names) {
 
   family <- iconv(family, to = "ASCII//translit")
   family <- gsub("[^A-Za-z]", "", family)
-  paste0(family, collapse = "-")
+  tolower(paste0(family, collapse = "-"))
 }
 
 bundle <- function(article, dest_path) {
