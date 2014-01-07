@@ -5,7 +5,7 @@
 as.article(id)
 }
 \arguments{
-  \item{a}{path to a DESCRIPTION, a path to a directory
+  \item{id}{a path to a DESCRIPTION, a path to a directory
   containing DESCRIPTION, or a article name, found in a
   sub-directory rejected, accepted or submissions}
 }

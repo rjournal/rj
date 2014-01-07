@@ -1,14 +1,11 @@
-#' Publish an article to online first
+#' Publish an article to online first.
+#'
+#' After running this, you'll need to update both the article and 
+#' the web repository.
 #'
 #' @importFrom tools texi2pdf
-#' @examples
-#' \dontrun{
-#' arts <- accepted_articles()
-#' for(art in arts) publish(art)
-#' for(art in arts) bundle(art, "~/desktop")
-#' for(art in arts) email_template(art, "copy-edit")
-#' online_metadata()
-#' }
+#' @param article article id
+#' @param home Location of the articles directory
 publish <- function(article, home = getwd()) {
   article <- as.article(article)
 
@@ -57,6 +54,8 @@ build_latex <- function(article, share_path) {
   )
 }
 
+#' Generate metadata needed for website.
+#' 
 #' @importFrom yaml as.yaml
 #' @export
 online_metadata <- function() {
@@ -76,9 +75,8 @@ online_metadata <- function() {
 }
 
 #' @S3method print catout
-print.catout <- function(x) cat(x, "\n", sep = "")
+print.catout <- function(x, ...) cat(x, "\n", sep = "")
 
-#' @export
 make_slug <- function(names) {
   people <- as.person(names)
   family <- unlist(lapply(people, function(x) x[[1]]$family))

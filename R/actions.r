@@ -9,7 +9,7 @@
 #' @param article as \code{\link{article}} object, path, or ID. See
 #'   \code{\link{as.article}} for more details about how article is located.
 #' @param status new status to add
-#' @param comment any additional comments
+#' @param comments any additional comments
 #' @param date date of status update. If omitted defaults to today.
 update_status <- function(article, status, comments = "", date = Sys.Date()) {
   article <- as.article(article)

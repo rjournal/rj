@@ -20,7 +20,7 @@ report_line <- function(x) {
   last_date <- last_status(x)$date
   
   days_taken <- difftime(Sys.Date(), last_date, "days")
-  stars <- sum(days_taken > deadlines(sstatus))
+  stars <- sum(days_taken > deadlines(todo))
   
   data.frame(
     status = todo,
@@ -55,8 +55,8 @@ print.report <- function(x, ...) {
   }
 
   cat("BY EDITOR:\n")
-  actionable <- subset(x, ed != "" &
-    !(status %in% c("accepted", "online", "complete")))
+  actionable <- x[x$ed != "" &
+    !(x$status %in% c("accepted", "online", "complete")), ]
   parts <- split(actionable, actionable$ed)
   for (nm in names(parts)) {
     part <- parts[[nm]]

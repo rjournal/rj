@@ -2,7 +2,7 @@
 #'
 #' EBNF at \url{http://tools.ietf.org/html/rfc2822#section-3.4}
 #'
-#' @param string to parse
+#' @param x string to parse
 #' @return a list of \code{\link{address}}es
 #' @examples
 #' parse_address_list("<a@@b.com> Alison, <c@@d.com> Colin")
@@ -35,8 +35,6 @@ print.address_list <- function(x, ...) cat(format(x), "\n")
 #' @examples
 #' address("h.wickham@@gmail.com")
 #' address("h.wickham@@gmail.com", "Hadley Wickham")
-#' parse_address("Hadley Wickham <h.wickham@@gmail.com>")
-#' parse_address("<h.wickham@@gmail.com>")
 address <- function(email = NULL, name = NULL) {
   if (is.null(email) && is.null(name)) {
     stop("Address must have name or email", call. = FALSE)
@@ -45,7 +43,7 @@ address <- function(email = NULL, name = NULL) {
   structure(list(name = name, email = email), class = "address")
 }
 
-#' @S3method format address
+#' @export
 format.address <- function(x, ...) {
   name <- if (!is.null(x$name))    paste('"', x$name, '"', sep = "")
   email <- if (!is.null(x$email))  paste("<", x$email, ">", sep = "")
@@ -53,10 +51,9 @@ format.address <- function(x, ...) {
   paste(c(name, email), collapse = " ")
 }
 
-#' @S3method print address
+#' @export
 print.address <- function(x, ...) cat(format(x), "\n")
 
-#' @rdname address
 parse_address <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
 

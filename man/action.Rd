@@ -20,7 +20,7 @@ withdraw(article, comments = "", date = Sys.Date())
 
   \item{status}{new status to add}
 
-  \item{comment}{any additional comments}
+  \item{comments}{any additional comments}
 
   \item{date}{date of status update. If omitted defaults to
   today.}

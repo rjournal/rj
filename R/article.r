@@ -6,6 +6,7 @@
 #'
 #' @param ... Named arguments giving the components of an article:
 #'   id, authors, title, editor, reviewers, status
+#' @param quiet if \code{TRUE} suppresses failure messages.
 #' @export
 article <- function(..., quiet = FALSE) {
   tryCatch(make_article(...),
@@ -23,9 +24,9 @@ article <- function(..., quiet = FALSE) {
 
 #' Convert input into an article.
 #'
-#' @param a path to a DESCRIPTION, a path to a directory containing DESCRIPTION,
-#'   or a article name, found in a sub-directory rejected, accepted or
-#'   submissions
+#' @param id a path to a DESCRIPTION, a path to a directory containing 
+#'   DESCRIPTION, or a article name, found in a sub-directory rejected, 
+#'   accepted or submissions
 #' @export
 #' @examples
 #' # Usually the best way to use is to have your working directory set to the
@@ -140,14 +141,4 @@ format.unparsed <- function(x, ...) {
     "Status:", x$status,
     sep = ""
   )
-}
-
-#' Generate a new article.
-#'
-#' @param index parsed index file
-new_article <- function(index) {
-  stopifnot(is.index(index))
-
-  id <- new_id(index)
-  make_article(id = id)
 }

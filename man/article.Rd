@@ -7,6 +7,8 @@ article(..., quiet = FALSE)
 \arguments{
   \item{...}{Named arguments giving the components of an
   article: id, authors, title, editor, reviewers, status}
+
+  \item{quiet}{if \code{TRUE} suppresses failure messages.}
 }
 \description{
 This function will always succeed: if the article is not

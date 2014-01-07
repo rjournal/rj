@@ -5,7 +5,7 @@
 parse_address_list(x)
 }
 \arguments{
-  \item{string}{to parse}
+  \item{x}{string to parse}
 }
 \value{
 a list of \code{\link{address}}es

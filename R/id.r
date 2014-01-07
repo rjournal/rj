@@ -1,4 +1,3 @@
-#' Validate ID
 parse_id <- function(x) {
   if (is.id(x)) return(x)
 
