@@ -1,5 +1,9 @@
 #' Update the status of an article.
 #'
+#' \code{reject}, \code{accept} and \code{withdraw} update the status,
+#' move the file to the correct directory and draft an email from a 
+#' template of the corresponding name.
+#'
 #' @rdname action
 #' @export
 #' @param article as \code{\link{article}} object, path, or ID. See
@@ -30,8 +34,8 @@ reject <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "rejected", comments = comments, date = date)
 
   file.rename(article$path, file.path("Rejected", basename(article$path)))
+  email_template(article, "reject")
 
-  email_template(article, "reject-editorial")
   invisible()
 }
 
@@ -43,7 +47,7 @@ accept <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "accepted", comments = comments, date = date)
 
   file.rename(article$path, file.path("Accepted", basename(article$path)))
-  email_template(article, "accept-final")
+  email_template(article, "accept")
 
   invisible()
 }
@@ -56,5 +60,7 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "withdrawn", comments = comments, date = date)
 
   file.rename(article$path, file.path("Rejected", basename(article$path)))
+  email_template(article, "widthdraw")
+
   invisible()
 }

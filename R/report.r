@@ -1,5 +1,7 @@
 #' Generate a status report.
 #'
+#' This should be run weekly.
+#'
 #' @param articles list of articles to generate report for. Defaults to
 #'   all active reports in \file{Submissions/}.
 #' @export
@@ -10,49 +12,16 @@ report <- function(articles = active_articles()) {
   structure(rpt, class = c("report", "data.frame"))
 }
 
-last_status <- function(x) {
-  stopifnot(is.article(x))
-  x$status[[length(x$status)]]
-}
-
-summary_status <- function(x) {
-  stopifnot(is.article(x))
-
-  status <- last_status(x)$status
-  if (status %in% final_status) {
-    "complete"
-  } else if (empty(x$editor)) {
-    "needs editor (editor-in-chief)"
-  } else if (empty(x$reviewers)) {
-    "needs reviewers (editor)"
-  } else {
-    todo(status)
-  }
-}
-
-todo <- function(status) {
-  switch(status,
-    "major revision" = "waiting (author)",
-    "minor revision" = "waiting (author)",
-    "out for review" = "waiting (reviewers)",
-    "updated" = "waiting (editor)",
-    "accepted" = "needs proofing (author)",
-    "proofed" = "needs online (editor-in-chief)",
-    "online" = "needs copy-editing (editor)",
-    "copy-edited" = "ready for publication (editor-in-chief)"
-  )
-}
-
 report_line <- function(x) {
   stopifnot(is.article(x))
-
+  
   sstatus <- summary_status(x)
   status <- last_status(x)
   last_date <- last_status(x)$date
-
+  
   days_taken <- difftime(Sys.Date(), last_date, "days")
   stars <- sum(days_taken > deadlines(sstatus))
-
+  
   data.frame(
     status = sstatus,
     ed = editor_abbr(x$editor),
@@ -64,7 +33,43 @@ report_line <- function(x) {
   )
 }
 
-#' @S3method print report
+last_status <- function(x) {
+  stopifnot(is.article(x))
+  x$status[[length(x$status)]]
+}
+
+summary_status <- function(x) {
+  stopifnot(is.article(x))
+
+  status <- last_status(x)$status
+  if (empty(x$editor)) {
+    "needs editor (editor-in-chief)"
+  } else if (empty(x$reviewers)) {
+    "needs reviewers (editor)"
+  } else {
+    switch(status,
+      "major revision" = "waiting (author)",
+      "minor revision" = "waiting (author)",
+      "out for review" = "waiting (reviewers)",
+      "updated" = "waiting (editor)",
+      
+      "reject and resubmit" = "waiting (author)",
+      "published" = "needs removal (editor)",
+      "withdrawn" = "needs removal (editor)",
+      "rejected" = "needs removal (editor)",
+      
+      "accepted" = "waiting (author)",
+      "style checked" = "needs online (editor-in-chief)",
+      "online" = "needs copy-editing (editor)",
+      "copy edited" = "waiting (author)",
+      "proofed" = "ready for publication (editor-in-chief)",
+      
+      stop("Unknown status: ", status)
+    )  
+  }
+}
+
+#' @export
 print.report <- function(x, ...) {
 
   cat("BY STATUS:\n")
@@ -110,6 +115,7 @@ deadlines <- function(sstatus) {
     return(c(Inf, Inf))
   }
 
+  # > 1st = *; > 2nd = **
   special <- list(
     "needs editor" = c(7L, 14L),
     "needs reviewers" = c(7L, 14L),

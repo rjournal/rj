@@ -1,0 +1,20 @@
+To: {{email}}
+CC: {{editor}}
+Subject: Subject: RJ {{id}}: accepted
+---
+Dear {{name}},
+
+Congratulations, your submission to the R journal is now accepted. Next, please:
+
+* Please double check that you're using the most recent version of the style 
+  file and wrapper available http://journal.r-project.org/submissions.html
+  and that the article compiles errors.
+
+* Please proofread your article carefully according to the checklist at
+  http://journal.r-project.org/share/proofreading-checklist.pdf
+
+Once you've done that, please respond to this email with any changes. I'll then make the article available in the online preview, and it will appear in the next issue of the journal. Prior to publication, another editor will also take a look at your paper and perform minor copy-editing; we'll contact you if any major changes are made.
+
+Regards,
+
+Hadley

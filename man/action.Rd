@@ -5,14 +5,13 @@
 \alias{withdraw}
 \title{Update the status of an article.}
 \usage{
-  update_status(article, status, comments = "",
-    date = Sys.Date())
+update_status(article, status, comments = "", date = Sys.Date())
 
-  reject(article, comments = "", date = Sys.Date())
+reject(article, comments = "", date = Sys.Date())
 
-  accept(article, comments = "", date = Sys.Date())
+accept(article, comments = "", date = Sys.Date())
 
-  withdraw(article, comments = "", date = Sys.Date())
+withdraw(article, comments = "", date = Sys.Date())
 }
 \arguments{
   \item{article}{as \code{\link{article}} object, path, or
@@ -27,6 +26,8 @@
   today.}
 }
 \description{
-  Update the status of an article.
+\code{reject}, \code{accept} and \code{withdraw} update the
+status, move the file to the correct directory and draft an
+email from a template of the corresponding name.
 }
 

@@ -3,9 +3,9 @@
 \alias{parse_address}
 \title{An S3 class to represent email addresses.}
 \usage{
-  address(email = NULL, name = NULL)
+address(email = NULL, name = NULL)
 
-  parse_address(x)
+parse_address(x)
 }
 \arguments{
   \item{email}{email address}
@@ -13,7 +13,7 @@
   \item{name}{display name, optional}
 }
 \description{
-  An S3 class to represent email addresses.
+An S3 class to represent email addresses.
 }
 \examples{
 address("h.wickham@gmail.com")

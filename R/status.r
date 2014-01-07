@@ -18,6 +18,7 @@ valid_status <- c(
   "copy edited",
   "online",
   "proofed",
+  "style checked",
   final_status
 )
 

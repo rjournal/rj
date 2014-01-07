@@ -53,7 +53,7 @@ get_submission <- function(subm) {
 
   message("Downloading submission ", subm$EntryId, " to ", id)
   temp_home <- file.path(tempdir(), paste0(id, ".zip"))
-  download(subm$zip_url, temp_home, quiet = TRUE)
+  try(download(subm$zip_url, temp_home, quiet = TRUE))
   on.exit(unlink(temp_home))
 
   message("Unzipping and creating DESCRIPTION")

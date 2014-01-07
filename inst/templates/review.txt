@@ -1,27 +1,19 @@
 To: {{email}}
 Subject: Review for the R journal {{id}}
 ---
-TODO: change from address
-TODO: attach file
-
 Dear {{name}},
 
-Would you be interested in reviewing the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise.
+Would you be interested in reviewing the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise. The structure of the review is up to you, but it's usually about a page long and should include:
 
-The structure of the review is up to you, but is typically around a page in length and will include comments on the following topics:
+* Overall recommendation: Accept with minor revisions (you won't see it again), accept with major revisions (you'll re-review the revisions), or reject.
 
-* Overall recommendation: Accept with minor revisions (you won't see it again), accept with major revisions (you'll be asked to review the revisions), or rejected.
+* Overview: Is the article important to R the community? Is the approach sensible? Are technology and methods up-to-date?
 
-* Overview: Is this article of importance to R community? Have the authors taken a sensible approach? Are technology and methods up-to-date?
+* Article: Is anything unclear? Is anything missing? Are the examples helpful? Is there sufficient background, including alternative approaches in R?
 
-* Article: Is anything unclear? Is anything missing (e.g. references, key features of package)? Are the examples helpful? IS there sufficient background (including alternative approaches in R)? Is the approach statistically sound?
+* Package: Could the functions presented be improved? Some ideas at http://bit.ly/1aYwkp3.
 
-* Package: Could the functions presented be improved (user interface, output)? You're not required to test the package, but authors typically appreciate efforts to check their code.  You may want to review http://carlboettiger.info/2013/06/13/what-I-look-for-in-software-papers.html for some useful things to review.
-
-The review should be anonymous and returned to me by email in plain text, or as a pdf. 
-
-Please let me know if you are willing to take on this review. I would
-like to receive the review, if possible, by {{date}}.
+Reviews are usually anonymous and should be returned by email. Please let me know if you are willing to take on this review. I would like to receive the review, if possible, by {{date}}.
 
 Regards,
 

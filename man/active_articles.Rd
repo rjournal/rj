@@ -3,11 +3,11 @@
 \alias{active_articles}
 \title{Return a list of all active articles}
 \usage{
-  active_articles()
+active_articles()
 
-  accepted_articles()
+accepted_articles()
 }
 \description{
-  Looks in \file{Submissions/}.
+Looks in \file{Submissions/}.
 }
 

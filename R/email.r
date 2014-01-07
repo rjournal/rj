@@ -2,7 +2,7 @@
 email_text <- function(text) {
   stopifnot(is.character(text))
   text <- paste(text, collapse = "\n")
-
+  
   pieces <- str_split_fixed(text, "-{3, }", n = 2)[1, ]
   stopifnot(is.character(pieces), length(pieces) == 2)
 
@@ -22,7 +22,7 @@ email_text <- function(text) {
 
   url <- paste0("mailto:", to, "?",
     paste0(names(fields), "=", unlist(fields), collapse = "&"))
-
+  
   browseURL(url)
 }
 

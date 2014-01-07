@@ -1,0 +1,11 @@
+To: {{email}}
+CC: {{editor}}
+Subject: Subject: RJ {{id}}: Withdrawn
+---
+Dear {{name}},
+
+This email is to acknowledge the withdrawal of your article, "{{title}}", from the R journal.
+
+Regards,
+
+Hadley

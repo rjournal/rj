@@ -17,18 +17,3 @@ Suggests:
     yaml
 Depends:
     R (>= 2.15.1)
-Collate:
-    'article.r'
-    'rfc822.r'
-    'rj.r'
-    'id.r'
-    'status.r'
-    'utils.r'
-    'actions.r'
-    'report.r'
-    'submissions.r'
-    'articles.r'
-    'templates.r'
-    'email.r'
-    'publish.r'
-    'postmark.r'

@@ -1,0 +1,15 @@
+To: {{email}}
+CC: {{editor}}
+Subject: RJ {{id}}: Online
+---
+TODO: change from address
+
+Dear {{name}},
+
+I have just published your article to the online first section of the R journal website: it should be available from
+http://journal.r-project.org/archive/accepted/ in the next few hours.
+
+Regards,
+
+{{me}}
+

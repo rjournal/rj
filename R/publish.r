@@ -62,7 +62,7 @@ build_latex <- function(article, share_path) {
 online_metadata <- function() {
   articles <- accepted_articles()
   articles <- Filter(function(x) !empty(x$slug), articles)
-  out <- lapply(articles, function(x) {
+  lapply(articles, function(x) {
     names <- vapply(x$authors, function(x) {
       format(as.person(x), include = c("given", "family"))[[1]]
     }, FUN.VALUE = character(1))
@@ -73,7 +73,6 @@ online_metadata <- function() {
       author = names
     )
   })
-  structure(as.yaml(out), class = "catout")
 }
 
 #' @S3method print catout

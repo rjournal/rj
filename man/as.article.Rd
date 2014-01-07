@@ -2,7 +2,7 @@
 \alias{as.article}
 \title{Convert input into an article.}
 \usage{
-  as.article(id)
+as.article(id)
 }
 \arguments{
   \item{a}{path to a DESCRIPTION, a path to a directory
@@ -10,7 +10,7 @@
   sub-directory rejected, accepted or submissions}
 }
 \description{
-  Convert input into an article.
+Convert input into an article.
 }
 \examples{
 # Usually the best way to use is to have your working directory set to the
