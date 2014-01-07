@@ -1,6 +1,11 @@
-#' Return a list of all active articles
+#' List articles.
 #'
-#' Looks in \file{Submissions/}.
+#' List all articles in common directories.
+#'
+#' \itemize{
+#'  \item \code{active_articles}: \file{Submissions/}, \file{Accepted/}
+#'  \item \code{accepted_articles}: \file{Accepted/}
+#' }
 #' @export
 active_articles <- function() {
   base <- c("Submissions", "Accepted")
@@ -16,6 +21,9 @@ accepted_articles <- function() {
 }
 
 #' Generate a new id value.
+#'
+#' Inspects submissions/, accepted/ and rejected to figure out which
+#' id is next in sequence.
 #'
 #' @export
 new_id <- function() {
