@@ -33,24 +33,7 @@ Most of these fields are self-explanatory, apart from the `Status` field, which 
 * If editor field is blank, then status is "Needs editor"
 * If reviewers field is blank, then status is "Needs reviewers"
 
-Otherwise we have the following possibilities
-
-* Initial:
-  * received
-  * acknowledged
-
-* In progress:
-  * out for review
-  * major revision
-  * minor revision
-  * updated
-  * proofed
-  * online
-
-* Terminal:
-  * rejected
-  * published
-  * withdrawn
+See `valid_status` for a list of all known statuses, and `todo()` for the next action to be taken based on each status.
 
 ## Examples
   
@@ -62,14 +45,8 @@ Otherwise we have the following possibilities
     report()
 
     # These are easy to do by hand, but this will set the date 
-    # correctly and move to the correct location
+    # correctly, move to the correct location and draft an email.
+    # See the templates in inst/templates
     accept("2010-15")
     reject("2010-15")
     withdraw("2010-15")
-
-## Submissions
-
-Could use `wufoo` form to accept submissions - this would make it easier to collect details to a common standard, and would be possible to automate using wufoo's REST API. 
-
-Would need additional field in local data to record unique wufoo id, used to prevent duplicate submissions.
-

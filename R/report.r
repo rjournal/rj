@@ -15,7 +15,7 @@ report <- function(articles = active_articles()) {
 report_line <- function(x) {
   stopifnot(is.article(x))
   
-  sstatus <- summary_status(x)
+  todo <- todo(x)
   status <- last_status(x)
   last_date <- last_status(x)$date
   
@@ -23,7 +23,7 @@ report_line <- function(x) {
   stars <- sum(days_taken > deadlines(sstatus))
   
   data.frame(
-    status = sstatus,
+    status = todo,
     ed = editor_abbr(x$editor),
     id = format(x$id),
     title = str_trunc(x$title, 34),
@@ -36,37 +36,6 @@ report_line <- function(x) {
 last_status <- function(x) {
   stopifnot(is.article(x))
   x$status[[length(x$status)]]
-}
-
-summary_status <- function(x) {
-  stopifnot(is.article(x))
-
-  status <- last_status(x)$status
-  if (empty(x$editor)) {
-    "needs editor (editor-in-chief)"
-  } else if (empty(x$reviewers)) {
-    "needs reviewers (editor)"
-  } else {
-    switch(status,
-      "major revision" = "waiting (author)",
-      "minor revision" = "waiting (author)",
-      "out for review" = "waiting (reviewers)",
-      "updated" = "waiting (editor)",
-      
-      "reject and resubmit" = "waiting (author)",
-      "published" = "needs removal (editor)",
-      "withdrawn" = "needs removal (editor)",
-      "rejected" = "needs removal (editor)",
-      
-      "accepted" = "waiting (author)",
-      "style checked" = "needs online (editor-in-chief)",
-      "online" = "needs copy-editing (editor)",
-      "copy edited" = "waiting (author)",
-      "proofed" = "ready for publication (editor-in-chief)",
-      
-      stop("Unknown status: ", status)
-    )  
-  }
 }
 
 #' @export
@@ -107,27 +76,6 @@ order_status <- function(x) {
   editors <- setdiff(x[grepl("editor", x)], eic)
   others <- setdiff(x, c(eic, editors)) 
   c(eic, editors, others)
-}
-
-# Takes a summary status as input, and returns number of days before it's due
-deadlines <- function(sstatus) {
-  if (sstatus %in% final_status) {
-    return(c(Inf, Inf))
-  }
-
-  # > 1st = *; > 2nd = **
-  special <- list(
-    "needs editor" = c(7L, 14L),
-    "needs reviewers" = c(7L, 14L),
-    "submitted" = c(3L, 7L),
-    "proofed" = c(7L, 14L),
-    "major revision" = c(60L, 90L)
-  )
-  if (sstatus %in% names(special)) {
-    special[[sstatus]]
-  } else {
-    c(4L, 6L) * 7L
-  }
 }
 
 editor_abbr <- function(x) {
