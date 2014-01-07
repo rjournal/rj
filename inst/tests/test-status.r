@@ -19,8 +19,8 @@ test_that("first component must be valid date", {
   expect_error(parse_status("3000-01-01 accepted"), "in the future")
 })
 
-test_that("non-standard statuses give warnings", {
-  expect_warning(parse_status("2010-01-01 accept"), "accepted")
-  expect_warning(parse_status("2010-01-01 minor"), "minor revision")
+test_that("non-standard statuses give errors", {
+  expect_error(parse_status("2010-01-01 accept"), "accepted")
+  expect_error(parse_status("2010-01-01 minor"), "minor revision")
 
 })

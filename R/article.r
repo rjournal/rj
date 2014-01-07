@@ -71,7 +71,10 @@ load_article <- function(path, quiet = FALSE) {
   colnames(dcf) <- tolower(colnames(dcf))
 
   dcf <- as.list(as.data.frame(dcf, stringsAsFactors = FALSE))
-  dcf$id <- basename(dirname(path))
+  # Only should be manually set in tests
+  if (is.null(dcf$id)) {
+    dcf$id <- basename(dirname(path))  
+  }
   dcf$path <- dirname(path)
 
   do.call(article, dcf)

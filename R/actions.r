@@ -16,15 +16,9 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
 
   if (is.character(date)) date <- as.Date(date)
 
-  if (!(status %in% valid_status)) {
-    stop(status, " is not a known status. Did you mean ",
-      amatch_status(status), "?", call. = FALSE)
-  }
-
   article$status <- c(article$status, status(status, date, comments))
   save_article(article, quiet = TRUE)
 }
-
 
 #' @rdname action
 #' @export

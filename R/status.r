@@ -57,10 +57,9 @@ status <- function(status, date = Sys.Date(), comments = "") {
     if (tolower(status) == tolower(guess)) {
       status <- guess
     } else {
-      warning(status, " is not a known status. ",
+      stop(status, " is not a known status. ",
         "Did you mean ", amatch_status(status), "?", call. = FALSE)
     }
-    
   }
   
   structure(list(date = date, status = status, comments = comments),
