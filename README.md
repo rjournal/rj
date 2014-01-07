@@ -46,4 +46,13 @@ report()
 accept("2010-15")
 reject("2010-15")
 withdraw("2010-15")
+
+# Similarly, once you have updated the DESCRIPTION you can use
+invite_reviewers("2010-15")
+# to send out reviewer invites
+
+# You can draft an email from any template in the inst/templates directory
+# with email_template
+email_template("2010-15", "accept-major")
+email_template("2010-15", "online")
 ```

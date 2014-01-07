@@ -1,3 +1,37 @@
+#' Send an email template.
+#' 
+#' Interpolate article values into a template, and create a new (unsent)
+#' email in your default mail client.  The email is created using 
+#' \code{\link{browseURL}} and the mailto protocol, so it must be relatively
+#' brief.
+#'  
+#' @section Text format:
+#' The template should be divided into header and body with \code{---}.
+#' The header should contain fields and values separated by \code{:} - 
+#' only a limited
+#' 
+#' @section Template parameters:
+#' The templates use whisker to insert template values. These have the form
+#' \code{\{\{field_name\}\}}. You can use any field from the description as
+#' well as the following special fields:
+#' 
+#' \itemize{
+#'   \item name: the name of the first author
+#'   \item email: email address of first author
+#'   \item editor: name of editor
+#'   \item me: your name, as determine by envvar \code{RJ_NAME}
+#' }
+#' 
+#'
+#' @param article An article id, e.g. \code{"2013-01"}
+#' @param template The name of a template (without extension) found 
+#'   in \code{inst/templates}.
+#' @export
+email_template <- function(article, template) {
+  article <- as.article(article)
+  text <- render_template(article, template)
+  email_text(text)
+}
 
 email_text <- function(text) {
   stopifnot(is.character(text))
@@ -26,9 +60,39 @@ email_text <- function(text) {
   browseURL(url)
 }
 
+find_template <- function(name) {
+  path <- system.file("templates", paste0(name, ".txt"), package = "rj")
+  if (path == "") stop("Template not found: ", name, call. = FALSE)
+  
+  path
+}
 
-email_template <- function(article, template) {
+as.data <- function(x) {
+  stopifnot(is.article(x))
+  
+  data <- lapply(x, format)
+  data$name <- x$authors[[1]]$name
+  data$email <- x$authors[[1]]$email
+  if (!empty(x$editor)) data$editor <- editors[[x$editor]]
+  data$me <- Sys.getenv("RJ_NAME",
+    unset = "Use RJ_NAME envname to set your name")
+  
+  data
+}
+
+editors <- c(
+  "Hadley Wickham" = "h.wickham@gmail.com",
+  "Heather Turner" = "ht@heatherturner.net",
+  "Martyn Plummer" = "Martyn.Plummer@r-project.org",
+  "Deepayan Sarkar" = "deepayan.sarkar@r-project.org",
+  "Bettina Grün" = "Bettina.Gruen@jku.at",
+  "Michael Lawrence" = "lawrence.michael@gene.com"
+)
+
+#' @importFrom whisker whisker.render
+render_template <- function(article, template) {
   article <- as.article(article)
-  text <- render_template(article, template)
-  email_text(text)
+  template <- find_template(template)
+  
+  whisker.render(readLines(template), as.data(article))
 }
