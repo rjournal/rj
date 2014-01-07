@@ -5,6 +5,11 @@ final_status <- c(
   "rejected"
 )
 
+#' A list of all valid statuses.
+#' 
+#' @export
+#' @examples
+#' valid_status
 valid_status <- c(
   "submitted",
   "acknowledged",
@@ -104,7 +109,7 @@ is.Date <- function(x) inherits(x, "Date")
 
 # Reporting --------------------------------------------------------------------
 
-summary_status <- function(x) {
+todo <- function(x) {
   stopifnot(is.article(x))
   
   status <- last_status(x)$status
