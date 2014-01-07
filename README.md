@@ -1,12 +1,6 @@
 # RJ
 
-This package provides tools for dealing with the metadata for the R Journal.
-
-## Overall goals
-
-* A minimal set of functions to automate manual tasks
-
-* `DESCRIPTION` files still maintainable by hand
+This package provides tools for dealing with the metadata for the R Journal. The overall goal of the package is to automate common tasks performed by the editors, particularly the editor-in-chief.
 
 ## `DESCRIPTION` format
 
@@ -37,16 +31,18 @@ See `valid_status` for a list of all known statuses, and `todo()` for the next a
 
 ## Examples
   
-    library(rj)
-    # Make sure your working directory is set correct, then:
+```R
+library(rj)
+# Make sure your working directory in the articles directory then:
 
-    as.article("2010-15")
-    new_id()
-    report()
+as.article("2010-15")
+new_id()
+report()
 
-    # These are easy to do by hand, but this will set the date 
-    # correctly, move to the correct location and draft an email.
-    # See the templates in inst/templates
-    accept("2010-15")
-    reject("2010-15")
-    withdraw("2010-15")
+# These are easy to do by hand, but this will set the date 
+# correctly, move to the correct location and draft an email.
+# See the templates in inst/templates
+accept("2010-15")
+reject("2010-15")
+withdraw("2010-15")
+```
