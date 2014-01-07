@@ -1,3 +1,21 @@
+#' Download submissions from wufoo.
+#' 
+#' Requires the wufoo api key to be set in envvar \code{WUFOO_API_KEY}.
+#' 
+#' @section Process:
+#' \enumerate{
+#'  \item Submissions are downloaded and placed in new directories
+#'    in submissions.
+#'  \item In wufoo, manually mark each new submission as processed
+#'    (so they won't get downloaded again)
+#'  \item Ensure that the files have unzipped correctly (some authors
+#'    incorrectly upload .rar or .tar.gz files) and that the latex
+#'    compiles
+#'  \item Send off the draft emails that should have accumulated in
+#'    you mail client.
+#' }
+#' 
+#' @export
 get_submissions <- function() {
   subs <- submissions()
   lapply(subs, get_submission)
@@ -6,7 +24,6 @@ get_submissions <- function() {
   browseURL("https://hadley.wufoo.com/entries/r-journal-submission/")
 }
 
-#' Download submissions from WUFOO.
 #' @importFrom httr authenticate GET content
 submissions <- function() {
   api_url <- "https://hadley.wufoo.com/api/v3"
@@ -57,7 +74,7 @@ get_submission <- function(subm) {
   on.exit(unlink(temp_home))
 
   message("Unzipping and creating DESCRIPTION")
-  unzip(temp_home, exdir = dest, setTimes = TRUE)
+  try(unzip(temp_home, exdir = dest, setTimes = TRUE))
   writeLines(toJSON(subm), file.path(dest, "submission.json"))
   write_description(dest, subm)
 

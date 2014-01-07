@@ -55,4 +55,10 @@ invite_reviewers("2010-15")
 # with email_template
 email_template("2010-15", "accept-major")
 email_template("2010-15", "online")
+
+# The editor in chief can run
+get_submissions()
+# to download all pending submission and automatically draft
+# acknowledgement emails.
+
 ```
