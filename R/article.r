@@ -73,11 +73,10 @@ load_article <- function(path, quiet = FALSE) {
 
   dcf <- as.list(as.data.frame(dcf, stringsAsFactors = FALSE))
   # Only should be manually set in tests
-  if (is.null(dcf$id)) {
+  if (is.null(dcf$id) || identical(dcf$id, "")) {
     dcf$id <- basename(dirname(path))  
   }
   dcf$path <- dirname(path)
-
   do.call(article, dcf)
 }
 
