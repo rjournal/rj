@@ -8,7 +8,7 @@ Congratulations, your submission to the R journal is now accepted. Next, please:
 
 * Please double check that you're using the most recent version of the style 
   file and wrapper available http://journal.r-project.org/submissions.html
-  and that the article compiles errors.
+  and that the article compiles without errors.
 
 * Please proofread your article carefully according to the checklist at
   http://journal.r-project.org/share/proofreading-checklist.pdf

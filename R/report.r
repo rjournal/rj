@@ -13,6 +13,7 @@ report <- function(articles = active_articles()) {
 }
 
 report_line <- function(x) {
+  message(x$path) # to identify culprit when things go wrong
   stopifnot(is.article(x))
   
   todo <- todo(x)
