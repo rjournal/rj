@@ -184,9 +184,10 @@ is.status_list <- function(x) inherits(x, "status_list")
 
 parse_status_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
-  if (empty(str_trim(x))) return(status_list())
+  x <- trimws(x)
+  if (empty(x)) return(status_list())
   
-  statuses <- str_trim(str_split(x, ",")[[1]])
+  statuses <- trimws(strsplit(x, ",[ \t\r]*(\n|$)")[[1]])
   statuses <- statuses[statuses != ""]
   
   status_list(lapply(statuses, parse_status))
