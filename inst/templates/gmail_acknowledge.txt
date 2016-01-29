@@ -1,0 +1,16 @@
+Dear {{name}},
+
+We are pleased to receive your submission "{{title}}" to the R Journal. It has been given id {{id}}; please use that in future correspondence.
+
+The submission process proceeds as follows:
+
+* review by editorial board & assignment of associate editor (~1-2 weeks)
+* reviewers solicited (~1-2 weeks)
+* reviews received (~1-2 months)
+
+You should expect to hear from us again within 3 months.
+
+Regards,
+
+{{me}}
+

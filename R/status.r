@@ -208,7 +208,7 @@ parse_status <- function(x) {
   date <- as.Date(date)
   
   status <- pieces[3]
-  comments <- pieces[4]
+  comments <- if (is.na(pieces[4])) "" else pieces[4]
   
   status(status = status, date = date, comments = comments)
 }

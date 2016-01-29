@@ -67,6 +67,17 @@ find_template <- function(name) {
   path
 }
 
+guess_real_name <- function() {
+    Sys.getenv("RJ_NAME",
+               unset = if (.Platform$OS.type == "unix") {
+                   login <- Sys.info()[["login"]]
+                   finger <- system(paste("finger", login), intern=TRUE)
+                   sub(".*Name: ", "", finger[1L])
+               } else {
+                   "Use RJ_NAME envvar to set your name"   
+               })
+}
+
 as.data <- function(x) {
   stopifnot(is.article(x))
   
@@ -74,8 +85,7 @@ as.data <- function(x) {
   data$name <- x$authors[[1]]$name
   data$email <- x$authors[[1]]$email
   if (!empty(x$editor)) data$editor <- editors[[x$editor]]
-  data$me <- Sys.getenv("RJ_NAME",
-    unset = "Use RJ_NAME envname to set your name")
+  data$me <- guess_real_name()
   
   data
 }
