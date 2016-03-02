@@ -99,7 +99,8 @@ draft_acknowledgements <- function(subs) {
         gmailr::create_draft(email, type="multipart")
     }
     ans <- lapply(subs, acknowledge_sub)
-    names(ans) <- vapply(subs, `[[`, "id", FUN.VALUE=character(1L))
+    names(ans) <- vapply(subs, function(s) format(s$id),
+                         FUN.VALUE=character(1L))
     ans
 }
 
