@@ -68,7 +68,6 @@ as.article.gmail_message <- function(msg, ...) {
 }
 
 download_submissions <- function() {
-    authorize("read_only")
     msgs <- gmailr::messages("is:unread subject:'R Journal Submission' from:me")
     msgids <- rev(gmailr::id(msgs)) # inbox is sorted latest first
     arts <- lapply(msgids, function(msgid) {
@@ -85,13 +84,11 @@ download_submissions <- function() {
 }
 
 consume_submissions <- function(subs) {
-    authorize("modify")
     for(msgid in names(subs))
         gmailr::modify_message(msgid, remove_labels="UNREAD")
 }
 
 draft_acknowledgements <- function(subs) {
-    authorize("compose")
     acknowledge_sub <- function(sub) {
         body <- render_template(sub, "gmail_acknowledge")
         email <- gmailr::mime(From="rjournal.submission@@gmail.com",
