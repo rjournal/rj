@@ -37,7 +37,7 @@ email_text <- function(text) {
   stopifnot(is.character(text))
   text <- paste(text, collapse = "\n")
   
-  pieces <- str_split_fixed(text, "-{3, }", n = 2)[1, ]
+  pieces <- strsplit(text, "---", fixed=TRUE)[[1L]]
   stopifnot(is.character(pieces), length(pieces) == 2)
 
   head <- pieces[1]
