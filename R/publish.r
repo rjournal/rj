@@ -3,6 +3,7 @@
 #' After running this, you'll need to update both the article and 
 #' the web repository.
 #'
+#' @export
 #' @importFrom tools texi2pdf
 #' @param article article id
 #' @param home Location of the articles directory
