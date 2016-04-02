@@ -14,7 +14,7 @@ publish <- function(article, home = getwd()) {
   if (basename(home) != "articles") {
     stop("Publish should be run from articles directory", call. = FALSE)
   }
-  web_path <- normalizePath("../web", mustWork = TRUE)
+  web_path <- normalizePath("../rjournal.github.io", mustWork = TRUE)
   share_path <- normalizePath("../share", mustWork = TRUE)
 
   message("Publishing ", format(article$id))
