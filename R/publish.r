@@ -5,6 +5,7 @@
 #'
 #' @export
 #' @importFrom tools texi2pdf
+#' @importFrom yaml yaml.load_file
 #' @param article article id
 #' @param home Location of the articles directory
 publish <- function(article, home = getwd()) {
@@ -33,9 +34,16 @@ publish <- function(article, home = getwd()) {
   message("Creating ", basename(to))
 
   article$slug <- slug
-  update_status(article, "online")
+  article <- update_status(article, "online")
 
-  # Make yaml
+  ## Make yaml
+  yaml_path <- file.path(web_path, "_config.yml")
+  message("Updating ", yaml_path)
+  config <- yaml.load_file(yaml_path)
+  config$issues[[1L]]$articles <- c(config$issues[[1L]]$articles,
+                                    list(online_metadata_for_article(article)))
+  writeLines(as.yaml(config), yaml_path)
+  
   message("Remember to check changes into git")
   invisible(TRUE)
 }
@@ -62,17 +70,19 @@ build_latex <- function(article, share_path) {
 online_metadata <- function() {
   articles <- accepted_articles()
   articles <- Filter(function(x) !empty(x$slug), articles)
-  lapply(articles, function(x) {
-    names <- vapply(x$authors, function(x) {
-      format(as.person(x), include = c("given", "family"))[[1]]
-    }, FUN.VALUE = character(1))
+  lapply(articles, online_metadata_for_article)
+}
 
+online_metadata_for_article <- function(x) {
+    names <- vapply(x$authors, function(x) {
+                        format(as.person(x),
+                               include = c("given", "family"))[[1]]
+                    }, FUN.VALUE = character(1L))
     list(
-      title = x$title,
-      slug = x$slug,
-      author = names
-    )
-  })
+        title = x$title,
+        slug = x$slug,
+        author = names
+        )
 }
 
 #' @S3method print catout
