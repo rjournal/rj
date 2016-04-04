@@ -119,6 +119,7 @@ save_article <- function(article, quiet = FALSE) {
   path <- file.path(article$path, "DESCRIPTION")
   if (!quiet) message("Writing ", path)
   writeLines(format(article), path, useBytes=TRUE)
+  invisible(article)
 }
 
 
