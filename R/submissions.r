@@ -62,7 +62,9 @@ create_submission_directory <- function(id) {
 }
 
 as.article.gmail_message <- function(msg, ...) {
-    dcf <- read.dcf(textConnection(sub("\\[.*", "", gmailr::body(msg)[[1L]])))
+    txt <- sub("\\[.*", "", gmailr::body(msg)[[1L]])
+    txt <- gsub("\r\n(\r\n)+", "\n", txt)
+    dcf <- read.dcf(textConnection(txt))
     dcf <- setNames(dcf, tolower(colnames(dcf)))
     do.call(article, c(dcf, list(...)))
 }
