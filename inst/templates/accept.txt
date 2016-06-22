@@ -17,4 +17,4 @@ Once you've done that, please respond to this email with any changes. I'll then 
 
 Regards,
 
-Hadley
+{{me}}
