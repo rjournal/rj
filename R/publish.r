@@ -48,9 +48,15 @@ publish <- function(article, home = getwd()) {
   invisible(TRUE)
 }
 
-build_latex <- function(article, share_path) {
+#' Build article from LaTeX
+#' 
+#' @export
+build_latex <- function(article,
+                        share_path = normalizePath("../share", mustWork = TRUE))
+{
   article <- as.article(article)
-
+  stopifnot(file.exists(share_path))
+  
   # Check RJournal.sty does not exist
   sty_path <- file.path(article$path, "RJournal.sty")
   if (file.exists(sty_path)) {
