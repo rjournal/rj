@@ -96,7 +96,9 @@ editors <- c(
   "Martyn Plummer" = "Martyn.Plummer@r-project.org",
   "Deepayan Sarkar" = "deepayan.sarkar@r-project.org",
   "Bettina Grün" = "Bettina.Gruen@jku.at",
-  "Michael Lawrence" = "lawrence.michael@gene.com"
+  "Michael Lawrence" = "lawrence.michael@gene.com",
+  "Roger Bivand" = "Roger.Bivand@nhh.no",
+  "John Verzani" = "verzani@math.csi.cuny.edu"
 )
 
 #' @importFrom whisker whisker.render
