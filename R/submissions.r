@@ -98,7 +98,7 @@ draft_acknowledgements <- function(subs) {
                               Subject=paste("R Journal submission",
                                   format(sub$id)),
                               body=body)
-        gmailr::create_draft(email, type="multipart")
+        gmailr::create_draft(email)
     }
     ans <- lapply(subs, acknowledge_sub)
     names(ans) <- vapply(subs, function(s) format(s$id),
