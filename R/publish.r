@@ -52,7 +52,8 @@ publish <- function(article, home = getwd()) {
 #' 
 #' @export
 build_latex <- function(article,
-                        share_path = normalizePath("../share", mustWork = TRUE))
+                        share_path = normalizePath("../share", mustWork = TRUE),
+                        clean = TRUE)
 {
   article <- as.article(article)
   stopifnot(file.exists(share_path))
@@ -65,7 +66,7 @@ build_latex <- function(article,
 
   # Build latex
   in_dir(article$path,
-    texi2pdf("RJwrapper.tex", texinputs = share_path, clean = TRUE)
+    texi2pdf("RJwrapper.tex", texinputs = share_path, clean = clean)
   )
 }
 
