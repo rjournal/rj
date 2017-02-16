@@ -1,6 +1,6 @@
 Type: Package
 Package: rj
-Version: 0.2.0
+Version: 0.2.1
 Title: Tools for managing the R journal
 Description: This package provides useful functions for the editors of the
     R journal.
@@ -13,6 +13,7 @@ Imports:
     yaml,
     gmailr
 Suggests:
-    testthat
+    testthat,
+    pdftools
 Depends:
     R (>= 3.2.0)
