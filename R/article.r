@@ -46,7 +46,8 @@ as.article <- function(id) {
     path <- id
   } else {
     # Otherwise, assume we're in the admin directory
-    base <- c("Rejected", "Accepted", "Submissions")
+    base <- c("Rejected", "Accepted", "Submissions",
+              file.path("Proofs", dir("Proofs")))
     pos <- file.exists(file.path(base, id))
 
     if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
