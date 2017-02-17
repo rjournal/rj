@@ -133,6 +133,7 @@ todo <- function(x) {
       "online" = "needs copy-editing (editor)",
       "copy edited" = "waiting (author)",
       "proofed" = "ready for publication (editor-in-chief)",
+      "acknowledged" = "needs reviewers (editor)",
       
       stop("Unknown status: ", status)
     )  
