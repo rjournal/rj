@@ -51,8 +51,8 @@ make_proof <- function(id, share_path = file.path("..", "share")) {
 
     prev_id <- previous_id(id)
     prev_dir <- file.path("Proofs", prev_id)
-    inherited_files <- c("ch.tex", "Rdsub.tex", "Rlogo.png", "Rlogo-4.png",
-                         "metadata.r", "editorial.tex")
+    inherited_files <- c("Rdsub.tex", "Rlogo.png", "Rlogo-4.png",
+                         "editorial.tex")
     file.copy(file.path(prev_dir, inherited_files), dir)
     file.copy(file.path(share_path, "RJournal.sty"), dir)
 
@@ -243,9 +243,9 @@ issue_news_metadata <- function(news) {
 }
 
 post_metadata <- function(id) {
-    news <- tools::list_files_with_exts(file.path(issue_dir(id), "news"), "tex")
-    news <- news[basename(news) != "NEWS.tex"]
-    lapply(news, issue_news_metadata)
+    files <- paste0(c("foundation", "cran", "bioc", "ch"), ".tex")
+    news <- file.path(issue_dir(id), files)
+    lapply(news[file.exists(news)], issue_news_metadata)
 }
 
 bibtex_escape_case <- function(x) {
