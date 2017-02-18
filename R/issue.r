@@ -177,8 +177,9 @@ build_issue <- function(id) {
 
 init_archive_path <- function(id, web_path) {
     archive_path <- file.path(web_path, "archive", id)
-    if (!file.exists(archive_path))
-        dir.create(archive_path)
+    if (file.exists(archive_path))
+        unlink(archive_path, recursive=TRUE)
+    dir.create(archive_path)
 
     issue_file <- issue_file(id)
     issue <- read_tex(issue_file)
@@ -244,7 +245,7 @@ issue_news_metadata <- function(news) {
 
 post_metadata <- function(id) {
     files <- paste0(c("foundation", "cran", "bioc", "ch"), ".tex")
-    news <- file.path(issue_dir(id), files)
+    news <- file.path(issue_dir(id), "news", files)
     lapply(news[file.exists(news)], issue_news_metadata)
 }
 
@@ -312,7 +313,10 @@ issue_metadata <- function(id) {
 write_issue_metadata <- function(web_path, md) {
     config_path <- file.path(web_path, "_config.yml")
     config <- yaml.load_file(config_path)
-    config$issues <- c(config$issues, list(md))
+    issues <- config$issues
+    ids <- vapply(issues, `[[`, character(1L), "issue")
+    issues <- issues[ids != md$issue]
+    config$issues <- c(issues, list(md))
     writeLines(as.yaml(config), config_path)
 }
 
@@ -381,7 +385,7 @@ update_layout <- function(id, web_path) {
 #' @export
 publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io")) {
     if (!file.exists(web_path))
-        stop("web_path '", webpath, "' does not exist, please specify")
+        stop("web_path '", web_path, "' does not exist, please specify")
     md <- issue_metadata(id)
     archive_path <- init_archive_path(id, web_path)
     write_article_pdfs(id, archive_path, md$articles)
