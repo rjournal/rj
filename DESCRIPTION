@@ -4,7 +4,7 @@ Version: 0.2.1
 Title: Tools for managing the R journal
 Description: This package provides useful functions for the editors of the
     R journal.
-Author: Hadley Wickham <h.wickham@gmail.com>
+Author: Hadley Wickham <h.wickham@gmail.com>, Michael Lawrence <michafla@gene.com>
 Maintainer: Hadley Wickham <h.wickham@gmail.com>
 License: MIT
 Imports:
