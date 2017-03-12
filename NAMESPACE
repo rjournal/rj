@@ -1,3 +1,7 @@
+  importFrom("stats", "setNames")
+  importFrom("utils", "URLencode", "as.person", "browseURL",
+             "capture.output", "type.convert", "zip")
+
 S3method("[[",status_list)
 S3method(c,status)
 S3method(empty,"NULL")
@@ -42,6 +46,7 @@ export(status)
 export(update_status)
 export(valid_status)
 export(withdraw)
+export(parse_address_list)
 import(stringr)
 importFrom(tools,texi2pdf)
 importFrom(utils,adist)
