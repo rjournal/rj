@@ -35,6 +35,8 @@ publish <- function(article, home = getwd()) {
 
   article$slug <- slug
   article <- update_status(article, "online")
+  
+
 
   ## Make yaml
   yaml_path <- file.path(web_path, "_config.yml")
@@ -46,6 +48,20 @@ publish <- function(article, home = getwd()) {
   
   message("Remember to check changes into git")
   invisible(TRUE)
+}
+
+get_md_from_pdf <- function(from)
+{
+   toc <- pdftools::pdf_toc(from)
+   title <- toc$children[[1L]]$title
+   text <- pdftools::pdf_text(from)
+   t1s <- t1s <- strsplit(gsub("           ", "", text[1]), "\\n")[[1L]]
+   abs_ <- grep("^Abstract", t1s)
+   aut0 <- paste(t1s[grep("^by", t1s):(abs_-1L)], collapse=" ")
+   author <- substring(aut0, 4, nchar(aut0))
+   abs0 <- paste(t1s[abs_:(grep(paste0("^", toc$children[[1L]]$children[[1L]]$title), t1s)-1L)], collapse=" ")
+   abstract <- substring(abs0, 10, nchar(abs0))
+   list(author=author, title=title, abstract=abstract)
 }
 
 #' Build article from LaTeX
@@ -81,14 +97,19 @@ online_metadata <- function() {
 }
 
 online_metadata_for_article <- function(x) {
-    names <- vapply(x$authors, function(x) {
-                        format(as.person(x),
-                               include = c("given", "family"))[[1]]
-                    }, FUN.VALUE = character(1L))
+#    names <- vapply(x$authors, function(x) {
+#                        format(as.person(x),
+#                               include = c("given", "family"))[[1]]
+#                    }, FUN.VALUE = character(1L))
+    from <- file.path(x$path, "RJwrapper.pdf")
+    pdf_list <- get_md_from_pdf(from)
     list(
-        title = x$title,
+        title = pdf_list$title,
         slug = x$slug,
-        author = names
+        author = pdf_list$author,
+        abstract = pdf_list$abstract,
+        acknowledged = format(x$status[[2L]]$date),
+        online = format(Sys.Date())
         )
 }
 

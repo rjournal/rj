@@ -10,7 +10,11 @@ The submission process proceeds as follows:
 
 You should expect to hear from us again within 3 months.
 
-Regards,
+Should you not have included an R script to replicate examples in your submission, could I please request that you send me such a file at your earliest convenience?
+
+Could I at this time also ask you to add any missing but available DOI fields to your *.bib file, removing extraneous URL fields? There is no need to send them now, but missing DOI fields should be in the next version of that file that we receive.
+
+Best wishes,
 
 {{me}}
 

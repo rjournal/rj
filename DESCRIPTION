@@ -1,19 +1,19 @@
 Type: Package
 Package: rj
-Version: 0.2.1
+Version: 0.2.2
 Title: Tools for managing the R journal
 Description: This package provides useful functions for the editors of the
     R journal.
-Author: Hadley Wickham <h.wickham@gmail.com>
-Maintainer: Hadley Wickham <h.wickham@gmail.com>
+Author: EiC <R-journal@r-project.org>
+Maintainer: EiC <R-journal@r-project.org>
 License: MIT
 Imports:
     stringr,
     whisker,
     yaml,
-    gmailr
-Suggests:
-    testthat,
+    gmailr,
     pdftools
+Suggests:
+    testthat
 Depends:
     R (>= 3.2.0)
