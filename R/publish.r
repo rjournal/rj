@@ -54,6 +54,55 @@ publish <- function(article, home = getwd()) {
   invisible(TRUE)
 }
 
+get_refs_from_tex <- function(article) 
+{
+  RJw <- readLines(paste0(article$path, "/RJwrapper.tex"))
+  str_search_inp <- "((\\\\input\\{)([-a-zA-Z0-9_\\.]*)(\\}))"
+  inp_str <- c(na.omit(str_trim(str_extract(RJw, str_search_inp))))
+  inps <- c(str_locate(inp_str, "((\\{)([-a-zA-Z0-9_\\.]*)(\\}))"))
+  inp_tex <- str_sub(inp_str, inps[1]+1, inps[2]-1)
+  if (str_sub(inp_tex, str_length(inp_tex)-3, str_length(inp_tex)) != ".tex")
+    inp_tex <- paste0(inp_tex, ".tex")
+  tex <- readLines(paste0(article$path, "/", inp_tex))
+  Cp_str <- "((\\\\CRANpkg\\{)([a-zA-Z0-9\\.]*)(\\}))"
+  Cps <- str_locate_all(tex, Cp_str)
+  Cpsi <- sapply(Cps, nrow)
+  CRANpkgs <- NULL
+  if (any(Cpsi > 0)) {
+    wCpsi <- which(Cpsi > 0)
+    Cmat <- cbind(i=rep(wCpsi, sapply(Cps[wCpsi], nrow)), do.call("rbind", Cps[wCpsi]))
+    CRANpkgs <- apply(Cmat, 1, function(row) {
+      pkg <- str_sub(tex[row[1]], row[2]+9, row[3]-1)
+      paste0("<a href=\"https://cran.r-project.org/package=", pkg, "\" target=\"_blank\">", pkg, "</a>")
+      })
+  }
+  Bp_str <- "((\\\\BIOpkg\\{)([a-zA-Z0-9\\.]*)(\\}))"
+  Bps <- str_locate_all(tex, Bp_str)
+  Bpsi <- sapply(Bps, nrow)
+  BIOpkgs <- NULL
+  if (any(Bpsi > 0)) {
+    wBpsi <- which(Bpsi > 0)
+    Bmat <- cbind(i=rep(wBpsi, sapply(Bps[wBpsi], nrow)), do.call("rbind", Bps[wBpsi]))
+    BIOpkgs <- apply(Bmat, 1, function(row) {
+      pkg <- str_sub(tex[row[1]], row[2]+8, row[3]-1)
+      paste0("<a href=\"https://www.bioconductor.org/packages/release/bioc/html/", pkg, ".html\" target=\"_blank\">", pkg, "</a>")
+      })
+  }
+  ctv_str <- "((\\\\ctv\\{)([a-zA-Z0-9]*)(\\}))"
+  ctvs <- str_locate_all(tex, ctv_str)
+  ctvsi <- sapply(ctvs, nrow)
+  CTVs <- NULL
+  if (any(ctvsi > 0)) {
+    wctvsi <- which(ctvsi > 0)
+    CTVmat <- cbind(i=rep(wctvsi, sapply(ctvs[wctvsi], nrow)), do.call("rbind", ctvs[wctvsi]))
+    CTVs <- apply(CTVmat, 1, function(row) {
+      pkg <- str_sub(tex[row[1]], row[2]+5, row[3]-1)
+      paste0("<a href=\"https://CRAN.R-project.org/view=", pkg, "\" target=\"_blank\">", pkg, "</a>")
+      })
+  }
+  list(CRANpkgs=CRANpkgs, BIOpkgs=BIOpkgs, CTVs=CTVs)
+}
+
 get_md_from_pdf <- function(from)
 {
    toc <- pdftools::pdf_toc(from)
@@ -107,14 +156,15 @@ online_metadata_for_article <- function(x) {
 #                    }, FUN.VALUE = character(1L))
     from <- file.path(x$path, "RJwrapper.pdf")
     pdf_list <- get_md_from_pdf(from)
-    list(
+    refs_list <- get_refs_from_tex(x)
+    c(list(
         title = pdf_list$title,
         slug = x$slug,
         author = pdf_list$author,
         abstract = pdf_list$abstract,
         acknowledged = format(x$status[[2L]]$date),
         online = format(Sys.Date())
-        )
+        ), refs_list[!sapply(refs_list, is.null)])
 }
 
 #' @S3method print catout
