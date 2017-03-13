@@ -1,7 +1,6 @@
-  importFrom("stats", "setNames")
-  importFrom("utils", "URLencode", "as.person", "browseURL",
+importFrom("stats", "setNames")
+importFrom("utils", "URLencode", "as.person", "browseURL",
              "capture.output", "type.convert", "zip")
-
 S3method("[[",status_list)
 S3method(c,status)
 S3method(empty,"NULL")
@@ -29,10 +28,6 @@ export(acknowledge_submissions)
 export(active_articles)
 export(address)
 export(article)
-  importFrom("stats", "setNames")
-  importFrom("utils", "URLencode", "as.person", "browseURL",
-             "capture.output", "type.convert", "zip")
-
 export(as.article)
 export(build_issue)
 export(build_latex)

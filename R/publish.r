@@ -17,6 +17,10 @@ publish <- function(article, home = getwd()) {
   }
   web_path <- normalizePath("../rjournal.github.io", mustWork = TRUE)
   share_path <- normalizePath("../share", mustWork = TRUE)
+  if (!("accepted" %in% sapply(seq(along=article$status),
+    function(i) article$status[[i]][["status"]]))) stop("not yet accepted")
+  if (!("style checked" %in% sapply(seq(along=article$status),
+    function(i) article$status[[i]][["status"]]))) stop("not yet style checked")
 
   message("Publishing ", format(article$id))
   # Build latex and copy to new home
