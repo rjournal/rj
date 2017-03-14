@@ -8,7 +8,7 @@
 #' @importFrom yaml yaml.load_file
 #' @param article article id
 #' @param home Location of the articles directory
-publish <- function(article, home = getwd()) {
+publish <- function(article, home = getwd(), legacy=TRUE) {
   article <- as.article(article)
 
   # Make sure we're in the right place
@@ -23,17 +23,69 @@ publish <- function(article, home = getwd()) {
     function(i) article$status[[i]][["status"]]))) stop("not yet style checked")
 
   message("Publishing ", format(article$id))
-  # Build latex and copy to new home
+  # Build latex 
   build_latex(article, share_path)
-  if (empty(article$slug)) {
-    names <- unlist(lapply(article$authors, "[[", "name"))
-    slug <- make_slug(names)
+  from <- file.path(article$path, "RJwrapper.pdf")
+
+  if (legacy) {
+    # create slug if needed and path to new home
+    if (empty(article$slug) || str_sub(article$slug, 1L, 5L) == "RJ-20") {
+      names <- unlist(lapply(article$authors, "[[", "name"))
+      slug <- make_slug(names)
+    } else {
+      slug <- article$slug
+    }
+    to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
+
   } else {
-    slug <- article$slug
+    # stage new YYYY/RJ-YYYY-XXX landing directory and slug
+    yr_id <- format(Sys.Date(), "%Y")
+    if (!dir.exists(file.path(web_path, "archive", yr_id)))
+      dir.create(file.path(web_path, "archive", yr_id))
+    current_dirs <- list.files(file.path(web_path, "archive", yr_id))
+    if (length(current_dirs) > 0) {
+      if (any(nchar(current_dirs) != 11L)) stop("landing dir-name length error")
+    } else {
+      i <- 1L
+    }
+
+    if (!empty(article$slug)) {
+      if (str_sub(article$slug, 1L, 5L) == "RJ-20") {
+        if (str_sub(article$slug, 4L, 7L) < yr_id) {
+          article$slug <- ""
+        }
+      } else {
+        article$slug <- ""
+      }
+    }
+    if (!empty(article$slug) &&
+      str_sub(article$slug, 1L, 8L) == paste0("RJ-", yr_id, "-")) {
+      this_dir <- str_sub(article$slug, 9L, 11L)
+      if (this_dir %in% str_sub(current_dirs, 9L, 11L)) {
+        if (!dir.exists(file.path(web_path, "archive",
+          yr_id, article$slug))) {
+          article$slug <- ""
+        }
+      } else {
+        slug <- article$slug
+      }
+    }
+    if (empty(article$slug)) {
+
+#Warning messages:
+#1: In max(as.integer(str_sub(current_dirs, 9L, 11L))) :
+#  no non-missing arguments to max; returning -Inf
+#2: In publish("2015-84", legacy = FALSE) :
+#  NAs introduced by coercion to integer range
+
+      i <- as.integer(max(as.integer(str_sub(current_dirs, 9L, 11L)))) + 1L
+      next_dir <- formatC(i, format="d", flag="0", width=3L)
+      slug <- paste0("RJ-", yr_id, "-", next_dir)
+      dir.create(file.path(web_path, "archive", yr_id, slug))
+    }
+    to <- file.path(web_path, "archive", yr_id, slug, paste0(slug, ".pdf"))
   }
 
-  from <- file.path(article$path, "RJwrapper.pdf")
-  to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
   file.copy(from, to, overwrite = TRUE)
   message("Creating ", basename(to))
 
@@ -157,7 +209,8 @@ online_metadata_for_article <- function(x) {
     from <- file.path(x$path, "RJwrapper.pdf")
     pdf_list <- get_md_from_pdf(from)
     refs_list <- get_refs_from_tex(x)
-    c(list(
+    landing <- str_sub(x$slug, 1L, 5L) == "RJ-20"
+    res <- c(list(
         title = pdf_list$title,
         slug = x$slug,
         author = pdf_list$author,
@@ -165,6 +218,8 @@ online_metadata_for_article <- function(x) {
         acknowledged = format(x$status[[2L]]$date),
         online = format(Sys.Date())
         ), refs_list[!sapply(refs_list, is.null)])
+     if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
+     res
 }
 
 #' @S3method print catout
