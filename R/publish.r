@@ -43,6 +43,7 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
     if (!dir.exists(file.path(web_path, "archive", yr_id)))
       dir.create(file.path(web_path, "archive", yr_id))
     current_dirs <- list.files(file.path(web_path, "archive", yr_id))
+    i <- 0L
     if (length(current_dirs) > 0) {
       if (any(nchar(current_dirs) != 11L)) stop("landing dir-name length error")
     } else {
@@ -71,40 +72,83 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
       }
     }
     if (empty(article$slug)) {
-
-#Warning messages:
-#1: In max(as.integer(str_sub(current_dirs, 9L, 11L))) :
-#  no non-missing arguments to max; returning -Inf
-#2: In publish("2015-84", legacy = FALSE) :
-#  NAs introduced by coercion to integer range
-
-      i <- as.integer(max(as.integer(str_sub(current_dirs, 9L, 11L)))) + 1L
+      if (i == 0L) 
+        i <- as.integer(max(as.integer(str_sub(current_dirs, 9L, 11L)))) + 1L
       next_dir <- formatC(i, format="d", flag="0", width=3L)
       slug <- paste0("RJ-", yr_id, "-", next_dir)
       dir.create(file.path(web_path, "archive", yr_id, slug))
+    } else{
+      slug <- article$slug
     }
-    to <- file.path(web_path, "archive", yr_id, slug, paste0(slug, ".pdf"))
+    landing_path <- file.path(web_path, "archive", yr_id, slug)
+    to <- file.path(landing_path, paste0(slug, ".pdf"))
   }
 
+  # copy PDF to target
   file.copy(from, to, overwrite = TRUE)
   message("Creating ", basename(to))
 
   article$slug <- slug
   article <- update_status(article, "online")
-  
 
+  # collect metadata
+  article_metadata <- online_metadata_for_article(article)
+  # if not legacy, create and post landing index.html
+  if (!legacy) {
+    article_landing <- make_landing(article_metadata, article)
+    writeLines(article_landing, file.path(web_path, "archive", yr_id,
+      slug, "index.html"))
+  }
 
   ## Make yaml
   yaml_path <- file.path(web_path, "_config.yml")
   message("Updating ", yaml_path)
   config <- yaml.load_file(yaml_path)
   config$issues[[1L]]$articles <- c(config$issues[[1L]]$articles,
-                                    list(online_metadata_for_article(article)))
+                                    list(article_metadata))
   writeLines(as.yaml(config), yaml_path)
   
   message("Remember to check changes into git")
   invisible(TRUE)
 }
+
+make_landing <- function(article_metadata, article){
+  slug <- article_metadata$slug
+  res <- paste0("---\nlayout: default\ntitle: ", slug, "\n---\n\n")
+  res <- c(res, paste0("<h2>Accepted article: ", slug, "</h2>\n\n"))
+  res <- c(res, "<p class=\"article\">\n") 
+  res <- c(res, paste0("<a href=\"", slug, ".pdf\" target=\"_blank\">",
+    article_metadata$title, "</a><br />\n"))
+  res <- c(res, paste0(article_metadata$author, "\n\n"))
+  if (!is.null(article_metadata$abstract))
+    res <- c(res, article_metadata$abstract)
+  if (!is.null(article_metadata$acknowledged))
+    res <- c(res, paste0("Received: ", article_metadata$acknowledged))
+  if (!is.null(article_metadata$online))
+    res <- c(res, paste0(", online: ", article_metadata$online))
+  if (!is.null(article_metadata$CRANpkgs))
+    res <- c(res, paste0("\n", paste(article_metadata$CRANpkgs,
+    collapse=", ")))
+  if (!is.null(article_metadata$CTVs))
+    res <- c(res, paste0("\n", paste(article_metadata$CTVs,
+    collapse=", ")))
+  if (!is.null(article_metadata$BIOpkgs))
+    res <- c(res, paste0("\n", paste(article_metadata$BIOpkgs,
+    collapse=", ")))
+  
+  res <- c(res, "\n</p>\n")
+  res
+}
+
+#    res <- c(list(
+#        title = pdf_list$title,
+#        slug = x$slug,
+#        author = pdf_list$author,
+#        abstract = pdf_list$abstract,
+#        acknowledged = format(x$status[[2L]]$date),
+#        online = format(Sys.Date())
+#        ), refs_list[!sapply(refs_list, is.null)])
+#     if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
 
 get_refs_from_tex <- function(article) 
 {
