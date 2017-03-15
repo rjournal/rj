@@ -152,15 +152,6 @@ make_landing <- function(article_metadata, article){
   res
 }
 
-#    res <- c(list(
-#        title = pdf_list$title,
-#        slug = x$slug,
-#        author = pdf_list$author,
-#        abstract = pdf_list$abstract,
-#        acknowledged = format(x$status[[2L]]$date),
-#        online = format(Sys.Date())
-#        ), refs_list[!sapply(refs_list, is.null)])
-#     if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
 
 get_refs_from_tex <- function(article) 
 {
@@ -216,7 +207,7 @@ get_md_from_pdf <- function(from)
    toc <- pdftools::pdf_toc(from)
    title <- toc$children[[1L]]$title
    text <- pdftools::pdf_text(from)
-   t1s <- t1s <- strsplit(gsub("           ", "", text[1]), "\\n")[[1L]]
+   t1s <- strsplit(gsub("           ", "", text[1]), "\\n")[[1L]]
    abs_ <- grep("^Abstract", t1s)
    aut0 <- paste(t1s[grep("^by", t1s):(abs_-1L)], collapse=" ")
    author <- substring(aut0, 4, nchar(aut0))
