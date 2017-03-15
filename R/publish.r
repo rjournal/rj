@@ -119,24 +119,36 @@ make_landing <- function(article_metadata, article){
   res <- c(res, "<p class=\"article\">\n") 
   res <- c(res, paste0("<a href=\"", slug, ".pdf\" target=\"_blank\">",
     article_metadata$title, "</a><br />\n"))
-  res <- c(res, paste0(article_metadata$author, "\n\n"))
+  res <- c(res, paste0(article_metadata$author, "<br /><br />\n"))
   if (!is.null(article_metadata$abstract))
     res <- c(res, article_metadata$abstract)
   if (!is.null(article_metadata$acknowledged))
-    res <- c(res, paste0("Received: ", article_metadata$acknowledged))
+    res <- c(res, paste0("<br /><br />Received: ",
+      article_metadata$acknowledged))
   if (!is.null(article_metadata$online))
-    res <- c(res, paste0(", online: ", article_metadata$online))
+    res <- c(res, paste0(", online: ", article_metadata$online, "<br />"))
   if (!is.null(article_metadata$CRANpkgs))
-    res <- c(res, paste0("\n", paste(article_metadata$CRANpkgs,
-    collapse=", ")))
+    res <- c(res, paste0("CRAN packages: ",
+    paste(article_metadata$CRANpkgs, collapse=", ")))
   if (!is.null(article_metadata$CTVs))
-    res <- c(res, paste0("\n", paste(article_metadata$CTVs,
+    res <- c(res, paste0("; CRAN Task Views: ", paste(article_metadata$CTVs,
     collapse=", ")))
   if (!is.null(article_metadata$BIOpkgs))
-    res <- c(res, paste0("\n", paste(article_metadata$BIOpkgs,
-    collapse=", ")))
+    res <- c(res, paste0("; Bioconductor packages: ",
+    paste(article_metadata$BIOpkgs, collapse=", ")))
   
-  res <- c(res, "\n</p>\n")
+  res <- c(res, paste0("<br /><br /><img src=\"../../by.png\" width=\"80\" height=\"15\" alt=\"CC BY 4.0\" /><br />This article is licensed under a\n <a href=\"https://creativecommons.org/licenses/by/4.0/\">Creative Commons Attribution 4.0 International license</a>.\n<br /><br /></p>\n"))
+
+  res <- c(res, paste0("<pre>\n@article{", slug, ","))
+  res <- c(res, paste0("  author = {", str_wrap(gsub(",", " and",
+    article_metadata$author), width=60, exdent=10), "},"))
+  res <- c(res, paste0("  title = {% raw %}{{", str_wrap(article_metadata$title,
+    width=60, exdent=10), "}}{% endraw %},"))
+  res <- c(res, paste0("  year = {", str_sub(slug, 4L, 7L), "},"))
+  res <- c(res, paste0("  journal = {The R Journal},"))
+  res <- c(res, paste0("  url = {https://journal.r-project.org/archive/",
+    str_sub(slug, 4L, 7L), "/", slug, "/index.html}\n}\n</pre>\n"))
+  res <- c(res, "<br />\n")
   res
 }
 
