@@ -112,6 +112,13 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
   invisible(TRUE)
 }
 
+#---
+#layout: landing
+#issue: accepted
+#slug: RJ-2017-001
+#---
+
+
 make_landing <- function(article_metadata, article){
   slug <- article_metadata$slug
   res <- paste0("---\nlayout: default\ntitle: ", slug, "\n---\n\n")
