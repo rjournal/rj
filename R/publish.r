@@ -286,3 +286,11 @@ bundle <- function(article, dest_path) {
   in_dir(article$path, zip(dest, files))
 }
 
+#library(yaml)
+#config <- yaml.load_file("_config.yml")
+#auths_accept <- unlist(lapply(config$issues[[1]]$articles, "[[", "author"))
+#library(genderizeR)
+#givenNames = findGivenNames(auths_accept)
+#res <- genderize(auths_accept, genderDB = givenNames)
+#table(res$gender)
+
