@@ -17,10 +17,11 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
   }
   web_path <- normalizePath("../rjournal.github.io", mustWork = TRUE)
   share_path <- normalizePath("../share", mustWork = TRUE)
-  if (!("accepted" %in% sapply(seq(along=article$status),
-    function(i) article$status[[i]][["status"]]))) stop("not yet accepted")
-  if (!("style checked" %in% sapply(seq(along=article$status),
-    function(i) article$status[[i]][["status"]]))) stop("not yet style checked")
+  
+  if (!any(as.data.frame(article$status)$status == "accepted"))
+    stop("not yet accepted")
+  if (!any(as.data.frame(article$status)$status == "style checked"))
+    stop("not yet style checked")
 
   message("Publishing ", format(article$id))
   # Build latex 
@@ -95,7 +96,8 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
   article_metadata <- online_metadata_for_article(article)
   # if not legacy, create and post landing index.html
   if (!legacy) {
-    article_landing <- make_landing(article_metadata, article)
+    issue <- "accepted"
+    article_landing <- make_landing(article_metadata, issue)
     writeLines(article_landing, file.path(web_path, "archive", yr_id,
       slug, "index.html"))
   }
@@ -119,43 +121,9 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
 #---
 
 
-make_landing <- function(article_metadata, article){
+make_landing <- function(article_metadata, issue){
   slug <- article_metadata$slug
-  res <- paste0("---\nlayout: default\ntitle: ", slug, "\n---\n\n")
-  res <- c(res, paste0("<h2>Accepted article: ", slug, "</h2>\n\n"))
-  res <- c(res, "<p class=\"article\">\n") 
-  res <- c(res, paste0("<a href=\"", slug, ".pdf\" target=\"_blank\">",
-    article_metadata$title, "</a><br />\n"))
-  res <- c(res, paste0(article_metadata$author, "<br /><br />\n"))
-  if (!is.null(article_metadata$abstract))
-    res <- c(res, article_metadata$abstract)
-  if (!is.null(article_metadata$acknowledged))
-    res <- c(res, paste0("<br /><br />Received: ",
-      article_metadata$acknowledged))
-  if (!is.null(article_metadata$online))
-    res <- c(res, paste0(", online: ", article_metadata$online, "<br />"))
-  if (!is.null(article_metadata$CRANpkgs))
-    res <- c(res, paste0("CRAN packages: ",
-    paste(article_metadata$CRANpkgs, collapse=", ")))
-  if (!is.null(article_metadata$CTVs))
-    res <- c(res, paste0("; CRAN Task Views: ", paste(article_metadata$CTVs,
-    collapse=", ")))
-  if (!is.null(article_metadata$BIOpkgs))
-    res <- c(res, paste0("; Bioconductor packages: ",
-    paste(article_metadata$BIOpkgs, collapse=", ")))
-  
-  res <- c(res, paste0("<br /><br /><img src=\"../../by.png\" width=\"80\" height=\"15\" alt=\"CC BY 4.0\" /><br />This article is licensed under a\n <a href=\"https://creativecommons.org/licenses/by/4.0/\">Creative Commons Attribution 4.0 International license</a>.\n<br /><br /></p>\n"))
-
-  res <- c(res, paste0("<pre>\n@article{", slug, ","))
-  res <- c(res, paste0("  author = {", str_wrap(gsub(",", " and",
-    article_metadata$author), width=60, exdent=10), "},"))
-  res <- c(res, paste0("  title = {% raw %}{{", str_wrap(article_metadata$title,
-    width=60, exdent=10), "}}{% endraw %},"))
-  res <- c(res, paste0("  year = {", str_sub(slug, 4L, 7L), "},"))
-  res <- c(res, paste0("  journal = {The R Journal},"))
-  res <- c(res, paste0("  url = {https://journal.r-project.org/archive/",
-    str_sub(slug, 4L, 7L), "/", slug, "/index.html}\n}\n</pre>\n"))
-  res <- c(res, "<br />\n")
+  res <- paste0("---\nlayout: landing\nissue: ", issue, "\nslug: ", slug, "\ntitle: \"", str_sub(article_metadata$title, 1, 25), "...\"\n---\n\n")
   res
 }
 
@@ -176,10 +144,10 @@ get_refs_from_tex <- function(article)
   CRANpkgs <- NULL
   if (any(Cpsi > 0)) {
     wCpsi <- which(Cpsi > 0)
-    Cmat <- cbind(i=rep(wCpsi, sapply(Cps[wCpsi], nrow)), do.call("rbind", Cps[wCpsi]))
+    Cmat <- cbind(i=rep(wCpsi, sapply(Cps[wCpsi], nrow)),
+      do.call("rbind", Cps[wCpsi]))
     CRANpkgs <- apply(Cmat, 1, function(row) {
-      pkg <- str_sub(tex[row[1]], row[2]+9, row[3]-1)
-      paste0("<a href=\"https://cran.r-project.org/package=", pkg, "\" target=\"_blank\">", pkg, "</a>")
+      str_sub(tex[row[1]], row[2]+9, row[3]-1)
       })
   }
   Bp_str <- "((\\\\BIOpkg\\{)([a-zA-Z0-9\\.]*)(\\}))"
@@ -188,11 +156,11 @@ get_refs_from_tex <- function(article)
   BIOpkgs <- NULL
   if (any(Bpsi > 0)) {
     wBpsi <- which(Bpsi > 0)
-    Bmat <- cbind(i=rep(wBpsi, sapply(Bps[wBpsi], nrow)), do.call("rbind", Bps[wBpsi]))
+    Bmat <- cbind(i=rep(wBpsi, sapply(Bps[wBpsi], nrow)),
+      do.call("rbind", Bps[wBpsi]))
     BIOpkgs <- apply(Bmat, 1, function(row) {
-      pkg <- str_sub(tex[row[1]], row[2]+8, row[3]-1)
-      paste0("<a href=\"https://www.bioconductor.org/packages/release/bioc/html/", pkg, ".html\" target=\"_blank\">", pkg, "</a>")
-      })
+      str_sub(tex[row[1]], row[2]+8, row[3]-1)
+    })
   }
   ctv_str <- "((\\\\ctv\\{)([a-zA-Z0-9]*)(\\}))"
   ctvs <- str_locate_all(tex, ctv_str)
@@ -200,10 +168,10 @@ get_refs_from_tex <- function(article)
   CTVs <- NULL
   if (any(ctvsi > 0)) {
     wctvsi <- which(ctvsi > 0)
-    CTVmat <- cbind(i=rep(wctvsi, sapply(ctvs[wctvsi], nrow)), do.call("rbind", ctvs[wctvsi]))
+    CTVmat <- cbind(i=rep(wctvsi, sapply(ctvs[wctvsi], nrow)),
+      do.call("rbind", ctvs[wctvsi]))
     CTVs <- apply(CTVmat, 1, function(row) {
-      pkg <- str_sub(tex[row[1]], row[2]+5, row[3]-1)
-      paste0("<a href=\"https://CRAN.R-project.org/view=", pkg, "\" target=\"_blank\">", pkg, "</a>")
+      str_sub(tex[row[1]], row[2]+5, row[3]-1)
       })
   }
   list(CRANpkgs=CRANpkgs, BIOpkgs=BIOpkgs, CTVs=CTVs)
@@ -213,14 +181,22 @@ get_md_from_pdf <- function(from)
 {
    toc <- pdftools::pdf_toc(from)
    title <- toc$children[[1L]]$title
+   bibtitle <- str_wrap(title, width=60, exdent=10)
    text <- pdftools::pdf_text(from)
    t1s <- strsplit(gsub("           ", "", text[1]), "\\n")[[1L]]
    abs_ <- grep("^Abstract", t1s)
    aut0 <- paste(t1s[grep("^by", t1s):(abs_-1L)], collapse=" ")
-   author <- substring(aut0, 4, nchar(aut0))
-   abs0 <- paste(t1s[abs_:(grep(paste0("^", toc$children[[1L]]$children[[1L]]$title), t1s)-1L)], collapse=" ")
+   aut1 <- str_sub(aut0, 4, str_length(aut0))
+   aut2 <- str_replace_all(aut1, ", and ", ", ")
+   aut3 <- str_replace_all(aut2, " and ", ", ")
+   author <- unlist(str_split(aut3, ", "))
+   bibauthor <- str_wrap(paste(author, collapse=" and "), width=60, exdent=10)
+   abs0 <- paste(t1s[abs_:(grep(paste0("^",
+     toc$children[[1L]]$children[[1L]]$title), t1s)-1L)], collapse=" ")
    abstract <- substring(abs0, 10, nchar(abs0))
-   list(author=author, title=title, abstract=abstract)
+   res <- list(author=author, title=title, abstract=abstract,
+     bibtitle=bibtitle, bibauthor=bibauthor)
+   res
 }
 
 #' Build article from LaTeX
@@ -266,8 +242,10 @@ online_metadata_for_article <- function(x) {
     landing <- str_sub(x$slug, 1L, 5L) == "RJ-20"
     res <- c(list(
         title = pdf_list$title,
+        bibtitle = pdf_list$bibtitle,
         slug = x$slug,
         author = pdf_list$author,
+        bibauthor = pdf_list$bibauthor,
         abstract = pdf_list$abstract,
         acknowledged = format(x$status[[2L]]$date),
         online = format(Sys.Date())

@@ -215,3 +215,9 @@ parse_status <- function(x) {
   status(status = status, date = date, comments = comments)
 }
 
+as.data.frame.status_list <- function(status_list) {
+  ml <- vector(mode="list", length=length(status_list))
+  for (i in seq(along=ml)) ml[[i]] <- as.data.frame(unclass(status_list[[i]]))
+  do.call("rbind", ml)
+}
+
