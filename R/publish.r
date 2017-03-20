@@ -114,12 +114,6 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
   invisible(TRUE)
 }
 
-#---
-#layout: landing
-#issue: accepted
-#slug: RJ-2017-001
-#---
-
 
 make_landing <- function(article_metadata, issue){
   slug <- article_metadata$slug
@@ -128,16 +122,16 @@ make_landing <- function(article_metadata, issue){
 }
 
 
-get_refs_from_tex <- function(article) 
+get_refs_from_tex <- function(article_path) 
 {
-  RJw <- readLines(paste0(article$path, "/RJwrapper.tex"))
+  RJw <- readLines(paste0(article_path, "/RJwrapper.tex"))
   str_search_inp <- "((\\\\input\\{)([-a-zA-Z0-9_\\.]*)(\\}))"
   inp_str <- c(na.omit(str_trim(str_extract(RJw, str_search_inp))))
   inps <- c(str_locate(inp_str, "((\\{)([-a-zA-Z0-9_\\.]*)(\\}))"))
   inp_tex <- str_sub(inp_str, inps[1]+1, inps[2]-1)
   if (str_sub(inp_tex, str_length(inp_tex)-3, str_length(inp_tex)) != ".tex")
     inp_tex <- paste0(inp_tex, ".tex")
-  tex <- readLines(paste0(article$path, "/", inp_tex))
+  tex <- readLines(paste0(article_path, "/", inp_tex))
   Cp_str <- "((\\\\CRANpkg\\{)([a-zA-Z0-9\\.]*)(\\}))"
   Cps <- str_locate_all(tex, Cp_str)
   Cpsi <- sapply(Cps, nrow)
@@ -185,7 +179,7 @@ get_md_from_pdf <- function(from)
    text <- pdftools::pdf_text(from)
    t1s <- strsplit(gsub("           ", "", text[1]), "\\n")[[1L]]
    abs_ <- grep("^Abstract", t1s)
-   aut0 <- paste(t1s[grep("^by", t1s):(abs_-1L)], collapse=" ")
+   aut0 <- paste(t1s[grep("^by", t1s)[1]:(abs_-1L)], collapse=" ")
    aut1 <- str_sub(aut0, 4, str_length(aut0))
    aut2 <- str_replace_all(aut1, ", and ", ", ")
    aut3 <- str_replace_all(aut2, " and ", ", ")
@@ -238,8 +232,11 @@ online_metadata_for_article <- function(x) {
 #                    }, FUN.VALUE = character(1L))
     from <- file.path(x$path, "RJwrapper.pdf")
     pdf_list <- get_md_from_pdf(from)
-    refs_list <- get_refs_from_tex(x)
+    refs_list <- get_refs_from_tex(x$path)
+    if (!is.null(refs_list$CRANpkgs))
+      refs_list$CTV_rev <- rev_dep_ctv(refs_list$CRANpkgs)
     landing <- str_sub(x$slug, 1L, 5L) == "RJ-20"
+    sl <- as.data.frame(x$status)
     res <- c(list(
         title = pdf_list$title,
         bibtitle = pdf_list$bibtitle,
@@ -247,8 +244,8 @@ online_metadata_for_article <- function(x) {
         author = pdf_list$author,
         bibauthor = pdf_list$bibauthor,
         abstract = pdf_list$abstract,
-        acknowledged = format(x$status[[2L]]$date),
-        online = format(Sys.Date())
+        acknowledged = format(sl$date[which(sl$status == "acknowledged")]),
+        online = format(sl$date[max(which(sl$status == "online"))])
         ), refs_list[!sapply(refs_list, is.null)])
      if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
      res
@@ -293,4 +290,8 @@ bundle <- function(article, dest_path) {
 #givenNames = findGivenNames(auths_accept)
 #res <- genderize(auths_accept, genderDB = givenNames)
 #table(res$gender)
+#auths_accept <- lapply(config$issues, function(x) unlist(lapply(x$articles, "[[", "author")))
+#names(auths_accept) <- sapply(config$issues, function(x) x$issue)
+#tab_all <- lapply(auths_accept, function(x) {givenNames <- findGivenNames(x); genderize(x, genderDB = givenNames)})
+#do.call("rbind", sapply(tab_all, function(x) table(x$gender)))
 

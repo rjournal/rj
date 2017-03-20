@@ -14,6 +14,7 @@ Imports:
     gmailr,
     pdftools
 Suggests:
-    testthat
+    testthat,
+    ctv
 Depends:
     R (>= 3.2.0)
