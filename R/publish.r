@@ -125,9 +125,9 @@ make_landing <- function(article_metadata, issue){
 get_refs_from_tex <- function(article_path) 
 {
   RJw <- readLines(paste0(article_path, "/RJwrapper.tex"))
-  str_search_inp <- "((\\\\input\\{)([-a-zA-Z0-9_\\.]*)(\\}))"
+  str_search_inp <- "((\\\\input\\{)([-a-zA-Z0-9_\\+\\.]*)(\\}))"
   inp_str <- c(na.omit(str_trim(str_extract(RJw, str_search_inp))))
-  inps <- c(str_locate(inp_str, "((\\{)([-a-zA-Z0-9_\\.]*)(\\}))"))
+  inps <- c(str_locate(inp_str, "((\\{)([-a-zA-Z0-9_\\+\\.]*)(\\}))"))
   inp_tex <- str_sub(inp_str, inps[1]+1, inps[2]-1)
   if (str_sub(inp_tex, str_length(inp_tex)-3, str_length(inp_tex)) != ".tex")
     inp_tex <- paste0(inp_tex, ".tex")
@@ -177,17 +177,23 @@ get_md_from_pdf <- function(from)
    title <- toc$children[[1L]]$title
    bibtitle <- str_wrap(title, width=60, exdent=10)
    text <- pdftools::pdf_text(from)
-   t1s <- strsplit(gsub("           ", "", text[1]), "\\n")[[1L]]
-   abs_ <- grep("^Abstract", t1s)
-   aut0 <- paste(t1s[grep("^by", t1s)[1]:(abs_-1L)], collapse=" ")
-   aut1 <- str_sub(aut0, 4, str_length(aut0))
+   
+   t1s <- str_split(text[1], "\\n")[[1L]]
+   abs_ <- which(!is.na(str_locate(t1s, "^[ ]*Abstract")[, "start"]))
+   aut0 <- paste(t1s[which(!is.na(str_locate(t1s, "^[ ]*by")[, "start"]))[1]:(abs_-1L)], collapse=" ")
+   aut1 <- str_trim(str_replace(aut0, "by", ""))
    aut2 <- str_replace_all(aut1, ", and ", ", ")
    aut3 <- str_replace_all(aut2, " and ", ", ")
    author <- unlist(str_split(aut3, ", "))
    bibauthor <- str_wrap(paste(author, collapse=" and "), width=60, exdent=10)
-   abs0 <- paste(t1s[abs_:(grep(paste0("^",
-     toc$children[[1L]]$children[[1L]]$title), t1s)-1L)], collapse=" ")
-   abstract <- substring(abs0, 10, nchar(abs0))
+   if (length(toc$children[[1L]]$children) >= 1L) {
+     first_section <- which(!is.na(str_locate(t1s, paste0("^[ ]*",
+       str_sub(toc$children[[1L]]$children[[1L]]$title, 1L, 20L)))[, "start"]))
+   } else {
+     first_section <- abs_ + 4L
+   }
+   abs0 <- paste(t1s[abs_:(first_section-1L)], collapse=" ")
+   abstract <- str_replace_all(substring(abs0, 10, nchar(abs0)), "[-][ ]", "")
    res <- list(author=author, title=title, abstract=abstract,
      bibtitle=bibtitle, bibauthor=bibauthor)
    res
