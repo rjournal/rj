@@ -18,7 +18,7 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
     i <- 1L
   }
   arts0 <- list.files(issue)
-  arts <- arts0[!is.na(str_match(arts0, "^20[01][0-9]-[0-9]*"))]
+  arts <- arts0[!is.na(str_match(arts0, "^20[01][0-9]-[0-9][0-9][0-9]*"))]
   for (art in arts) {
     if (yr_id < "2013") {
       article <- list()
