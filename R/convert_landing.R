@@ -7,6 +7,16 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
   yr_id <- str_sub(issue, 1L, 4L)
   share_path <- normalizePath("../../share", mustWork = TRUE)
   web_path <- normalizePath("../../rjournal.github.io", mustWork = TRUE)
+
+  config <- yaml.load_file(file.path(web_path, "_config.yml"))
+  issues <- sapply(config$issues, function(x) x$issue)
+  this_issue <- which(issues == issue)
+  if (length(this_issue) == 0L) stop("issue not in _config.yml")
+  conf_articles <- config$issues[[this_issue]]$articles
+  has_slug <- sapply(conf_articles, function(x) !is.null(x$slug))
+  has_slug_ptr <- character(length(has_slug))
+  has_slug_ptr[has_slug] <- sapply(conf_articles[has_slug], function(x) x$slug)
+
   if (!dir.exists(file.path(web_path, "archive", yr_id)) 
     && action == "report_and_commit")
     dir.create(file.path(web_path, "archive", yr_id))
@@ -37,6 +47,7 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
       if (!file.exists(localfrom)) stop(localfrom, " not found")
     } else {
       article <- as.article(file.path(issue, art))
+      if (empty(article$slug)) stop("no slug in ", issue, " ", art)
     }
     if (!empty(article$slug)) {
       old_slug <- str_to_lower(article$slug)
@@ -75,10 +86,12 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
       slug <- article$slug
     }
     landing_path <- file.path(web_path, "archive", yr_id, slug)
+    if (!dir.exists(landing_path) && action == "report_and_commit")
+      dir.create(landing_path)
 
-    cat(paste0(issue, ": article: ", art, ", yr_id: ", yr_id, ", slug: ", slug, "\n"))
+#    cat(paste0(issue, ": article: ", art, ", yr_id: ", yr_id, ", slug: ", slug, "\n"))
 #    cat(paste0("  from: ", from, "\n"))
-    cat(paste0("  landing_path: ", landing_path, "\n"))
+#    cat(paste0("  landing_path: ", landing_path, "\n"))
 
     if (yr_id < "2013") {
       file.copy(localfrom, file.path(issue, art, "oRJwrapper.pdf"))
@@ -87,15 +100,15 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
       pdf_list <- get_md_from_pdf(localfrom)
       file.copy(file.path(issue, art, "oRJwrapper.pdf"), localfrom)
 
-      cat(pdf_list$bibtitle, "\n")
-      cat(pdf_list$bibauthor, "\n")
-      cat(str_wrap(pdf_list$abstract, width=70), "\n")
+#      cat(pdf_list$bibtitle, "\n")
+#      cat(pdf_list$bibauthor, "\n")
+#      cat(str_wrap(pdf_list$abstract, width=70), "\n")
 
       refs_list <- get_refs_from_tex(file.path(issue, art))
       if (!is.null(refs_list$CRANpkgs))
         refs_list$CTV_rev <- rev_dep_ctv(refs_list$CRANpkgs)
 
-      print(refs_list)
+#      print(refs_list)
        
       metadata <- c(list(
         title = pdf_list$title,
@@ -116,10 +129,18 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
         aus <- str_replace(aus, "[é]", "e")
       if ("Bååth" %in% aus) 
         aus <- str_replace_all(aus, "[å]", "aa")
+      pub_file <- NULL
+      if (issue == "2009-2" && art == "2009-07") aus <- "Coeurjolly"
+      if (issue == "2012-2" && art == "2011-22")
+        pub_file <- "RJournal_2012-2_Murrell+Ly.pdf"
+      if (issue == "2012-2" && art == "2011-32")
+        pub_file <- "RJournal_2012-2_Murrell.pdf"
+      if (issue == "2012-2" && art == "2011-35") 
+        pub_file <- "RJournal_2012-2_Murrell2.pdf"
 
-      pub_file <- fls[which(sapply(lapply(nms, function(x)
-        match(unlist(str_split(x, " ")), aus)),
-       function(y) any(!is.na(y))))]
+      if (is.null(pub_file)) pub_file <- fls[which(sapply(lapply(nms,
+        function(x) match(unlist(str_split(x, " ")), aus)),
+        function(y) any(!is.na(y))))]
 
       if (length(pub_file) == 0) {
         cat(nms, "\n")
@@ -127,31 +148,36 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
         stop(issue, " ", art, " no match")
       }
       
-      cat(issue, art, paste(metadata$author, collapse=" "), "\n")
-      cat(pub_file, "\n")
+#      cat(issue, art, paste(metadata$author, collapse=" "), "\n")
+#      cat(pub_file, "\n")
+
       from <- file.path(web_path, "archive", issue, pub_file)
       if (!file.exists(from))
         stop("published file :", pub_file, "not found in ", issue)
-      cat(from, "\n")
+
+      metadata <- c(metadata, list(old_slug = str_sub(pub_file, 17L,
+        str_length(pub_file)-4L)))
+#      cat(from, "\n")
 
     } else {
       pdf_list <- get_md_from_pdf(file.path(issue, art, "RJwrapper.pdf"))
 
-      cat(pdf_list$bibtitle, "\n")
-      cat(pdf_list$bibauthor, "\n")
-      cat(str_wrap(pdf_list$abstract, width=70), "\n")
+#      cat(pdf_list$bibtitle, "\n")
+#      cat(pdf_list$bibauthor, "\n")
+#      cat(str_wrap(pdf_list$abstract, width=70), "\n")
 
       refs_list <- get_refs_from_tex(article$path)
       if (!is.null(refs_list$CRANpkgs))
         refs_list$CTV_rev <- rev_dep_ctv(refs_list$CRANpkgs)
 
-      print(refs_list)
+#      print(refs_list)
        
       sl <- as.data.frame(article$status)
       metadata <- c(list(
         title = pdf_list$title,
         bibtitle = pdf_list$bibtitle,
         slug = slug,
+        old_slug = old_slug,
         author = pdf_list$author,
         bibauthor = pdf_list$bibauthor,
         abstract = pdf_list$abstract,
@@ -160,9 +186,20 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
 
         ), refs_list[!sapply(refs_list, is.null)])
       metadata <- c(metadata, list(landing = str_sub(slug, 4L, 7L)))
-      cat(from, "\n")
+#      cat(from, "\n")
 
     }
+    conf_art <- which(has_slug_ptr == metadata$old_slug)
+#    cat(has_slug_ptr, "\n")
+#    cat(metadata$old_slug, "\n")
+    if (length(conf_art) == 0L) stop("config slug mismatch")
+
+    cat("ptr: ", conf_art, " derived slug: ", metadata$old_slug, "\n")
+    cat(metadata$title, "\n")
+    cat(conf_articles[[conf_art]]$title, "\n")
+    cat(metadata$author, "\n")
+    cat(conf_articles[[conf_art]]$author, "\n")
+    cat(from, "\n")
 
     
   }
@@ -170,6 +207,15 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
 
 
 }
+
+#(2016L-2009L)+1L
+#config <- yaml.load_file("../../rjournal.github.io/_config.yml")
+#issues <- sapply(config$issues, function(x) x$issue)
+#has_slug <- sapply(config$issues[[which(issues == "2013-1")]]$articles, function(x) !is.null(x$slug))
+#has_slug_ptr <- character(length(has_slug))
+#has_slug_ptr[has_slug] <- sapply(config$issues[[which(issues == "2013-1")]]$articles[has_slug], function(x) x$slug)
+#config$issues[[which(issues == "2013-1")]]$articles[[which(has_slug_ptr == "kahle")]]
+
 
 rev_dep_ctv <- function(pkgs) {
 
