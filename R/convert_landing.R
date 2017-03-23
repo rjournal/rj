@@ -201,20 +201,57 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
     cat(conf_articles[[conf_art]]$author, "\n")
     cat(from, "\n")
 
-    
+    if (action == "report_and_commit") {
+      article_landing <- make_landing(metadata, issue)
+      writeLines(article_landing, file.path(landing_path, "index.html"))
+      message("Creating landing page")
+
+      to <- file.path(landing_path, paste0(slug, ".pdf"))
+      file.copy(from, to, overwrite = TRUE)
+      message("Creating ", basename(to))
+
+      article_config_content <- list(
+        slug=metadata$slug,
+        old_slug=metadata$old_slug,
+        title=metadata$title,
+        bibtitle=metadata$bibtitle,
+        author=metadata$author,
+        bibauthor=metadata$bibauthor,
+        landing=metadata$landing,
+        abstract=metadata$abstract
+      )
+      if (!is.null(conf_articles[[conf_art]]$pages))
+        article_config_content <- c(article_config_content,
+          list(pages=conf_articles[[conf_art]]$pages))
+      if (!is.null(metadata$acknowledged))
+        article_config_content <- c(article_config_content,
+          list(acknowledged=metadata$acknowledged))
+      if (!is.null(metadata$online))
+        article_config_content <- c(article_config_content,
+          list(online=metadata$online))
+      if (!is.null(metadata$CRANpks))
+        article_config_content <- c(article_config_content,
+          list(CRANpks=metadata$CRANpks))
+      if (!is.null(metadata$BIOpks))
+        article_config_content <- c(article_config_content,
+          list(BIOpks=metadata$BIOpks))
+      if (!is.null(metadata$CTVs))
+        article_config_content <- c(article_config_content,
+          list(CTVs=metadata$CTVs))
+      if (!is.null(metadata$CTV_rev))
+        article_config_content <- c(article_config_content,
+          list(CTV_rev=metadata$CTV_rev))
+
+      conf_articles[[conf_art]] <- article_config_content
+    }
   }
-  
 
-
+  if (action == "report_and_commit") {
+    config$issues[[this_issue]]$articles
+    writeLines(as.yaml(config), yaml_path)
+  }
+  invisible(TRUE)
 }
-
-#(2016L-2009L)+1L
-#config <- yaml.load_file("../../rjournal.github.io/_config.yml")
-#issues <- sapply(config$issues, function(x) x$issue)
-#has_slug <- sapply(config$issues[[which(issues == "2013-1")]]$articles, function(x) !is.null(x$slug))
-#has_slug_ptr <- character(length(has_slug))
-#has_slug_ptr[has_slug] <- sapply(config$issues[[which(issues == "2013-1")]]$articles[has_slug], function(x) x$slug)
-#config$issues[[which(issues == "2013-1")]]$articles[[which(has_slug_ptr == "kahle")]]
 
 
 rev_dep_ctv <- function(pkgs) {
