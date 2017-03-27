@@ -20,13 +20,7 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
   if (!dir.exists(file.path(web_path, "archive", yr_id)) 
     && action == "report_and_commit")
     dir.create(file.path(web_path, "archive", yr_id))
-  current_dirs <- list.files(file.path(web_path, "archive", yr_id))
   i <- 0L
-  if (length(current_dirs) > 0) {
-    if (any(nchar(current_dirs) != 11L)) stop("landing dir-name length error")
-  } else {
-    i <- 1L
-  }
 
   if (yr_id < "2013") {
     fls0 <- list.files(file.path(web_path, "archive", issue))
@@ -41,6 +35,14 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
   arts <- arts0[!is.na(str_match(arts0, "^20[01][0-9]-[0-9][0-9][0-9]*"))]
 
   for (art in arts) {
+    current_dirs <- list.files(file.path(web_path, "archive", yr_id))
+    if (length(current_dirs) > 0) {
+      if (any(nchar(current_dirs) != 11L)) stop("landing dir-name length error")
+    }
+    if (action != "report_and_commit" && i == 0) {
+      if (length(current_dirs) > 0) i <- length(current_dirs)
+    }
+
     if (yr_id < "2013") {
       article <- list()
       localfrom <- file.path(issue, art, "RJwrapper.pdf")
@@ -76,8 +78,12 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
       }
     }
     if (empty(article$slug)) {
-      if (i == 0L) 
-        i <- as.integer(max(as.integer(str_sub(current_dirs, 9L, 11L)))) + 1L
+      if (action != "report_and_commit") {
+        i <- i + 1L
+      } else {
+        i <- ifelse(length(current_dirs) > 0,
+          as.integer(max(as.integer(str_sub(current_dirs, 9L, 11L)))) + 1L, 1L)
+      }
       next_dir <- formatC(i, format="d", flag="0", width=3L)
       slug <- paste0("RJ-", yr_id, "-", next_dir)
       if (action == "report_and_commit") 
@@ -86,6 +92,7 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
       slug <- article$slug
     }
     landing_path <- file.path(web_path, "archive", yr_id, slug)
+    cat(paste0("landing_path: ", landing_path, "\n"))
     if (!dir.exists(landing_path) && action == "report_and_commit")
       dir.create(landing_path)
 
@@ -200,6 +207,7 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
     cat(metadata$author, "\n")
     cat(conf_articles[[conf_art]]$author, "\n")
     cat(from, "\n")
+    print(names(metadata))
 
     if (action == "report_and_commit") {
       article_landing <- make_landing(metadata, issue)
@@ -209,8 +217,9 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
       to <- file.path(landing_path, paste0(slug, ".pdf"))
       file.copy(from, to, overwrite = TRUE)
       message("Creating ", basename(to))
+    }
 
-      article_config_content <- list(
+    article_config_content <- list(
         slug=metadata$slug,
         old_slug=metadata$old_slug,
         title=metadata$title,
@@ -219,36 +228,40 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
         bibauthor=metadata$bibauthor,
         landing=metadata$landing,
         abstract=metadata$abstract
-      )
-      if (!is.null(conf_articles[[conf_art]]$pages))
+    )
+    if (!is.null(conf_articles[[conf_art]]$pages))
         article_config_content <- c(article_config_content,
           list(pages=conf_articles[[conf_art]]$pages))
-      if (!is.null(metadata$acknowledged))
+    if (!is.null(metadata$acknowledged))
         article_config_content <- c(article_config_content,
           list(acknowledged=metadata$acknowledged))
-      if (!is.null(metadata$online))
+    if (!is.null(metadata$online))
         article_config_content <- c(article_config_content,
           list(online=metadata$online))
-      if (!is.null(metadata$CRANpks))
+    if (!is.null(metadata$CRANpkgs))
         article_config_content <- c(article_config_content,
-          list(CRANpks=metadata$CRANpks))
-      if (!is.null(metadata$BIOpks))
+          list(CRANpkgs=metadata$CRANpkgs))
+    if (!is.null(metadata$BIOpkgs))
         article_config_content <- c(article_config_content,
-          list(BIOpks=metadata$BIOpks))
-      if (!is.null(metadata$CTVs))
+          list(BIOpkgs=metadata$BIOpkgs))
+    if (!is.null(metadata$CTVs))
         article_config_content <- c(article_config_content,
           list(CTVs=metadata$CTVs))
-      if (!is.null(metadata$CTV_rev))
+    if (!is.null(metadata$CTV_rev))
         article_config_content <- c(article_config_content,
           list(CTV_rev=metadata$CTV_rev))
+
+    print(str(article_config_content))
+
+    if (action == "report_and_commit") {
 
       conf_articles[[conf_art]] <- article_config_content
     }
   }
 
   if (action == "report_and_commit") {
-    config$issues[[this_issue]]$articles
-    writeLines(as.yaml(config), yaml_path)
+    config$issues[[this_issue]]$articles <- conf_articles
+    writeLines(as.yaml(config), file.path(web_path, "_config.yml"))
   }
   invisible(TRUE)
 }
