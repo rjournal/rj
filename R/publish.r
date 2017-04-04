@@ -8,7 +8,7 @@
 #' @importFrom yaml yaml.load_file
 #' @param article article id
 #' @param home Location of the articles directory
-publish <- function(article, home = getwd(), legacy=TRUE) {
+publish <- function(article, home = getwd(), legacy=FALSE) {
   article <- as.article(article)
 
   # Make sure we're in the right place
@@ -106,8 +106,22 @@ publish <- function(article, home = getwd(), legacy=TRUE) {
   yaml_path <- file.path(web_path, "_config.yml")
   message("Updating ", yaml_path)
   config <- yaml.load_file(yaml_path)
-  config$issues[[1L]]$articles <- c(config$issues[[1L]]$articles,
-                                    list(article_metadata))
+  conf_articles <- config$issues[[1L]]$articles
+  has_slug <- sapply(conf_articles, function(x) !is.null(x$slug))
+  if (length(has_slug) > 0L) {
+    has_slug_ptr <- character(length(has_slug))
+    has_slug_ptr[has_slug] <- sapply(conf_articles[has_slug],
+      function(x) x$slug)
+    this_slug <- which(slug == has_slug_ptr)
+    if (length(this_slug) == 0L) {
+      conf_articles <- c(conf_articles, list(article_metadata))
+    } else {
+      conf_articles[[this_slug]] <- article_metadata
+    }
+  } else {
+    conf_articles <- c(conf_articles, list(article_metadata))
+  }
+  config$issues[[1L]]$articles <- conf_articles
   writeLines(as.yaml(config), yaml_path)
   
   message("Remember to check changes into git")
