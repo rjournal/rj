@@ -5,7 +5,7 @@ update_bib <- function(bibfile) {
     basename(bibfile))
   file.copy(bibfile, safe, overwrite=TRUE)
   biblist <- read.bib(safe)
-  fixed_biblist <- fix_bib(biblist)
+  fixed_biblist <- fix_bib(biblist, shortcites=FALSE, doi=FALSE)
   for(i in 1:length(fixed_biblist)) {
     if(!is.null(fixed_biblist[i]$doi)) {
       if (!is.null(fixed_biblist[i]$url)) fixed_biblist[i]$url <- NULL
