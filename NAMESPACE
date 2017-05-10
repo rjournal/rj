@@ -1,6 +1,8 @@
 importFrom("stats", "setNames")
 importFrom("utils", "URLencode", "as.person", "browseURL",
              "capture.output", "type.convert", "zip")
+importFrom("jss", "fix_bib")
+importFrom("bibtex", "read.bib", "write.bib")
 S3method("[[",status_list)
 S3method(c,status)
 S3method(empty,"NULL")
