@@ -43,10 +43,10 @@ issue_file <- function(id) {
     file.path(issue_dir(id), paste0("RJ-", id, ".tex"))
 }
 
-make_proof <- function(id, share_path = file.path("..", "share")) {
+make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
     dir <- issue_dir(id)
-    if (file.exists(dir))
-        stop("Proof ", id, " already exists")
+    if (!file.exists(dir))
+#        stop("Proof ", id, " already exists")
     dir.create(dir)
 
     prev_id <- previous_id(id)
@@ -66,12 +66,16 @@ make_proof <- function(id, share_path = file.path("..", "share")) {
     }
     issue$volnum <- number
     issue$year <- issue_year(id)
-    issue$month <- switch(number, "1" = "July", "2" = "December")
+    issue$month <- switch(number, "1" = "June", "2" = "December")
 
     arts <- accepted_articles()
     ready <- filter_status(arts, "online")
     for (art in ready) {
-        system(paste("git mv", art$path, file.path(dir, art$id)))
+        if (exec) {
+          system(paste("git mv", art$path, file.path(dir, format(art$id))))
+        } else {
+          cat(art$path, file.path(dir, format(art$id)), "\n")
+        }
     }
     
     message("Do not forget to update the editorial board in ", issue_file)
