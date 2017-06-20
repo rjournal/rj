@@ -113,9 +113,9 @@ convert_bbl_tex <- function(tex_path) {
     bbl <- readLines(bbl_path)
     bib_line <- which(has_bib)
     out <- insert_replace(tex, bib_line, bbl)
-    writeLines(out, tex_path)
+    writeLines(out, sub("/", "/bbl-", tex_path))
     
-    tex_path
+    sub("/", "/bbl-", tex_path)
 }
 
 convert_one_bbl <- function(id) {
@@ -150,7 +150,7 @@ convert_issue_bbl <- function(id) {
 build_include <- function(tex) {
     paste0(
         "\\begin{article}\n", 
-        "\\subimport{", basename(dirname(tex)), "/}{", basename(tex), "}\n",
+        "\\subimport{", basename(dirname(tex)), "/}{", basename(sub("/", "/bbl-", tex)), "}\n",
         "\\end{article}\n",
         "\\newpage\n")
 }
