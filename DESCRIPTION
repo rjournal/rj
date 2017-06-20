@@ -1,6 +1,6 @@
 Type: Package
 Package: rj
-Version: 0.2.5
+Version: 0.2.6
 Title: Tools for managing the R journal
 Description: This package provides useful functions for the editors of the
     R journal.

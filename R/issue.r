@@ -104,7 +104,7 @@ convert_bbl_tex <- function(tex_path) {
     
     ## Build tex to make sure bib up-to-date message(share_path)
     message("Building ", tex_path)
-    rj::build_latex(dirname(tex_path), clean=FALSE, share_path=getwd())
+    tools::texi2pdf("RJwrapper.tex", clean=FALSE, texinput=getwd())
     
     bbl_path <- file.path(dirname(tex_path), "RJwrapper.bbl")
     if (!file.exists(bbl_path)) stop("Can't find ", bbl_path)
