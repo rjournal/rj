@@ -338,7 +338,7 @@ page_bounds <- function(id) {
     pdf_path <- replace_ext(toc_path, "pdf")
     pages <- pdftools::pdf_info(pdf_path)$pages
     end <- c(start[-1L] - 1L, pages)
-    end[1L] <- start[1L] ## For editorial (don't count extra blank page)
+#    end[1L] <- start[1L] ## For editorial (don't count extra blank page)
     data.frame(start, end)
 }
 
