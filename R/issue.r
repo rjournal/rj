@@ -85,6 +85,45 @@ insert_replace <- function(tex, at, lines) {
     c(tex[1:(at - 1)], lines, tex[(at + 1):length(tex)])
 }
 
+insert_replace_n <- function(tex, at, lines, n) {
+    c(tex[1:(at - 1)], lines, tex[(at + n):length(tex)])
+}
+
+#run in Proofs/issue-id
+update_RJwrapper_page_no <- function(art_id, start, vol, no, yr, mon) {
+  tex <- read_tex(file.path(art_id, "RJwrapper.tex"))
+  pos <- grepl(cmd_regex("sectionhead"), tex)
+  if (sum(pos) > 1L) {
+    stop("Multiple \\sectionhead in ", file.path(art_id, "RJwrapper.tex"))
+  }
+  if (!any(pos)) {
+    stop("No \\sectionhead found in ", file.path(art_id, "RJwrapper.tex"))
+  }
+  writeLines(tex, file.path(art_id, "orig_RJwrapper.tex"))
+  n <- 5
+  insert <- c("\\sectionhead{Contributed research article}", 
+    paste0("\\volume{", vol, "}"),
+    paste0("\\volnumber{", no, "}"),
+    paste0("\\year{", yr, "}"), 
+    paste0("\\month{", mon, "}"),
+    paste0("\\setcounter{page}{", start, "}"))
+#cat(which(pos), n, "\n")
+  out <- insert_replace_n(tex, which(pos), insert, n)
+  writeLines(out, file.path(art_id, "RJwrapper.tex"))
+  insert[6]
+}
+
+#run in Proofs/issue-id
+copy_RJwrapper_pdf_slug_archive <- function(art_id, arch_path, arch_yr) {
+  slug <- as.article(art_id)$slug
+  if (unlist(strsplit(slug, "-"))[2] != arch_yr)
+    stop("wrong slug year:", unlist(strsplit(slug, "-"))[2])
+  src <- file.path(art_id, "RJwrapper.pdf")
+  dest <- file.path(arch_path, arch_yr, slug, paste0(slug, ".pdf"))
+  file.copy(src, dest, overwrite=TRUE)
+  dest
+}
+
 convert_bbl_tex <- function(tex_path) {
     tex <- read_tex(tex_path)
     has_bib <- grepl(cmd_regex("bibliography"), tex)
