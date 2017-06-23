@@ -51,7 +51,7 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
 
     prev_id <- previous_id(id)
     prev_dir <- file.path("Proofs", prev_id)
-    inherited_files <- c("Rdsub.tex", "Rlogo.png", "Rlogo-4.png",
+    inherited_files <- c("Rdsub.tex", "Rlogo.png", "Rlogo-5.png",
                          "editorial.tex")
     file.copy(file.path(prev_dir, inherited_files), dir)
     file.copy(file.path(share_path, "RJournal.sty"), dir)
@@ -220,6 +220,7 @@ build_issue <- function(id) {
     in_dir(dirname(issue_file), system(paste("pdflatex", basename(issue_file))))
 }
 
+## run from articles
 init_archive_path <- function(id, web_path) {
     archive_path <- file.path(web_path, "archive", id)
     if (file.exists(archive_path))
@@ -233,7 +234,7 @@ init_archive_path <- function(id, web_path) {
         writeLines(c("---", as.yaml(header), "---"), file)
     }
     
-    header <- list(layout = "issue-new",
+    header <- list(layout = "issue_landing-new",
                    title = paste0("Volume ", issue$volume, "/", issue$volnum,
                                   ", ", issue$month, " ", issue$year),
                    issue = id)
@@ -248,15 +249,19 @@ init_archive_path <- function(id, web_path) {
     archive_path
 }
 
+## run from articles
 cleanup_accepted <- function(id, web_path) {
     slugs <- lapply(article_paths(id), function(a) as.article(a)$slug)
 
-    obsolete_pdfs <- file.path(web_path, "archive", "accepted",
-                               paste0(slugs, ".pdf"))
-    unlink(obsolete_pdfs)
+print(slugs)
+
+#    obsolete_pdfs <- file.path(web_path, "archive", "accepted",
+#                               paste0(slugs, ".pdf"))
+#    unlink(obsolete_pdfs)
 
     config_path <- file.path(web_path, "_config.yml")
     config <- yaml.load_file(config_path)
+    writeLines(as.yaml(config), file.path(web_path, "safe_config.safe"))
     config_arts <- config$issues[[1L]]$articles
     config_slugs <- vapply(config_arts, `[[`, character(1L), "slug")
     config$issues[[1L]]$articles <- config_arts[!config_slugs %in% slugs]
