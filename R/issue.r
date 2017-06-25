@@ -443,3 +443,12 @@ publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io")) {
     write_issue_metadata(web_path, md)
     update_layout(id, web_path)
 }
+
+
+#arts0 <- list.files(patt="^201[0-9]-[0-9][0-9]*")
+#arts <- strsplit(arts0, "-")
+#arts1 <- t(sapply(arts, as.integer))
+#arts2 <- arts0[order(arts1[,1], arts1[,2])]
+#rj:::online_metadata_for_article(as.article("2015-17"), final=TRUE)
+
+

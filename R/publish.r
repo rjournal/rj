@@ -136,7 +136,7 @@ make_landing <- function(article_metadata, issue){
 }
 
 
-get_refs_from_tex <- function(article_path) 
+get_refs_from_tex <- function(article_path, final=FALSE) 
 {
   RJw <- readLines(paste0(article_path, "/RJwrapper.tex"))
   str_search_inp <- "((\\\\input\\{)([-a-zA-Z0-9_\\+\\.]*)(\\}))"
@@ -182,10 +182,18 @@ get_refs_from_tex <- function(article_path)
       str_sub(tex[row[1]], row[2]+5, row[3]-1)
       })
   }
-  list(CRANpkgs=CRANpkgs, BIOpkgs=BIOpkgs, CTVs=CTVs)
+  res <- list(CRANpkgs=CRANpkgs, BIOpkgs=BIOpkgs, CTVs=CTVs)
+  if (final) {
+    str_search_start <- "((\\\\setcounter\\{page\\}\\{)([0-9]*)(\\}))"
+    start_str <- c(na.omit(str_trim(str_extract(RJw, str_search_start))))
+    start0 <- c(str_locate(start_str, "((\\{)([0-9]*)(\\}))"))
+    start <- as.integer(str_sub(start_str, start0[1]+1, start0[2]-1))
+    attr(res, "start") <- start
+  }
+  res
 }
 
-get_md_from_pdf <- function(from)
+get_md_from_pdf <- function(from, final=FALSE)
 {
    toc <- pdftools::pdf_toc(from)
    title <- toc$children[[1L]]$title
@@ -210,6 +218,7 @@ get_md_from_pdf <- function(from)
    abstract <- str_replace_all(substring(abs0, 10, nchar(abs0)), "[-][ ]", "")
    res <- list(author=author, title=title, abstract=abstract,
      bibtitle=bibtitle, bibauthor=bibauthor)
+   if (final) attr(res, "len") <- pdftools::pdf_info(from)$pages
    res
 }
 
@@ -245,14 +254,19 @@ online_metadata <- function() {
   lapply(articles, online_metadata_for_article)
 }
 
-online_metadata_for_article <- function(x) {
+online_metadata_for_article <- function(x, final=FALSE) {
 #    names <- vapply(x$authors, function(x) {
 #                        format(as.person(x),
 #                               include = c("given", "family"))[[1]]
 #                    }, FUN.VALUE = character(1L))
     from <- file.path(x$path, "RJwrapper.pdf")
-    pdf_list <- get_md_from_pdf(from)
-    refs_list <- get_refs_from_tex(x$path)
+    pdf_list <- get_md_from_pdf(from, final=final)
+    refs_list <- get_refs_from_tex(x$path, final=final)
+    if (final) {
+      start <- attr(refs_list, "start")
+      len <- attr(pdf_list, "len")
+      pages <- c(start, start + (len - 1))
+    }
     if (!is.null(refs_list$CRANpkgs))
       refs_list$CTV_rev <- rev_dep_ctv(refs_list$CRANpkgs)
     landing <- str_sub(x$slug, 1L, 5L) == "RJ-20"
@@ -268,6 +282,7 @@ online_metadata_for_article <- function(x) {
         online = format(sl$date[max(which(sl$status == "online"))])
         ), refs_list[!sapply(refs_list, is.null)])
      if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
+     if (final) res <- c(res, list(pages = pages))
      res
 }
 
