@@ -444,11 +444,53 @@ publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io")) {
     update_layout(id, web_path)
 }
 
-
+# run in Proofs/<id>
 #arts0 <- list.files(patt="^201[0-9]-[0-9][0-9]*")
 #arts <- strsplit(arts0, "-")
 #arts1 <- t(sapply(arts, as.integer))
 #arts2 <- arts0[order(arts1[,1], arts1[,2])]
-#rj:::online_metadata_for_article(as.article("2015-17"), final=TRUE)
+#articles <- arts2
+#save(articles, file="articles.RData")
 
+#bib_keys <- list()
+# for (i in seq(along=articles)) {
+#bib_keys[[articles[i]]] <- rj:::find_stack_bib_keys(articles[i])
+
+#for (ii in seq(along=bib_keys)) { if(ii > 1) { nms <- names(bib_keys); cat(ii, nms[1], ":", nms[ii-1], "|", nms[i]); cat(" ", any(unlist(bib_keys[1:(ii-1)]) %in% bib_keys[[ii]])); cat("\n") }}
+#bib_keys[[i]][which(bib_keys[[i]] %in% unlist(bib_keys[1:(i-1)]))]
+#}
+
+
+# for (i in seq(along=articles)) {
+#rj:::convert_one_bbl(articles[i])
+#}
+
+#run from articles
+#pb_2017_1_contr <- rj:::page_bounds(<id>)[2:(length(articles)+1),]
+
+#pb_2017_1_contr$what <- articles
+#save(pb_2017_1_contr, file="Proofs/<id>/pb_2017_1_contr.RData")
+
+
+#load("pb_2017_1_contr.RData")
+
+#this_art <- 1L
+#rj:::update_RJwrapper_page_no(as.character(pb_2017_1_contr$what[this_art]), as.character(pb_2017_1_contr$start[this_art]), "9", "1", "2017", "June")
+#build_latex(as.character(pb_2017_1_contr$what[this_art]), "/home/rsb/proj/R-Journal/share")
+#this_art <- this_art + 1L
+
+#this_art <- 1L
+#rj:::copy_RJwrapper_pdf_slug_archive(as.character(pb_2017_1_contr$what[this_art]), "../../../rjournal.github.io/archive", "2017")
+#this_art <- this_art + 1L; pb_2017_1_contr$what[this_art]
+#rj:::copy_RJwrapper_pdf_slug_archive(as.character(pb_2017_1_contr$what[this_art]), "../../../rjournal.github.io/archive", "2017")
+
+
+
+
+
+#rj:::online_metadata_for_article(as.article("2015-17"), final=TRUE)
+# run in Proofs/<id>
+#load("articles.RData")
+#art_mds <- list()
+#for (art in articles) { cat(art, "\n"); art_mds[[art]] <- rj:::online_metadata_for_article(as.article(art), final=TRUE)}
 

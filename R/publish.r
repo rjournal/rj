@@ -272,9 +272,9 @@ online_metadata_for_article <- function(x, final=FALSE) {
     landing <- str_sub(x$slug, 1L, 5L) == "RJ-20"
     sl <- as.data.frame(x$status)
     res <- c(list(
+        slug = x$slug,
         title = pdf_list$title,
         bibtitle = pdf_list$bibtitle,
-        slug = x$slug,
         author = pdf_list$author,
         bibauthor = pdf_list$bibauthor,
         abstract = pdf_list$abstract,
