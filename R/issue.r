@@ -293,7 +293,7 @@ issue_news_metadata <- function(news) {
          slug = tools::file_path_sans_ext(basename(news)))
 }
 
-post_metadata <- function(id) {
+post_lp_metadata <- function(id) {
     files <- paste0(c("foundation", "cran", "bioc", "ch"), ".tex")
     news <- file.path(issue_dir(id), "news", files)
     lapply(news[file.exists(news)], issue_news_metadata)
@@ -349,6 +349,19 @@ contents_metadata <- function(id) {
            after = length(pre_md) + length(art_md) + 1L)
 }
 
+contents_lp_metadata <- function(id) {
+    pre_md <- pre_lp_metadata(id)
+    art_md <- articles_lp_metadata(id)
+    post_md <- post_lp_metadata(id)
+    md <- c(pre_md, art_md, post_md)
+    pb <- page_bounds(id)
+    md <- mapply(annotate_metadata, md, pb$start, pb$end, SIMPLIFY=FALSE)
+    md <- append(md, list(list(heading = "Contributed Research Articles")),
+                 after = length(pre_md))
+    append(md, list(list(heading = "News and Notes")),
+           after = length(pre_md) + length(art_md) + 1L)
+}
+
 issue_metadata <- function(id) {
     tex <- read_tex(issue_file(id))
     list(issue=id,
@@ -358,6 +371,17 @@ issue_metadata <- function(id) {
          month=tex$month,
          bibmonth=tolower(tex$month),
          articles=contents_metadata(id))
+}
+
+issue_lp_metadata <- function(id) {
+    tex <- read_tex(issue_file(id))
+    list(issue=id,
+         year=tex$year,
+         volume=tex$volume,
+         num=tex$volnum,
+         month=tex$month,
+         bibmonth=tolower(tex$month),
+         articles=contents_lp_metadata(id))
 }
 
 write_issue_metadata <- function(web_path, md) {
@@ -443,6 +467,19 @@ publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io")) {
     write_issue_metadata(web_path, md)
     update_layout(id, web_path)
 }
+
+
+#init_archive_path(id, web_path)
+#md <- issue_lp_metadata(id)
+#write_article_pdfs(id, archive_path, md$articles) ??
+
+#write_non_articles_pdf(???)
+
+#cleanup_accepted(id, web_path)
+#write_issue_metadata(web_path, md)
+#update_lp_layout(id, web_path) ??
+
+
 
 # run in Proofs/<id>
 #arts0 <- list.files(patt="^201[0-9]-[0-9][0-9]*")
