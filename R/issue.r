@@ -350,16 +350,25 @@ contents_metadata <- function(id) {
 }
 
 contents_lp_metadata <- function(id) {
-    pre_md <- pre_lp_metadata(id)
-    art_md <- articles_lp_metadata(id)
-    post_md <- post_lp_metadata(id)
-    md <- c(pre_md, art_md, post_md)
-    pb <- page_bounds(id)
-    md <- mapply(annotate_metadata, md, pb$start, pb$end, SIMPLIFY=FALSE)
-    md <- append(md, list(list(heading = "Contributed Research Articles")),
-                 after = length(pre_md))
-    append(md, list(list(heading = "News and Notes")),
-           after = length(pre_md) + length(art_md) + 1L)
+    setwd(id)
+    md <- list()
+    pre_md <- get_pre_md()
+    md <- c(md, list(pre_md))
+    md <- c(md, list(list(heading = "Contributed Research Articles")))
+    load("articles.RData")
+    art_mds <- list()
+    for (art in articles) { 
+        cat(art, "\n")
+        art_mds[[art]] <- rj:::online_metadata_for_article(as.article(art),
+            final=TRUE)
+    }
+    md <- c(md, art_mds)
+    md <- c(md, list(list(heading = "News and Notes")))
+    post_md <- get_post_md("news", file=c("foundation"=1, "erum"=3,
+        "cran"=1, "bioc"=1, "ch"=1))
+    md <- c(md, post_md)
+    setwd("..")
+    md
 }
 
 issue_metadata <- function(id) {
@@ -405,7 +414,7 @@ page_bounds <- function(id) {
     start <- as.integer(sub(".*\\}\\{([0-9]+)\\}\\{.*", "\\1", chapters))
     pdf_path <- replace_ext(toc_path, "pdf")
     pages <- pdftools::pdf_info(pdf_path)$pages
-    end <- c(start[-1L] - 1L, pages)
+    end <- as.integer(c(start[-1L] - 1L, pages))
 #    end[1L] <- start[1L] ## For editorial (don't count extra blank page)
     data.frame(start, end)
 }
@@ -466,6 +475,59 @@ publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io")) {
     cleanup_accepted(id, web_path)
     write_issue_metadata(web_path, md)
     update_layout(id, web_path)
+}
+
+
+get_startpg_from_nonart_tex <- function(dir, file) {
+  RJw <- readLines(file.path(dir, paste0("wrapped_", file, ".tex")))
+  str_search_start <- "((\\\\setcounter\\{page\\}\\{)([0-9]*)(\\}))"
+  start_str <- c(na.omit(str_trim(str_extract(RJw, str_search_start))))
+  start0 <- c(str_locate(start_str, "((\\{)([0-9]*)(\\}))"))
+  start <- as.integer(str_sub(start_str, start0[1]+1, start0[2]-1))
+  start
+}
+
+get_md_from_nonart_pdf <- function(from, nautlns=1) {
+   from <- paste0(from, ".pdf")
+   toc <- pdftools::pdf_toc(from)
+   title <- toc$children[[1L]]$title
+   bibtitle <- str_wrap(title, width=60, exdent=10)
+   text <- pdftools::pdf_text(from)
+   
+   t1s <- str_split(text[1], "\\n")[[1L]]
+   byln <- which(!is.na(str_locate(t1s, "^[ ]*by")[, "start"]))[1]
+   aut0 <- paste(t1s[byln:(byln+nautlns-1)], collapse=" ")
+   aut1 <- str_trim(str_replace(aut0, "by", ""))
+   aut2 <- str_replace_all(aut1, ", and ", ", ")
+   aut3 <- str_replace_all(aut2, " and ", ", ")
+   author <- unlist(str_split(aut3, ", "))
+   bibauthor <- str_wrap(paste(author, collapse=" and "), width=60, exdent=10)
+   res <- list(author=author, title=title, bibtitle=bibtitle,
+     bibauthor=bibauthor)
+   attr(res, "len") <- pdftools::pdf_info(from)$pages
+   res
+}
+
+get_pre_md <- function(dir="editorial", file="editorial") {
+  res <- get_md_from_nonart_pdf(file.path(dir, file))
+  start <- get_startpg_from_nonart_tex(dir, file)
+  res$pages <- as.integer(c(start, start+attr(res, "len")-1))
+  attr(res, "len") <- NULL
+  res <- c(list(slug=file), res)
+  res
+}
+
+get_post_md <- function(dir="news", file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
+  res <- vector(mode="list", length=length(file))
+  nms <- names(file)
+  for (i in seq(along=file)) {
+    resi <- get_md_from_nonart_pdf(file.path(dir, nms[i]), unname(file[i]))
+    starti <- get_startpg_from_nonart_tex(dir, nms[i])
+    resi$pages <- as.integer(c(starti, starti+attr(resi, "len")-1))
+    attr(resi, "len") <- NULL
+    res[[i]] <- c(list(slug=nms[i]), resi)
+  }
+  res
 }
 
 
@@ -530,4 +592,5 @@ publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io")) {
 #load("articles.RData")
 #art_mds <- list()
 #for (art in articles) { cat(art, "\n"); art_mds[[art]] <- rj:::online_metadata_for_article(as.article(art), final=TRUE)}
+
 

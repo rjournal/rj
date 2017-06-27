@@ -265,7 +265,7 @@ online_metadata_for_article <- function(x, final=FALSE) {
     if (final) {
       start <- attr(refs_list, "start")
       len <- attr(pdf_list, "len")
-      pages <- c(start, start + (len - 1))
+      pages <- as.integer(c(start, start + (len - 1)))
     }
     if (!is.null(refs_list$CRANpkgs))
       refs_list$CTV_rev <- rev_dep_ctv(refs_list$CRANpkgs)
@@ -329,4 +329,6 @@ bundle <- function(article, dest_path) {
 #names(auths_accept) <- sapply(config$issues, function(x) x$issue)
 #tab_all <- lapply(auths_accept, function(x) {givenNames <- findGivenNames(x); genderize(x, genderDB = givenNames)})
 #do.call("rbind", sapply(tab_all, function(x) table(x$gender)))
+
+
 
