@@ -89,12 +89,27 @@ publish <- function(article, home = getwd(), legacy=FALSE) {
   file.copy(from, to, overwrite = TRUE)
   message("Creating ", basename(to))
 
+  if (!empty(article$suppl)) {
+    if (any(!file.exists(file.path(article$path, unlist(article$suppl)))))
+      stop("supplementary file not found")
+    zipfrom <- file.path(article$path, "supplementaries.zip")
+    ret <- zip(zipfrom, file.path(article$path, unlist(article$suppl)),
+      flags="-j")
+    if (ret != 0L) stop("zipfile creation error")
+    zipto <- file.path(landing_path, paste0(slug, ".zip"))
+    file.copy(zipfrom, zipto, overwrite = TRUE)
+    message("Creating ", basename(zipto))
+  }
+
   article$slug <- slug
   article <- update_status(article, "online")
 
   # collect metadata
   article_metadata <- online_metadata_for_article(article)
   # if not legacy, create and post landing index.html
+  if (!empty(article$suppl)) article_metadata <- c(article_metadata,
+    list(suppl = format(structure(file.size(zipfrom), class="object_size"),
+      "auto")))
   if (!legacy) {
     issue <- "accepted"
     article_landing <- make_landing(article_metadata, issue)

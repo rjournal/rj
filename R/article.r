@@ -60,7 +60,7 @@ as.article <- function(id) {
 }
 
 load_article <- function(path, quiet = FALSE) {
-  fields <- c("ID", "Slug", "Authors", "Title", "Editor", "Reviewers", "Status")
+  fields <- c("ID", "Slug", "Authors", "Title", "Editor", "Reviewers", "Status", "Suppl")
   dcf <- read.dcf(path, fields = fields, keep.white = fields)
   if (nrow(dcf) != 1) stop("DCF parsing error: ", path, call. = FALSE)
 
@@ -84,10 +84,11 @@ load_article <- function(path, quiet = FALSE) {
 is.article <- function(x) inherits(x, "article")
 
 make_article <- function(id, slug = "", authors = "", title = "", editor = "",
-                         reviewers = "", status = "", path = "") {
+                         reviewers = "", status = "", path = "", suppl = "") {
   structure(list(
     id = parse_id(id),
     slug = slug,
+    suppl = parse_supplementaries(suppl),
     path = path,
     authors = parse_address_list(authors),
     title = str_trim(title),
@@ -96,15 +97,38 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "",
     status = parse_status_list(status)), class = "article")
 }
 
+
+parse_supplementaries <- function(suppl) {
+  x <- str_trim(str_split(suppl, "\n")[[1]])
+  x <- x[str_length(x) > 0]
+  xs <-lapply(x, function(y) {class(y) <- "supplfile"; y})
+  class(xs) <- "supplfile_list"
+  xs
+}
+
+format.supplfile_list <- function(x, ...) {
+  suppls <- lapply(x, format)
+  paste(suppls, collapse = ",\n  ")
+}
+
+format.supplfile <- function(x, ...) {
+  paste0(x)
+}
+
+empty.supplfile_list <- function(x) length(x) == 0
+
+
 #' @S3method format article
 format.article <- function(x, ...) {
   authors <- format(x$authors)
   reviewers <- format(x$reviewers)
   status <- format(x$status)
+  if (!empty(x$suppl)) suppl <- format(x$suppl)
 
   paste(
     "Title: ", x$title, "\n",
     if (!empty(x$slug)) paste0("Slug: ", x$slug, "\n"),
+    if (!empty(x$suppl)) paste0("Suppl:\n  ", suppl, "\n"),
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
     "Reviewers:", if (!empty(reviewers)) "\n  ", reviewers, "\n",
