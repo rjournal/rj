@@ -51,8 +51,7 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
 
     prev_id <- previous_id(id)
     prev_dir <- file.path("Proofs", prev_id)
-    inherited_files <- c("Rdsub.tex", "Rlogo.png", "Rlogo-5.png",
-                         "editorial.tex")
+    inherited_files <- c("Rdsub.tex", "Rlogo-5.png")
     file.copy(file.path(prev_dir, inherited_files), dir)
     file.copy(file.path(share_path, "RJournal.sty"), dir)
 
