@@ -348,7 +348,8 @@ contents_metadata <- function(id) {
            after = length(pre_md) + length(art_md) + 1L)
 }
 
-contents_lp_metadata <- function(id) {
+contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
+        "cran"=1, "bioc"=1, "ch"=1)) {
     setwd(id)
     md <- list()
     pre_md <- get_pre_md()
@@ -363,8 +364,7 @@ contents_lp_metadata <- function(id) {
     }
     md <- c(md, art_mds)
     md <- c(md, list(list(heading = "News and Notes")))
-    post_md <- get_post_md("news", file=c("foundation"=1, "erum"=3,
-        "cran"=1, "bioc"=1, "ch"=1))
+    post_md <- get_post_md("news", file=post_file)
     md <- c(md, post_md)
     setwd("..")
     md
@@ -381,7 +381,7 @@ issue_metadata <- function(id) {
          articles=contents_metadata(id))
 }
 
-issue_lp_metadata <- function(id) {
+issue_lp_metadata <- function(id, post_file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
     tex <- read_tex(issue_file(id))
     list(issue=id,
          year=tex$year,
@@ -389,7 +389,7 @@ issue_lp_metadata <- function(id) {
          num=tex$volnum,
          month=tex$month,
          bibmonth=tolower(tex$month),
-         articles=contents_lp_metadata(id))
+         articles=contents_lp_metadata(id, post_file=post_file))
 }
 
 write_issue_metadata <- function(web_path, md) {
@@ -465,10 +465,10 @@ update_layout <- function(id, web_path) {
 #' @param id the id of the issue
 #' @param web_path path to the rjournal.github.io checkout
 #' @export
-publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io")) {
+publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io"), post_file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
     if (!file.exists(web_path))
         stop("web_path '", web_path, "' does not exist, please specify")
-    md <- issue_metadata(id)
+    md <- issue_lp_metadata(id, post_file=post_file)
     archive_path <- init_archive_path(id, web_path)
     write_article_pdfs(id, archive_path, md$articles)
     cleanup_accepted(id, web_path)
@@ -512,7 +512,7 @@ get_pre_md <- function(dir="editorial", file="editorial") {
   start <- get_startpg_from_nonart_tex(dir, file)
   res$pages <- as.integer(c(start, start+attr(res, "len")-1))
   attr(res, "len") <- NULL
-  res <- c(list(slug=file), res)
+  res <- c(list(slug=file, cat="Editorial"), res)
   res
 }
 
