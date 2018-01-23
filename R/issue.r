@@ -350,7 +350,7 @@ contents_metadata <- function(id) {
 
 contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
         "cran"=1, "bioc"=1, "ch"=1)) {
-    setwd(id)
+    setwd(file.path("Proofs", id))
     md <- list()
     pre_md <- get_pre_md()
     md <- c(md, list(pre_md))
@@ -366,7 +366,7 @@ contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
     md <- c(md, list(list(heading = "News and Notes")))
     post_md <- get_post_md("news", file=post_file)
     md <- c(md, post_md)
-    setwd("..")
+    setwd("../..")
     md
 }
 
@@ -389,7 +389,7 @@ issue_lp_metadata <- function(id, post_file=c("foundation"=1, "cran"=1, "bioc"=1
          num=tex$volnum,
          month=tex$month,
          bibmonth=tolower(tex$month),
-         articles=contents_lp_metadata(id, post_file=post_file))
+         articles=unname(contents_lp_metadata(id, post_file=post_file)))
 }
 
 write_issue_metadata <- function(web_path, md) {
