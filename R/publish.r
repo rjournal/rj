@@ -107,9 +107,6 @@ publish <- function(article, home = getwd(), legacy=FALSE) {
   # collect metadata
   article_metadata <- online_metadata_for_article(article)
   # if not legacy, create and post landing index.html
-  if (!empty(article$suppl)) article_metadata <- c(article_metadata,
-    list(suppl = format(structure(file.size(zipfrom), class="object_size"),
-      "auto")))
   if (!legacy) {
     issue <- "accepted"
     article_landing <- make_landing(article_metadata, issue)
@@ -294,11 +291,20 @@ online_metadata_for_article <- function(x, final=FALSE) {
         bibauthor = pdf_list$bibauthor,
         abstract = pdf_list$abstract,
         acknowledged = format(sl$date[which(sl$status == "acknowledged")]),
-        online = format(sl$date[max(which(sl$status == "online"))])
+        online = format(sl$date[min(which(sl$status == "online"))])
         ), refs_list[!sapply(refs_list, is.null)])
-     if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
-     if (final) res <- c(res, list(pages = pages))
-     res
+
+    if (!empty(x$suppl)) {
+        zipfrom <- file.path(x$path, "supplementaries.zip")
+        sz <- "unknown"
+        if (file.exists(zipfrom)) sz <- format(structure(file.size(zipfrom),
+          class="object_size"), "auto")
+        res <- c(res, list(suppl = sz))
+    } 
+
+    if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
+    if (final) res <- c(res, list(pages = pages))
+    res
 }
 
 #' @S3method print catout
