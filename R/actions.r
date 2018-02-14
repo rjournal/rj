@@ -27,7 +27,8 @@ reject <- function(article, comments = "", date = Sys.Date()) {
   message("Rejecting ", format(article$id))
   update_status(article, "rejected", comments = comments, date = date)
 
-  file.rename(article$path, file.path("Rejected", basename(article$path)))
+  system(paste("git mv",
+               article$path, file.path("Rejected", basename(article$path))))
   email_template(article, "reject")
 
   invisible()
@@ -40,7 +41,8 @@ accept <- function(article, comments = "", date = Sys.Date()) {
   message("Accepting ", format(article$id))
   update_status(article, "accepted", comments = comments, date = date)
 
-  file.rename(article$path, file.path("Accepted", basename(article$path)))
+  system(paste("git mv",
+               article$path, file.path("Accepted", basename(article$path))))
   email_template(article, "accept")
 
   invisible()
@@ -53,7 +55,8 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   message("Withdrawing ", format(article$id))
   update_status(article, "withdrawn", comments = comments, date = date)
 
-  file.rename(article$path, file.path("Rejected", basename(article$path)))
+  system(paste("git mv",
+               article$path, file.path("Rejected", basename(article$path))))
   email_template(article, "widthdraw")
 
   invisible()

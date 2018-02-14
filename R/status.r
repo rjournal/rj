@@ -133,6 +133,7 @@ todo <- function(x) {
       "online" = "needs copy-editing (editor)",
       "copy edited" = "waiting (author)",
       "proofed" = "ready for publication (editor-in-chief)",
+      "acknowledged" = "needs reviewers (editor)",
       
       stop("Unknown status: ", status)
     )  
@@ -212,5 +213,11 @@ parse_status <- function(x) {
   comments <- if (is.na(pieces[4])) "" else pieces[4]
   
   status(status = status, date = date, comments = comments)
+}
+
+as.data.frame.status_list <- function(status_list) {
+  ml <- vector(mode="list", length=length(status_list))
+  for (i in seq(along=ml)) ml[[i]] <- as.data.frame(unclass(status_list[[i]]))
+  do.call("rbind", ml)
 }
 

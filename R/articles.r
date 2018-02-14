@@ -39,3 +39,9 @@ new_id <- function() {
     id(year(), max(seqs) + 1L)
   }
 }
+
+#' Find articles with a given status.
+#'
+filter_status <- function(articles, status) {
+    Filter(function(a) last_status(a)$status == status, articles)
+}
