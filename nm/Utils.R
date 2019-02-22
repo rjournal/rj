@@ -310,6 +310,8 @@ ghPush <- function() {
 # edit file, then push
 
 editPush <- function(fname,commitComment,textEditor='vim') {
+   print('make sure commitComment has double quotes within single')
+   readline('hit Enter when ready')
    cmd <- makeSysCmd(textEditor,fname)
    cmd()
    pushToGitHub(fname,commitComment)
