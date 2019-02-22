@@ -261,19 +261,42 @@ reject <- function(msNum) {
 # e.g.
 #
 # g <- makeSysCmd('ls')  # Mac/Linux command to list files
-# g()  # same as typing system('ls')
+# g()  # is then same as typing system('ls')
 
 makeSysCmd <- function(...) {
-   x <- paste0(...)
+   x <- paste(...)
    f <- function() {
        system(x)
    }
    f
 }
 
+########################  pushToGitHub  ##################################
+
+# the 'add' argument will be tacked on to 'git add', with the file names
+# relative to articles/dir
+
+# example
+
+#   pushToGitHub('xy z','new src files')
+
+# will push xy and z in current directory
+
+pushToGitHub <- function(add,commitComment) {
+   cmd <- makeSysCmd('git add ',add)
+   cmd()
+   cmd <- makeSysCmd('git commit -m ',commitComment)
+   cmd()
+   # commit may take a while
+   readline('hit Enter when ready')
+   ghPush()
+}
+
+
 ###########################  ghPush  ##################################
 
-# push to GitHub; make it a loop in case of password mistyping :-)
+# push to GitHub, final action; make it a loop in case of password
+# mistyping :-)
 
 ghPush <- function() {
    cmd <- makeSysCmd('git push origin')
@@ -282,3 +305,12 @@ ghPush <- function() {
    }
 }
 
+###########################  editPush  ##################################
+
+# edit file, then push
+
+editPush <- function(fname,commitComment,textEditor='vim') {
+   cmd <- makeSysCmd(textEditor,fname)
+   cmd()
+   pushToGitHub(fname,commitComment)
+}
