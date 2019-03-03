@@ -39,7 +39,7 @@ getAll <- function() {
    Titles <- sapply(desFiles,getTitle)
    df <- data.frame(Title=Titles)
    row.names(df) <- dirs
-   auts <- sapply(desFiles,getAut)
+   auts <- sapply(desFiles,getAutAddr)
    df <- cbind(df,Aut=auts)
    eds <- sapply(desFiles,getEd)
    df <- cbind(df,Editor=eds)
@@ -101,8 +101,8 @@ getTitle <- function(des) {
    substr(tline,8,min(27,nchar(tline)))
 }
 
-# get lead author's e-mail address
-getAut <- function(des) {
+# get lead author's and e-mail address
+getAutInfo <- function(des) {
    alines <- grep('Authors',des)
    if (length(alines) == 0) {
       print(des)
@@ -116,6 +116,14 @@ getAut <- function(des) {
       stop('bad author e-mail address')
    }
    emailAddr <- substr(aline,left[1]+1,right[1]-1)
+   tmp <- strsplit(aline,' ')[[1]]
+   tmp <- tmp[length(tmp)-1]
+   surname <- substr(tmp,1,(nchar(tmp)-1))
+   c(surname,emailAddr)
+}
+
+getAutAddr <- function(des) {
+   getAutInfo(des)[2]
 }
 
 # get editor
@@ -316,3 +324,52 @@ editPush <- function(fname,commitComment,textEditor='vim') {
    cmd()
    pushToGitHub(fname,commitComment)
 }
+
+###########################  sendLetter  ##################################
+
+# arguments:
+# 
+#    msNum: manuscript number
+#    template: name of directory, e.g.  '../rj/nm/Templates/ConditAccept/NM.R'
+
+sendLetter <- function(msNum,template,attaches) {
+   editorName <- Sys.getenv('RJ_NAME')
+   if (length(editorName) == 0)
+      stop('please set your RJ_NAME environment variable')
+   source(template)
+   des <- desFiles[[msNum]]
+   autInfo <- getAutInfo(des)
+   surname <- autInfo[1]
+   formletter[1] <- sub('GREET',surname,formletter[1])
+   formletter[1] <- sub('EDITOR',editorName,formletter[1])
+   title <- des[1]
+   title <- substr(title,8,nchar(title))
+   formletter[2] <- sub('TITLE',title,formletter[2])
+   # check it
+   system('cat formletterfile')
+   if (readline('edit, say for personalizing? ') == 'y') {
+      formletter <- edit(formletter)
+      cat(formletter,file='formletterfile',sep='\n\n')
+      system('cat formletterfile')
+   }
+   # send
+   addr <- autInfo[2]
+   mailIt(addr=addr,subject='your R journal submission',attaches=attaches)
+}
+
+mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail') 
+{
+browser()
+   if (mailer != 'muttMail') stop('only configured to mutt for now')
+   mailCmd <- paste('mutt',addr,'-s',subject)
+   for (att in attaches) {
+      mailCmd <- paste0(mailCmd,' -a "',att,'" ')
+   }
+   unlink('tmpltr')
+   writeLines(ltr,con='tmpltr')
+   mailCmd <- paste0(mailCmd,' < tmpltr')
+   cmd <- makeSysCmd(mailCmd)
+   cmd()
+}
+
+
