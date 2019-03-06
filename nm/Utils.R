@@ -22,11 +22,15 @@ myRecs <- '~/Minority/General.Notes'  # name of my own records file, if any
 # makes sure a comma is at the end of the last line
 
 getAll <- function() {
-   # are we in Submissions/?
-   wd <- getwd()
-   nc <- nchar(wd)
-   dirname = substr(wd,nc-10,nc)
-   if (dirname != 'Submissions') stop('must be in Submissions/ dir')
+   wd <- getwd()  
+   # leave trail of bread crumbs
+   on.exit('setwd(wd)')
+   # need to be in Submissions/ but can start in 'articles'
+   here <- getLocalDirName()
+   if (here != 'Submissions' && here != 'articles') {
+      stop("must start in 'articles/' or 'Submissions'")
+   }
+   if (here == 'articles') setwd('Submissions')
    dirs <- list.dirs(full.names=FALSE,recursive=FALSE)
    getDES <- function(dr) {
       desName <- paste0(dr,'/DESCRIPTION')
@@ -327,39 +331,56 @@ editPush <- function(fname,commitComment,textEditor='vim') {
 
 ###########################  sendLetter  ##################################
 
+# send letter to manuscript author
+
 # arguments:
 # 
 #    msNum: manuscript number
-#    template: name of directory, e.g.  '../rj/nm/Templates/ConditAccept/NM.R'
+#    template: .R file name, e.g.
+#       '../rj/nm/Templates/ConditAccept/NM.R'; details below
+#    attaches: R vector of file names to be attached
 
-sendLetter <- function(msNum,template,attaches) {
+# notes on the template: 
+
+#   This assigns an R character vector to 'formletter', i.e. of the form
+
+#      formletter <- c(line 1, line 2,...)
+
+#   It is assumed that the recipient's surname, the editor's name, 
+#   and title of the paper all appear in line 1 of the template, as
+#   fields GREET, EDITOR and TITLE to be substituted hersubject.
+
+sendLetter <- function(msNum,surname,addr,subject,template,attaches) {
+browser()
+   if (is.null(subs)) stop('run getAll() first')
    editorName <- Sys.getenv('RJ_NAME')
-   if (length(editorName) == 0)
+   if (nchar(editorName) == 0)
       stop('please set your RJ_NAME environment variable')
    source(template)
    des <- desFiles[[msNum]]
-   autInfo <- getAutInfo(des)
-   surname <- autInfo[1]
    formletter[1] <- sub('GREET',surname,formletter[1])
    formletter[1] <- sub('EDITOR',editorName,formletter[1])
    title <- des[1]
    title <- substr(title,8,nchar(title))
-   formletter[2] <- sub('TITLE',title,formletter[2])
+   formletter[1] <- sub('TITLE',title,formletter[1])
    # check it
-   system('cat formletterfile')
+   print(system('cat formletterfile'))
    if (readline('edit, say for personalizing? ') == 'y') {
       formletter <- edit(formletter)
       cat(formletter,file='formletterfile',sep='\n\n')
       system('cat formletterfile')
    }
    # send
-   addr <- autInfo[2]
-   mailIt(addr=addr,subject='your R journal submission',attaches=attaches)
+   mailIt(addr=addr,subject,attaches=attaches)
 }
+
+# actually mail the message 'ltr' (a character vector, one element per
+# line) that we've composed, sending to address 'addr', with subject
+# title 'subject'; here 'attaches' is a vector of namess of files to be
+# attached to the message; note:  'ltr' is written to the file 'tmpltr'
 
 mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail') 
 {
-browser()
    if (mailer != 'muttMail') stop('only configured to mutt for now')
    mailCmd <- paste('mutt',addr,'-s',subject)
    for (att in attaches) {
@@ -372,4 +393,10 @@ browser()
    cmd()
 }
 
+# return the last part of the path, e.g. z in /x/y/z
+getLocalDirName <- function() {
+   wd <- getwd()
+   wdparts <- strsplit(wd,split='/')[[1]]  # works even in MSWin
+   wdparts[length(wdparts)]
+}
 
