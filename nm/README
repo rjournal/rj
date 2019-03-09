@@ -1,0 +1,49 @@
+
+Various functions to facilitate R Journal administration.
+
+Utils.R:
+
+   getAll():  reads the Submissions directory, and returns an R list, one
+      element 'des' per submission, basically summarizing the DESCRIPTION
+      file; list is indexed by manuscript number, e.g. subs[['2018-52']]
+   getTitle(des):  extracts title from 'des'
+   getAutInfo(des):  extracts author info
+   getAutAddr(des):  extracts author e-mail address
+   getEd(des):  extracts editor name
+   setEd(des):  setsW editor name
+   getReviewStatus(des) extracts review status
+   autAdd(aut)  get lead author's e-mail address from aut name
+   pullRepo():  git pull origin, and call getAll() 
+   makeSysCmd(...):  aids in setting up quotes commands for system()
+   pushToGitHub(add,commitComment): pushes the 'add' files to GitHub,
+      along with comment for 'commit -m'
+   ghPush():  does the actual pushing, with a loop to deal with mistyped
+      passwords
+   editPush(fname,commitComment):  eidt the given file, then push to GitHub
+   sendLetter(msNum,surname,addr,subject,template,attaches): send letter
+      to author, e.g. conditional acceptance
+   mailIt(addr,subject,attaches,ltr,mailer='muttMaile-'):  mail letter 
+getLocalDirName <- function() {
+getAll <- function() {
+   getDES <- function(dr) {
+fixDesEnd <- function(des) {
+isBlankOrEmpty <- function(line) {
+getTitle <- function(des) {
+getAutInfo <- function(des) {
+getAutAddr <- function(des) {
+getEd <- function(des) {
+setEd <- function(msNumList,editor) {
+getReviewStatus <- function(des) {
+autNum <- function(aut,numOnly=TRUE) {
+pullRepo <- function() {
+gotoSubs <- function() {
+reject <- function(msNum) {
+# utility function to construct a string containing an R command,
+makeSysCmd <- function(...) {
+   f <- function() {
+pushToGitHub <- function(add,commitComment) {
+ghPush <- function() {
+editPush <- function(fname,commitComment,textEditor='vim') {
+sendLetter <- function(msNum,surname,addr,subject,template,attaches) {
+mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail') 
+getLocalDirName <- function() {

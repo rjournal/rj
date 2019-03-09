@@ -185,13 +185,13 @@ getReviewStatus <- function(des) {
    c(HasReviewer,status)
 }
 
-######################  autNum  ################################
+######################  autAddr  ################################
 
 # inputs author's e-mail address (can be partial), outputs submission
 # number, 20XX-Y; assumes 'subs', output of getAll(), is global; numOnly
 # means return the submission number only, else the entire line in subs
 
-autNum <- function(aut,numOnly=TRUE) {
+autAddr <- function(aut,numOnly=TRUE) {
    aut <- grep(aut,subs$Aut)
    if (length(aut) > 1) {
       print('multiple author entries')
@@ -209,60 +209,6 @@ autNum <- function(aut,numOnly=TRUE) {
 pullRepo <- function() {
    system('git pull origin')
    subs <<- getAll()
-}
-
-######################  gotoSubs  ##################################
-
-# to launch from my Scripts/
-gotoSubs <- function() {
-   setwd('../articles/Submissions')
-}
-
-######################  reject  ##################################
-
-# reject manuscript number msNum: edit DESCRIPTION; git mv to Rejects/
-
-# run from Submissions/
-
-
-reject <- function(msNum) {
-   # get in-memory DESCRIPTION file
-   if (is.null(desFiles))  {
-      getAll()
-      print('desFiles regenerated')
-   }
-   des <- desFiles[[msNum]]
-   cat('\ncheck correct ms!\n')
-   print(des)
-   ans <- readline('correct file (yes or no) ')
-   if (ans != 'yes') stop('wrong file')
-   # add 'rejected' line
-   rejectLine <- paste0('  ',Sys.Date(),' rejected')
-   cmt <- readline('optional brief comment (if none, hit Enter): ')
-   if (length(cmt) > 0)
-      rejectLine <- paste0(rejectLine,' [',cmt,']')
-   des <- c(des,rejectLine) 
-   desFiles[[msNum]] <<- des
-   # save to actual file
-   outfilename <- paste0(msNum,'/DESCRIPTION')
-   cat(des,file=outfilename,sep='\n')
-   # push to GitHub
-   cmd <- makeSysCmd('git add ',outfilename)
-   cmd()
-   cmd <- makeSysCmd('git commit -m "rejected"')
-   cmd()
-   # commit may take a while
-   readline('hit Enter when ready')
-   ghPush()
-   cmd <- makeSysCmd('git mv ',msNum,' ../Rejected')
-   cmd()
-   readline('hit Enter when ready')
-   cmd <- makeSysCmd('git commit -m "rejected"')
-   cmd()
-   # commit may take a while
-   readline('hit Enter when ready')
-   ghPush()
-   print('NOTE: send letter to authors')
 }
 
 ###########################  makeSysCmd  ##################################
@@ -286,7 +232,7 @@ makeSysCmd <- function(...) {
 ########################  pushToGitHub  ##################################
 
 # the 'add' argument will be tacked on to 'git add', with the file names
-# relative to articles/dir
+# relative to articles/dir, for current directory dir
 
 # example
 
@@ -321,9 +267,10 @@ ghPush <- function() {
 
 # edit file, then push
 
-editPush <- function(fname,commitComment,textEditor='vim') {
+editPush <- function(fname,commitComment) {
    print('make sure commitComment has double quotes within single')
    readline('hit Enter when ready')
+   textEditor <- Sys.getenv('EDITOR')
    cmd <- makeSysCmd(textEditor,fname)
    cmd()
    pushToGitHub(fname,commitComment)
