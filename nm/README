@@ -22,28 +22,19 @@ Utils.R:
    editPush(fname,commitComment):  eidt the given file, then push to GitHub
    sendLetter(msNum,surname,addr,subject,template,attaches): send letter
       to author, e.g. conditional acceptance
-   mailIt(addr,subject,attaches,ltr,mailer='muttMaile-'):  mail letter 
-getLocalDirName <- function() {
-getAll <- function() {
-   getDES <- function(dr) {
-fixDesEnd <- function(des) {
-isBlankOrEmpty <- function(line) {
-getTitle <- function(des) {
-getAutInfo <- function(des) {
-getAutAddr <- function(des) {
-getEd <- function(des) {
-setEd <- function(msNumList,editor) {
-getReviewStatus <- function(des) {
-autNum <- function(aut,numOnly=TRUE) {
-pullRepo <- function() {
-gotoSubs <- function() {
-reject <- function(msNum) {
-# utility function to construct a string containing an R command,
-makeSysCmd <- function(...) {
-   f <- function() {
-pushToGitHub <- function(add,commitComment) {
-ghPush <- function() {
-editPush <- function(fname,commitComment,textEditor='vim') {
-sendLetter <- function(msNum,surname,addr,subject,template,attaches) {
-mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail') 
-getLocalDirName <- function() {
+   mailIt(addr,subject,attaches,ltr,mailer='muttMaile-'):  e-mail letter 
+   getLocalDirName():  get last part of path, e.g. z from /x/y/z 
+
+Reject.R:
+
+   reject(msNum):  performs all needed operations -- updates the
+      DESCRIPTION file, git-moves the directory to Rejected; sends
+      letter to the author; pushes to GitHub; first displays to the
+      editor the DESCRIPTION file, so the editor can double-check that
+      this is the right one
+
+ConditAccept.R:
+
+   conditAcc():  like reject() above, performing all ops except, for
+      now, sending the letter
+
