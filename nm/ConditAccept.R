@@ -36,7 +36,7 @@ conditAcc <- function(msNum,attaches) {
    readline('hit Enter when ready')
    ghPush()
    autinfo <- getAutInfo(des)
-   sendLetter(msNum,autinfo[1],autinfo[2],'your R Journal submission',
+   sendLetter(msNum,autinfo[1],autinfo[2],'"your R Journal submission"',
       'ConditAccTmplt.R',attaches)
 }
 

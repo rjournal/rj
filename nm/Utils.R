@@ -298,7 +298,9 @@ editPush <- function(fname,commitComment) {
 #   and title of the paper all appear in line 1 of the template, as
 #   fields GREET, EDITOR and TITLE to be substituted.
 
-sendLetter <- function(msNum,surname,addr,subject,template,attaches) {
+#   Must have both single and double-quoted subject.
+
+sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
    if (is.null(subs)) stop('run getAll() first')
    editorName <- Sys.getenv('RJ_NAME')
    if (nchar(editorName) == 0)
@@ -314,15 +316,17 @@ sendLetter <- function(msNum,surname,addr,subject,template,attaches) {
    title <- des[1]
    title <- substr(title,8,nchar(title))
    formletter[1] <- sub('TITLE',title,formletter[1])
+   formletter <- c(formletter,'\n')
    # check it
    cat(formletter)
-   if (readline('edit, say for personalizing? ') == 'y') {
+   edit <- readline('edit, say for personalizing? ')
+   if (substr(edit,1,1) == 'y') {
       formletter <- edit(formletter)
       cat(formletter,file='formletterfile',sep='\n\n')
       system('cat formletterfile')
    }
    # send
-   mailIt(addr=addr,subject,attaches=attaches)
+   mailIt(addr=addr,subject,formletter,attaches=attaches)
 }
 
 # actually mail the message 'ltr' (a character vector, one element per
@@ -340,6 +344,7 @@ mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail')
    unlink('tmpltr')
    writeLines(ltr,con='tmpltr')
    mailCmd <- paste0(mailCmd,' < tmpltr')
+   print(mailCmd)
    cmd <- makeSysCmd(mailCmd)
    cmd()
 }
