@@ -7,9 +7,11 @@ library(stringr)
 
 # globals
 
-subs <- NULL  # submissions data frame, created by getAll()
-desFiles <- NULL # R list, one DESCRIPTION file per element
-myRecs <- '~/Minority/General.Notes'  # name of my own records file, if any
+# RJ_NAME environment variable, your name
+# RJNM_DIR environment variable, full path of rj/nm
+ 
+# subs <- NULL  # submissions data frame, created by getAll()
+# desFiles <- NULL # R list, one DESCRIPTION file per element
 
 ######################  getAll  ##################################
 
@@ -283,27 +285,29 @@ editPush <- function(fname,commitComment) {
 # arguments:
 # 
 #    msNum: manuscript number
-#    template: .R file name, e.g.
-#       '../rj/nm/Templates/ConditAccept/NM.R'; details below
-#    attaches: R vector of file names to be attached
+#    template: .R file name, given relative to RJNM_DIR
+#    attaches: R vector of file names to be attached, given relative to
+#        current working directory
 
 # notes on the template: 
 
-#   This assigns an R character vector to 'formletter', i.e. of the form
-
-#      formletter <- c(line 1, line 2,...)
+#   This assigns to a global variable 'formletter'  an R character
+#   vector, one element per line of the letter. 
 
 #   It is assumed that the recipient's surname, the editor's name, 
 #   and title of the paper all appear in line 1 of the template, as
-#   fields GREET, EDITOR and TITLE to be substituted hersubject.
+#   fields GREET, EDITOR and TITLE to be substituted.
 
 sendLetter <- function(msNum,surname,addr,subject,template,attaches) {
-browser()
    if (is.null(subs)) stop('run getAll() first')
    editorName <- Sys.getenv('RJ_NAME')
    if (nchar(editorName) == 0)
       stop('please set your RJ_NAME environment variable')
-   source(template)
+   rjnmDir <- Sys.getenv('RJNM_DIR')
+   if (nchar(rjnmDir) == 0)
+      stop('please set your RJNM_DIR environment variable')
+   template <- paste0(rjnmDir,'/',template)
+   source(template)  # sets global var 'formletter'
    des <- desFiles[[msNum]]
    formletter[1] <- sub('GREET',surname,formletter[1])
    formletter[1] <- sub('EDITOR',editorName,formletter[1])
@@ -311,7 +315,7 @@ browser()
    title <- substr(title,8,nchar(title))
    formletter[1] <- sub('TITLE',title,formletter[1])
    # check it
-   print(system('cat formletterfile'))
+   cat(formletter)
    if (readline('edit, say for personalizing? ') == 'y') {
       formletter <- edit(formletter)
       cat(formletter,file='formletterfile',sep='\n\n')

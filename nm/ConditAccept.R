@@ -6,7 +6,7 @@
 
 # run from Submissions/
 
-conditAcc <- function(msNum) {
+conditAcc <- function(msNum,attaches) {
    # get in-memory DESCRIPTION file
    if (is.null(desFiles))  {
       getAll()
@@ -35,6 +35,8 @@ conditAcc <- function(msNum) {
    # commit may take a while
    readline('hit Enter when ready')
    ghPush()
-   print('NOTE: send letter to authors')
+   autinfo <- getAutInfo(des)
+   sendLetter(msNum,autinfo[1],autinfo[2],'your R Journal submission',
+      'ConditAccTmplt.R',attaches)
 }
 

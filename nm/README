@@ -1,6 +1,11 @@
 
 Various functions to facilitate R Journal administration.
 
+Needed environment variables:
+
+   RJ_NAME environment variable, your name
+   RJNM_DIR environment variable, full path of rj/nm
+
 Utils.R:
 
    getAll():  reads the Submissions directory, and returns an R list, one
