@@ -329,9 +329,9 @@ sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
    mailIt(addr=addr,subject,formletter,attaches=attaches)
 }
 
-# actually mail the message 'ltr' (a character vector, one element per
+# mail the message 'ltr' (a character vector, one element per
 # line) that we've composed, sending to address 'addr', with subject
-# title 'subject'; here 'attaches' is a vector of namess of files to be
+# title 'subject'; here 'attaches' is a vector of names of files to be
 # attached to the message; note:  'ltr' is written to the file 'tmpltr'
 
 mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail') 

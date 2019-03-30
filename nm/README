@@ -30,6 +30,10 @@ Utils.R:
    mailIt(addr,subject,attaches,ltr,mailer='muttMaile-'):  e-mail letter 
    getLocalDirName():  get last part of path, e.g. z from /x/y/z 
 
+ACK.R:
+
+   ack(msNum):  sends acknowledgement of receipt of manuscript
+
 Reject.R:
 
    reject(msNum):  performs all needed operations -- updates the
