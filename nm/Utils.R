@@ -345,6 +345,8 @@ mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail')
    writeLines(ltr,con='tmpltr')
    mailCmd <- paste0(mailCmd,' < tmpltr')
    print(mailCmd)
+   ans <- readline('OK to send? ')
+   if (substr(ans,1,1) != 'y') stop('exiting')
    cmd <- makeSysCmd(mailCmd)
    cmd()
 }

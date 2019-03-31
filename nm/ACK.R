@@ -16,7 +16,6 @@ ack <- function(msNum) {
    # print('NOTE: send letter to authors')
    source('../../rj/nm/ACKTmplt.R')
    autinfo <- getAutInfo(des)
-   browser()
    formletter[1] <- sub('GREET',autinfo[1],formletter[1])
    title <- des[1]
    title <- substr(title,8,nchar(title))
