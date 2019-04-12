@@ -159,7 +159,7 @@ convert_bbl_tex <- function(tex_path) {
 }
 
 convert_one_bbl <- function(id) {
-    path <- rj::as.article(id)$path
+    path <- as.article(id)$path
     wrapper_tex <- read_tex(file.path(path, "RJwrapper.tex"))
     tex_input <- wrapper_tex$input
     tex_path <- file.path(path, tex_input)

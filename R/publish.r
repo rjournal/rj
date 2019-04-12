@@ -1,6 +1,6 @@
 #' Publish an article to online first.
 #'
-#' After running this, you'll need to update both the article and 
+#' After running this, you'll need to update both the article and
 #' the web repository.
 #'
 #' @export
@@ -17,14 +17,14 @@ publish <- function(article, home = getwd(), legacy=FALSE) {
   }
   web_path <- normalizePath("../rjournal.github.io", mustWork = TRUE)
   share_path <- normalizePath("../share", mustWork = TRUE)
-  
+
   if (!any(as.data.frame(article$status)$status == "accepted"))
     stop("not yet accepted")
   if (!any(as.data.frame(article$status)$status == "style checked"))
     stop("not yet style checked")
 
   message("Publishing ", format(article$id))
-  # Build latex 
+  # Build latex
   build_latex(article, share_path)
   from <- file.path(article$path, "RJwrapper.pdf")
 
@@ -40,7 +40,7 @@ publish <- function(article, home = getwd(), legacy=FALSE) {
 
   } else {
     # stage new YYYY/RJ-YYYY-XXX landing directory and slug
-    yr_id <- format(Sys.Date(), "%Y")
+      yr_id <- format(Sys.Date(), "%Y")
     if (!dir.exists(file.path(web_path, "archive", yr_id)))
       dir.create(file.path(web_path, "archive", yr_id))
     current_dirs <- list.files(file.path(web_path, "archive", yr_id))
@@ -73,7 +73,7 @@ publish <- function(article, home = getwd(), legacy=FALSE) {
       }
     }
     if (empty(article$slug)) {
-      if (i == 0L) 
+      if (i == 0L)
         i <- as.integer(max(as.integer(str_sub(current_dirs, 9L, 11L)))) + 1L
       next_dir <- formatC(i, format="d", flag="0", width=3L)
       slug <- paste0("RJ-", yr_id, "-", next_dir)
@@ -135,7 +135,7 @@ publish <- function(article, home = getwd(), legacy=FALSE) {
   }
   config$issues[[1L]]$articles <- conf_articles
   writeLines(as.yaml(config), yaml_path)
-  
+
   message("Remember to check changes into git")
   invisible(TRUE)
 }
@@ -148,7 +148,7 @@ make_landing <- function(article_metadata, issue){
 }
 
 
-get_refs_from_tex <- function(article_path, final=FALSE) 
+get_refs_from_tex <- function(article_path, final=FALSE)
 {
   RJw <- readLines(paste0(article_path, "/RJwrapper.tex"))
   str_search_inp <- "((\\\\input\\{)([-a-zA-Z0-9_\\+\\.]*)(\\}))"
@@ -211,7 +211,7 @@ get_md_from_pdf <- function(from, final=FALSE)
    title <- toc$children[[1L]]$title
    bibtitle <- str_wrap(title, width=60, exdent=10)
    text <- pdftools::pdf_text(from)
-   
+
    t1s <- str_split(text[1], "\\n")[[1L]]
    abs_ <- which(!is.na(str_locate(t1s, "^[ ]*Abstract")[, "start"]))
    aut0 <- paste(t1s[which(!is.na(str_locate(t1s, "^[ ]*by")[, "start"]))[1]:(abs_-1L)], collapse=" ")
@@ -235,7 +235,7 @@ get_md_from_pdf <- function(from, final=FALSE)
 }
 
 #' Build article from LaTeX
-#' 
+#'
 #' @export
 build_latex <- function(article,
                         share_path = normalizePath("../share", mustWork = TRUE),
@@ -243,7 +243,7 @@ build_latex <- function(article,
 {
   article <- as.article(article)
   stopifnot(file.exists(share_path))
-  
+
   # Check RJournal.sty does not exist
   sty_path <- file.path(article$path, "RJournal.sty")
   if (file.exists(sty_path)) {
@@ -257,7 +257,7 @@ build_latex <- function(article,
 }
 
 #' Generate metadata needed for website.
-#' 
+#'
 #' @importFrom yaml as.yaml
 #' @export
 online_metadata <- function() {
@@ -300,7 +300,7 @@ online_metadata_for_article <- function(x, final=FALSE) {
         if (file.exists(zipfrom)) sz <- format(structure(file.size(zipfrom),
           class="object_size"), "auto")
         res <- c(res, list(suppl = sz))
-    } 
+    }
 
     if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
     if (final) res <- c(res, list(pages = pages))
@@ -350,6 +350,3 @@ bundle <- function(article, dest_path) {
 #names(auths_accept) <- sapply(config$issues, function(x) x$issue)
 #tab_all <- lapply(auths_accept, function(x) {givenNames <- findGivenNames(x); genderize(x, genderDB = givenNames)})
 #do.call("rbind", sapply(tab_all, function(x) table(x$gender)))
-
-
-
