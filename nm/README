@@ -12,6 +12,7 @@ Utils.R:
       element 'des' per submission, basically summarizing the DESCRIPTION
       file; list is indexed by manuscript number, e.g. subs[['2018-52']]
    getTitle(des):  extracts title from 'des'
+   getDESbyAut(aut):  returns ms number(s) for e-mail address of 1st author
    getAutInfo(des):  extracts author info
    getAutAddr(des):  extracts author e-mail address
    getEd(des):  extracts editor name
