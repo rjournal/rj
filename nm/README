@@ -24,7 +24,7 @@ Utils.R:
       along with comment for 'commit -m'
    ghPush():  does the actual pushing, with a loop to deal with mistyped
       passwords
-   editPush(fname,commitComment):  eidt the given file, then push to GitHub
+   editPush(fname,commitComment):  edit the given file, then push to GitHub
    sendLetter(msNum,surname,addr,subject,template,attaches): send letter
       to author, e.g. conditional acceptance
    mailIt(addr,subject,attaches,ltr,mailer='muttMaile-'):  e-mail letter 

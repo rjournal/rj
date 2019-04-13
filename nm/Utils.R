@@ -240,7 +240,8 @@ makeSysCmd <- function(...) {
 
 #   pushToGitHub('xy z','new src files')
 
-# will push xy and z in current directory
+# will push xy and z in current directory, with the commit done with the
+# message 'new src files'
 
 pushToGitHub <- function(add,commitComment) {
    cmd <- makeSysCmd('git add ',add)
