@@ -53,6 +53,19 @@ getAll <- function() {
    subs <<- cbind(df,HasReviewer=rs[1,],Status=rs[2,])
 }
 
+######################  getDESbyAut  ##################################
+
+# returns the ms number(s) for 'aut', e-mail address of the first author
+
+getMSnumByAut <- function(aut) {
+   getAll()
+   grepout <- grep(aut,subs$Aut)
+   if (length(grepout) == 0) {
+      stop('author not found')
+   }
+   rownames(subs)[grepout]
+}
+
 ######################  fixDesEnd  ##################################
 
 # deletes any blank lines at the end of DESCRIPTION file, and
