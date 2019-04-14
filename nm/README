@@ -21,8 +21,9 @@ Utils.R:
    autAdd(aut)  get lead author's e-mail address from aut name
    pullRepo():  git pull origin, and call getAll() 
    makeSysCmd(...):  aids in setting up quotes commands for system()
-   pushToGitHub(add,commitComment): pushes the 'add' files to GitHub,
-      along with comment for 'commit -m'
+   pushToGitHub(fileList,commitComment,op,mvdest): 
+      if op is 'add', pushes the files to GitHub, or if 'mv' does mv of
+      fileList to mv dest; then comment for 'commit -m'
    ghPush():  does the actual pushing, with a loop to deal with mistyped
       passwords
    editPush(fname,commitComment):  edit the given file, then push to GitHub

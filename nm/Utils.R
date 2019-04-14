@@ -246,18 +246,22 @@ makeSysCmd <- function(...) {
 
 ########################  pushToGitHub  ##################################
 
-# the 'add' argument will be tacked on to 'git add', with the file names
-# relative to articles/dir, for current directory dir
+# the 'fileList' argument will be tacked on to 'git add' (or 'git mv' if
+# op is 'mv'), with the file names relative to current directory, and
+# the git op will be performed 
 
 # example
 
-#   pushToGitHub('xy z','new src files')
+#   pushToGitHub('xy z','"new src files"')
 
 # will push xy and z in current directory, with the commit done with the
-# message 'new src files'
+# message "new src files"
 
-pushToGitHub <- function(add,commitComment) {
-   cmd <- makeSysCmd('git add ',add)
+pushToGitHub <- function(fileList,commitComment,op='add',mvdest) {
+   if (!(op %in% c('add','mv')) stop('bad op')
+   partcmd <- paste('git',op)
+   if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
+   else cmd <- makeSysCmd(paste(partcmd,fileList,mvdest))
    cmd()
    cmd <- makeSysCmd('git commit -m ',commitComment)
    cmd()
