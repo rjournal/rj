@@ -1,6 +1,8 @@
 
 Various functions to facilitate R Journal administration.
 
+See comments in the source files for usage.
+
 Needed environment variables:
 
    RJ_NAME environment variable, your name
@@ -16,7 +18,7 @@ Utils.R:
    getAutInfo(des):  extracts author info
    getAutAddr(des):  extracts author e-mail address
    getEd(des):  extracts editor name
-   setEd(des):  setsW editor name
+   setEd(des):  sets editor name
    getReviewStatus(des) extracts review status
    autAdd(aut)  get lead author's e-mail address from aut name
    pullRepo():  git pull origin, and call getAll() 
@@ -49,3 +51,11 @@ ConditAccept.R:
    conditAcc():  like reject() above, performing all ops except, for
       now, sending the letter
 
+Accept.R:
+
+    accept():  performs all needed operations -- updates the
+       DESCRIPTION file, git-moves the directory to Accepted; sends
+       letter to the author; pushes new author files, DESCRIPTION etc.
+       to GitHub; first displays to the
+       editor the DESCRIPTION file, so the editor can double-check that
+       this is the right one

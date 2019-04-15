@@ -4,7 +4,7 @@
 
 ack <- function(msNum) {
    # get in-memory DESCRIPTION file
-   if (is.null(desFiles))  {
+   if (!exists('desFiles'))  {
       getAll()
       print('desFiles regenerated')
    }
@@ -20,6 +20,6 @@ ack <- function(msNum) {
    title <- des[1]
    title <- substr(title,8,nchar(title))
    formletter[1] <- sub('TITLE',title,formletter[1])
-   mailIt(autinfo[2],'"manuscript received"',NULL,formletter)
+   mailIt(autinfo[2],'"R Journal manuscript received"',NULL,formletter)
 }
 

@@ -167,7 +167,7 @@ setEd <- function(msNumList,editor) {
       print(des[elines[1]])
       toWrite <- paste0('Editor: ',editor)
       print(toWrite)
-      ans <- readline('OK to write new entry? ')
+      ans <- readline('OK to write new entry (yes or no)? ')
       if (ans != 'yes') stop('exiting')
       des[elines[1]] <- toWrite
       writeLines(des,'DESCRIPTION')
@@ -258,7 +258,7 @@ makeSysCmd <- function(...) {
 # message "new src files"
 
 pushToGitHub <- function(fileList,commitComment,op='add',mvdest) {
-   if (!(op %in% c('add','mv')) stop('bad op')
+   if (!(op %in% c('add','mv'))) stop('bad op')
    partcmd <- paste('git',op)
    if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
    else cmd <- makeSysCmd(paste(partcmd,fileList,mvdest))
@@ -319,7 +319,7 @@ editPush <- function(fname,commitComment) {
 #   Must have both single and double-quoted subject.
 
 sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
-   if (is.null(subs)) stop('run getAll() first')
+   if (!exists('subs')) stop('run getAll() first')
    editorName <- Sys.getenv('RJ_NAME')
    if (nchar(editorName) == 0)
       stop('please set your RJ_NAME environment variable')
