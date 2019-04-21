@@ -31,7 +31,7 @@ Utils.R:
    editPush(fname,commitComment):  edit the given file, then push to GitHub
    sendLetter(msNum,surname,addr,subject,template,attaches): send letter
       to author, e.g. conditional acceptance
-   mailIt(addr,subject,attaches,ltr,mailer='muttMaile-'):  e-mail letter 
+   mailIt(addr,subject,attaches,ltr,mailer='muttMailer'):  e-mail letter 
    getLocalDirName():  get last part of path, e.g. z from /x/y/z 
 
 ACK.R:
