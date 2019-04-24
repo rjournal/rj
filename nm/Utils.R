@@ -350,15 +350,18 @@ sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
 # mail the message 'ltr' (a character vector, one element per
 # line) that we've composed, sending to address 'addr', with subject
 # title 'subject'; here 'attaches' is a vector of names of files to be
-# attached to the message; note:  'ltr' is written to the file 'tmpltr'
+# attached to the message; note:  'ltr' is written to the file 'tmpltr';
+# the subject must be quoted if it contains spaces
 
-mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail') 
+mailIt <- function(addr,subject,attaches,ltr,mailer='muttMailer') 
 {
-   if (mailer != 'muttMail') stop('only configured to mutt for now')
+   if (mailer != 'muttMailer') stop('only configured to mutt for now')
    mailCmd <- paste('mutt',addr,'-s',subject)
-   for (att in attaches) {
-      mailCmd <- paste0(mailCmd,' -a "',att,'" ')
-   }
+   # for (att in attaches) {
+   #    mailCmd <- paste0(mailCmd,' -a "',att,'" ')
+   # }
+   if (nchar(attaches) > 0)
+      mailCmd <- paste(mailCmd,'-a', attaches)
    unlink('tmpltr')
    writeLines(ltr,con='tmpltr')
    mailCmd <- paste0(mailCmd,' < tmpltr')
