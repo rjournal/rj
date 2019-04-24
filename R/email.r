@@ -101,7 +101,8 @@ editors <- c(
   "John Verzani" = "verzani@math.csi.cuny.edu",
   "Norm Matloff" = "nsmatloff@ucdavis.edu",
   "Olivia Lau"   = "olivia.lau@post.harvard.edu",
-  "Dianne Cook"   = "dicook@monash.edu"
+  "Dianne Cook"   = "dicook@monash.edu",
+  "Michael Kane" = "michael.kane@yale.edu"
 )
 
 #' @importFrom whisker whisker.render
