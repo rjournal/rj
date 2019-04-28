@@ -60,7 +60,6 @@ askReview <- function(reviewerAddr,salut,msNum,cran,dueDate,attaches) {
       print(formletter)
    }
    # mail out
-browser()
    mailIt(reviewerAddr,'"possible refereeing"',attaches,formletter,
       mailer='muttMailer')
 }
