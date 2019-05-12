@@ -13,7 +13,6 @@ ack <- function(msNum) {
    print(des)
    ans <- readline('correct file (yes or no) ')
    if (ans != 'yes') stop('wrong file')
-   # print('NOTE: send letter to authors')
    source('../../rj/nm/ACKTmplt.R')
    autinfo <- getAutInfo(des)
    formletter[1] <- sub('GREET',autinfo[1],formletter[1])
