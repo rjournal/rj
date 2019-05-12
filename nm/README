@@ -8,11 +8,23 @@ Needed environment variables:
    RJ_NAME environment variable, your name
    RJNM_DIR environment variable, full path of rj/nm
 
+Global variables:
+
+   desFiles:
+
+      list created by getAll(); gives overview of all current
+      submissions, one elememt per submission; e.g. subs[['2019-47']]
+
+   subs:
+
+      data frame created by getAll(); gives overview of all current
+      submissions, one row per submission; e.g. subs['2019-47',]
+
 Utils.R:
 
    getAll():  reads the Submissions directory, and returns an R list, one
       element 'des' per submission, basically summarizing the DESCRIPTION
-      file; list is indexed by manuscript number, e.g. subs[['2018-52']]
+      file; list is indexed by manuscript number, e.g. subs['2018-52',]
    getTitle(des):  extracts title from 'des'
    getDESbyAut(aut):  returns ms number(s) for e-mail address of 1st author
    getAutInfo(des):  extracts author info
