@@ -8,7 +8,7 @@
 
 conditAcc <- function(msNum,attaches) {
    # get in-memory DESCRIPTION file
-   if (is.null(desFiles))  {
+   if (!exists('desFiles'))  {
       getAll()
       print('desFiles regenerated')
    }

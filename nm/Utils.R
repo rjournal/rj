@@ -344,7 +344,7 @@ sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
       system('cat formletterfile')
    }
    # send
-   mailIt(addr=addr,subject,formletter,attaches=attaches)
+   mailIt(addr=addr,singdoubsubject,formletter,attaches=attaches)
 }
 
 # mail the message 'ltr' (a character vector, one element per
@@ -360,7 +360,7 @@ mailIt <- function(addr,subject,attaches,ltr,mailer='muttMailer')
    # for (att in attaches) {
    #    mailCmd <- paste0(mailCmd,' -a "',att,'" ')
    # }
-   if (nchar(attaches) > 0)
+   if (!is.null((attaches)))
       mailCmd <- paste(mailCmd,'-a', attaches)
    unlink('tmpltr')
    writeLines(ltr,con='tmpltr')
