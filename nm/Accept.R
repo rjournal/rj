@@ -43,7 +43,8 @@ accept <- function(msNum,newAutFiles='') {
    # mv to Accepted
    setwd(subsdir)
    pushToGitHub(msNum,'accept','mv','../Accepted')
+   autinfo <- getAutInfo(des)
    sendLetter(msNum,autinfo[1],autinfo[2],'"your R Journal submission"',
-      'AcceptTmplt.R')
+      'AcceptTmplt.R',attaches=NULL)
 }
 
