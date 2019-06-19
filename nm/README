@@ -53,15 +53,16 @@ ACK.R:
 Reject.R:
 
    reject(msNum):  performs all needed operations -- updates the
-      DESCRIPTION file, git-moves the directory to Rejected; sends
-      letter to the author; pushes to GitHub; first displays to the
-      editor the DESCRIPTION file, so the editor can double-check that
-      this is the right one
+      DESCRIPTION file, git-moves the directory to Rejected; 
+      pushes to GitHub; first displays to the editor the 
+      DESCRIPTION file, so the editor can double-check that
+      this is the right one; editor must separately send letter to
+      author
 
 ConditAccept.R:
 
-   conditAcc():  like reject() above, performing all ops except, for
-      now, sending the letter
+   conditAcc():  like reject() above, plus sending letter to author,
+      including the review files
 
 Accept.R:
 
