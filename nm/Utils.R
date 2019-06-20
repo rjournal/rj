@@ -53,15 +53,29 @@ getAll <- function() {
    subs <<- cbind(df,HasReviewer=rs[1,],Status=rs[2,])
 }
 
-######################  getDESbyAut  ##################################
+######################  getMSnumByAut  ##################################
 
-# returns the ms number(s) for 'aut', e-mail address of the first author
+# returns the ms number(s) for 'aut', full or unique partial e-mail
+# address of the first author
 
 getMSnumByAut <- function(aut) {
    getAll()
    grepout <- grep(aut,subs$Aut)
    if (length(grepout) == 0) {
       stop('author not found')
+   }
+   rownames(subs)[grepout]
+}
+
+######################  getMSnumByTitle  ##################################
+
+# returns the ms number(s) for 'aut', full or unique partial title
+
+getMSnumByTitle <- function(title) {
+   getAll()
+   grepout <- grep(title,subs$Title)
+   if (length(grepout) == 0) {
+      stop('title not found')
    }
    rownames(subs)[grepout]
 }
