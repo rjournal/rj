@@ -170,11 +170,14 @@ getEd <- function(des) {
    substr(eline,9,nchar(eline))
 }
 
-# set editor, directly writing to DESCRIPTION file, and pushing to # GitHub
-setEd <- function(msNumList,editor) {
+# set editor, directly writing to DESCRIPTION file, and pushing to 
+# GitHub; msNumEdList is an R list of (nsNum,editor) pairs
+setEd <- function(msNumEdList) {
    subsdir <- getwd()
    on.exit(setwd(subsdir))
-   for (msNum in msNumList) {
+   for (pair in msNumEdList) {
+      msNum <- pair[1]
+      editor <- pair[2]
       setwd(msNum)
       des <- readLines('DESCRIPTION')
       elines <- grep('Editor',des)
