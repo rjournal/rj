@@ -49,8 +49,10 @@ getAll <- function() {
    df <- cbind(df,Aut=auts)
    eds <- sapply(desFiles,getEd)
    df <- cbind(df,Editor=eds)
-   rs <- sapply(desFiles,getReviewStatus)
-   subs <<- cbind(df,HasReviewer=rs[1,],Status=rs[2,])
+   reviewers <- sapply(desFiles,getReviewStatus)
+   tmpsubs <- cbind(df,HasReviewer=reviewers[1,],Status=reviewers[2,])
+   tmpsubs$HasReviewer <- as.logical(tmpsubs$HasReviewer)
+   subs <<- tmpsubs
 }
 
 ######################  getMSnumByAut  ##################################
@@ -202,14 +204,11 @@ setEd <- function(msNumEdList) {
 # check has reviewers and status
 getReviewStatus <- function(des) {
    rlines <- grep('Reviewers',des)
-   if (length(rlines) == 0) {
-      print(des)
-      stop('no reviewers line')
-   }
-   rline <- des[rlines[1]]
-   left <- str_locate(rline,'<')
-   HasReviewer <- !is.na(left[1])
+   rline <- rlines[1]
+   leftelbow <- str_locate(rline,'<')
    slines <- grep('Status',des)
+   sline <- slines[1]
+   HasReviewer <- length(grep('<',des[rline:(sline-1)])) > 0
    statusLineNum <- slines[1]
    status <- des[length(des)]
    nChars <- min(25,nchar(status))
