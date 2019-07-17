@@ -76,7 +76,7 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
           cat(art$path, file.path(dir, format(art$id)), "\n")
         }
     }
-    
+
     message("Do not forget to update the editorial board in ", issue_file)
 }
 
@@ -100,10 +100,10 @@ update_RJwrapper_page_no <- function(art_id, start, vol, no, yr, mon) {
   }
   writeLines(tex, file.path(art_id, "orig_RJwrapper.tex"))
   n <- 5
-  insert <- c("\\sectionhead{Contributed research article}", 
+  insert <- c("\\sectionhead{Contributed research article}",
     paste0("\\volume{", vol, "}"),
     paste0("\\volnumber{", no, "}"),
-    paste0("\\year{", yr, "}"), 
+    paste0("\\year{", yr, "}"),
     paste0("\\month{", mon, "}"),
     paste0("\\setcounter{page}{", start, "}"))
 #cat(which(pos), n, "\n")
@@ -139,7 +139,7 @@ convert_bbl_tex <- function(tex_path) {
         bib <- paste0(bib, ".bib")
     bib_path <- file.path(dirname(tex_path), bib)
     if (!file.exists(bib_path)) stop("Can't find ", bib_path)
-    
+
     ## Build tex to make sure bib up-to-date message(share_path)
     message("Building ", tex_path)
     owd <- getwd()
@@ -154,12 +154,12 @@ convert_bbl_tex <- function(tex_path) {
     bib_line <- which(has_bib)
     out <- insert_replace(tex, bib_line, bbl)
     writeLines(out, sub("/", "/bbl-", tex_path))
-    
+
     sub("/", "/bbl-", tex_path)
 }
 
 convert_one_bbl <- function(id) {
-    path <- rj::as.article(id)$path
+    path <- as.article(id)$path
     wrapper_tex <- read_tex(file.path(path, "RJwrapper.tex"))
     tex_input <- wrapper_tex$input
     tex_path <- file.path(path, tex_input)
@@ -168,7 +168,7 @@ convert_one_bbl <- function(id) {
     }
     if (tools::file_ext(tex_path) != "tex")
         tex_path <- paste0(tex_path, ".tex")
-    
+
     convert_bbl_tex(tex_path)
 }
 
@@ -189,7 +189,7 @@ convert_issue_bbl <- function(id) {
 
 build_include <- function(tex) {
     paste0(
-        "\\begin{article}\n", 
+        "\\begin{article}\n",
         "\\subimport{", basename(dirname(tex)), "/}{", basename(sub("/", "/bbl-", tex)), "}\n",
         "\\end{article}\n",
         "\\newpage\n")
@@ -232,7 +232,7 @@ init_archive_path <- function(id, web_path) {
     write_header <- function(header, file) {
         writeLines(c("---", as.yaml(header), "---"), file)
     }
-    
+
     header <- list(layout = "issue_landing-new",
                    title = paste0("Volume ", issue$volume, "/", issue$volnum,
                                   ", ", issue$month, " ", issue$year),
@@ -244,7 +244,7 @@ init_archive_path <- function(id, web_path) {
     write_header(header_bib, file.path(archive_path, "index-bib.html"))
 
     file.copy(replace_ext(issue_file(id), "pdf"), archive_path)
-    
+
     archive_path
 }
 
@@ -292,7 +292,7 @@ issue_news_metadata <- function(news) {
          slug = tools::file_path_sans_ext(basename(news)))
 }
 
-post_lp_metadata <- function(id) {
+post_lp_metadata <- function(id, fs=c("foundation", "cran", "bioc", "ch")) {
     files <- paste0(c("foundation", "cran", "bioc", "ch"), ".tex")
     news <- file.path(issue_dir(id), "news", files)
     lapply(news[file.exists(news)], issue_news_metadata)
@@ -316,7 +316,7 @@ bibtex_encode_non_ascii <- function(x) {
              "ï" = "{\\\" i}",
              "ñ" = "{\\~ n}",
              "ó" = "{\\\' o}")
-    Encoding(names(map)) <- "UTF-8" 
+    Encoding(names(map)) <- "UTF-8"
     for (i in seq_along(map)) {
         x <- gsub(names(map)[i], map[i], x, fixed=TRUE)
     }
@@ -357,9 +357,9 @@ contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
     md <- c(md, list(list(heading = "Contributed Research Articles")))
     load("articles.RData")
     art_mds <- list()
-    for (art in articles) { 
+    for (art in articles) {
         cat(art, "\n")
-        art_mds[[art]] <- rj:::online_metadata_for_article(as.article(art),
+        art_mds[[art]] <- online_metadata_for_article(as.article(art),
             final=TRUE)
     }
     md <- c(md, art_mds)
@@ -407,7 +407,7 @@ replace_ext <- function(f, new) {
 }
 
 page_bounds <- function(id) {
-    toc_path <- replace_ext(issue_file(id), "toc") 
+    toc_path <- replace_ext(issue_file(id), "toc")
     toc <- readLines(toc_path)
     chapters <- toc[grepl("{chapter}", toc, fixed=TRUE)]
     start <- as.integer(sub(".*\\}\\{([0-9]+)\\}\\{.*", "\\1", chapters))
@@ -422,8 +422,8 @@ write_article_pdfs <- function(id, archives_path, md) {
     issue_pdf <- replace_ext(issue_file(id), "pdf")
     for(x in md) {
         if (!is.null(x$heading)) next
-        pdftk(issue_pdf, 
-              "cat ", x$pages[1], "-", x$pages[2], " ", 
+        pdftk(issue_pdf,
+              "cat ", x$pages[1], "-", x$pages[2], " ",
               "output ", file.path(archives_path, paste0(x$slug, ".pdf")))
     }
 }
@@ -431,11 +431,11 @@ write_article_pdfs <- function(id, archives_path, md) {
 pdftk <- function(input, ...) {
     input <- shQuote(input)
     args <- paste0(..., collapse = " ")
-    
+
     cmd <- paste0("pdftk ", input, " ", args)
     message(cmd)
     res <- system(cmd, intern = TRUE)
-    
+
     if (!is.null(attr(res, "status"))) {
         stop("Non-zero exit: ", attr(res, "status"), "\n", attr(res, "errmsg"),
              call. = FALSE)
@@ -492,7 +492,7 @@ get_md_from_nonart_pdf <- function(from, nautlns=1) {
    title <- toc$children[[1L]]$title
    bibtitle <- str_wrap(title, width=60, exdent=10)
    text <- pdftools::pdf_text(from)
-   
+
    t1s <- str_split(text[1], "\\n")[[1L]]
    byln <- which(!is.na(str_locate(t1s, "^[ ]*by")[, "start"]))[1]
    aut0 <- paste(t1s[byln:(byln+nautlns-1)], collapse=" ")
@@ -591,5 +591,3 @@ get_post_md <- function(dir="news", file=c("foundation"=1, "cran"=1, "bioc"=1, "
 #load("articles.RData")
 #art_mds <- list()
 #for (art in articles) { cat(art, "\n"); art_mds[[art]] <- rj:::online_metadata_for_article(as.article(art), final=TRUE)}
-
-

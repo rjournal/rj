@@ -49,8 +49,37 @@ getAll <- function() {
    df <- cbind(df,Aut=auts)
    eds <- sapply(desFiles,getEd)
    df <- cbind(df,Editor=eds)
-   rs <- sapply(desFiles,getReviewStatus)
-   subs <<- cbind(df,HasReviewer=rs[1,],Status=rs[2,])
+   reviewers <- sapply(desFiles,getReviewStatus)
+   tmpsubs <- cbind(df,HasReviewer=reviewers[1,],Status=reviewers[2,])
+   tmpsubs$HasReviewer <- as.logical(tmpsubs$HasReviewer)
+   subs <<- tmpsubs
+}
+
+######################  getMSnumByAut  ##################################
+
+# returns the ms number(s) for 'aut', full or unique partial e-mail
+# address of the first author
+
+getMSnumByAut <- function(aut) {
+   getAll()
+   grepout <- grep(aut,subs$Aut)
+   if (length(grepout) == 0) {
+      stop('author not found')
+   }
+   rownames(subs)[grepout]
+}
+
+######################  getMSnumByTitle  ##################################
+
+# returns the ms number(s) for 'aut', full or unique partial title
+
+getMSnumByTitle <- function(title) {
+   getAll()
+   grepout <- grep(title,subs$Title)
+   if (length(grepout) == 0) {
+      stop('title not found')
+   }
+   rownames(subs)[grepout]
 }
 
 ######################  fixDesEnd  ##################################
@@ -143,18 +172,21 @@ getEd <- function(des) {
    substr(eline,9,nchar(eline))
 }
 
-# set editor, directly writing to DESCRIPTION file, and pushing to # GitHub
-setEd <- function(msNumList,editor) {
+# set editor, directly writing to DESCRIPTION file, and pushing to 
+# GitHub; msNumEdList is an R list of (nsNum,editor) pairs
+setEd <- function(msNumEdList) {
    subsdir <- getwd()
    on.exit(setwd(subsdir))
-   for (msNum in msNumList) {
+   for (pair in msNumEdList) {
+      msNum <- pair[1]
+      editor <- pair[2]
       setwd(msNum)
       des <- readLines('DESCRIPTION')
       elines <- grep('Editor',des)
       print(des[elines[1]])
       toWrite <- paste0('Editor: ',editor)
       print(toWrite)
-      ans <- readline('OK to write new entry? ')
+      ans <- readline('OK to write new entry (yes or no)? ')
       if (ans != 'yes') stop('exiting')
       des[elines[1]] <- toWrite
       writeLines(des,'DESCRIPTION')
@@ -172,14 +204,11 @@ setEd <- function(msNumList,editor) {
 # check has reviewers and status
 getReviewStatus <- function(des) {
    rlines <- grep('Reviewers',des)
-   if (length(rlines) == 0) {
-      print(des)
-      stop('no reviewers line')
-   }
-   rline <- des[rlines[1]]
-   left <- str_locate(rline,'<')
-   HasReviewer <- !is.na(left[1])
+   rline <- rlines[1]
+   leftelbow <- str_locate(rline,'<')
    slines <- grep('Status',des)
+   sline <- slines[1]
+   HasReviewer <- length(grep('<',des[rline:(sline-1)])) > 0
    statusLineNum <- slines[1]
    status <- des[length(des)]
    nChars <- min(25,nchar(status))
@@ -233,17 +262,22 @@ makeSysCmd <- function(...) {
 
 ########################  pushToGitHub  ##################################
 
-# the 'add' argument will be tacked on to 'git add', with the file names
-# relative to articles/dir, for current directory dir
+# the 'fileList' argument will be tacked on to 'git add' (or 'git mv' if
+# op is 'mv'), with the file names relative to current directory, and
+# the git op will be performed 
 
 # example
 
-#   pushToGitHub('xy z','new src files')
+#   pushToGitHub('xy z','"new src files"')
 
-# will push xy and z in current directory
+# will push xy and z in current directory, with the commit done with the
+# message "new src files"
 
-pushToGitHub <- function(add,commitComment) {
-   cmd <- makeSysCmd('git add ',add)
+pushToGitHub <- function(fileList,commitComment,op='add',mvdest) {
+   if (!(op %in% c('add','mv'))) stop('bad op')
+   partcmd <- paste('git',op)
+   if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
+   else cmd <- makeSysCmd(paste(partcmd,fileList,mvdest))
    cmd()
    cmd <- makeSysCmd('git commit -m ',commitComment)
    cmd()
@@ -301,7 +335,7 @@ editPush <- function(fname,commitComment) {
 #   Must have both single and double-quoted subject.
 
 sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
-   if (is.null(subs)) stop('run getAll() first')
+   if (!exists('subs')) stop('run getAll() first')
    editorName <- Sys.getenv('RJ_NAME')
    if (nchar(editorName) == 0)
       stop('please set your RJ_NAME environment variable')
@@ -326,21 +360,24 @@ sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
       system('cat formletterfile')
    }
    # send
-   mailIt(addr=addr,subject,formletter,attaches=attaches)
+   mailIt(addr=addr,singdoubsubject,formletter,attaches=attaches)
 }
 
 # mail the message 'ltr' (a character vector, one element per
 # line) that we've composed, sending to address 'addr', with subject
 # title 'subject'; here 'attaches' is a vector of names of files to be
-# attached to the message; note:  'ltr' is written to the file 'tmpltr'
+# attached to the message; note:  'ltr' is written to the file 'tmpltr';
+# the subject must be quoted if it contains spaces
 
-mailIt <- function(addr,subject,attaches,ltr,mailer='muttMail') 
+mailIt <- function(addr,subject,attaches,ltr,mailer='muttMailer') 
 {
-   if (mailer != 'muttMail') stop('only configured to mutt for now')
+   if (mailer != 'muttMailer') stop('only configured to mutt for now')
    mailCmd <- paste('mutt',addr,'-s',subject)
-   for (att in attaches) {
-      mailCmd <- paste0(mailCmd,' -a "',att,'" ')
-   }
+   # for (att in attaches) {
+   #    mailCmd <- paste0(mailCmd,' -a "',att,'" ')
+   # }
+   if (!is.null((attaches)))
+      mailCmd <- paste(mailCmd,'-a', attaches)
    unlink('tmpltr')
    writeLines(ltr,con='tmpltr')
    mailCmd <- paste0(mailCmd,' < tmpltr')

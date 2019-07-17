@@ -2,6 +2,18 @@
 
 This package provides tools for dealing with the metadata for the R Journal. The overall goal of the package is to automate common tasks performed by the editors, particularly the editor-in-chief.
 
+## Installation
+
+The `jss` package has been archived from CRAN, but can be installed from its R forge site, as follows:
+
+`svn checkout svn://r-forge.r-project.org/svnroot/jss/`
+
+cd to the `jss` directory and install as usual.
+
+R CMD INSTALL .
+
+then you can install `rj`, using your favourite approach.
+
 ## `DESCRIPTION` format
 
 Each submission consists of a directory containing the submission, any correspondence, and a `DESCRIPTION` file.  The `DESCRIPTION` is a DCF (debian control file) file, made up of entries of the following form.

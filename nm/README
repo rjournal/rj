@@ -1,33 +1,52 @@
 
 Various functions to facilitate R Journal administration.
 
+See comments in the source files for usage.
+
 Needed environment variables:
 
    RJ_NAME environment variable, your name
    RJNM_DIR environment variable, full path of rj/nm
 
+Global variables:
+
+   desFiles:
+
+      list created by getAll(); gives overview of all current
+      submissions, one elememt per submission; e.g. subs[['2019-47']]
+
+   subs:
+
+      data frame created by getAll(); gives overview of all current
+      submissions, one row per submission; e.g. subs['2019-47',]
+
 Utils.R:
 
    getAll():  reads the Submissions directory, and returns an R list, one
       element 'des' per submission, basically summarizing the DESCRIPTION
-      file; list is indexed by manuscript number, e.g. subs[['2018-52']]
+      file; list is indexed by manuscript number, e.g. subs['2018-52',]
    getTitle(des):  extracts title from 'des'
+   getMSnumByAut(aut):  finds the manun number by author e-mail addres
+      (full or unique partial)
+   getMSnumByTitle(tleinds the manun number by title (full or unique partial)
+   getDESbyAut(aut):  returns ms number(s) for e-mail address of 1st author
    getAutInfo(des):  extracts author info
    getAutAddr(des):  extracts author e-mail address
    getEd(des):  extracts editor name
-   setEd(des):  setsW editor name
+   setEd(des):  sets editor name
    getReviewStatus(des) extracts review status
    autAdd(aut)  get lead author's e-mail address from aut name
    pullRepo():  git pull origin, and call getAll() 
    makeSysCmd(...):  aids in setting up quotes commands for system()
-   pushToGitHub(add,commitComment): pushes the 'add' files to GitHub,
-      along with comment for 'commit -m'
+   pushToGitHub(fileList,commitComment,op,mvdest): 
+      if op is 'add', pushes the files to GitHub, or if 'mv' does mv of
+      fileList to mv dest; then comment for 'commit -m'
    ghPush():  does the actual pushing, with a loop to deal with mistyped
       passwords
-   editPush(fname,commitComment):  eidt the given file, then push to GitHub
+   editPush(fname,commitComment):  edit the given file, then push to GitHub
    sendLetter(msNum,surname,addr,subject,template,attaches): send letter
       to author, e.g. conditional acceptance
-   mailIt(addr,subject,attaches,ltr,mailer='muttMaile-'):  e-mail letter 
+   mailIt(addr,subject,attaches,ltr,mailer='muttMailer'):  e-mail letter 
    getLocalDirName():  get last part of path, e.g. z from /x/y/z 
 
 ACK.R:
@@ -37,13 +56,22 @@ ACK.R:
 Reject.R:
 
    reject(msNum):  performs all needed operations -- updates the
-      DESCRIPTION file, git-moves the directory to Rejected; sends
-      letter to the author; pushes to GitHub; first displays to the
-      editor the DESCRIPTION file, so the editor can double-check that
-      this is the right one
+      DESCRIPTION file, git-moves the directory to Rejected; 
+      pushes to GitHub; first displays to the editor the 
+      DESCRIPTION file, so the editor can double-check that
+      this is the right one; editor must separately send letter to
+      author
 
 ConditAccept.R:
 
-   conditAcc():  like reject() above, performing all ops except, for
-      now, sending the letter
+   conditAcc():  like reject() above, plus sending letter to author,
+      including the review files
 
+Accept.R:
+
+    accept():  performs all needed operations -- updates the
+       DESCRIPTION file, git-moves the directory to Accepted; sends
+       letter to the author; pushes new author files, DESCRIPTION etc.
+       to GitHub; first displays to the
+       editor the DESCRIPTION file, so the editor can double-check that
+       this is the right one
