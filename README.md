@@ -43,9 +43,18 @@ Most of these fields are self-explanatory, apart from the `Status` field, which 
 
 See `valid_status` for a list of all known statuses, and `todo()` for the next action to be taken based on each status.
 
+## Installation
+
+```
+# First install the jss package from R-forge
+install.packages("jss", repos="http://R-Forge.R-project.org")
+# Then install rj
+remotes::install_github("rjournal/rj")
+```
+
 ## Useful actions
   
-```R
+```
 library(rj)
 # Make sure your working directory in the articles directory then:
 
