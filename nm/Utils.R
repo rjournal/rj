@@ -322,15 +322,17 @@ editPush <- function(fname,commitComment) {
 #    template: .R file name, given relative to RJNM_DIR
 #    attaches: R vector of file names to be attached, given relative to
 #        current working directory
+#    deadline: optional deadline for request
 
 # notes on the template: 
 
 #   This assigns to a global variable 'formletter'  an R character
 #   vector, one element per line of the letter. 
 
-#   It is assumed that the recipient's surname, the editor's name, 
-#   and title of the paper all appear in line 1 of the template, as
-#   fields GREET, EDITOR and TITLE to be substituted.
+#   It is assumed that the recipient's surname, the editor's name, title
+#   of the paper, and deadline if any, all appear in line 1 of the
+#   template, as fields GREET, EDITOR, TITLE and DEADLINE to be
+#   substituted.
 
 #   Must have both single and double-quoted subject.
 
@@ -349,8 +351,10 @@ sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches,
    formletter[1] <- sub('GREET',surname,formletter[1])
    formletter[1] <- sub('EDITOR',editorName,formletter[1])
    title <- des[1]
-   title <- substr(title,8,nchar(title))
+   title <- substr(title,8,nchar(title))  # skip over 'Title: ' field
    formletter[1] <- sub('TITLE',title,formletter[1])
+   if (!null(deadline)) 
+      formletter[1] <- sub('DEADLINE',deadline,formletter[1])
    formletter <- c(formletter,'\n')
    # check it
    cat(formletter)
