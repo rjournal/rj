@@ -8,7 +8,7 @@ Needed environment variables:
    RJ_NAME environment variable, your name
    RJNM_DIR environment variable, full path of rj/nm
 
-Global variables:
+Global variables (for submissions-oriented functions):
 
    desFiles:
 
@@ -75,3 +75,8 @@ Accept.R:
        to GitHub; first displays to the
        editor the DESCRIPTION file, so the editor can double-check that
        this is the right one
+
+CopyEdit.R:
+
+   copyEdit():  sendis letter to author, with the final PDF, asking for
+      confirmation
