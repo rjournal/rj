@@ -334,7 +334,8 @@ editPush <- function(fname,commitComment) {
 
 #   Must have both single and double-quoted subject.
 
-sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches) {
+sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches,
+   deadline=NULL) {
    if (!exists('subs')) stop('run getAll() first')
    editorName <- Sys.getenv('RJ_NAME')
    if (nchar(editorName) == 0)
