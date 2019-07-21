@@ -337,8 +337,8 @@ editPush <- function(fname,commitComment) {
 #   Must have both single and double-quoted subject.
 
 sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches,
-   deadline=NULL) {
-   if (!exists('subs')) stop('run getAll() first')
+   deadline=NULL,des=NULL) {
+   if (is.null(des) && !exists('subs')) stop('run getAll() first')
    editorName <- Sys.getenv('RJ_NAME')
    if (nchar(editorName) == 0)
       stop('please set your RJ_NAME environment variable')
@@ -347,13 +347,13 @@ sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches,
       stop('please set your RJNM_DIR environment variable')
    template <- paste0(rjnmDir,'/',template)
    source(template)  # sets global var 'formletter'
-   des <- desFiles[[msNum]]
+   if (is.null(des)) des <- desFiles[[msNum]]
    formletter[1] <- sub('GREET',surname,formletter[1])
    formletter[1] <- sub('EDITOR',editorName,formletter[1])
    title <- des[1]
    title <- substr(title,8,nchar(title))  # skip over 'Title: ' field
    formletter[1] <- sub('TITLE',title,formletter[1])
-   if (!null(deadline)) 
+   if (!is.null(deadline)) 
       formletter[1] <- sub('DEADLINE',deadline,formletter[1])
    formletter <- c(formletter,'\n')
    # check it

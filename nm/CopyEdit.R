@@ -31,7 +31,8 @@ copyEdit <- function(msNum,deadline) {
    ans <- readline('correct file (yes or no) ')
    if (ans != 'yes') stop('wrong file')
    autinfo <- getAutInfo(des)
+   pdfLoc <- paste0(msNum,'/RJwrapper.pdf')
    sendLetter(msNum,autinfo[1],autinfo[2],'"your R Journal submission"',
-      'ConditAccTmplt.R','RJwrapper.pdf',deadline=deadline)
+      'CopyEditTmplt.R',pdfLoc,deadline=deadline,des=des)
 }
 
