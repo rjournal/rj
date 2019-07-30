@@ -166,9 +166,9 @@ get_refs_from_tex <- function(article_path, final=FALSE)
     wCpsi <- which(Cpsi > 0)
     Cmat <- cbind(i=rep(wCpsi, sapply(Cps[wCpsi], nrow)),
       do.call("rbind", Cps[wCpsi]))
-    CRANpkgs <- apply(Cmat, 1, function(row) {
+    CRANpkgs <- unique(apply(Cmat, 1, function(row) {
       str_sub(tex[row[1]], row[2]+9, row[3]-1)
-      })
+      }))
   }
   Bp_str <- "((\\\\BIOpkg\\{)([a-zA-Z0-9\\.]*)(\\}))"
   Bps <- str_locate_all(tex, Bp_str)
@@ -178,9 +178,9 @@ get_refs_from_tex <- function(article_path, final=FALSE)
     wBpsi <- which(Bpsi > 0)
     Bmat <- cbind(i=rep(wBpsi, sapply(Bps[wBpsi], nrow)),
       do.call("rbind", Bps[wBpsi]))
-    BIOpkgs <- apply(Bmat, 1, function(row) {
+    BIOpkgs <- unique(apply(Bmat, 1, function(row) {
       str_sub(tex[row[1]], row[2]+8, row[3]-1)
-    })
+    }))
   }
   ctv_str <- "((\\\\ctv\\{)([a-zA-Z0-9]*)(\\}))"
   ctvs <- str_locate_all(tex, ctv_str)
@@ -190,9 +190,9 @@ get_refs_from_tex <- function(article_path, final=FALSE)
     wctvsi <- which(ctvsi > 0)
     CTVmat <- cbind(i=rep(wctvsi, sapply(ctvs[wctvsi], nrow)),
       do.call("rbind", ctvs[wctvsi]))
-    CTVs <- apply(CTVmat, 1, function(row) {
+    CTVs <- unique(apply(CTVmat, 1, function(row) {
       str_sub(tex[row[1]], row[2]+5, row[3]-1)
-      })
+      }))
   }
   res <- list(CRANpkgs=CRANpkgs, BIOpkgs=BIOpkgs, CTVs=CTVs)
   if (final) {
