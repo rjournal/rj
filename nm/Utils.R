@@ -82,6 +82,21 @@ getMSnumByTitle <- function(title) {
    rownames(subs)[grepout]
 }
 
+######################  checkNoEditor  ##################################
+
+# returns IDs of all articles in Submissions that have no handling
+# editor assigned; run getAll() first
+
+checkNoEditor <- function() {
+   noEditor <- function(des)  {
+      ed <- getEd(des)
+      ed == ''
+   }
+   noEd <- sapply(desFiles,noEditor)
+   names(desFiles)[noEd]
+}
+
+
 ######################  fixDesEnd  ##################################
 
 # deletes any blank lines at the end of DESCRIPTION file, and
@@ -273,7 +288,14 @@ makeSysCmd <- function(...) {
 # will push xy and z in current directory, with the commit done with the
 # message "new src files"
 
-pushToGitHub <- function(fileList,commitComment,op='add',mvdest) {
+# arguments:
+ 
+#    fileList: character vector of file names to be git-ted
+#    commitComment: string to be used with git commit -m
+#    op: 'add' or 'mv'
+#    mvdest: destination directory of op = 'mv'
+
+pushToGitHub <- function(fileList,commitComment,op='add',mvdest=NULL) {
    if (!(op %in% c('add','mv'))) stop('bad op')
    partcmd <- paste('git',op)
    if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
@@ -398,5 +420,13 @@ getLocalDirName <- function() {
    wd <- getwd()
    wdparts <- strsplit(wd,split='/')[[1]]  # works even in MSWin
    wdparts[length(wdparts)]
+}
+
+# run rjtexi() to check PDF, push to GitHub; run from ms directory
+
+checkPDF <- function() {
+   rjtexi()
+   readline('hit Enter to push to GitHub')
+   pushToGitHub('RJwrapper.pdf','"new PDF"')
 }
 
