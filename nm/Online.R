@@ -18,11 +18,11 @@ putOnline <- function(msnum)
    des <- checkForSupps()
 
    setwd('../..')  # articles/
-   print('check bib')
+   print('checking bib')
    readline('Hit Enter when ready ')
    rj:::find_update_bib(msnum)
 
-   print('put online (internally)')
+   print('adding to _config.yml')
    readline('Hit Enter when ready ')
    rj::publish(msnum)
 
