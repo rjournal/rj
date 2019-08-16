@@ -10,6 +10,8 @@ require(gitR)  # github/matloff/gitR
 putOnline <- function(msnum) 
 {
 
+   options(warn = 1)  # e.g. if bib problem, want to know now
+
    cat('\n\nprocessing msnum ',msnum,'\n')
    accdir <- getwd()  # Accepted/
    on.exit(setwd(accdir))
