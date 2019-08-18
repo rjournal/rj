@@ -32,10 +32,10 @@ putOnline <- function(msnum)
    setwd(paste0(accdir,'/',msnum))
    # get name of .bib
    origbib <- dir(pattern=glob2rx('orig_*.bib'))
-   bib <- substr(bib,6,nchar(origbib))
+   bib <- substr(origbib,6,nchar(origbib))
    rjpdf <- 'RJwrapper.pdf'
-   suppzip <- 'supplementaries.zip'
-   gitOpPush(paste('DESCRIPTION',origbib,bib,rjpdf,suppszipe),
+   suppszip <- 'supplementaries.zip'
+   gitOpPush(paste('DESCRIPTION',origbib,bib,rjpdf,suppszip),
       '"for putting online"', quiet=TRUE,acceptEnter=TRUE)
    setwd('../../../rjournal.github.io/')  # different repo
    gitOpPush('_config.yml','"for putting online"',quiet=TRUE,acceptEnter=TRUE)
