@@ -31,11 +31,14 @@ putOnline <- function(msnum)
    # push DESCRIPTION, .bib, _config.yml to GitHub
    setwd(paste0(accdir,'/',msnum))
    # get name of .bib
-   bib <- dir(pattern=glob2rx('orig_*.bib'))
-   bib <- substr(bib,6,nchar(bib))
-   gitOpPush(paste('DESCRIPTION',bib),'"for putting online"')
+   origbib <- dir(pattern=glob2rx('orig_*.bib'))
+   bib <- substr(bib,6,nchar(origbib))
+   rjpdf <- 'RJwrapper.pdf'
+   suppzip <- 'supplementaries.zip'
+   gitOpPush(paste('DESCRIPTION',origbib,bib,rjpdf,suppszipe),
+      '"for putting online"', quiet=TRUE,acceptEnter=TRUE)
    setwd('../../../rjournal.github.io/')  # different repo
-   gitOpPush('_config.yml','"for putting online"')
+   gitOpPush('_config.yml','"for putting online"',quiet=TRUE,acceptEnter=TRUE)
    setwd(accdir)
 }
 
@@ -53,7 +56,7 @@ checkForSupps <- function(msnum)
                   suLine,
                   des[(stLineNum):length(des)])
       writeLines(desNew,con='DESCRIPTION')
-      gitOpPush('DESCRIPTION','"added Suppl: line"')
+      gitOpPush('DESCRIPTION','"added Suppl: line"',quiet=TRUE,acceptEnter=TRUE)
       des <- readLines('DESCRIPTION')  # re-read, just to make sure
       print('new des:')
       cat(des,sep='\n')
