@@ -19,6 +19,18 @@ putOnline <- function(msnum)
    setwd(msnum)
    des <- checkForSupps()
 
+   # each run of rj:::find_update_bib() will copy x.bib to orig_x.bib,
+   # overwriting the last, thus not really "original"; may be useful to
+   # save the real original
+   print('check .bib files')
+   dir(pattern=glob2rx('*.bib'))
+   print('should be only 1, plus 1 or 2 saved originals')
+   ans <- readLine('need to save (real) original .bib? ')
+   if (substr(ans,1,1) == 'y') {
+      cmd <- readLine('enter cp shell command')
+      system(cmd)
+   }
+
    setwd('../..')  # articles/
    print('checking bib')
    readline('Hit Enter when ready ')

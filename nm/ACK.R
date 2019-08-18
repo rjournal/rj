@@ -23,10 +23,6 @@ ack <- function(msNums) {
       ans <- readline('correct file (yes or no) ')
       if (ans != 'yes') stop('wrong file')
       autinfo <- getAutInfo(des)
-      # run LaTeX checks
-      setwd(msNum)
-      rj::build_latex('RJwrapper.tex')
-      readline('hit Enter when ready')
       frml <- formletter
       frml[1] <- sub('GREET',autinfo[1],frml[1])
       title <- des[1]
