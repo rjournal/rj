@@ -430,3 +430,10 @@ checkPDF <- function() {
    pushToGitHub('RJwrapper.pdf','"new PDF"')
 }
 
+#################### checkNonASCII()  ########################################
+
+checkNonASCII <- function(fname) {
+   cmd <- paste("grep --color='auto' -P -n '[^x00-\x7F]'",fname)
+   system(cmd)
+}
+
