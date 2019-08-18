@@ -4,6 +4,8 @@
 
 # msNums: char vec of ms numbers to be ACKed
 
+# run from Submissions/
+
 ack <- function(msNums) {
    # get in-memory DESCRIPTION file
    if (!exists('desFiles'))  {
@@ -12,6 +14,7 @@ ack <- function(msNums) {
    }
    # get formletter (global; no need, should change this)
    source('../../rj/nm/ACKTmplt.R')
+   subsdir <- getwd()
    for (msNum in msNums) {
       cat('ACKing',msNum,'\n')
       des <- desFiles[[msNum]]
@@ -20,6 +23,10 @@ ack <- function(msNums) {
       ans <- readline('correct file (yes or no) ')
       if (ans != 'yes') stop('wrong file')
       autinfo <- getAutInfo(des)
+      # run LaTeX checks
+      setwd(msNum)
+      rj::build_latex('RJwrapper.tex')
+      readline('hit Enter when ready')
       frml <- formletter
       frml[1] <- sub('GREET',autinfo[1],frml[1])
       title <- des[1]
