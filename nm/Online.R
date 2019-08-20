@@ -25,7 +25,7 @@ putOnline <- function(msnum)
    print('check .bib files')
    dir(pattern=glob2rx('*.bib'))
    print('should be only 1, plus 1 or 2 saved originals')
-   ans <- readLine('need to save (real) original .bib? ')
+   ans <- readline('need to save (real) original .bib? ')
    if (substr(ans,1,1) == 'y') {
       cmd <- readLine('enter cp shell command')
       system(cmd)
@@ -40,17 +40,21 @@ putOnline <- function(msnum)
    readline('Hit Enter when ready ')
    rj::publish(msnum)
 
-   # push DESCRIPTION, .bib, _config.yml to GitHub
+   # push DESCRIPTION, *.bib, RJwrapper.pdf, supplementaries.zip,
+   # _config.yml, archive/thisyear  to GitHub
    setwd(paste0(accdir,'/',msnum))
    # get name of .bib
    origbib <- dir(pattern=glob2rx('orig_*.bib'))
    bib <- substr(origbib,6,nchar(origbib))
    rjpdf <- 'RJwrapper.pdf'
    suppszip <- 'supplementaries.zip'
-   gitOpPush(paste('DESCRIPTION',origbib,bib,rjpdf,suppszip),
-      '"for putting online"', quiet=TRUE,acceptEnter=TRUE)
-   setwd('../../../rjournal.github.io/')  # different repo
-   gitOpPush('_config.yml','"for putting online"',quiet=TRUE,acceptEnter=TRUE)
+   toPush <- paste('DESCRIPTION',origbib,bib,rjpdf,suppszip)
+   gitOpPush(toPush,'"for putting online"',quiet=TRUE,acceptEnter=TRUE)
+   setwd('../../../rjournal.github.io/')  # different repo, for .yml etc.
+   yrID <- format(Sys.Date(), "%Y")
+   archiveDir <- paste0('archive/',yrID)
+   toPush <- paste('_config.yml',archiveDir)
+   gitOpPush(toPush,'"rjournal.github.io stuff"',quiet=TRUE,acceptEnter=TRUE)
    setwd(accdir)
 }
 
