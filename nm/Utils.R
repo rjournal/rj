@@ -437,3 +437,10 @@ checkNonASCII <- function(fname) {
    system(cmd)
 }
 
+#################### delNonASCII()  ########################################
+
+delNonASCII <- function(fname) {
+   cmd <- paste0("tr -cd '\11\12\15\40-\176' < ",fname," > ",fname,'.NEW')
+   system(cmd)
+}
+

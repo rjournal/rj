@@ -9,10 +9,7 @@
 
 reject <- function(msNum) {
    # get in-memory DESCRIPTION file
-   if (is.null(desFiles))  {
-      getAll()
-      print('desFiles regenerated')
-   }
+   getAll()
    des <- desFiles[[msNum]]
    cat('\ncheck correct ms!\n')
    print(des)
