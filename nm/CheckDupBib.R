@@ -26,16 +26,24 @@ checkDupBib <- function() {
       bibEntries <- 
          system(paste('grep @',bibFl,'| grep -v "orig_"'),intern=T)
       tmp <- strsplit(bibEntries,'@')
+      # delete colons
+      noCol <- 
+         function(tmpelt) c(tmpelt[1] <- sub(':','',tmpelt[1]),tmpelt[2])
+      tmp <- lapply(tmp,noCol)
       localDF <- Reduce(rbind,tmp)
       outDF <- rbind(outDF,localDF)
    }
    names(outDF) <- c('fname','bibentry')
 
-   # sort data frame
+   # sort data frame and find dups
    idxs <- order(outDF$bibentry)
    outDF <- outDF[idxs,]
-
    dups <- which(duplicated(outDF$bibentry))
-   outDF[dups,]
+   outDF <- outDF[dups,]
+
+   # finally, want it sorted by file name
+   idxs <- order(outDF$fname)
+   outDF[idxs,]
+
 }
 
