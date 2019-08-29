@@ -35,19 +35,7 @@ checkDupBib <- function() {
    idxs <- order(outDF$bibentry)
    outDF <- outDF[idxs,]
 
-
-   # find all the .bib files
-   bibs <- system('ls 2*/*bib | grep -v "orig"',intern=T)
-   # find all the bib entries in those files
-   biblines <- lapply(bibs,function(bib) 
-      system(paste('grep @',bib),intern=T))
-   # a typical biblines[[i]] will look like
-   #     @Article{Oravecz2009,"
-   # we need to remember while lines came from the same i
-
-
-allBiblines <- Reduce(c,biblines)
-sort(allBiblines)
-dupIdxs <- which(duplicated(sortedBiblines))
-
+   dups <- which(duplicated(outDF$bibentry))
+   outDF[dups,]
 }
+
