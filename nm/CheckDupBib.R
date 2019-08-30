@@ -10,6 +10,9 @@
 
 # assumes each article directory contains only one .bib file
 
+# returns a data frame, with columns for the article number, basename of
+# the .bib file and duplicated .bib line
+
 checkDupBib <- function() {
 
    # easier to not use lapply() etc.
@@ -25,24 +28,35 @@ checkDupBib <- function() {
       # look for @ lines, but skip the orig_*bib
       bibEntries <- 
          system(paste('grep @',bibFl,'| grep -v "orig_"'),intern=T)
-      tmp <- strsplit(bibEntries,'@')
-      # delete colons
-      noCol <- 
-         function(tmpelt) c(tmpelt[1] <- sub(':','',tmpelt[1]),tmpelt[2])
-      tmp <- lapply(tmp,noCol)
+      # each element now has the form 'year-id/basename.bib:bibLine';
+      # need to split into three fields
+      for (i in 1:length(bibEntries)) {
+         be <- bibEntries[i]
+         be <- sub('/',' ',be)
+         be <- sub(':',' ',be)
+         be <- sub('.bib','',be)
+         bibEntries[i] <- be
+      }
+
+      # form a data frame from this, and tack on to the running data
+      # frame
+      tmp <- strsplit(bibEntries,' ')
       localDF <- Reduce(rbind,tmp)
+print(fl)
+print(dim(localDF))
+      localDF <- as.data.frame(localDF)
+      names(localDF) <- c('articleNum','articleBasename','bibLine')
       outDF <- rbind(outDF,localDF)
    }
-   names(outDF) <- c('fname','bibentry')
 
    # sort data frame and find dups
-   idxs <- order(outDF$bibentry)
+   idxs <- order(outDF$bibLine)
    outDF <- outDF[idxs,]
-   dups <- which(duplicated(outDF$bibentry))
+   dups <- which(duplicated(outDF$bibLine))
    outDF <- outDF[dups,]
 
    # finally, want it sorted by file name
-   idxs <- order(outDF$fname)
+   idxs <- order(outDF$articleNum)
    outDF[idxs,]
 
 }

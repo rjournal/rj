@@ -80,3 +80,12 @@ CopyEdit.R:
 
    copyEdit():  sendis letter to author, with the final PDF, asking for
       confirmation
+
+CheckNewSubmit.R:
+
+   various checks to make sure files OK for review
+
+CheckDupBib.R:
+
+   run before using rj:::build_issue()
+
