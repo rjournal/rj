@@ -42,8 +42,6 @@ checkDupBib <- function() {
       # frame
       tmp <- strsplit(bibEntries,' ')
       localDF <- Reduce(rbind,tmp)
-print(fl)
-print(dim(localDF))
       localDF <- as.data.frame(localDF)
       names(localDF) <- c('articleNum','articleBasename','bibLine')
       outDF <- rbind(outDF,localDF)
