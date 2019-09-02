@@ -161,6 +161,7 @@ convert_bbl_tex <- function(tex_path) {
        paste0(substr(tex_path,1,sl3-1),
               '/bbl-',
               substr(tex_path,sl3+1,nchar(tex_path)))
+    writeLines(out,bbltex_path))
 
     bbltex_path
 }
