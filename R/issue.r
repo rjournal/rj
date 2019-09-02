@@ -153,9 +153,16 @@ convert_bbl_tex <- function(tex_path) {
     bbl <- readLines(bbl_path)
     bib_line <- which(has_bib)
     out <- insert_replace(tex, bib_line, bbl)
-    writeLines(out, sub("/", "/bbl-", tex_path))
+    # change by NM, Sept. 1, 2019; bbl path wrong
+    # writeLines(out, sub("/", "/bbl-", tex_path))
+    slashes <- str_locate_all(tex_path, '/')[[1]]
+    sl3 <- slashes[3,1]  # third slash loc
+    bbltex_path <- 
+       paste0(substr(tex_path,1,sl3-1),
+              '/bbl-',
+              substr(tex_path,sl3+1,nchar(tex_path)))
 
-    sub("/", "/bbl-", tex_path)
+    bbltex_path
 }
 
 convert_one_bbl <- function(id) {
