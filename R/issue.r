@@ -218,13 +218,12 @@ build_issue <- function(id) {
 
 ### TODO: also include tex files under '/news'
     include_lines <- unlist(lapply(files, build_include))
-    # NM, Sept. 3, 2019: not sure what 'pos' was doing, but it wasn't
-    # working, so it's now deleted
-    # pos <- grep("^% include import stanzas here", issue_lines)
-    # if (length(pos) > 0L) {
+    # NM, Sept. 3, 2019: 'pos' was nonexistent, fixed now
+    pos <- grep("Contributed Research Articles", issue_lines)
+    if (length(pos) > 0L) {
         out <- insert_replace(issue_lines, pos, include_lines)
         writeLines(out, issue_file)
-    # }
+    }
 
     in_dir(dirname(issue_file), system(paste("pdflatex", basename(issue_file))))
 }
