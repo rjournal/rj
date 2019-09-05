@@ -1,3 +1,14 @@
+
+# NM, Sept. 4:
+
+# The function make_issue() creates Proofs/year-ed, creates the RJ-*.tex
+# file etc. that serve as the basis of the issue, and moves the article
+# files (the ones online) to Proofs/year-ed.  This then makes the latter
+# directory a "staging area," for articles waiting to be proofed and
+# eventually put into an issue.
+ 
+# Accordingly, build_issue () excludes articles not yet proofed.
+
 issue_year <- function(id) {
     as.integer(sub("-.*", "", id))
 }
@@ -43,6 +54,7 @@ issue_file <- function(id) {
     file.path(issue_dir(id), paste0("RJ-", id, ".tex"))
 }
 
+# see notes, top of this file
 make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
     dir <- issue_dir(id)
     if (!file.exists(dir))
@@ -203,6 +215,7 @@ build_include <- function(tex) {
         "\\newpage\n")
 }
 
+# see notes, top of this file
 #' Build an issue
 #'
 #' Embeds the article bibliographies as bbl, adds the article import
@@ -212,6 +225,12 @@ build_include <- function(tex) {
 #' @export
 build_issue <- function(id) {
     files <- convert_issue_bbl(id)
+    notproofed <- checkProofed(files)
+    if (notproofed != '') {
+       print('these articles not yet proofed, not processed')
+       print(notproofed)
+       files <- setdiff(files,notproofed)
+    }
 
     issue_file <- issue_file(id)
     issue_lines <- readLines(issue_file)
@@ -226,6 +245,19 @@ build_issue <- function(id) {
     }
 
     in_dir(dirname(issue_file), system(paste("pdflatex", basename(issue_file))))
+}
+
+checkProofed <- function(files) {
+   grepProofed <- function(fl) {
+      bblloc <- str_locate(fl,'bbl-')
+      desfl <- paste0(substr(fl,1,(bblloc-1)),'DESCRIPTION')
+      cmd <- paste0('grep proofed ',desfl)
+      sysout <- system(cmd,intern=T)
+      length(sysout) == 0
+   }
+   notThere <- Map(grepProofed,files)
+   notThere <- unlist(notThere)
+   names(which(notThere))
 }
 
 ## run from articles
