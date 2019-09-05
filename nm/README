@@ -49,6 +49,10 @@ Utils.R:
    mailIt(addr,subject,attaches,ltr,mailer='muttMailer'):  e-mail letter 
    getLocalDirName():  get last part of path, e.g. z from /x/y/z 
 
+ExtractPreambles.R:
+
+   getAllPreambles():  extracts all \usepackage etc. from authors'
+      RJwrapper.tex, to insert into RJ-yearid.tex for building an issue
 ACK.R:
 
    ack(msNum):  sends acknowledgement of receipt of manuscript
