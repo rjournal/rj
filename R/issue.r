@@ -225,12 +225,12 @@ build_include <- function(tex) {
 #' @export
 build_issue <- function(id) {
     files <- convert_issue_bbl(id)
-    notproofed <- checkProofed(files)
-    if (notproofed != '') {
-       print('these articles not yet proofed, not processed')
-       print(notproofed)
-       files <- setdiff(files,notproofed)
-    }
+#     notproofed <- checkProofed(files)
+#     if (notproofed != '') {
+#        print('these articles not yet proofed, not processed')
+#        print(notproofed)
+#        files <- setdiff(files,notproofed)
+#     }
 
     issue_file <- issue_file(id)
     issue_lines <- readLines(issue_file)
@@ -247,18 +247,18 @@ build_issue <- function(id) {
     in_dir(dirname(issue_file), system(paste("pdflatex", basename(issue_file))))
 }
 
-checkProofed <- function(files) {
-   grepProofed <- function(fl) {
-      bblloc <- str_locate(fl,'bbl-')
-      desfl <- paste0(substr(fl,1,(bblloc-1)),'DESCRIPTION')
-      cmd <- paste0('grep proofed ',desfl)
-      sysout <- system(cmd,intern=T)
-      length(sysout) == 0
-   }
-   notThere <- Map(grepProofed,files)
-   notThere <- unlist(notThere)
-   names(which(notThere))
-}
+# checkProofed <- function(files) {
+#    grepProofed <- function(fl) {
+#       bblloc <- str_locate(fl,'bbl-')
+#       desfl <- paste0(substr(fl,1,(bblloc-1)),'DESCRIPTION')
+#       cmd <- paste0('grep proofed ',desfl)
+#       sysout <- system(cmd,intern=T)
+#       length(sysout) == 0
+#    }
+#    notThere <- Map(grepProofed,files)
+#    notThere <- unlist(notThere)
+#    names(which(notThere))
+# }
 
 ## run from articles
 init_archive_path <- function(id, web_path) {
