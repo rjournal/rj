@@ -13,7 +13,7 @@ ack <- function(msNums) {
       print('desFiles regenerated')
    }
    # get formletter (global; no need, should change this)
-   source('../../rj/nm/ACKTmplt.R')
+   source('../../rj/ACKTmplt.R')
    subsdir <- getwd()
    for (msNum in msNums) {
       cat('ACKing',msNum,'\n')
