@@ -6,7 +6,7 @@
 
 # run from Submissions/
 
-accept <- function(msNum,newAutFiles='') {
+acceptNM <- function(msNum,newAutFiles='') {
    # get in-memory DESCRIPTION file for this ms
    getAll()
    # double check it's the right one

@@ -7,7 +7,7 @@
 # run from Submissions/
 
 
-reject <- function(msNum) {
+rejectNM <- function(msNum) {
    # get in-memory DESCRIPTION file
    getAll()
    des <- desFiles[[msNum]]
