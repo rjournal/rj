@@ -54,3 +54,6 @@ importFrom(utils,adist)
 importFrom(whisker,whisker.render)
 importFrom(yaml,as.yaml,yaml.load_file)
 importFrom(pdftools, pdf_toc, pdf_text)
+
+# NM ftns; need to add more
+export(ack,rejectNM,acceptNM)
