@@ -56,4 +56,4 @@ importFrom(yaml,as.yaml,yaml.load_file)
 importFrom(pdftools, pdf_toc, pdf_text)
 
 # NM ftns; need to add more
-export(ack,rejectNM,acceptNM)
+export(ackNM,rejectNM,acceptNM)

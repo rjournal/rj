@@ -6,14 +6,14 @@
 
 # run from Submissions/
 
-ack <- function(msNums) {
+ackNM <- function(msNums) {
    # get in-memory DESCRIPTION file
    if (!exists('desFiles'))  {
       getAll()
       print('desFiles regenerated')
    }
    # get formletter (global; no need, should change this)
-   source('../../rj/ACKTmplt.R')
+   source('../../rj/R/ACKTmplt.R')
    subsdir <- getwd()
    for (msNum in msNums) {
       cat('ACKing',msNum,'\n')
