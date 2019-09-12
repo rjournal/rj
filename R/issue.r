@@ -1,7 +1,7 @@
 
 # NM, Sept. 4:
 
-# The function make_issue() creates Proofs/year-ed, creates the RJ-*.tex
+# The function make_proof() creates Proofs/year-ed, creates the RJ-*.tex
 # file etc. that serve as the basis of the issue, and moves the article
 # files (the ones online) to Proofs/year-ed.  This then makes the latter
 # directory a "staging area," for articles waiting to be proofed and
