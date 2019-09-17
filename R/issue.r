@@ -14,7 +14,7 @@
 # The code tacitly assumes that any article put online will necessarily
 # appear in the next issue.  Our postponement of some of the articles
 # originally slated for Vol. 11, No. 1 means adjustments will need to be
-# made.
+# made, on a one-time basis.
 
 issue_year <- function(id) {
     as.integer(sub("-.*", "", id))
