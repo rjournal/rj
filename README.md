@@ -2,7 +2,7 @@
 
 This package provides tools for dealing with the metadata for the R Journal. The overall goal of the package is to automate common tasks performed by the editors, particularly the editor-in-chief.
 
-The files with 'NM' in their names are due to Norm Matloff.  Some of the functions there perform tasks not in the original 'rj' package, while others perform similar tasks but differing in details.  See README.nm.
+The files with 'NM' in their names are due to Norm Matloff.  Some of the functions there perform tasks not in the original 'rj' package, while others perform similar tasks but differing in details.  See README.nm for further information.
 
 
 ## Installation
