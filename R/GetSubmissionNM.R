@@ -1,14 +1,37 @@
 
-# wraps to rj::get_submissions(), then does a different ACK, with the
-# latter calling rj::build_latex() as well
+require(gitR)  # on NM repo
+
+# largely does the same work as rj::get_submissions()
+
+# actions:
+
+#  determine next available manuscript number
+#  mkdir in Submissions/ with that number
+#  cd to the new directory
+#  unzip articleZip
+#  do some checks
+#  create DESCRIPTIONfile
+#  push to GitHub
 
 # call from articles/
 
 # work in progress
 
-# newSubmissions <- function() {
+getSubmission <- function(articleZip) 
+{
+   currdir <- getwd()
+   on.exit(setwd(currdir))
+
+   newID <- new_id()
+   newDir <- paste0('Submissions/',newID)
+   dir.create(newDir)
+   setwd(newDir)
+   unzip('articleZip)
+
+}
+
+# newSubmission <- function() {
 #    require(gitR)
-#    browser()
 #    oldSubs <- dir('Submissions')
 #    # can't have any files other that article directories
 #    ds <- list.dirs('Submissions',recursive=FALSE)

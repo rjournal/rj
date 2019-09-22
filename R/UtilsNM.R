@@ -3,7 +3,8 @@
 
 # launched from that directory, or use gotoSubs() to go there
 
-library(stringr)
+require(stringr)
+require(gitR)  # on NM repo
 
 # globals
 

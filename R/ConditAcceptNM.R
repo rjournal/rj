@@ -1,4 +1,5 @@
 
+require(gitR)  # on NM repo
 
 ######################  conditional accept  ##################################
 
