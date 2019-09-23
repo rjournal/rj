@@ -5,7 +5,6 @@
 
 checkNewSubmit <- function() 
 {
-   
    # rj software can only allow for 2 .tex and 1 .bib
    if (length(dir(pattern=glob2rx('*.tex*'))) > 2)
       warnReArticle('only 2 *.tex* allowed')
@@ -15,9 +14,14 @@ checkNewSubmit <- function()
    texs <- grep('.tex',readLines('RJwrapper.tex'))
    if (length(texs) > 1)
       warnReArticle('only 1 mention allowed in RJwrapper.tex of ".tex"')
-   # run LaTeX checks
-   rj::build_latex('RJwrapper.tex')
+   # run LaTeX check
+   tryCatch(
+      tools::texi2pdf("RJwrapper.tex", clean = FALSE, texinput = "..../share")
+   )
+
 }
+
+# calls warning() but with the manuscript number
 
 warnReArticle <- function(msg) 
 {

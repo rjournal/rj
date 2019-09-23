@@ -296,18 +296,18 @@ makeSysCmd <- function(...) {
 #    op: 'add' or 'mv'
 #    mvdest: destination directory of op = 'mv'
 
-pushToGitHub <- function(fileList,commitComment,op='add',mvdest=NULL) {
-   if (!(op %in% c('add','mv'))) stop('bad op')
-   partcmd <- paste('git',op)
-   if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
-   else cmd <- makeSysCmd(paste(partcmd,fileList,mvdest))
-   cmd()
-   cmd <- makeSysCmd('git commit -m ',commitComment)
-   cmd()
-   # commit may take a while
-   readline('hit Enter when ready')
-   ghPush()
-}
+# pushToGitHub <- function(fileList,commitComment,op='add',mvdest=NULL) {
+#    if (!(op %in% c('add','mv'))) stop('bad op')
+#    partcmd <- paste('git',op)
+#    if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
+#    else cmd <- makeSysCmd(paste(partcmd,fileList,mvdest))
+#    cmd()
+#    cmd <- makeSysCmd('git commit -m ',commitComment)
+#    cmd()
+#    # commit may take a while
+#    readline('hit Enter when ready')
+#    ghPush()
+# }
 
 
 ###########################  ghPush  ##################################
@@ -315,25 +315,25 @@ pushToGitHub <- function(fileList,commitComment,op='add',mvdest=NULL) {
 # push to GitHub, final action; make it a loop in case of password
 # mistyping :-)
 
-ghPush <- function() {
-   cmd <- makeSysCmd('git push origin')
-   while (TRUE) {
-      if (cmd() == 0) return()
-   }
-}
+# ghPush <- function() {
+#    cmd <- makeSysCmd('git push origin')
+#    while (TRUE) {
+#       if (cmd() == 0) return()
+#    }
+# }
 
 ###########################  editPush  ##################################
 
 # edit file, then push
 
-editPush <- function(fname,commitComment) {
-   print('make sure commitComment has double quotes within single')
-   readline('hit Enter when ready')
-   textEditor <- Sys.getenv('EDITOR')
-   cmd <- makeSysCmd(textEditor,fname)
-   cmd()
-   pushToGitHub(fname,commitComment)
-}
+# editPush <- function(fname,commitComment) {
+#    print('make sure commitComment has double quotes within single')
+#    readline('hit Enter when ready')
+#    textEditor <- Sys.getenv('EDITOR')
+#    cmd <- makeSysCmd(textEditor,fname)
+#    cmd()
+#    pushToGitHub(fname,commitComment)
+# }
 
 ###########################  sendLetter  ##################################
 
