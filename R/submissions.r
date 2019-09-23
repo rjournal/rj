@@ -78,9 +78,11 @@ download_submissions <- function() {
                        msg <- gmailr::message(msgid, format="full")
                        files <- gmailr::save_attachments(msg, path=path)
                        extract_files(files, path)
-                       art <- as.article.gmail_message(msg, id=id, path=path)
-                       save_article(art)
-                       art
+                       try(  # try() from NM, 09/24/19
+                       {art <- as.article.gmail_message(msg, id=id, path=path);
+                       save_article(art);
+                       art}
+                       )
                   })
     setNames(arts, msgids)
 }
