@@ -56,7 +56,8 @@ importFrom(yaml,as.yaml,yaml.load_file)
 importFrom(pdftools, pdf_toc, pdf_text)
 
 # NM ftns; need to add more
-export(ackNM,rejectNM,acceptNM,getAll,getMSnumByAut,getMSnumByTitle)
-export(getTitle,getAutInfo,getEd,setEd)
+export(ackNM,rejectNM,acceptNM,getAll)
+export(getMSnumByAut,getMSnumByTitle,getReviewStatus)
+export(getTitle,getAutInfo,getAutAddr,getEd,setEd)
 export(mailIt,sendLetter)
-
+export(checkNonASCII,delNonASCII)
