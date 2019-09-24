@@ -212,7 +212,7 @@ setEd <- function(msNumEdList) {
       cmd()
       # commit may take a while
       readline('hit Enter when ready')
-      ghPush()
+      gitPush()
       setwd(subsdir)
    }
 }
