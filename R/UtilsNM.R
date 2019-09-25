@@ -365,10 +365,10 @@ sendLetter <- function(msNum,surname,addr,singdoubsubject,template,attaches,
    editorName <- Sys.getenv('RJ_NAME')
    if (nchar(editorName) == 0)
       stop('please set your RJ_NAME environment variable')
-   rjnmDir <- Sys.getenv('RJNM_DIR')
-   if (nchar(rjnmDir) == 0)
-      stop('please set your RJNM_DIR environment variable')
-   template <- paste0(rjnmDir,'/',template)
+   rjDir <- Sys.getenv('RJ_DIR')
+   if (nchar(rjDir) == 0)
+      stop('please set your RJ_DIR environment variable')
+   template <- paste0(rjDir,'/',template)
    source(template)  # sets global var 'formletter'
    if (is.null(des)) des <- desFiles[[msNum]]
    formletter[1] <- sub('GREET',surname,formletter[1])
