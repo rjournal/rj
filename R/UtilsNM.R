@@ -9,7 +9,7 @@ require(gitR)  # on NM repo
 # globals
 
 # RJ_NAME environment variable, your name
-# RJNM_DIR environment variable, full path of rj/nm
+# RJ_DIR environment variable, full path of rj/R
  
 # subs <- NULL  # submissions data frame, created by getAll()
 # desFiles <- NULL # R list, one DESCRIPTION file per element
@@ -342,7 +342,7 @@ makeSysCmd <- function(...) {
 # arguments:
 # 
 #    msNum: manuscript number
-#    template: .R file name, given relative to RJNM_DIR
+#    template: .R file name, given relative to RJ_DIR
 #    attaches: R vector of file names to be attached, given relative to
 #        current working directory
 #    deadline: optional deadline for request

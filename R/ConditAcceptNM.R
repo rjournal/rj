@@ -7,7 +7,7 @@ require(gitR)  # on NM repo
 
 # run from Submissions/
 
-conditAcc <- function(msNum,attaches) {
+conditAccNM <- function(msNum,attaches) {
    # get in-memory DESCRIPTION file
    if (!exists('desFiles'))  {
       getAll()
