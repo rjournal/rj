@@ -44,7 +44,7 @@ askReview <- function(reviewerAddr,salut,msNum,cran,dueDate,attaches) {
    # get form version
    rjDir <- Sys.getenv('RJ_DIR')
    editor <- Sys.getenv('RJ_NAME')
-   source(paste0(rjDir,'/AskReviewTmplt.R')) 
+   source(paste0(rjDir,'/AskReviewTmpltNM.R')) 
    # determine article title 
    paperTitle <- getTitle(des)
    # insert title, due date, CRAN status into form letter
