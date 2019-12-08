@@ -46,6 +46,6 @@ acceptNM <- function(msNum,newAutFiles='') {
    gitOpPush(msNum,'"accept"','mv','../Accepted')
    autinfo <- rj:::getAutInfo(des)
    rj:::sendLetter(msNum,autinfo[1],autinfo[2],'"your R Journal submission"',
-      'AcceptTmplt.R',attaches=NULL)
+      'AcceptTmpltNM.R',attaches=NULL)
 }
 
