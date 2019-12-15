@@ -322,18 +322,18 @@ makeSysCmd <- function(...) {
 #    }
 # }
 
-###########################  editPush  ##################################
+###########################  editPushNM  ##################################
 
 # edit file, then push
 
-# editPush <- function(fname,commitComment) {
-#    print('make sure commitComment has double quotes within single')
-#    readline('hit Enter when ready')
-#    textEditor <- Sys.getenv('EDITOR')
-#    cmd <- makeSysCmd(textEditor,fname)
-#    cmd()
-#    pushToGitHub(fname,commitComment)
-# }
+editPushNM <- function(fname,commitComment) {
+   print('make sure commitComment has double quotes within single')
+   readline('hit Enter when ready')
+   textEditor <- Sys.getenv('EDITOR')
+   cmd <- makeSysCmd(textEditor,fname)
+   cmd()
+   pushToGitHub(fname,commitComment)
+}
 
 ###########################  sendLetter  ##################################
 
