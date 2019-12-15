@@ -8,6 +8,7 @@ require(gitR)  # on NM repo
 # run from Submissions/
 
 conditAccNM <- function(msNum,attaches) {
+   print('"attaches" is with respect to correspondence/')
    # get in-memory DESCRIPTION file
    if (!exists('desFiles'))  {
       getAll()
