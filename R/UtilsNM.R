@@ -276,7 +276,7 @@ makeSysCmd <- function(...) {
    f
 }
 
-########################  pushToGitHub  ##################################
+########################  pushToGitHubNM  ##################################
 
 # the 'fileList' argument will be tacked on to 'git add' (or 'git mv' if
 # op is 'mv'), with the file names relative to current directory, and
@@ -296,18 +296,18 @@ makeSysCmd <- function(...) {
 #    op: 'add' or 'mv'
 #    mvdest: destination directory of op = 'mv'
 
-# pushToGitHub <- function(fileList,commitComment,op='add',mvdest=NULL) {
-#    if (!(op %in% c('add','mv'))) stop('bad op')
-#    partcmd <- paste('git',op)
-#    if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
-#    else cmd <- makeSysCmd(paste(partcmd,fileList,mvdest))
-#    cmd()
-#    cmd <- makeSysCmd('git commit -m ',commitComment)
-#    cmd()
-#    # commit may take a while
-#    readline('hit Enter when ready')
-#    ghPush()
-# }
+pushToGitHubNM <- function(fileList,commitComment,op='add',mvdest=NULL) {
+   if (!(op %in% c('add','mv'))) stop('bad op')
+   partcmd <- paste('git',op)
+   if (op == 'add') cmd <- makeSysCmd(paste(partcmd,fileList))
+   else cmd <- makeSysCmd(paste(partcmd,fileList,mvdest))
+   cmd()
+   cmd <- makeSysCmd('git commit -m ',commitComment)
+   cmd()
+   # commit may take a while
+   readline('hit Enter when ready')
+   ghPush()
+}
 
 
 ###########################  ghPush  ##################################

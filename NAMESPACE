@@ -57,7 +57,7 @@ importFrom(pdftools, pdf_toc, pdf_text)
 
 # NM ftns; need to add more
 export(ackNM,rejectNM,acceptNM,getAll,conditAccNM)
-export(editPushNM)
+export(editPushNM,pushToGitHubNM)
 export(getMSnumByAut,getMSnumByTitle,getReviewStatus)
 export(getTitle,getAutInfo,getAutAddr,getEd,setEd)
 export(mailIt,sendLetter)
