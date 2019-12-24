@@ -284,7 +284,7 @@ makeSysCmd <- function(...) {
 
 # example
 
-#   pushToGitHub('xy z','"new src files"')
+#   pushToGitHubNM('xy z','"new src files"')
 
 # will push xy and z in current directory, with the commit done with the
 # message "new src files"
@@ -306,21 +306,21 @@ pushToGitHubNM <- function(fileList,commitComment,op='add',mvdest=NULL) {
    cmd()
    # commit may take a while
    readline('hit Enter when ready')
-   ghPush()
+   ghPushNM()
 }
 
 
-###########################  ghPush  ##################################
+###########################  ghPushNM  ##################################
 
 # push to GitHub, final action; make it a loop in case of password
 # mistyping :-)
 
-# ghPush <- function() {
-#    cmd <- makeSysCmd('git push origin')
-#    while (TRUE) {
-#       if (cmd() == 0) return()
-#    }
-# }
+ghPushNM <- function() {
+   cmd <- makeSysCmd('git push origin')
+   while (TRUE) {
+      if (cmd() == 0) return()
+   }
+}
 
 ###########################  editPushNM  ##################################
 
