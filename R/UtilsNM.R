@@ -332,7 +332,7 @@ editPushNM <- function(fname,commitComment) {
    textEditor <- Sys.getenv('EDITOR')
    cmd <- makeSysCmd(textEditor,fname)
    cmd()
-   pushToGitHub(fname,commitComment)
+   pushToGitHubNM(fname,commitComment)
 }
 
 ###########################  sendLetter  ##################################
