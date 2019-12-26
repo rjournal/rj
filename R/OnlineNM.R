@@ -7,9 +7,8 @@
 
 require(gitR)  # github/matloff/gitR
 
-putOnline <- function(msnum) 
+putOnlineNM <- function(msnum) 
 {
-
    options(warn = 1)  # e.g. if bib problem, want to know now
 
    cat('\n\nprocessing msnum ',msnum,'\n')
@@ -17,19 +16,20 @@ putOnline <- function(msnum)
    on.exit(setwd(accdir))
 
    setwd(msnum)
-   des <- checkForSupps()
+   des <- checkForSuppsNM()
 
    # each run of rj:::find_update_bib() will copy x.bib to orig_x.bib,
    # overwriting the last, thus not really "original"; may be useful to
    # save the real original
    print('check .bib files')
-   dir(pattern=glob2rx('*.bib'))
+   print(dir(pattern=glob2rx('*.bib')))
    print('should be only 1, plus 1 or 2 saved originals')
-   ans <- readline('need to save (real) original .bib? ')
-   if (substr(ans,1,1) == 'y') {
-      cmd <- readLine('enter cp shell command')
-      system(cmd)
-   }
+   readline('hit Enter to continue ')
+##    ans <- readline('need to save (real) original .bib? ')
+##    if (substr(ans,1,1) == 'y') {
+##       cmd <- readLine('enter cp shell command')
+##       system(cmd)
+##    }
 
    setwd('../..')  # articles/
    print('checking bib')
@@ -60,7 +60,7 @@ putOnline <- function(msnum)
 
 # need to add a Suppl: line for supplementary material?
 
-checkForSupps <- function(msnum) 
+checkForSuppsNM <- function(msnum) 
 {
    des <- readLines('DESCRIPTION')
    # for now, treat only .R as supp, and assume just 1 such file
