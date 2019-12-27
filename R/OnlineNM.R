@@ -14,22 +14,30 @@ putOnlineNM <- function(msnum)
    cat('\n\nprocessing msnum ',msnum,'\n')
    accdir <- getwd()  # Accepted/
    on.exit(setwd(accdir))
-
    setwd(msnum)
+
+   # if already has slug, skip this one
+   slug <- checkForSlugNM()
+   if (nchar(slug) > 0) {
+      cat(msnum, ' already has slug: ', slug, '\n',sep='')
+      return()
+   }
+
+   # create supplement if nonexistent and there is an .R file
    des <- checkForSuppsNM()
 
+   print('check .bib files:')
+   print(dir(pattern=glob2rx('*.bib')))
+   print('should be only 1, plus 1 saved original')
+   readline('hit Enter to continue ')
    # each run of rj:::find_update_bib() will copy x.bib to orig_x.bib,
    # overwriting the last, thus not really "original"; may be useful to
    # save the real original
-   print('check .bib files')
-   print(dir(pattern=glob2rx('*.bib')))
-   print('should be only 1, plus 1 or 2 saved originals')
-   readline('hit Enter to continue ')
-##    ans <- readline('need to save (real) original .bib? ')
-##    if (substr(ans,1,1) == 'y') {
-##       cmd <- readLine('enter cp shell command')
-##       system(cmd)
-##    }
+   ans <- readline('need to save (real) original .bib? ')
+   if (substr(ans,1,1) == 'y') {
+      cmd <- readLine('enter cp shell command')
+      system(cmd)
+   }
 
    setwd('../..')  # articles/
    print('checking bib')
@@ -58,7 +66,15 @@ putOnlineNM <- function(msnum)
    setwd(accdir)
 }
 
-# need to add a Suppl: line for supplementary material?
+# assumes already in ms directory, e.g. 2016-52/
+checkForSlugNM <- function() {
+   rl <- readLines('DESCRIPTION')
+   slug <- rl[grep('Slug',rl)]
+   if (length(slug) == 0) return('')
+   substr(slug,7,18)
+}
+
+# need lo add a Suppl: line for supplementary material?
 
 checkForSuppsNM <- function(msnum) 
 {
@@ -78,7 +94,7 @@ checkForSuppsNM <- function(msnum)
       cat(des,sep='\n')
       ans <- readline('\n\nfurther edit? ')
       if (substr(ans,1,1) == 'y') {
-         editPush('DESCRIPTION','"further edit"')
+         editPushNM('DESCRIPTION','"further edit"')
          des <- readLines('DESCRIPTION')  # re-read, just in case
       } 
    }
