@@ -33,7 +33,7 @@ putOnlineNM <- function(msnum)
    # each run of rj:::find_update_bib() will copy x.bib to orig_x.bib,
    # overwriting the last, thus not really "original"; may be useful to
    # save the real original
-   if (length(dir(pattern='orig_') == 0)) {
+   if (length(dir(pattern='orig_')) == 0) {
       bibfile <- dir(pattern='.bib')
       file.copy(bibfile,'REALorigBIB')
    }
