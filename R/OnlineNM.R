@@ -1,7 +1,7 @@
 
 # for EiC to put an accepted paper in 'online' status, meaning it will
 # show up on the landing page under "Accepted articles"; note:  does NOT
-# copy to SVN, needed for external viewing
+# copy to SVN, needed for external viewing 
 
 # run from Accepted/
 
@@ -29,14 +29,14 @@ putOnlineNM <- function(msnum)
    print('check .bib files:')
    print(dir(pattern=glob2rx('*.bib')))
    print('should be only 1, plus 1 saved original')
-   readline('hit Enter to continue ')
+   readline('hit ctrl-C if this is not the case, else Enter to continue ')
    # each run of rj:::find_update_bib() will copy x.bib to orig_x.bib,
    # overwriting the last, thus not really "original"; may be useful to
    # save the real original
-   ans <- readline('need to save (real) original .bib? ')
-   if (substr(ans,1,1) == 'y') {
-      cmd <- readLine('enter cp shell command')
-      system(cmd)
+   if (length(dir(pattern='orig_') == 0)) {
+      bibfile <- dir(pattern='.bib')
+      savefile <- paste0('REALorig',bibfile) 
+      file.copy(bibfile,savefile)
    }
 
    setwd('../..')  # articles/
