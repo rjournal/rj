@@ -35,8 +35,7 @@ putOnlineNM <- function(msnum)
    # save the real original
    if (length(dir(pattern='orig_') == 0)) {
       bibfile <- dir(pattern='.bib')
-      savefile <- paste0('REALorig',bibfile) 
-      file.copy(bibfile,savefile)
+      file.copy(bibfile,'REALorigBIB')
    }
 
    setwd('../..')  # articles/
