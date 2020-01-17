@@ -78,10 +78,17 @@ download_submissions <- function() {
                        msg <- gmailr::message(msgid, format="full")
                        files <- gmailr::save_attachments(msg, path=path)
                        extract_files(files, path)
-                       try(  # try() from NM, 09/24/19
-                       {art <- as.article.gmail_message(msg, id=id, path=path);
-                       save_article(art);
-                       art}
+                       # try() from NM, 09/24/19, modified 01/16/20
+                       tryCatch(  
+                          {art <- as.article.gmail_message(
+                                     msg, id=id, path=path);
+                           save_article(art);
+                           art},
+                          error = function(e) {
+                             msg <- paste('remove erroneous article directory ',
+                                    id)
+                             message(msg)
+                          }
                        )
                   })
     setNames(arts, msgids)
