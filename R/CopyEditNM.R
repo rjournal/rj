@@ -33,6 +33,6 @@ copyEdit <- function(msNum,deadline) {
    autinfo <- getAutInfo(des)
    pdfLoc <- paste0(msNum,'/RJwrapper.pdf')
    sendLetter(msNum,autinfo[1],autinfo[2],'"your R Journal submission"',
-      'CopyEditTmplt.R',pdfLoc,deadline=deadline,des=des)
+      'CopyEditTmpltNM.R',pdfLoc,deadline=deadline,des=des)
 }
 
