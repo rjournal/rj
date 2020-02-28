@@ -154,8 +154,11 @@ convert_bbl_tex <- function(tex_path) {
     }
 
     bib <- tex$bibliography
-    if (tools::file_ext(bib) != "bib")
-        bib <- paste0(bib, ".bib")
+    bib <- stringr::str_remove(bib, "%.*") # Remove comments
+    bib <- stringr::str_trim(bib) # Remove whitespace
+    if (tools::file_ext(bib) != "bib"){
+      bib <- paste0(bib, ".bib")
+    }
     bib_path <- file.path(dirname(tex_path), bib)
     if (!file.exists(bib_path)) stop("Can't find ", bib_path)
 
