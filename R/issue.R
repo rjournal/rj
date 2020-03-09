@@ -587,6 +587,15 @@ suffix_labels <- function(file, suffix, macros = c("label", "ref", "pageref", "s
   macros <- paste0(macros, collapse = "|")
   pattern <- paste0("\\\\(", macros, ")\\s*((\\[([^\\]]*)\\]\\s*)*)\\{([^\\}]+)\\}")
   txt <- readLines(file)
+  
+  
+  subarticles <- stringr::str_match(
+    txt,
+    "\\\\input\\s*\\{([^\\}]+)\\}"
+  )
+  subarticles <- subarticles[!is.na(subarticles[,2]),2]
+  lapply(file.path(dirname(file), subarticles), suffix_labels, suffix = suffix, macros = macros)
+  
   txt <- stringr::str_replace_all(
     paste(txt, collapse = "\n"), pattern, 
     function(x){
