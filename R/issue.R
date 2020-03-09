@@ -591,7 +591,7 @@ suffix_labels <- function(file, suffix, macros = c("label", "ref", "pageref", "s
   
   subarticles <- stringr::str_match(
     txt,
-    "\\\\input\\s*\\{([^\\}]+)\\}"
+    "(?<!%)\\\\input\\s*\\{([^\\}]+)\\}"
   )
   subarticles <- subarticles[!is.na(subarticles[,2]),2]
   lapply(file.path(dirname(file), subarticles), suffix_labels, suffix = suffix, macros = macros)
