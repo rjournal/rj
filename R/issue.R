@@ -583,7 +583,7 @@ get_post_md <- function(dir="news", file=c("foundation"=1, "cran"=1, "bioc"=1, "
 #' @param suffix A unique suffix to add to label and bib IDs.
 #' 
 #' @export
-suffix_labels <- function(file, suffix, macros = c("label", "ref", "cref", "pageref", "subref", "nameref", "eqref", "bibitem", "cite", "citep", "citealt", "citet", "citealp")){
+suffix_labels <- function(file, suffix, macros = c("label", "ref", "cref", "autoref", "pageref", "subref", "nameref", "eqref", "bibitem", "cite", "citep", "citealt", "citet", "citealp")){
   macros <- paste0(macros, collapse = "|")
   pattern <- paste0("\\\\(", macros, ")\\s*((\\[([^\\]]*)\\]\\s*)*)\\{([^\\}]+)\\}")
   txt <- readLines(file)
