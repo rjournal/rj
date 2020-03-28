@@ -17,6 +17,8 @@ R CMD INSTALL .
 
 then you can install `rj`, using your favourite approach.
 
+New editors should be added to the list of editors in `R/email.r`.
+
 ## `DESCRIPTION` format
 
 Each submission consists of a directory containing the submission, any correspondence, and a `DESCRIPTION` file.  The `DESCRIPTION` is a DCF (debian control file) file, made up of entries of the following form.
