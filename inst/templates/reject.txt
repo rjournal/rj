@@ -3,7 +3,7 @@ Subject: R journal submission {{id}}
 ---
 Dear {{name}},
 
-We regret to inform you that you article "{{title}}" submitted to the R Journal has been rejected.
+We regret to inform you that your article "{{title}}" submitted to the R Journal has been rejected.
 
 The editorial board has discussed your submission and ...
 
