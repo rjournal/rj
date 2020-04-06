@@ -7,10 +7,10 @@
 
 checkDupSubmissions <- function() {
       rj:::getAll()
-      dirs <- list.dirs(recurs=FALSE)
-      titles <- sapply(desFiles,function(dfile) dfile[1])
-      byTitle <- split(dirs,titles)
-      nSameTitle <-sapply(byTitle,length)
+      dirs <- list.dirs(recursive = FALSE)
+      titles <- sapply(desFiles, function(dfile) dfile[1])
+      byTitle <- split(dirs, titles)
+      nSameTitle <- sapply(byTitle, length)
       which(nSameTitle > 1)
 }
 
