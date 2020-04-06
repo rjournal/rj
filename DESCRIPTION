@@ -6,15 +6,15 @@ Author: EiC <R-journal@r-project.org>
 Maintainer: EiC <R-journal@r-project.org>
 Description: This package provides useful functions for the
     editors of the R journal.
-License: MIT
+License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0)
 Imports:
     bibtex,
-    gmailr,
     jss,
     pdftools,
     stringr,
+    tth,
     whisker,
     yaml
 Suggests:
