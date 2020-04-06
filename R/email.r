@@ -103,6 +103,7 @@ editors <- c(
   "NM"   = "nsmatloff@ucdavis.edu",
   "DC"   = "dicook.rj@gmail.com",
   "MK"   = "kaneplusplus@gmail.com",
+  "CH"   = "Catherine.Hurley@mu.ie",
   "CG"   = "csgillespie@gmail.com"
 )
 
