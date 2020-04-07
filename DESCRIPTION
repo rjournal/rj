@@ -19,5 +19,7 @@ Imports:
     yaml
 Suggests:
     ctv,
+    knitr,
     testthat
 Encoding: UTF-8
+RoxygenNote: 7.1.0
