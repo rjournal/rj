@@ -8,7 +8,7 @@ get_submissions()
 }
 \value{
 list of \code{gmail_draft} objects for
-  \code{\link{send_acknowledgements}}
+  \code{send_acknowledgements}
 }
 \description{
 Assumes submissions to be processed are unread emails in the

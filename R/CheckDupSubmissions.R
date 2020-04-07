@@ -6,7 +6,7 @@
 # run from Submissions/
 
 checkDupSubmissions <- function() {
-      rj:::getAll()
+      getAll()
       dirs <- list.dirs(recursive = FALSE)
       titles <- sapply(desFiles, function(dfile) dfile[1])
       byTitle <- split(dirs, titles)

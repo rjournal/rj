@@ -3,4 +3,7 @@
 \docType{package}
 \name{rj}
 \alias{rj}
-\title{A package to make it easier to work with the R-journal dcf files.}
+\title{R Journal Package}
+\description{
+A package to make it easier to work with the R-journal dcf files.
+}

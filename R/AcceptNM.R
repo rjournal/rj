@@ -9,7 +9,7 @@
 acceptNM <- function(msNum,newAutFiles='') {
    require(gitR)
    # get in-memory DESCRIPTION file for this ms
-   rj:::getAll()
+   getAll()
    # double check it's the right one
    cat('\ncheck correct ms!\n')
    des <- desFiles[[msNum]]  
@@ -44,8 +44,8 @@ acceptNM <- function(msNum,newAutFiles='') {
    # mv to Accepted
    setwd(subsdir)
    gitOpPush(msNum,'"accept"','mv','../Accepted')
-   autinfo <- rj:::getAutInfo(des)
-   rj:::sendLetter(msNum,autinfo[1],autinfo[2],'"your R Journal submission"',
+   autinfo <- getAutInfo(des)
+   sendLetter(msNum,autinfo[1],autinfo[2],'"your R Journal submission"',
       'AcceptTmpltNM.R',attaches=NULL)
 }
 

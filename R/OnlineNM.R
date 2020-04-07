@@ -41,7 +41,7 @@ putOnlineNM <- function(msnum)
    setwd('../..')  # articles/
    print('checking bib')
    readline('Hit Enter when ready ')
-   rj:::find_update_bib(msnum)
+   find_update_bib(msnum)
 
    print('adding to _config.yml')
    readline('Hit Enter when ready ')

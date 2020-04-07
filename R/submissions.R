@@ -21,7 +21,7 @@
 #' }
 #'
 #' @return list of \code{gmail_draft} objects for
-#'   \code{\link{send_acknowledgements}}
+#'   \code{send_acknowledgements}
 #' @export
 get_submissions <- function() {
     authorize(c("read_only", "modify", "compose"))
@@ -30,6 +30,7 @@ get_submissions <- function() {
     draft_acknowledgements(subs)
 }
 
+#' @importFrom gmailr gmail_auth
 authorize <- function(scope) {
     secret_file <- system.file("auth", "client_id.json", package="rj")
     gmailr::gmail_auth(scope, secret_file = secret_file)
@@ -69,6 +70,7 @@ as.article.gmail_message <- function(msg, ...) {
     do.call(article, c(dcf, list(...)))
 }
 
+#' @importFrom gmailr messages id message
 download_submissions <- function() {
     msgs <- gmailr::messages("is:unread subject:'R Journal Submission' from:me")
     msgids <- rev(gmailr::id(msgs)) # inbox is sorted latest first
@@ -99,6 +101,7 @@ consume_submissions <- function(subs) {
         gmailr::modify_message(msgid, remove_labels="UNREAD")
 }
 
+#' @importFrom gmailr mime create_draft
 draft_acknowledgements <- function(subs) {
     acknowledge_sub <- function(sub) {
         body <- render_template(sub, "gmail_acknowledge")
@@ -118,6 +121,7 @@ draft_acknowledgements <- function(subs) {
 #' Send submission acknowledgement drafts
 #'
 #' @param drafts list of \code{gmail_draft} objects
+#' @importFrom gmailr send_draft
 #' @export
 acknowledge_submissions <- function(drafts) {
     for (draft in drafts) {

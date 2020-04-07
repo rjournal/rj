@@ -1,6 +1,7 @@
-#' @importFrom stats setNames
+#' @importFrom stats setNames na.omit
 #' @importFrom utils URLencode as.person browseURL
 #' @importFrom utils capture.output type.convert zip
+#' @importFrom utils edit glob2rx str unzip
 
 empty <- function(x) UseMethod("empty")
 #' @method empty character
