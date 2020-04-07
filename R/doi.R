@@ -1,5 +1,6 @@
 # read article *.bib, replace by url to https://doi.org/<doi>
-
+#' @importFrom jss fix_bib
+#' @importFrom bibtex read.bib write.bib
 update_bib <- function(bibfile) {
   safe <- paste0(dirname(bibfile), .Platform$file.sep, "orig_",
     basename(bibfile))

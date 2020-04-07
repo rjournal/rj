@@ -118,7 +118,8 @@ format.supplfile <- function(x, ...) {
 empty.supplfile_list <- function(x) length(x) == 0
 
 
-#' @S3method format article
+#' @method format article
+#' @export
 format.article <- function(x, ...) {
   authors <- format(x$authors)
   reviewers <- format(x$reviewers)
@@ -148,14 +149,16 @@ save_article <- function(article, quiet = FALSE) {
 }
 
 
-#' @S3method print article
+#' @method print article
+#' @export
 print.article <- function(x, ...) cat(format(x), "\n")
 
 unparsed <- function(...) {
   structure(list(...), class = c("unparsed", "article"))
 }
 
-#' @S3method format unparsed
+#' @method format unparsed
+#' @export
 format.unparsed <- function(x, ...) {
   paste(
     "ID:", x$id, "\n",

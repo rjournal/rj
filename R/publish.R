@@ -204,7 +204,7 @@ get_refs_from_tex <- function(article_path, final=FALSE)
   }
   res
 }
-
+#' @importFrom pdftools pdf_toc pdf_text
 get_md_from_pdf <- function(from, final=FALSE)
 {
    toc <- pdftools::pdf_toc(from)
@@ -307,7 +307,8 @@ online_metadata_for_article <- function(x, final=FALSE) {
     res
 }
 
-#' @S3method print catout
+#' @method print catout
+#' @export
 print.catout <- function(x, ...) cat(x, "\n", sep = "")
 
 make_slug <- function(names) {

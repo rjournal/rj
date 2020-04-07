@@ -4,6 +4,7 @@
 #'
 #' @param x string to parse
 #' @return a list of \code{\link{address}}es
+#' @export
 #' @examples
 #' parse_address_list("<a@@b.com> Alison, <c@@d.com> Colin")
 parse_address_list <- function(x) {
@@ -19,12 +20,15 @@ address_list <- function(addresses = list()) {
   structure(addresses, class = "address_list")
 }
 
-#' @S3method format address_list
+#' @method format address_list
+#' @export
 format.address_list <- function(x, ...) {
   addresses <- vapply(x, format, character(1))
   paste(addresses, collapse = ",\n  ")
 }
-#' @S3method print address_list
+
+#' @method print address_list
+#' @export
 print.address_list <- function(x, ...) cat(format(x), "\n")
 
 #' An S3 class to represent email addresses.

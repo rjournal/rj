@@ -1,9 +1,16 @@
+#' @importFrom stats setNames
+#' @importFrom utils URLencode as.person browseURL
+#' @importFrom utils capture.output type.convert zip
+
 empty <- function(x) UseMethod("empty")
-#' @S3method empty character
+#' @method empty character
+#' @export 
 empty.character <- function(x) str_length(x) == 0
-#' @S3method empty address_list
+#' @method empty address_list
+#' @export
 empty.address_list <- function(x) length(x) == 0
-#' @S3method empty NULL
+#' @method empty NULL
+#' @export
 empty.NULL <- function(x) TRUE
 
 str_trunc <- function(x, width = getOption("width")) {

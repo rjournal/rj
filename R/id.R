@@ -32,11 +32,13 @@ id <- function(year, seq) {
 
 is.id <- function(x) inherits(x, "id")
 
-#' @S3method format id
+#' @method format id
+#' @export
 format.id <- function(x, ...) {
   paste(x$year, sprintf("%02d", x$seq), sep = "-")
 }
-#' @S3method print id
+#' @method print id
+#' @export
 print.id <- function(x, ...) cat(format(x), "\n")
 
 year <- function() as.POSIXlt(Sys.Date())$year + 1900
