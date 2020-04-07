@@ -91,9 +91,8 @@ as.data <- function(x) {
 }
 
 editors <- function(){
-  out <- readLines("editors.txt")
-  out <- str_match(out, "^\\s*([^<>]*) ?<(.*)>")[,-1]
-  `names<-`(str_trim(out[,2]), str_trim(out[,1]))
+  out <- read.csv("editors.csv", stringsAsFactors = FALSE)
+  `names<-`(out[["name"]], out[["email"]])
 }
 
 #' @importFrom whisker whisker.render
