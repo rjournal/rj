@@ -4,9 +4,7 @@
 \name{valid_status}
 \alias{valid_status}
 \title{A list of all valid statuses.}
-\format{
-An object of class \code{character} of length 17.
-}
+\format{An object of class \code{character} of length 17.}
 \usage{
 valid_status
 }

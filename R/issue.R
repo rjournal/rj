@@ -580,6 +580,39 @@ get_post_md <- function(dir="news", file=c("foundation"=1, "cran"=1, "bioc"=1, "
   res
 }
 
+#' Make article labels and bibliographies unique with a suffix
+#' 
+#' @param file The file to convert.
+#' @param suffix A unique suffix to add to label and bib IDs.
+#' 
+#' @export
+suffix_labels <- function(file, suffix, macros = c("label", "ref", "cref", "autoref", "pageref", "subref", "nameref", "eqref", "bibitem", "cite", "citep", "citealt", "citet", "citealp")){
+  macros <- paste0(macros, collapse = "|")
+  pattern <- paste0("\\\\(", macros, ")\\s*((\\[([^\\]]*)\\]\\s*)*)\\{([^\\}]+)\\}")
+  txt <- readLines(file)
+  
+  
+  subarticles <- stringr::str_match(
+    txt,
+    "(?<!%)\\\\input\\s*\\{([^\\}]+)\\}"
+  )
+  subarticles <- subarticles[!is.na(subarticles[,2]),2]
+  lapply(file.path(dirname(file), subarticles), suffix_labels, suffix = suffix, macros = macros)
+  
+  txt <- stringr::str_replace_all(
+    paste(txt, collapse = "\n"), pattern, 
+    function(x){
+      x <- stringr::str_match(x, pattern)
+      sprintf(
+        "\\%s%s{%s}", 
+        x[,2], if(is.na(x[,3])) "" else x[,3],
+        paste(stringr::str_trim(stringr::str_split(x[,6], ",")[[1]]), suffix, 
+              sep = "-", collapse = ",")
+      )
+    }
+  )
+  writeLines(txt, file)
+}
 
 #init_archive_path(id, web_path)
 #md <- issue_lp_metadata(id)
