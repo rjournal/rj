@@ -1,7 +1,7 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.12
+Version: 0.2.13
 Author: EiC <R-journal@r-project.org>
 Maintainer: EiC <R-journal@r-project.org>
 Description: This package provides useful functions for the
@@ -11,6 +11,7 @@ Depends:
     R (>= 3.2.0)
 Imports:
     bibtex,
+    cli,
     gmailr,
     jss,
     pdftools,

@@ -2,6 +2,7 @@
 #' @importFrom utils URLencode as.person browseURL
 #' @importFrom utils capture.output type.convert zip
 #' @importFrom utils edit glob2rx str unzip
+#' @importFrom cli cli_alert_info cli_h1
 
 empty <- function(x) UseMethod("empty")
 #' @method empty character

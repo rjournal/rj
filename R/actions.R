@@ -13,7 +13,6 @@
 #' @param date date of status update. If omitted defaults to today.
 update_status <- function(article, status, comments = "", date = Sys.Date()) {
   article <- as.article(article)
-
   if (is.character(date)) date <- as.Date(date)
 
   article$status <- c(article$status, status(status, date, comments))
@@ -24,14 +23,22 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
 #' @export
 reject <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
-  message("Rejecting ", format(article$id))
+  
+  cli::cli_h1(paste("Rejecting paper", format(article$id)))
+  cli::cli_alert_info("Updating DESCRIPTION file")
   update_status(article, "rejected", comments = comments, date = date)
 
-  system(paste("git mv",
-               article$path, file.path("Rejected", basename(article$path))))
-  email_template(article, "reject")
+  from = article$path
+  to = file.path("Rejected", basename(article$path))
+  msg = paste("Moving", from, "to", to)
+  cli::cli_alert_info(msg)
+  system2("git", args = c("mv", from, to))
 
-  invisible()
+  cli::cli_alert_info("Creating Email")
+  email_template(article, "reject")
+  cli::cli_alert_info("If your browser doesn't open, check getOption('browser')")
+
+  return(invisible(NULL))
 }
 
 #' @rdname action
@@ -45,7 +52,7 @@ accept <- function(article, comments = "", date = Sys.Date()) {
                article$path, file.path("Accepted", basename(article$path))))
   email_template(article, "accept")
 
-  invisible()
+  return(invisible(NULL))
 }
 
 #' @rdname action
@@ -59,5 +66,5 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
                article$path, file.path("Rejected", basename(article$path))))
   email_template(article, "widthdraw")
 
-  invisible()
+  return(invisible(NULL))
 }

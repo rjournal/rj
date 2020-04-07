@@ -272,8 +272,8 @@ online_metadata_for_article <- function(x, final=FALSE) {
 #                               include = c("given", "family"))[[1]]
 #                    }, FUN.VALUE = character(1L))
     from <- file.path(x$path, "RJwrapper.pdf")
-    pdf_list <- get_md_from_pdf(from, final=final)
-    refs_list <- get_refs_from_tex(x$path, final=final)
+    pdf_list <- get_md_from_pdf(from, final = final)
+    refs_list <- get_refs_from_tex(x$path, final = final)
     if (final) {
       start <- attr(refs_list, "start")
       len <- attr(pdf_list, "len")
@@ -298,7 +298,7 @@ online_metadata_for_article <- function(x, final=FALSE) {
         zipfrom <- file.path(x$path, "supplementaries.zip")
         sz <- "unknown"
         if (file.exists(zipfrom)) sz <- format(structure(file.size(zipfrom),
-          class="object_size"), "auto")
+          class = "object_size"), "auto")
         res <- c(res, list(suppl = sz))
     }
 
