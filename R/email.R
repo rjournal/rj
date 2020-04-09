@@ -71,7 +71,7 @@ guess_real_name <- function() {
     Sys.getenv("RJ_NAME",
                unset = if (.Platform$OS.type == "unix") {
                    login <- Sys.info()[["login"]]
-                   finger <- system(paste("finger", login), intern=TRUE)
+                   finger <- system(paste("finger", login), intern = TRUE)
                    sub(".*Name: ", "", finger[1L])
                } else {
                    "Use RJ_NAME envvar to set your name"
@@ -90,8 +90,11 @@ as.data <- function(x) {
   data
 }
 
-editors <- function(){
-  out <- read.csv("editors.csv", stringsAsFactors = FALSE)
+editors <- function() {
+  cli::cli_alert_info("Reading inst/editor.csv")
+  fname <- system.file("editors.csv", package = "rj")
+  out <- read.csv(fname, stringsAsFactors = FALSE)
+#  out <- read.csv("editors.csv", stringsAsFactors = FALSE)
   `names<-`(out[["name"]], out[["email"]])
 }
 
