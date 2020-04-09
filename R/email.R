@@ -90,6 +90,7 @@ as.data <- function(x) {
   data
 }
 
+#' @importFrom utils read.csv
 editors <- function() {
   cli::cli_alert_info("Reading inst/editor.csv")
   fname <- system.file("editors.csv", package = "rj")
