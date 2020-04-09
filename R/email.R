@@ -84,28 +84,16 @@ as.data <- function(x) {
   data <- lapply(x, format)
   data$name <- x$authors[[1]]$name
   data$email <- x$authors[[1]]$email
-  if (!empty(x$editor)) data$editor <- editors[[x$editor]]
+  if (!empty(x$editor)) data$editor <- editors()[[x$editor]]
   data$me <- guess_real_name()
 
   data
 }
 
-editors <- c(
-  "Hadley Wickham" = "h.wickham@gmail.com",
-  "Heather Turner" = "ht@heatherturner.net",
-  "Martyn Plummer" = "Martyn.Plummer@r-project.org",
-  "Deepayan Sarkar" = "deepayan.sarkar@r-project.org",
-  "Bettina Grün" = "Bettina.Gruen@jku.at",
-  "Michael Lawrence" = "lawrence.michael@gene.com",
-  "Roger Bivand" = "Roger.Bivand@nhh.no",
-  "John Verzani" = "verzani@math.csi.cuny.edu",
-  "Olivia Lau"   = "olivia.lau@post.harvard.edu",
-  "NM"   = "nsmatloff@ucdavis.edu",
-  "DC"   = "dicook.rj@gmail.com",
-  "MK"   = "kaneplusplus@gmail.com",
-  "CH"   = "Catherine.Hurley@mu.ie",
-  "CG"   = "csgillespie@gmail.com"
-)
+editors <- function(){
+  out <- read.csv("editors.csv", stringsAsFactors = FALSE)
+  `names<-`(out[["name"]], out[["email"]])
+}
 
 #' @importFrom whisker whisker.render
 render_template <- function(article, template) {
