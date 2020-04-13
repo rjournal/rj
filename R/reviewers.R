@@ -1,3 +1,28 @@
+#' Add review to DESCRIPTION
+#' 
+#' Add a reviewers name to the DESCRIPTION file
+#' @inheritParams address
+#' @inheritParams invite_reviewers
+#' @export
+add_reviewer = function(article, name, email) {
+  article = as.article(article)
+  reviewers = article$reviewers
+  new_reviewer = address( email = email, name = name)
+  any_dups = sapply(reviewers, identical, new_reviewer)
+  if (any(any_dups)) {
+    cli_alert_danger("Reviewer already added")
+  } else {
+    total_reviewers = length(reviewers) + 1
+    cli_alert_info(paste0("Adding '", name, "' <", email, "> (of ", total_reviewers, ")"))
+    reviewers[[total_reviewers]] =  new_reviewer
+    article$reviewers = address_list(reviewers)
+    article = save_article(article)
+  }
+  return(invisible(article))
+}
+
+
+
 #' Invite reviewer(s).
 #' 
 #' Once you have added reviewers to the DESCRIPTION file, you can use
@@ -14,7 +39,7 @@ invite_reviewers <- function(article, prefix = "1") {
   article <- as.article(article)
   update_status(article, "out for review")
   
-  for(i in seq_along(article$reviewers)) {
+  for (i in seq_along(article$reviewers)) {
     invite_reviewer(article, i, prefix = prefix)
   }
 }
