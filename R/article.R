@@ -143,8 +143,8 @@ save_article <- function(article, quiet = FALSE) {
   stopifnot(!is.null(article$path))
 
   path <- file.path(article$path, "DESCRIPTION")
-  if (!quiet) message("Writing ", path)
-  writeLines(format(article), path, useBytes=TRUE)
+  writeLines(format(article), path, useBytes = TRUE)
+  cli::cli_alert_info(paste("Updated", path))
   invisible(article)
 }
 

@@ -226,11 +226,11 @@ print_citation = function(cit, file) {
 }
 
 print_citations = function(art, file) {
-    cat("<citation_list>\n", out=file, append=true)
+    cat("<citation_list>\n", out = file, append = TRUE)
     for (cit in art$citations) {
         print_citation(cit, file)
     }
-    cat("</citation_list>\n", out=file, append=true)
+    cat("</citation_list>\n", out = file, append = TRUE)
 }
 
 
