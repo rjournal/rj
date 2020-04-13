@@ -84,7 +84,7 @@ as.data <- function(x) {
   data <- lapply(x, format)
   data$name <- x$authors[[1]]$name
   data$email <- x$authors[[1]]$email
-  if (!empty(x$editor)) data$editor <- editors()[[x$editor]]
+  if (!empty(x$editor)) data$editor <- editors()[x$editor]
   data$me <- guess_real_name()
 
   data
