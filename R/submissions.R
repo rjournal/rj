@@ -70,7 +70,7 @@ as.article.gmail_message <- function(msg, ...) {
     do.call(article, c(dcf, list(...)))
 }
 
-#' @importFrom gmailr messages id message
+#' @importFrom gmailr messages id
 download_submissions <- function() {
     msgs <- gmailr::messages("is:unread subject:'R Journal Submission' from:me")
     msgids <- rev(gmailr::id(msgs)) # inbox is sorted latest first
