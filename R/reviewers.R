@@ -60,6 +60,8 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
     data <- as.data(article)
     data$email <- reviewer$email
     data$name <- reviewer$name
+    data$firstname <- stringr::str_split(reviewer$name, " ")[[1]][1]
+    browser()
     data$date <- format(Sys.Date() + 30, "%d %b %Y")
     
     template <- find_template("review")

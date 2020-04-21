@@ -1,7 +1,7 @@
 To: {{email}}
 Subject: Review for the R journal {{id}}
 ---
-Dear {{name}},
+Dear {{firstname}},
 
 Would you be willing to review the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise. The structure of the review is up to you, but it's usually about a page long and should include:
 
