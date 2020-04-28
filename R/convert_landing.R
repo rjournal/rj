@@ -128,14 +128,14 @@ convert_proofs <- function(issue, action="report_only", clean=TRUE) {
       metadata <- c(metadata, list(landing = str_sub(slug, 4L, 7L)))
 
       aus <- unlist(str_split(paste(metadata$author, collapse=" "), " "))
-      if ("Rönnegård" %in% aus) 
-        aus <- str_replace(str_replace(aus, "[ö]", "oe"), "[å]", "aa")
-      if ("Sólymos" %in% aus) 
-        aus <- str_replace(aus, "[ó]", "o")
-      if ("Hervé" %in% aus) 
-        aus <- str_replace(aus, "[é]", "e")
-      if ("Bååth" %in% aus) 
-        aus <- str_replace_all(aus, "[å]", "aa")
+      if ("R\xc3\xb6nneg\xc3\xa5rd" %in% aus) 
+        aus <- str_replace(str_replace(aus, "[\xc3\xb6]", "oe"), "[\xc3\xa5]", "aa")
+      if ("S\xc3\xb3lymos" %in% aus) 
+        aus <- str_replace(aus, "[\xc3\xb3]", "o")
+      if ("Herv\xc3\xa9" %in% aus) 
+        aus <- str_replace(aus, "[\xc3\xa9]", "e")
+      if ("B\xc3\xa5\xc3\xa5th" %in% aus) 
+        aus <- str_replace_all(aus, "[\xc3\xa5]", "aa")
       pub_file <- NULL
       if (issue == "2009-2" && art == "2009-07") aus <- "Coeurjolly"
       if (issue == "2012-2" && art == "2011-22")

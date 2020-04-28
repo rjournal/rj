@@ -359,13 +359,13 @@ bibtex_escape_case <- function(x) {
 }
 
 bibtex_encode_non_ascii <- function(x) {
-  map <- c("á" = "{\\\' a}",
-           "ä" = "{\\\" a}",
-           "é" = "{\\\' e}",
-           "í" = "{\\\' i}",
-           "ï" = "{\\\" i}",
-           "ñ" = "{\\~ n}",
-           "ó" = "{\\\' o}")
+  map <- c("\xc3\xa1" = "{\\\' a}",
+           "\xc3\xa4" = "{\\\" a}",
+           "\xc3\xa9" = "{\\\' e}",
+           "\xc3\xad" = "{\\\' i}",
+           "\xc3\xaf" = "{\\\" i}",
+           "\xc3\xb1" = "{\\~ n}",
+           "\xc3\xb3" = "{\\\' o}")
   Encoding(names(map)) <- "UTF-8"
   for (i in seq_along(map)) {
     x <- gsub(names(map)[i], map[i], x, fixed=TRUE)
