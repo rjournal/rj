@@ -77,16 +77,18 @@ as.article.gmail_message <- function(msg, ...) {
     do.call(article, c(dcf, list(...)))
 }
 
-#' @importFrom gmailr messages id
 download_submissions <- function() {
     submissions <- googlesheets4::read_sheet(sheet_id)
-    new_submission <- is.na(submissions[["Submission ID"]])
+    ids <- submissions[["Submission ID"]]
+    new_submission <- is.na(ids)
     
-    articles <- lapply(split(submissions[new_submission,], seq_len(sum(new_submission))),
+    new_ids <- future_ids(ids[!new_submission], n = sum(new_submission))
+    new_articles <- submissions[new_submission,]
+    new_articles[["Submission ID"]] <- vapply(new_ids, format, character(1L))
+    articles <- lapply(split(new_articles, new_articles[["Submission ID"]]),
            function(form) {
-               id <- new_id()
+               id <- form[["Submission ID"]]
                path <- create_submission_directory(id)
-               # msg <- gmailr::message(msgid, format="full")
                files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
                extract_files(files, path)
                
@@ -106,12 +108,27 @@ download_submissions <- function() {
                update_status(art, status = "submitted", date = as.Date(form$Timestamp))
            })
     
-    new_ids <- tibble::tibble("Submission ID" = vapply(unname(articles), function(x) format(x[["id"]]), character(1L)))
     cli::cli_alert_info("Writing new article IDs to Google Sheets.")
-    googlesheets4::range_write(sheet_id, new_ids, sheet = "Form responses 1", col_names = FALSE,
+    googlesheets4::range_write(sheet_id, new_articles["Submission ID"], sheet = "Form responses 1", col_names = FALSE,
                               range = str_c(LETTERS[which(names(submissions) == "Submission ID")], range(which(new_submission)) + 1, collapse = ":"))
     
     articles
+}
+
+#' Generate a new id value.
+#'
+#' Inspects submissions/, accepted/ and rejected to figure out which
+#' id is next in sequence.
+#'
+#' @export
+future_ids <- function(ids, n = 1) {
+    ids <- lapply(ids, parse_id)
+    
+    this_year <- Filter(function(x) x$year == year(), ids)
+    
+    seqs <- vapply(this_year, function(x) x$seq, integer(1))
+    max_seq <- if(is_empty(seqs)) 0 else max(seqs)
+    lapply(max_seq + seq_len(n), id, year = year())
 }
 
 #' @importFrom stringr str_remove fixed
