@@ -2,28 +2,27 @@
 % Please edit documentation in R/submissions.R
 \name{get_submissions}
 \alias{get_submissions}
-\title{Download submissions from gmail.}
+\title{Download submissions.}
 \usage{
 get_submissions()
 }
 \value{
 list of \code{gmail_draft} objects for
-  \code{send_acknowledgements}
+  \code{\link{send_acknowledgements}}
 }
 \description{
-Assumes submissions to be processed are unread emails in the
-rjournal.submission@gmail.com inbox.  For authorization to work,
-you must be logged into the rjournal.submission account before
-calling this function.
+Obtains submissions from the Google Sheets spreadsheet and downloads
+submission files from Google Drive.
 }
 \section{Process}{
 
 The function does three things automatically:
 \enumerate{
  \item Downloads and extracts submissions into appropriate directories.
- \item Marks submissions as "read" in the inbox.
+ \item Marks submissions as "read" in the spreadsheet.
  \item Uploads acknowledgement emails to gmail account as drafts.
 }
+
 The user (editor-in-chief) then:
 \enumerate{
  \item Ensures that the files have unzipped correctly (some authors

@@ -18,10 +18,16 @@ Imports:
     stringr,
     tth,
     whisker,
-    yaml
+    googledrive,
+    googlesheets4,
+    yaml,
+    rlang,
+    fs
 Suggests:
     ctv,
     knitr,
     testthat
+Remotes:
+    tidyverse/googlesheets4
 Encoding: UTF-8
 RoxygenNote: 7.1.0
