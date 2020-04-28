@@ -25,13 +25,13 @@ sheet_id <- "15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k"
 #'   \code{\link{send_acknowledgements}}
 #' @export
 get_submissions <- function(){
-    cat_line("Downloading new submissions")
+    cli::cat_line("Downloading new submissions")
     subs <- download_submissions()
     
-    cat_line("Performing automatic checks on submissions")
+    cli::cat_line("Performing automatic checks on submissions")
     # consume_submissions(subs)
     
-    cat_line("Drafting acknowledgements")
+    cli::cat_line("Drafting acknowledgements")
     draft_acknowledgements(subs)
     
     invisible()
@@ -107,7 +107,7 @@ download_submissions <- function() {
            })
     
     new_ids <- tibble::tibble("Submission ID" = vapply(unname(articles), function(x) format(x[["id"]]), character(1L)))
-    msg_info("Writing new article IDs to Google Sheets.")
+    cli::cli_alert_info("Writing new article IDs to Google Sheets.")
     googlesheets4::range_write(sheet_id, new_ids, sheet = "Form responses 1", col_names = FALSE,
                               range = str_c(LETTERS[which(names(submissions) == "Submission ID")], range(which(new_submission)) + 1, collapse = ":"))
     
@@ -120,15 +120,15 @@ download_submission_file <- function(url, path = get_articles_path()){
     path <- path_ext_set(path(path, file$id), path_ext(file$name))
     
     if(file_exists(path)) {
-        msg_info("Skipping {basename(path)}, it already exists")
+        cli::cli_alert_info("Skipping {basename(path)}, it already exists")
         return(path)
     }
     result <- purrr::safely(googledrive::drive_download)(file, path, verbose = FALSE)
     if(is.null(result$error)){
-        msg_good("{basename(path)}: Downloaded {file$path} successfully")
+        cli::cli_alert_success("{basename(path)}: Downloaded {file$path} successfully")
         return(path)
     } else {
-        msg_bad("{basename(path)}: Failed downloading {file$id} (reason: {result$error$message})")
+        cli::cli_alert_danger("{basename(path)}: Failed downloading {file$id} (reason: {result$error$message})")
     }
     return(NA_character_)
 }

@@ -32,12 +32,6 @@ in_dir <- function(path, code) {
 
 "%NA%" <- function(a, b) ifelse(is.na(a), b, a)
 
-# Adapted from usethis
-cat_line <- function(...) {
-  lines <- paste0(..., "\n")
-  cat(lines, sep = "")
-}
-
 require_package <- function(pkg) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     abort(
