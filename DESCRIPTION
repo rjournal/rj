@@ -27,5 +27,7 @@ Suggests:
     ctv,
     knitr,
     testthat
+Remotes:
+    tidyverse/googlesheets4
 Encoding: UTF-8
 RoxygenNote: 7.1.0

@@ -82,7 +82,7 @@ download_submissions <- function() {
     submissions <- googlesheets4::read_sheet(sheet_id)
     new_submission <- is.na(submissions[["Submission ID"]])
     
-    lapply(split(submissions[new_submission,], seq_along(new_submission)),
+    articles <- lapply(split(submissions[new_submission,], seq_len(sum(new_submission))),
            function(form) {
                id <- new_id()
                path <- create_submission_directory(id)
@@ -102,8 +102,16 @@ download_submissions <- function() {
                    path = path,
                    suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
                )
+               
                update_status(art, status = "submitted", date = as.Date(form$Timestamp))
            })
+    
+    new_ids <- tibble::tibble("Submission ID" = vapply(unname(articles), function(x) format(x[["id"]]), character(1L)))
+    msg_info("Writing new article IDs to Google Sheets.")
+    googlesheets4::range_write(sheet_id, new_ids, sheet = "Form responses 1", col_names = FALSE,
+                              range = str_c(LETTERS[which(names(submissions) == "Submission ID")], range(which(new_submission)) + 1, collapse = ":"))
+    
+    articles
 }
 
 #' @importFrom stringr str_remove fixed
