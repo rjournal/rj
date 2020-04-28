@@ -93,9 +93,11 @@ download_submissions <- function() {
                art <- make_article(
                    id = id,
                    authors = str_c(
-                       str_glue_data(form, "{`Your name:`} <{`Email address`}>"),
-                       form$`Names of other authors, comma separated`,
-                       sep = ", "),
+                       c(
+                           str_glue_data(form, "{`Your name:`} <{`Email address`}>"),
+                           setdiff(str_trim(str_split(form$`Names of other authors, comma separated`, ",")[[1]]), form$`Your name:`)
+                       ),
+                       collapse = ", "),
                    title = form$`Article title`,
                    path = path,
                    suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
