@@ -100,8 +100,7 @@ download_submissions <- function() {
                    path = path,
                    suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
                )
-               save_article(art)
-               art
+               update_status(art, status = "submitted", date = as.Date(form$Timestamp))
            })
 }
 
