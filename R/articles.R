@@ -27,7 +27,7 @@ accepted_articles <- function() {
 #'
 #' @export
 new_id <- function() {
-  ids <- dir(c("Submissions", "Accepted", "Rejected"))
+  ids <- dir(file.path(get_articles_path(), c("Submissions", "Accepted", "Rejected")))
   ids <- lapply(ids, parse_id)
 
   this_year <- Filter(function(x) x$year == year(), ids)

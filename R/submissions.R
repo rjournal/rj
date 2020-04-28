@@ -1,17 +1,18 @@
-#' Download submissions from gmail.
-#' 
-#' Assumes submissions to be processed are unread emails in the
-#' rjournal.submission@gmail.com inbox.  For authorization to work,
-#' you must be logged into the rjournal.submission account before
-#' calling this function.
-#' 
+sheet_id <- "15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k"
+
+#' Download submissions.
+#'
+#' Obtains submissions from the Google Sheets spreadsheet and downloads
+#' submission files from Google Drive.
+#'
 #' @section Process:
 #' The function does three things automatically:
 #' \enumerate{
 #'  \item Downloads and extracts submissions into appropriate directories.
-#'  \item Marks submissions as "read" in the inbox.
+#'  \item Marks submissions as "read" in the spreadsheet.
 #'  \item Uploads acknowledgement emails to gmail account as drafts.
 #' }
+#'
 #' The user (editor-in-chief) then:
 #' \enumerate{
 #'  \item Ensures that the files have unzipped correctly (some authors
@@ -21,13 +22,19 @@
 #' }
 #'
 #' @return list of \code{gmail_draft} objects for
-#'   \code{send_acknowledgements}
+#'   \code{\link{send_acknowledgements}}
 #' @export
-get_submissions <- function() {
-    authorize(c("read_only", "modify", "compose"))
+get_submissions <- function(){
+    cat_line("Downloading new submissions")
     subs <- download_submissions()
-    consume_submissions(subs)
+    
+    cat_line("Performing automatic checks on submissions")
+    # consume_submissions(subs)
+    
+    cat_line("Drafting acknowledgements")
     draft_acknowledgements(subs)
+    
+    invisible()
 }
 
 #' @importFrom gmailr gmail_auth
@@ -57,7 +64,7 @@ extract_files <- function(files, dest) {
 }
 
 create_submission_directory <- function(id) {
-    dir <- file.path("Submissions", format(id))
+    dir <- file.path(get_articles_path(), "Submissions", format(id))
     dir.create(dir)
     dir
 }
@@ -72,28 +79,49 @@ as.article.gmail_message <- function(msg, ...) {
 
 #' @importFrom gmailr messages id
 download_submissions <- function() {
-    msgs <- gmailr::messages("is:unread subject:'R Journal Submission' from:me")
-    msgids <- rev(gmailr::id(msgs)) # inbox is sorted latest first
-    arts <- lapply(msgids, function(msgid) {
-                       id <- new_id()
-                       path <- create_submission_directory(id)
-                       msg <- gmailr::message(msgid, format="full")
-                       files <- gmailr::save_attachments(msg, path=path)
-                       extract_files(files, path)
-                       # try() from NM, 09/24/19, modified 01/16/20
-                       tryCatch(  
-                          {art <- as.article.gmail_message(
-                                     msg, id=id, path=path);
-                           save_article(art);
-                           art},
-                          error = function(e) {
-                             msg <- paste('remove erroneous article directory ',
-                                    id)
-                             message(msg)
-                          }
-                       )
-                  })
-    setNames(arts, msgids)
+    submissions <- googlesheets4::read_sheet(sheet_id)
+    new_submission <- is.na(submissions[["Submission ID"]])
+    
+    lapply(split(submissions[new_submission,], seq_along(new_submission)),
+           function(form) {
+               id <- new_id()
+               path <- create_submission_directory(id)
+               # msg <- gmailr::message(msgid, format="full")
+               files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
+               extract_files(files, path)
+               
+               art <- make_article(
+                   id = id,
+                   authors = str_c(
+                       str_glue_data(form, "{`Your name:`} <{`Email address`}>"),
+                       form$`Names of other authors, comma separated`,
+                       sep = ", "),
+                   title = form$`Article title`,
+                   path = path,
+                   suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
+               )
+               save_article(art)
+               art
+           })
+}
+
+#' @importFrom stringr str_remove fixed
+download_submission_file <- function(url, path = get_articles_path()){
+    file <- googledrive::as_dribble(url)
+    path <- path_ext_set(path(path, file$id), path_ext(file$name))
+    
+    if(file_exists(path)) {
+        msg_info("Skipping {basename(path)}, it already exists")
+        return(path)
+    }
+    result <- purrr::safely(googledrive::drive_download)(file, path, verbose = FALSE)
+    if(is.null(result$error)){
+        msg_good("{basename(path)}: Downloaded {file$path} successfully")
+        return(path)
+    } else {
+        msg_bad("{basename(path)}: Failed downloading {file$id} (reason: {result$error$message})")
+    }
+    return(NA_character_)
 }
 
 consume_submissions <- function(subs) {
@@ -103,6 +131,7 @@ consume_submissions <- function(subs) {
 
 #' @importFrom gmailr mime create_draft
 draft_acknowledgements <- function(subs) {
+    authorize(c("read_only", "modify", "compose"))
     acknowledge_sub <- function(sub) {
         body <- render_template(sub, "gmail_acknowledge")
         email <- gmailr::mime(From="rjournal.submission@@gmail.com",

@@ -18,7 +18,11 @@ Imports:
     stringr,
     tth,
     whisker,
-    yaml
+    googledrive,
+    googlesheets4,
+    yaml,
+    rlang,
+    fs
 Suggests:
     ctv,
     knitr,

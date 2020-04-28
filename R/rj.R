@@ -4,4 +4,6 @@
 #' @docType package
 #' @name rj
 #' @import stringr
+#' @import rlang
+#' @import fs
 NULL
