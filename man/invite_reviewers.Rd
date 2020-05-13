@@ -3,11 +3,14 @@
 \name{invite_reviewers}
 \alias{invite_reviewers}
 \alias{invite_reviewer}
+\alias{add_review}
 \title{Invite reviewer(s).}
 \usage{
 invite_reviewers(article, prefix = "1")
 
 invite_reviewer(article, reviewer_id, prefix = "1")
+
+add_review(article, reviewer_id, review, recommend = NULL)
 }
 \arguments{
 \item{article}{article id, like \code{"2014-01"}}
@@ -16,6 +19,10 @@ invite_reviewer(article, reviewer_id, prefix = "1")
 between multiple rounds of reviewers (if needed)}
 
 \item{reviewer_id}{invite just a single reviewer}
+
+\item{review}{Path to the review, e.g. pdf, txt, or docx format}
+
+\item{recommend}{Summary of review. Accept, minor, major, reject}
 }
 \description{
 Once you have added reviewers to the DESCRIPTION file, you can use

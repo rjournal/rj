@@ -4,7 +4,7 @@
 \alias{add_reviewer}
 \title{Add review to DESCRIPTION}
 \usage{
-add_reviewer(article, name, email)
+add_reviewer(article, name, email, invite = TRUE)
 }
 \arguments{
 \item{article}{article id, like \code{"2014-01"}}
@@ -12,6 +12,8 @@ add_reviewer(article, name, email)
 \item{name}{display name, optional}
 
 \item{email}{email address}
+
+\item{invite}{Automatically construct email}
 }
 \description{
 Add a reviewers name to the DESCRIPTION file
