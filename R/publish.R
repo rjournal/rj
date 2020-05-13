@@ -8,6 +8,7 @@
 #' @importFrom yaml yaml.load_file
 #' @param article article id
 #' @param home Location of the articles directory
+#' @param legacy (Very) old way of referening the R journal
 publish <- function(article, home = getwd(), legacy=FALSE) {
   article <- as.article(article)
 
@@ -235,7 +236,9 @@ get_md_from_pdf <- function(from, final=FALSE)
 }
 
 #' Build article from LaTeX
-#'
+#' @inheritParams publish
+#' @param share_path ???
+#' @param clean Remove generated files
 #' @export
 build_latex <- function(article,
                         share_path = normalizePath("../share", mustWork = TRUE),

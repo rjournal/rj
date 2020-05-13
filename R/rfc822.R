@@ -35,24 +35,26 @@ print.address_list <- function(x, ...) cat(format(x), "\n")
 #'
 #' @param email email address
 #' @param name display name, optional
+#' @param comment comment, optional
 #' @export
 #' @examples
 #' address("h.wickham@@gmail.com")
 #' address("h.wickham@@gmail.com", "Hadley Wickham")
-address <- function(email = NULL, name = NULL) {
+address <- function(email = NULL, name = NULL, comment = "") {
   if (is.null(email) && is.null(name)) {
     stop("Address must have name or email", call. = FALSE)
   }
 
-  structure(list(name = name, email = email), class = "address")
+  structure(list(name = name, email = email, comment = comment), class = "address")
 }
 
 #' @export
 format.address <- function(x, ...) {
   name <- if (!is.null(x$name))    paste('"', x$name, '"', sep = "")
   email <- if (!is.null(x$email))  paste("<", x$email, ">", sep = "")
+  comment <- if (!is.null(x$comment))  paste("[", x$comment, "]", sep = "")
 
-  paste(c(name, email), collapse = " ")
+  paste(c(name, email, comment), collapse = " ")
 }
 
 #' @export
@@ -61,7 +63,11 @@ print.address <- function(x, ...) cat(format(x), "\n")
 parse_address <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
 
-  pieces <- str_match(x, "^\\s*([^<>]*) ?(<.*>)?")[1, ]
+  pieces <- str_match(x, "^\\s*([^<>]*) ?(<.*>)? ?(\\[.*\\])?")[1, ]
+
+  comment <- str_trim(pieces[4])
+  comment <- str_replace_all(comment, "\\[|\\]", "")
+  if (is.na(comment) || str_length(comment) == 0) comment <- ""
 
   email <- str_trim(pieces[3])
   email <- str_replace_all(email, "<|>", "")
@@ -71,6 +77,6 @@ parse_address <- function(x) {
   name <- str_replace_all(name, fixed('"'), "")
   if (is.na(name) || str_length(name) == 0) name <- NULL
 
-  address(email, name)
+  address(email, name, comment)
 }
 

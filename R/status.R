@@ -70,6 +70,7 @@ is.status <- function(x) inherits(x, "status")
 
 #' @export
 c.status <- c.status_list <- function(..., recursive = FALSE) {
+  message("Combining")
   pieces <- list(...)
   statuses <- lapply(pieces, function(x) {
     if (is.status(x)) {
@@ -165,21 +166,26 @@ deadlines <- function(sstatus) {
 # status_list class ------------------------------------------------------------
 
 status_list <- function(x = list()) {
-  structure(list(status = x), class = "status_list")
+  structure(x, class = "status_list")
 }
 
-#' @export
-length.status_list <- function(x) length(x$status)
-#' @export
-"[[.status_list" <- function(x, i) x$status[[i]]
+# @export
+length.status_list <- function(x) length(x)
+# #' @export
+# "[[.status_list" <- function(x, i) {
+#   x$status[[i]]
+# }
 
 #' @export
 format.status_list <- function(x, ...) {
-  statuses <- lapply(x$status, format)
-  paste(statuses, collapse = ",\n  ")
+ statuses <- lapply(x, format)
+ paste(statuses, collapse = ",\n  ")
 }
 #' @export
-print.status_list <- function(x, ...) cat(format(x), "\n")
+print.status_list <- function(x, ...) {
+  statuses <- lapply(x, format)
+  cat(paste(statuses, collapse = "\n"))
+}
 is.status_list <- function(x) inherits(x, "status_list")
 
 # Parsing ----------------------------------------------------------------------
@@ -219,6 +225,7 @@ parse_status <- function(x) {
 }
 
 as.data.frame.status_list <- function(status_list) {
+  message("DF")
   ml <- vector(mode="list", length=length(status_list))
   for (i in seq(along=ml)) ml[[i]] <- as.data.frame(unclass(status_list[[i]]))
   do.call("rbind", ml)

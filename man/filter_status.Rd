@@ -6,6 +6,11 @@
 \usage{
 filter_status(articles, status)
 }
+\arguments{
+\item{articles}{A vector of articles}
+
+\item{status}{The status you are looking for}
+}
 \description{
 Find articles with a given status.
 }

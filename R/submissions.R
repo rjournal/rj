@@ -20,20 +20,17 @@ sheet_id <- "15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k"
 #'    compiles
 #'  \item Manually sends the draft emails
 #' }
-#'
-#' @return list of \code{gmail_draft} objects for
-#'   \code{\link{send_acknowledgements}}
 #' @export
 get_submissions <- function(){
     cli::cat_line("Downloading new submissions")
     subs <- download_submissions()
-    
+
     cli::cat_line("Performing automatic checks on submissions")
     # consume_submissions(subs)
-    
+
     cli::cat_line("Drafting acknowledgements")
     draft_acknowledgements(subs)
-    
+
     invisible()
 }
 
@@ -77,11 +74,12 @@ as.article.gmail_message <- function(msg, ...) {
     do.call(article, c(dcf, list(...)))
 }
 
+#' @importFrom googlesheets4 read_sheet range_write
 download_submissions <- function() {
     submissions <- googlesheets4::read_sheet(sheet_id)
     ids <- submissions[["Submission ID"]]
     new_submission <- is.na(ids)
-    
+
     new_ids <- future_ids(ids[!new_submission], n = sum(new_submission))
     new_articles <- submissions[new_submission,]
     new_articles[["Submission ID"]] <- vapply(new_ids, format, character(1L))
@@ -91,7 +89,7 @@ download_submissions <- function() {
                path <- create_submission_directory(id)
                files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
                extract_files(files, path)
-               
+
                art <- make_article(
                    id = id,
                    authors = str_c(
@@ -104,14 +102,14 @@ download_submissions <- function() {
                    path = path,
                    suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
                )
-               
+
                update_status(art, status = "submitted", date = as.Date(form$Timestamp))
            })
-    
+
     cli::cli_alert_info("Writing new article IDs to Google Sheets.")
     googlesheets4::range_write(sheet_id, new_articles["Submission ID"], sheet = "Form responses 1", col_names = FALSE,
                               range = str_c(LETTERS[which(names(submissions) == "Submission ID")], range(which(new_submission)) + 1, collapse = ":"))
-    
+
     articles
 }
 
@@ -119,13 +117,14 @@ download_submissions <- function() {
 #'
 #' Inspects submissions/, accepted/ and rejected to figure out which
 #' id is next in sequence.
-#'
+#' @param ids XXX
+#' @param n No. of ids to generate
 #' @export
 future_ids <- function(ids, n = 1) {
     ids <- lapply(ids, parse_id)
-    
+
     this_year <- Filter(function(x) x$year == year(), ids)
-    
+
     seqs <- vapply(this_year, function(x) x$seq, integer(1))
     max_seq <- if(is_empty(seqs)) 0 else max(seqs)
     lapply(max_seq + seq_len(n), id, year = year())
@@ -135,7 +134,7 @@ future_ids <- function(ids, n = 1) {
 download_submission_file <- function(url, path = get_articles_path()){
     file <- googledrive::as_dribble(url)
     path <- path_ext_set(path(path, file$id), path_ext(file$name))
-    
+
     if(file_exists(path)) {
         cli::cli_alert_info("Skipping {basename(path)}, it already exists")
         return(path)

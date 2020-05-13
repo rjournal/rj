@@ -10,6 +10,13 @@ build_latex(
   clean = TRUE
 )
 }
+\arguments{
+\item{article}{article id}
+
+\item{share_path}{???}
+
+\item{clean}{Remove generated files}
+}
 \description{
 Build article from LaTeX
 }

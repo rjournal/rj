@@ -6,10 +6,6 @@
 \usage{
 get_submissions()
 }
-\value{
-list of \code{gmail_draft} objects for
-  \code{\link{send_acknowledgements}}
-}
 \description{
 Obtains submissions from the Google Sheets spreadsheet and downloads
 submission files from Google Drive.

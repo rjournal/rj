@@ -10,6 +10,8 @@ publish(article, home = getwd(), legacy = FALSE)
 \item{article}{article id}
 
 \item{home}{Location of the articles directory}
+
+\item{legacy}{(Very) old way of referening the R journal}
 }
 \description{
 After running this, you'll need to update both the article and

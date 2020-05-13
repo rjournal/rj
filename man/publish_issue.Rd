@@ -14,6 +14,8 @@ publish_issue(
 \item{id}{the id of the issue}
 
 \item{web_path}{path to the rjournal.github.io checkout}
+
+\item{post_file}{XXX}
 }
 \description{
 Generates per-article PDFs and copies them to the website, located

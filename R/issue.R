@@ -67,17 +67,17 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   if (!file.exists(dir))
     #        stop("Proof ", id, " already exists")
     dir.create(dir)
-  
+
   prev_id <- previous_id(id)
   prev_dir <- file.path("Proofs", prev_id)
   inherited_files <- c("Rdsub.tex", "Rlogo-5.png")
   file.copy(file.path(prev_dir, inherited_files), dir)
   file.copy(file.path(share_path, "RJournal.sty"), dir)
-  
+
   issue_file <- issue_file(id)
   file.copy(file.path(share_path, "RJournal_template.tex"), issue_file)
   issue <- read_tex(issue_file)
-  
+
   number <- issue_number(id)
   if (number == 1L) {
     issue$volume <- issue$volume + 1L
@@ -85,7 +85,7 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   issue$volnum <- number
   issue$year <- issue_year(id)
   issue$month <- switch(number, "1" = "June", "2" = "December")
-  
+
   arts <- accepted_articles()
   ready <- filter_status(arts, "online")
   for (art in ready) {
@@ -151,7 +151,7 @@ convert_bbl_tex <- function(tex_path) {
     message("No \\bibliography found. Skipping ", tex_path)
     return(tex_path)
   }
-  
+
   bib <- tex$bibliography
   bib <- stringr::str_remove(bib, "%.*") # Remove comments
   bib <- stringr::str_trim(bib) # Remove whitespace
@@ -160,7 +160,7 @@ convert_bbl_tex <- function(tex_path) {
   }
   bib_path <- file.path(dirname(tex_path), bib)
   if (!file.exists(bib_path)) stop("Can't find ", bib_path)
-  
+
   ## Build tex to make sure bib up-to-date message(share_path)
   message("Building ", tex_path)
   owd <- getwd()
@@ -169,7 +169,7 @@ convert_bbl_tex <- function(tex_path) {
   setwd(owd)
   bbl_path <- file.path(dirname(tex_path), "RJwrapper.bbl")
   if (!file.exists(bbl_path)) stop("Can't find ", bbl_path)
-  
+
   ## Read bbl and use to replace bib
   bbl <- readLines(bbl_path)
   bib_line <- which(has_bib)
@@ -178,12 +178,12 @@ convert_bbl_tex <- function(tex_path) {
   # writeLines(out, sub("/", "/bbl-", tex_path))
   slashes <- str_locate_all(tex_path, '/')[[1]]
   sl3 <- slashes[3, 1]  # third slash loc
-  bbltex_path <- 
+  bbltex_path <-
     paste0(substr(tex_path,1,sl3 - 1),
            '/bbl-',
            substr(tex_path,sl3 + 1, nchar(tex_path)))
   writeLines(out, bbltex_path)
-  
+
   bbltex_path
 }
 
@@ -197,7 +197,7 @@ convert_one_bbl <- function(id) {
   }
   if (tools::file_ext(tex_path) != "tex")
     tex_path <- paste0(tex_path, ".tex")
-  
+
   convert_bbl_tex(tex_path)
 }
 
@@ -240,10 +240,10 @@ build_issue <- function(id) {
   #        print(notproofed)
   #        files <- setdiff(files,notproofed)
   #     }
-  
+
   issue_file <- issue_file(id)
   issue_lines <- readLines(issue_file)
-  
+
   ### TODO: also include tex files under '/news'
   include_lines <- unlist(lapply(files, build_include))
   # NM, Sept. 3, 2019: 'pos' was nonexistent, fixed now
@@ -252,7 +252,7 @@ build_issue <- function(id) {
     out <- insert_replace(issue_lines, pos, include_lines)
     writeLines(out, issue_file)
   }
-  
+
   in_dir(dirname(issue_file), system(paste("pdflatex", basename(issue_file))))
 }
 
@@ -275,39 +275,39 @@ init_archive_path <- function(id, web_path) {
   if (file.exists(archive_path))
     unlink(archive_path, recursive = TRUE)
   dir.create(archive_path)
-  
+
   issue_file <- issue_file(id)
   issue <- read_tex(issue_file)
-  
+
   write_header <- function(header, file) {
     writeLines(c("---", as.yaml(header), "---"), file)
   }
-  
+
   header <- list(layout = "issue_landing-new",
                  title = paste0("Volume ", issue$volume, "/", issue$volnum,
                                 ", ", issue$month, " ", issue$year),
                  issue = id)
   write_header(header, file.path(archive_path, "index.html"))
-  
+
   header_bib <- header
   header_bib$layout <- "issue-bib-new"
   write_header(header_bib, file.path(archive_path, "index-bib.html"))
-  
+
   file.copy(replace_ext(issue_file(id), "pdf"), archive_path)
-  
+
   archive_path
 }
 
 ## run from articles
 cleanup_accepted <- function(id, web_path) {
   slugs <- lapply(article_paths(id), function(a) as.article(a)$slug)
-  
+
   print(slugs)
-  
+
   #    obsolete_pdfs <- file.path(web_path, "archive", "accepted",
   #                               paste0(slugs, ".pdf"))
   #    unlink(obsolete_pdfs)
-  
+
   config_path <- file.path(web_path, "_config.yml")
   config <- yaml.load_file(config_path)
   writeLines(as.yaml(config), file.path(web_path, "safe_config.safe"))
@@ -386,16 +386,18 @@ annotate_metadata <- function(article, start, end) {
 }
 
 contents_metadata <- function(id) {
-  pre_md <- pre_metadata(id)
-  art_md <- articles_metadata(id)
-  post_md <- post_metadata(id)
-  md <- c(pre_md, art_md, post_md)
-  pb <- page_bounds(id)
-  md <- mapply(annotate_metadata, md, pb$start, pb$end, SIMPLIFY=FALSE)
-  md <- append(md, list(list(heading = "Contributed Research Articles")),
-               after = length(pre_md))
-  append(md, list(list(heading = "News and Notes")),
-         after = length(pre_md) + length(art_md) + 1L)
+  ## XXX: Remove this function. Can't find post_metatdata
+  stop("This function has been removed. Can't find post_metadata")
+  # pre_md <- pre_metadata(id)
+  # art_md <- articles_metadata(id)
+  # post_md <- post_metadata(id)
+  # md <- c(pre_md, art_md, post_md)
+  # pb <- page_bounds(id)
+  # md <- mapply(annotate_metadata, md, pb$start, pb$end, SIMPLIFY=FALSE)
+  # md <- append(md, list(list(heading = "Contributed Research Articles")),
+  #              after = length(pre_md))
+  # append(md, list(list(heading = "News and Notes")),
+  #        after = length(pre_md) + length(art_md) + 1L)
 }
 
 globalVariables("articles")
@@ -483,11 +485,11 @@ write_article_pdfs <- function(id, archives_path, md) {
 pdftk <- function(input, ...) {
   input <- shQuote(input)
   args <- paste0(..., collapse = " ")
-  
+
   cmd <- paste0("pdftk ", input, " ", args)
   message(cmd)
   res <- system(cmd, intern = TRUE)
-  
+
   if (!is.null(attr(res, "status"))) {
     stop("Non-zero exit: ", attr(res, "status"), "\n", attr(res, "errmsg"),
          call. = FALSE)
@@ -516,8 +518,11 @@ update_layout <- function(id, web_path) {
 #'
 #' @param id the id of the issue
 #' @param web_path path to the rjournal.github.io checkout
+#' @param post_file XXX
 #' @export
-publish_issue <- function(id, web_path=file.path("..", "rjournal.github.io"), post_file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
+publish_issue <- function(id,
+                          web_path=file.path("..", "rjournal.github.io"),
+                          post_file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
   if (!file.exists(web_path))
     stop("web_path '", web_path, "' does not exist, please specify")
   md <- issue_lp_metadata(id, post_file=post_file)
@@ -544,7 +549,7 @@ get_md_from_nonart_pdf <- function(from, nautlns=1) {
   title <- toc$children[[1L]]$title
   bibtitle <- str_wrap(title, width=60, exdent=10)
   text <- pdftools::pdf_text(from)
-  
+
   t1s <- str_split(text[1], "\\n")[[1L]]
   byln <- which(!is.na(str_locate(t1s, "^[ ]*by")[, "start"]))[1]
   aut0 <- paste(t1s[byln:(byln+nautlns-1)], collapse=" ")
@@ -582,32 +587,36 @@ get_post_md <- function(dir="news", file=c("foundation"=1, "cran"=1, "bioc"=1, "
 }
 
 #' Make article labels and bibliographies unique with a suffix
-#' 
+#'
 #' @param file The file to convert.
 #' @param suffix A unique suffix to add to label and bib IDs.
-#' 
+#' @param macros Latex macros
 #' @export
-suffix_labels <- function(file, suffix, macros = c("label", "ref", "cref", "autoref", "pageref", "subref", "nameref", "eqref", "bibitem", "cite", "citep", "citealt", "citet", "citealp")){
+suffix_labels <- function(file, suffix,
+                          macros = c("label", "ref", "cref", "autoref",
+                                     "pageref", "subref", "nameref", "eqref",
+                                     "bibitem", "cite", "citep", "citealt",
+                                     "citet", "citealp")){
   macros <- paste0(macros, collapse = "|")
   pattern <- paste0("\\\\(", macros, ")\\s*((\\[([^\\]]*)\\]\\s*)*)\\{([^\\}]+)\\}")
   txt <- readLines(file)
-  
-  
+
+
   subarticles <- stringr::str_match(
     txt,
     "(?<!%)\\\\input\\s*\\{([^\\}]+)\\}"
   )
   subarticles <- subarticles[!is.na(subarticles[,2]),2]
   lapply(file.path(dirname(file), subarticles), suffix_labels, suffix = suffix, macros = macros)
-  
+
   txt <- stringr::str_replace_all(
-    paste(txt, collapse = "\n"), pattern, 
+    paste(txt, collapse = "\n"), pattern,
     function(x){
       x <- stringr::str_match(x, pattern)
       sprintf(
-        "\\%s%s{%s}", 
+        "\\%s%s{%s}",
         x[,2], if(is.na(x[,3])) "" else x[,3],
-        paste(stringr::str_trim(stringr::str_split(x[,6], ",")[[1]]), suffix, 
+        paste(stringr::str_trim(stringr::str_split(x[,6], ",")[[1]]), suffix,
               sep = "-", collapse = ",")
       )
     }

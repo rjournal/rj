@@ -4,12 +4,14 @@
 \alias{address}
 \title{An S3 class to represent email addresses.}
 \usage{
-address(email = NULL, name = NULL)
+address(email = NULL, name = NULL, comment = "")
 }
 \arguments{
 \item{email}{email address}
 
 \item{name}{display name, optional}
+
+\item{comment}{comment, optional}
 }
 \description{
 An S3 class to represent email addresses.

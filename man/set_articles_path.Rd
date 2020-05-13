@@ -6,6 +6,9 @@
 \usage{
 set_articles_path(path)
 }
+\arguments{
+\item{path}{Articles path}
+}
 \description{
 This path is used to locate articles on your file system. If this path is not
 specified, the path will default to the current working directory if it is
