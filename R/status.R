@@ -207,7 +207,7 @@ parse_status <- function(x) {
   re <- "^(\\d{4}-\\d{2}-\\d{2}) ([^\\[]*)(?: \\[([^\\[]+)\\])?$"
   if (!str_detect(x, re)) {
     # NM added line
-    cat('bad status:',x,'\n')
+    cat("bad status:", x, "\n")
     stop("Status must have form 'yyyy-mm-dd status [optional comments]'",
       call. = FALSE)
   }
@@ -226,7 +226,7 @@ parse_status <- function(x) {
 
 as.data.frame.status_list <- function(status_list) {
   message("DF")
-  ml <- vector(mode="list", length=length(status_list))
-  for (i in seq(along=ml)) ml[[i]] <- as.data.frame(unclass(status_list[[i]]))
+  ml <- vector(mode = "list", length = length(status_list))
+  for (i in seq(along = ml)) ml[[i]] <- as.data.frame(unclass(status_list[[i]]))
   do.call("rbind", ml)
 }

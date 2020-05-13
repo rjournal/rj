@@ -28,11 +28,11 @@ journal_metadata = list(
 doi_batch_id_tpl = "<doi_batch_id>{{ID}}</doi_batch_id>\n"
 print_doi_batch_id <- function(file) {
     x <- as.POSIXlt(Sys.time())
-    mon <- if(nchar(x$mon) == 1) paste("0", x$mon, sep="") else x$mon
-    mday <- if(nchar(x$mday) == 1) paste("0", x$mday, sep="") else x$mday
-    hour <-  if(nchar(x$hour) == 1) paste("0", x$hour, sep="") else x$hour
-    min <-  if(nchar(x$min) == 1) paste("0", x$min, sep="") else x$min
-    sec <-  if(nchar(round(x$sec)) == 1) paste("0", round(x$sec), sep="") else round(x$sec)
+    mon <- if (nchar(x$mon) == 1) paste("0", x$mon, sep="") else x$mon
+    mday <- if (nchar(x$mday) == 1) paste("0", x$mday, sep="") else x$mday
+    hour <- if (nchar(x$hour) == 1) paste("0", x$hour, sep="") else x$hour
+    min <- if (nchar(x$min) == 1) paste("0", x$min, sep="") else x$min
+    sec <- if(nchar(round(x$sec)) == 1) paste("0", round(x$sec), sep="") else round(x$sec)
     ID = paste(x$year, mon, mday, hour, min, sec, sep="")
     txt = whisker.render(doi_batch_id_tpl, list(ID=ID))
     cat(txt, file=file, append=TRUE)
@@ -255,7 +255,7 @@ newDeposit = function(x, out="") {
     cat("<registrant>CrossRef</registrant> \n </head>\n
 	<body>\n", file=out, append=TRUE)
     ## this generates xml for all bib items stored in a bib file
-    for(i in 1:length(x$articles)) {
+    for (i in 1:length(x$articles)) {
         cat("<journal>\n", file=out, append=TRUE)
         print_journal_metadata(out)
         print_journal_issue(x, out)

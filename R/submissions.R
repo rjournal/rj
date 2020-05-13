@@ -21,7 +21,7 @@ sheet_id <- "15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k"
 #'  \item Manually sends the draft emails
 #' }
 #' @export
-get_submissions <- function(){
+get_submissions <- function() {
     cli::cat_line("Downloading new submissions")
     subs <- download_submissions()
 
@@ -31,12 +31,12 @@ get_submissions <- function(){
     cli::cat_line("Drafting acknowledgements")
     draft_acknowledgements(subs)
 
-    invisible()
+    invisible(NULL)
 }
 
 #' @importFrom gmailr gmail_auth
 authorize <- function(scope) {
-    secret_file <- system.file("auth", "client_id.json", package="rj")
+    secret_file <- system.file("auth", "client_id.json", package = "rj")
     gmailr::gmail_auth(scope, secret_file = secret_file)
 }
 
@@ -47,10 +47,10 @@ extract_files <- function(files, dest) {
                             gz = utils::untar)
         if (is.null(extractor))
             return(NULL)
-        extractor(file, exdir=dest)
+        extractor(file, exdir = dest)
         unlink(file)
-        unlink(file.path(dest, "__MACOSX"), recursive=TRUE)
-        exfiles <- list.files(dest, full.names=TRUE)
+        unlink(file.path(dest, "__MACOSX"), recursive = TRUE)
+        exfiles <- list.files(dest, full.names = TRUE)
         nested <- length(exfiles) == 1L && file.info(exfiles)$isdir
         if (nested) {
             subfiles <- list.files(exfiles, full.names=TRUE)
@@ -126,7 +126,7 @@ future_ids <- function(ids, n = 1) {
     this_year <- Filter(function(x) x$year == year(), ids)
 
     seqs <- vapply(this_year, function(x) x$seq, integer(1))
-    max_seq <- if(is_empty(seqs)) 0 else max(seqs)
+    max_seq <- if (is_empty(seqs)) 0 else max(seqs)
     lapply(max_seq + seq_len(n), id, year = year())
 }
 
@@ -135,12 +135,12 @@ download_submission_file <- function(url, path = get_articles_path()){
     file <- googledrive::as_dribble(url)
     path <- path_ext_set(path(path, file$id), path_ext(file$name))
 
-    if(file_exists(path)) {
+    if (file_exists(path)) {
         cli::cli_alert_info("Skipping {basename(path)}, it already exists")
         return(path)
     }
     result <- purrr::safely(googledrive::drive_download)(file, path, verbose = FALSE)
-    if(is.null(result$error)){
+    if (is.null(result$error)) {
         cli::cli_alert_success("{basename(path)}: Downloaded {file$path} successfully")
         return(path)
     } else {
@@ -150,8 +150,8 @@ download_submission_file <- function(url, path = get_articles_path()){
 }
 
 consume_submissions <- function(subs) {
-    for(msgid in names(subs))
-        gmailr::modify_message(msgid, remove_labels="UNREAD")
+    for (msgid in names(subs))
+        gmailr::modify_message(msgid, remove_labels = "UNREAD")
 }
 
 #' @importFrom gmailr mime create_draft
@@ -159,16 +159,16 @@ draft_acknowledgements <- function(subs) {
     authorize(c("read_only", "modify", "compose"))
     acknowledge_sub <- function(sub) {
         body <- render_template(sub, "gmail_acknowledge")
-        email <- gmailr::mime(From="rjournal.submission@@gmail.com",
-                              To=sub$authors[[1L]]$email,
-                              Subject=paste("R Journal submission",
+        email <- gmailr::mime(From = "rjournal.submission@@gmail.com",
+                              To = sub$authors[[1L]]$email,
+                              Subject = paste("R Journal submission",
                                   format(sub$id)),
-                              body=body)
+                              body = body)
         gmailr::create_draft(email)
     }
     ans <- lapply(subs, acknowledge_sub)
     names(ans) <- vapply(subs, function(s) format(s$id),
-                         FUN.VALUE=character(1L))
+                         FUN.VALUE = character(1L))
     ans
 }
 

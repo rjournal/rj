@@ -1,7 +1,7 @@
 #' Update the status of an article.
 #'
 #' \code{reject}, \code{accept} and \code{withdraw} update the status,
-#' move the file to the correct directory and draft an email from a 
+#' move the file to the correct directory and draft an email from a
 #' template of the corresponding name.
 #'
 #' @rdname action
@@ -23,7 +23,7 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
 #' @export
 reject <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
-  
+
   cli::cli_h1(paste("Rejecting paper", format(article$id)))
   cli::cli_alert_info("Updating DESCRIPTION file")
   update_status(article, "rejected", comments = comments, date = date)

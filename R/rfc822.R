@@ -79,4 +79,3 @@ parse_address <- function(x) {
 
   address(email, name, comment)
 }
-

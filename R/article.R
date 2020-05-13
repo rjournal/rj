@@ -10,22 +10,22 @@
 #' @export
 article <- function(..., quiet = FALSE) {
   tryCatch(make_article(...),
-    error = function(e) {
-      article <- unparsed(...)
-      if (!quiet) {
-        message("Failed to parse: ")
-        print(article)
-        message(e, "\n")
-      }
-      article
-    }
+           error = function(e) {
+             article <- unparsed(...)
+             if (!quiet) {
+               message("Failed to parse: ")
+               print(article)
+               message(e, "\n")
+             }
+             article
+           }
   )
 }
 
 #' Convert input into an article.
 #'
-#' @param id a path to a DESCRIPTION, a path to a directory containing 
-#'   DESCRIPTION, or a article name, found in a sub-directory rejected, 
+#' @param id a path to a DESCRIPTION, a path to a directory containing
+#'   DESCRIPTION, or a article name, found in a sub-directory rejected,
 #'   accepted or submissions
 #' @export
 #' @examples
@@ -65,7 +65,7 @@ load_article <- function(path, quiet = FALSE) {
   if (nrow(dcf) != 1) stop("DCF parsing error: ", path, call. = FALSE)
 
   # Remove field names that keep.white incorrectly preserves
-  for(field in fields) {
+  for (field in fields) {
     dcf[, field] <- gsub(paste(field, ": ?", sep = ""), "", dcf[, field])
   }
   # Convert missing values to empty strings
@@ -75,7 +75,7 @@ load_article <- function(path, quiet = FALSE) {
   dcf <- as.list(as.data.frame(dcf, stringsAsFactors = FALSE))
   # Only should be manually set in tests
   if (is.null(dcf$id) || identical(dcf$id, "")) {
-    dcf$id <- basename(dirname(path))  
+    dcf$id <- basename(dirname(path))
   }
   dcf$path <- dirname(path)
   do.call(article, dcf)
@@ -101,7 +101,9 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "",
 parse_supplementaries <- function(suppl) {
   x <- str_trim(str_split(suppl, "\n")[[1]])
   x <- x[str_length(x) > 0]
-  xs <-lapply(x, function(y) {class(y) <- "supplfile"; y})
+  xs <- lapply(x, function(y) {
+    class(y) <- "supplfile"; y
+  })
   class(xs) <- "supplfile_list"
   xs
 }

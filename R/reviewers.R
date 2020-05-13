@@ -147,4 +147,3 @@ add_review = function(article, reviewer_id, review, recommend = NULL) {
                        comment = recommend)
   return(invisible(NULL))
 }
-

@@ -56,7 +56,7 @@ email_text <- function(text) {
 
   url <- paste0("mailto:", to, "?",
     paste0(names(fields), "=", unlist(fields), collapse = "&"))
-  
+
   browseURL(url)
 }
 

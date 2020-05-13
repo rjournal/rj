@@ -15,14 +15,14 @@ report <- function(articles = active_articles()) {
 report_line <- function(x) {
   message(x$path) # to identify culprit when things go wrong
   stopifnot(is.article(x))
-  
+
   todo <- todo(x)
-  status <- last_status(x)
+  #status <- last_status(x)
   last_date <- last_status(x)$date
-  
+
   days_taken <- difftime(Sys.Date(), last_date, "days")
   stars <- sum(days_taken > deadlines(todo))
-  
+
   data.frame(
     status = todo,
     ed = editor_abbr(x$editor),
@@ -75,7 +75,7 @@ order_status <- function(x) {
   x <- unique(x)
   eic <- x[grepl("editor-in-chief", x)]
   editors <- setdiff(x[grepl("editor", x)], eic)
-  others <- setdiff(x, c(eic, editors)) 
+  others <- setdiff(x, c(eic, editors))
   c(eic, editors, others)
 }
 

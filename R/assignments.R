@@ -1,3 +1,4 @@
+globalVariables("titles")
 # XXX: Repetition below. But I intend to split out the different
 # sections in the future
 #' @export
@@ -12,7 +13,6 @@ summarise_articles = function(editor = NULL) {
   }
   all_articles = get_assignments(editor)
   latest = get_latest_assignments(all_articles)
-
 
   cli::cli_h1("Submitted")
   art = latest[latest$status_status == "submitted", ]
