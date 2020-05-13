@@ -7,8 +7,8 @@
 as.article(id)
 }
 \arguments{
-\item{id}{a path to a DESCRIPTION, a path to a directory containing 
-DESCRIPTION, or a article name, found in a sub-directory rejected, 
+\item{id}{a path to a DESCRIPTION, a path to a directory containing
+DESCRIPTION, or a article name, found in a sub-directory rejected,
 accepted or submissions}
 }
 \description{

@@ -1,7 +1,7 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.15
+Version: 0.2.16
 Author: EiC <R-journal@r-project.org>
 Maintainer: EiC <R-journal@r-project.org>
 Description: This package provides useful functions for the
@@ -12,22 +12,24 @@ Depends:
 Imports:
     bibtex,
     cli,
+    dplyr,
+    fs,
+    glue,
     gmailr,
-    jss,
-    pdftools,
-    stringr,
-    tth,
-    whisker,
     googledrive,
     googlesheets4,
-    yaml,
+    jss,
+    pdftools,
+    purrr,
     rlang,
-    fs
+    stringr,
+    tibble,
+    tth,
+    whisker,
+    yaml
 Suggests:
     ctv,
     knitr,
     testthat
-Remotes:
-    tidyverse/googlesheets4
 Encoding: UTF-8
 RoxygenNote: 7.1.0

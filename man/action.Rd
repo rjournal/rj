@@ -27,6 +27,6 @@ withdraw(article, comments = "", date = Sys.Date())
 }
 \description{
 \code{reject}, \code{accept} and \code{withdraw} update the status,
-move the file to the correct directory and draft an email from a 
+move the file to the correct directory and draft an email from a
 template of the corresponding name.
 }
