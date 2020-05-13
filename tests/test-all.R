@@ -1,4 +1,2 @@
-library(testthat)
-library(rj)
-
-test_package("rj")
+library("testthat")
+test_check("rj")
