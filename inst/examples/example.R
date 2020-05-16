@@ -1,12 +1,18 @@
 library(rj)
 setwd("/data/ncsg3/github/r-journal//articles/")
-summarise_articles("CG")
+summarise_articles()
+
+
+
 article = "2020-33"
 reviewer_id = 3
 from = "~/Downloads/BivRec-review.pdf"
 add_review(article, reviewer_id, from, "Reject")
 
 decline_reviewer(article, 1)
+
+
+list_reviewers("2020-11")
 
 
 ext = tools::file_ext(from)

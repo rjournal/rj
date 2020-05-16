@@ -12,7 +12,7 @@ get_assignments(editor)
 }
 \arguments{
 \item{editor}{Editors initials. If \code{NULL}, looks for the
-environment variable \code{RJ_editor}.}
+environment variable \code{RJ_EDITOR}.}
 }
 \description{
 Summarise intray

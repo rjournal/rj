@@ -1,40 +1,56 @@
 globalVariables("titles")
 # XXX: Repetition below. But I intend to split out the different
 # sections in the future
+
+print_submitted = function(latest) {
+  art = latest[latest$status_status == "submitted", ]
+  if (nrow(art) == 0) return(invisible(NULL))
+  cli::cli_h1("Submitted ({nrow(art)})")
+  titles = str_trunc(art$title, 30)
+  items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
+  cli_ul(items)
+}
+
+print_acknowledged = function(latest) {
+  art = latest[latest$status_status == "acknowledged", ]
+  if (nrow(art) == 0) return(invisible(NULL))
+  cli::cli_h1(glue::glue("Acknowledged ({nrow(art)})"))
+  titles = str_trunc(art$title, 30)
+  items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
+  cli_ul(items)
+}
+
+print_out_for_review = function(latest) {
+  articles = latest[latest$status_status == "out for review", ]
+  if (nrow(articles) == 0) return(invisible(NULL))
+  cli::cli_h1("Out for Review ({nrow(articles)})")
+  articles$title = stringr::str_trunc(articles$title, 50)
+  cli::cli_ul()
+  for (i in seq_len(nrow(articles))) {
+    article = articles[i, ]
+    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
+    cli::cli_li(item)
+    list_reviewers(article$id)
+  }
+
+  cli::cli_end()
+}
+
 #' @export
 #' @importFrom cli cli_h1 cli_li cli_ul cli_end
 #' @title Summarise intray
 #' Summarise editors current in-tray
 #' @param editor Editors initials. If \code{NULL}, looks for the
-#' environment variable \code{RJ_editor}.
+#' environment variable \code{RJ_EDITOR}.
 summarise_articles = function(editor = NULL) {
   if (is.null(editor)) {
-    editor = Sys.getenv("RJ_editor")
+    editor = Sys.getenv("RJ_EDITOR")
   }
   all_articles = get_assignments(editor)
   latest = get_latest_assignments(all_articles)
-
-  cli::cli_h1("Submitted")
-  art = latest[latest$status_status == "submitted", ]
-  titles = str_trunc(art$title, 30)
-  items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
-  cli_ul(items)
-
-  cli::cli_h1("Acknowledged")
-  art = latest[latest$status_status == "acknowledged", ]
-  titles = str_trunc(art$title, 30)
-  items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
-
-  cli_ul(items)
-
-
-  cli::cli_h1("Out for Review")
-  art = latest[latest$status_status == "out for review", ]
-  titles = str_trunc(art$title, 30)
-  items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
-
-  cli_ul(items)
-
+  print_acknowledged(latest)
+  print_submitted(latest)
+  print_out_for_review(latest)
 }
 
 globalVariables("status_date")

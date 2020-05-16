@@ -1,18 +1,17 @@
-
-#' @title Review helper function
-#' @inheritParams invite_reviewers
-#' @export
 list_reviewers = function(article) {
   article = as.article(article)
   reviewers = article$reviewers
+  cli::cli_ul()
   for (i in seq_along(reviewers)) {
     msg = glue::glue("r{i}: {format(reviewers[[i]])}")
-    cli::cat_bullet(msg)
+    cli::cli_li(msg)
   }
+  cli::cli_end
   return(invisible(NULL))
 }
 
-#' @rdname list_reviewers
+#' @title Review helper function
+#' @inheritParams invite_reviewers
 #' @export
 decline_reviewer = function(article, reviewer_id) {
   check_dup_comment(article, reviewer_id, "Declined")
@@ -22,7 +21,7 @@ decline_reviewer = function(article, reviewer_id) {
                        comment = comment)
 }
 
-#' @rdname list_reviewers
+#' @rdname decline_reviewer
 #' @export
 agree_reviewer = function(article, reviewer_id) {
   check_dup_comment(article, reviewer_id, "Agreed")
@@ -31,9 +30,6 @@ agree_reviewer = function(article, reviewer_id) {
                        reviewer_id = reviewer_id,
                        comment = comment)
 }
-
-
-
 
 
 #' Add review to DESCRIPTION
