@@ -6,7 +6,7 @@ print_submitted = function(latest) {
   art = latest[latest$status_status == "submitted", ]
   if (nrow(art) == 0) return(invisible(NULL))
   cli::cli_h1("Submitted ({nrow(art)})")
-  titles = str_trunc(art$title, 30)
+  titles = str_trunc(art$title, 50)
   items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
   cli_ul(items)
 }
@@ -15,7 +15,7 @@ print_acknowledged = function(latest) {
   art = latest[latest$status_status == "acknowledged", ]
   if (nrow(art) == 0) return(invisible(NULL))
   cli::cli_h1(glue::glue("Acknowledged ({nrow(art)})"))
-  titles = str_trunc(art$title, 30)
+  titles = str_trunc(art$title, 50)
   items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
   cli_ul(items)
 }
