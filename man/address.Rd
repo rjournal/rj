@@ -4,7 +4,7 @@
 \alias{address}
 \title{An S3 class to represent email addresses.}
 \usage{
-address(email = NULL, name = NULL, comment = "")
+address(email = NULL, name = NULL, comment = NULL)
 }
 \arguments{
 \item{email}{email address}

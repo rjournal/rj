@@ -31,7 +31,6 @@ agree_reviewer = function(article, reviewer_id) {
                        comment = comment)
 }
 
-
 #' Add review to DESCRIPTION
 #'
 #' Add a reviewers name to the DESCRIPTION file

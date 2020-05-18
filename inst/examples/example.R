@@ -1,25 +1,19 @@
 library(rj)
 setwd("/data/ncsg3/github/r-journal//articles/")
 summarise_articles()
+options(browser = "google-chrome")
+
+article = "2020-39"
+path = "../articles/Submissions/2020-39/DESCRIPTION"
+article = as.article("2020-39")
+add_reviewer(article,
+             name = "Kris Sankaran",
+             email = "kris.sankaran@umontreal.ca",
+             invite = TRUE)
 
 
-
-article = "2020-33"
-reviewer_id = 3
-from = "~/Downloads/BivRec-review.pdf"
-add_review(article, reviewer_id, from, "Reject")
-
-decline_reviewer(article, 1)
-
-
-list_reviewers("2020-11")
-
-
-ext = tools::file_ext(from)
-prefix = length(list.files(dest, pattern = paste0("-review-", reviewer_id))) + 1
-name <- paste0(prefix, "-review-", reviewer_id, ".", ext)
-path <- file.path(dest, name)
-file.copy(from, to = path)
-
-
+file.copy(from = file.path(article$path, "RJwrapper.pdf"),
+          to = paste0(file.path("/tmp/",
+                                paste(article$id, collapse = "-")
+          ), ".pdf"))
 setwd("/data/ncsg3/github/r-journal/rj/")

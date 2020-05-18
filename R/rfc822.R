@@ -40,7 +40,7 @@ print.address_list <- function(x, ...) cat(format(x), "\n")
 #' @examples
 #' address("h.wickham@@gmail.com")
 #' address("h.wickham@@gmail.com", "Hadley Wickham")
-address <- function(email = NULL, name = NULL, comment = "") {
+address <- function(email = NULL, name = NULL, comment = NULL) {
   if (is.null(email) && is.null(name)) {
     stop("Address must have name or email", call. = FALSE)
   }
@@ -67,7 +67,7 @@ parse_address <- function(x) {
 
   comment <- str_trim(pieces[4])
   comment <- str_replace_all(comment, "\\[|\\]", "")
-  if (is.na(comment) || str_length(comment) == 0) comment <- ""
+  if (is.na(comment) || str_length(comment) == 0) comment <- NULL
 
   email <- str_trim(pieces[3])
   email <- str_replace_all(email, "<|>", "")

@@ -2,6 +2,15 @@ globalVariables("titles")
 # XXX: Repetition below. But I intend to split out the different
 # sections in the future
 
+print_rejected = function(latest) {
+  art = latest[latest$status_status == "rejected", ]
+  if (nrow(art) == 0) return(invisible(NULL))
+  cli::cli_h1("Rejected ({nrow(art)})")
+  titles = str_trunc(art$title, 50)
+  items = glue::glue("{art$id}: {titles}")
+  cli_ul(items)
+}
+
 print_submitted = function(latest) {
   art = latest[latest$status_status == "submitted", ]
   if (nrow(art) == 0) return(invisible(NULL))
@@ -42,15 +51,20 @@ print_out_for_review = function(latest) {
 #' Summarise editors current in-tray
 #' @param editor Editors initials. If \code{NULL}, looks for the
 #' environment variable \code{RJ_EDITOR}.
-summarise_articles = function(editor = NULL) {
+#' @param rejected Default \code{FALSE}. If \code{TRUE}, show
+#' rejected articles.
+summarise_articles = function(editor = NULL,
+                              rejected = FALSE) {
   if (is.null(editor)) {
     editor = Sys.getenv("RJ_EDITOR")
   }
   all_articles = get_assignments(editor)
   latest = get_latest_assignments(all_articles)
+  if (isTRUE(rejected)) print_rejected(latest)
   print_acknowledged(latest)
   print_submitted(latest)
   print_out_for_review(latest)
+  return(invisible(all_articles))
 }
 
 globalVariables("status_date")
@@ -64,10 +78,6 @@ get_assignments = function(editor) {
                      stdout = TRUE)
   path = stringr::str_remove(grep_str, "/DESCRIPTION:Editor: .*")
   id = stringr::str_remove(path, "^./(Rejected|Submissions)/")
-  is_rejected = stringr::str_detect(grep_str, "Rejected/")
-  id = id[!is_rejected]
-  # assignments = tibble::tibble(id = id, is_rejected = is_rejected)
-  # assignments = assignments[!assignments$is_rejected,]
   map(id, as.article) %>%
     map(~unpack_status(.x)) %>%
     map_df(rbind) %>%

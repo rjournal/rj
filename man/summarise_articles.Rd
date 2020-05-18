@@ -6,13 +6,16 @@
 \title{Summarise intray
 Summarise editors current in-tray}
 \usage{
-summarise_articles(editor = NULL)
+summarise_articles(editor = NULL, rejected = FALSE)
 
 get_assignments(editor)
 }
 \arguments{
 \item{editor}{Editors initials. If \code{NULL}, looks for the
 environment variable \code{RJ_EDITOR}.}
+
+\item{rejected}{Default \code{FALSE}. If \code{TRUE}, show
+rejected articles.}
 }
 \description{
 Summarise intray
