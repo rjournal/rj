@@ -7,8 +7,8 @@
 suffix_labels(
   file,
   suffix,
-  macros = c("label", "ref", "cref", "autoref", "pageref", "subref", "nameref",
-    "eqref", "bibitem", "cite", "citep", "citealt", "citet", "citealp")
+  macros = c("label", "ref", "cref", "autoref", "pageref", "subref", "nameref", "eqref",
+    "bibitem", "cite", "citep", "citealt", "citet", "citealp")
 )
 }
 \arguments{
