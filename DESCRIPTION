@@ -31,5 +31,7 @@ Suggests:
     ctv,
     knitr,
     testthat
+Remotes: 
+    svn::svn://r-forge.r-project.org/svnroot/jss/pkg
 Encoding: UTF-8
 RoxygenNote: 7.1.0

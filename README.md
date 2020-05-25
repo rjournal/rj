@@ -7,15 +7,10 @@ The files with 'NM' in their names are due to Norm Matloff.  Some of the functio
 
 ## Installation
 
-The `jss` package has been archived from CRAN, but can be installed from its R forge site, as follows:
-
-`svn checkout svn://r-forge.r-project.org/svnroot/jss/`
-
-cd to the `jss` directory and install as usual.
-
-R CMD INSTALL .
-
-then you can install `rj`, using your favourite approach.
+```
+# Then install rj
+remotes::install_github("rjournal/rj")
+```
 
 New editors should be added to the list of editors in `R/email.r`.
 
@@ -47,15 +42,6 @@ Most of these fields are self-explanatory, apart from the `Status` field, which 
 * If reviewers field is blank, then status is "Needs reviewers"
 
 See `valid_status` for a list of all known statuses, and `todo()` for the next action to be taken based on each status.
-
-## Installation
-
-```
-# First install the jss package from R-forge
-install.packages("jss", repos="http://R-Forge.R-project.org")
-# Then install rj
-remotes::install_github("rjournal/rj")
-```
 
 ## Useful actions
   
