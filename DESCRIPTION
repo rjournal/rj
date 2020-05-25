@@ -1,7 +1,7 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.16
+Version: 0.2.17
 Author: EiC <R-journal@r-project.org>
 Maintainer: EiC <R-journal@r-project.org>
 Description: This package provides useful functions for the
@@ -17,7 +17,7 @@ Imports:
     glue,
     gmailr,
     googledrive,
-    googlesheets4,
+    googlesheets4 (>= 0.2.0),
     jss,
     pdftools,
     purrr,

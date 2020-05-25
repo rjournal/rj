@@ -31,6 +31,17 @@ agree_reviewer = function(article, reviewer_id) {
                        comment = comment)
 }
 
+add_out_for_review = function(article) {
+  article = as.article(article)
+  status = article$status
+  latest_status = article$status[[length(status)]]
+  comments = latest_status$comments
+  if (!stringr::str_detect("out for review", comments)) {
+    update_status(article, "out for review")
+  }
+  return(invisible(NULL))
+}
+
 #' Add review to DESCRIPTION
 #'
 #' Add a reviewers name to the DESCRIPTION file
@@ -45,15 +56,16 @@ add_reviewer = function(article, name, email, invite = TRUE) {
   any_dups = sapply(reviewers, identical, new_reviewer)
   if (any(any_dups)) {
     cli_alert_danger("Reviewer already added")
+    reviewer_id = which(any_dups)
   } else {
-    total_reviewers = length(reviewers) + 1
-    cli_alert_info(paste0("Adding '", name, "' <", email, "> (of ", total_reviewers, ")"))
-    reviewers[[total_reviewers]] =  new_reviewer
+    reviewer_id = length(reviewers) + 1
+    cli_alert_info(paste0("Adding '", name, "' <", email, "> (of ", reviewer_id, ")"))
+    reviewers[[reviewer_id]] = new_reviewer
     article$reviewers = address_list(reviewers)
     article = save_article(article)
   }
   if (isTRUE(invite)) {
-    invite_reviewer(article, reviewer_id = total_reviewers)
+    invite_reviewer(article, reviewer_id = reviewer_id)
   }
   return(invisible(article))
 }
@@ -72,8 +84,6 @@ add_reviewer = function(article, name, email, invite = TRUE) {
 #' @export
 invite_reviewers <- function(article, prefix = "1") {
   article <- as.article(article)
-  update_status(article, "out for review")
-
   for (i in seq_along(article$reviewers)) {
     invite_reviewer(article, i, prefix = prefix)
   }
@@ -103,16 +113,19 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
 
     writeLines(email, path)
   } else {
-    message("Already invited - resending")
+    cli::cli_alert_info("Already invited - resending")
     email <- paste0(readLines(path), collapse = "\n")
   }
 
   # Update reviewer comment
   comment = article$reviewers[[reviewer_id]]$comment
   test_string = paste("Invited", Sys.Date())
-  if (!stringr::str_detect(comment, pattern = test_string)) {
+  if (is.null(comment) || !stringr::str_detect(comment, pattern = test_string)) {
     add_reviewer_comment(article, reviewer_id = reviewer_id, test_string)
   }
+
+  add_out_for_review(article)
+
   email_text(email)
 }
 

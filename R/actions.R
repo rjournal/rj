@@ -14,7 +14,6 @@
 update_status <- function(article, status, comments = "", date = Sys.Date()) {
   article <- as.article(article)
   if (is.character(date)) date <- as.Date(date)
-
   article$status <- c(article$status, status(status, date, comments))
   save_article(article)
 }

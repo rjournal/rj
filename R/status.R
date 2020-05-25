@@ -68,21 +68,21 @@ status <- function(status, date = Sys.Date(), comments = "") {
 
 is.status <- function(x) inherits(x, "status")
 
-#' @export
+
 c.status <- c.status_list <- function(..., recursive = FALSE) {
-  message("Combining")
   pieces <- list(...)
   statuses <- lapply(pieces, function(x) {
     if (is.status(x)) {
       list(x)
     } else if (is.status_list(x)) {
-      x$status
+      x
     } else {
       stop("Don't know how to combine with ", class(x)[1])
     }
   })
+
   status_list(unlist(statuses, recursive = FALSE))
-}
+ }
 
 #' @export
 format.status <- function(x, ...) {
@@ -166,22 +166,21 @@ deadlines <- function(sstatus) {
 # status_list class ------------------------------------------------------------
 
 status_list <- function(x = list()) {
-  structure(x, class = "status_list")
+ structure(x, class = "status_list")
 }
 
-# @export
-length.status_list <- function(x) length(x)
+#' #' @export
+#' length.status_list <- function(x) length(x)
 # #' @export
 # "[[.status_list" <- function(x, i) {
 #   x$status[[i]]
 # }
 
-#' @export
 format.status_list <- function(x, ...) {
  statuses <- lapply(x, format)
  paste(statuses, collapse = ",\n  ")
 }
-#' @export
+
 print.status_list <- function(x, ...) {
   statuses <- lapply(x, format)
   cat(paste(statuses, collapse = "\n"))
@@ -202,17 +201,17 @@ parse_status_list <- function(x) {
 }
 
 parse_status <- function(x) {
-  x <- str_trim(x)
+  x <- stringr::str_trim(x)
 
   re <- "^(\\d{4}-\\d{2}-\\d{2}) ([^\\[]*)(?: \\[([^\\[]+)\\])?$"
-  if (!str_detect(x, re)) {
+  if (!stringr::str_detect(x, re)) {
     # NM added line
     cat("bad status:", x, "\n")
     stop("Status must have form 'yyyy-mm-dd status [optional comments]'",
       call. = FALSE)
   }
 
-  pieces <- str_match(x, re)[1, ]
+  pieces <- stringr::str_match(x, re)[1, ]
 
   date <- pieces[2]
   if (!is.date(date)) stop("Date must be a valid date")
