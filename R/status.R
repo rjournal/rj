@@ -169,13 +169,6 @@ status_list <- function(x = list()) {
  structure(x, class = "status_list")
 }
 
-#' #' @export
-#' length.status_list <- function(x) length(x)
-# #' @export
-# "[[.status_list" <- function(x, i) {
-#   x$status[[i]]
-# }
-
 format.status_list <- function(x, ...) {
  statuses <- lapply(x, format)
  paste(statuses, collapse = ",\n  ")
