@@ -2,20 +2,16 @@
 
 This package provides tools for dealing with the metadata for the R Journal. The overall goal of the package is to automate common tasks performed by the editors, particularly the editor-in-chief.
 
-The files with 'NM' in their names are due to Norm Matloff.  Some of the functions there perform tasks not in the original 'rj' package, while others perform similar tasks but differing in details.  See README.nm for further information.
-
 
 ## Installation
 
 The `jss` package has been archived from CRAN, but can be installed from its R forge site, as follows:
 
-`svn checkout svn://r-forge.r-project.org/svnroot/jss/`
+`install.packages("jss", repos = "http://R-Forge.R-project.org")`
 
-cd to the `jss` directory and install as usual.
+Then install `rj` using:
 
-R CMD INSTALL .
-
-then you can install `rj`, using your favourite approach.
+`remotes::install_github("rjournal/rj")`
 
 New editors should be added to the list of editors in `R/email.r`.
 
