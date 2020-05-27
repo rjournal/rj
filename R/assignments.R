@@ -99,7 +99,7 @@ unpack_status = function(x) {
   purrr::map(status,
              ~tibble::tibble(id_year = id$year,
                              id_seq = id$seq,
-                             id = paste0(id$year, "-", id$seq),
+                             id = format(id),
                              path = x$path,
                              title = x$title,
                              "status_date" = .x[[1]],
