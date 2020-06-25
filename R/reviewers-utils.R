@@ -4,7 +4,7 @@ add_reviewer_comment = function(article, reviewer_id, comment) {
   reviewer = reviewers[[reviewer_id]]
   old_comment = reviewer$comment
   if (!is.null(old_comment) && nchar(old_comment) > 0) {
-    old_comment = stringr::str_remove(comment, "\\[|\\]")
+    old_comment = stringr::str_remove(old_comment, "\\[|\\]")
     comment = paste0(old_comment, "; ", comment)
   }
   reviewer$comment = comment

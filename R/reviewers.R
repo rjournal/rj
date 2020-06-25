@@ -144,7 +144,7 @@ add_review = function(article, reviewer_id, review, recommend = NULL) {
   }
   ext = tools::file_ext(review)
   name = paste0(prefix, "-review-", reviewer_id, ".", ext)
-  path = file.path(article$path, name)
+  path = file.path(article$path, "correspondence", name)
   file.copy(review, to = path)
   cli::cli_alert_info(paste0("Created ", path))
   if (is.null(recommend)) {
