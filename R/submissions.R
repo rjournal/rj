@@ -62,7 +62,7 @@ extract_files <- function(files, dest) {
 
 create_submission_directory <- function(id) {
     dir <- file.path(get_articles_path(), "Submissions", format(id))
-    dir.create(dir)
+    dir_create(dir)
     dir
 }
 
@@ -79,33 +79,82 @@ download_submissions <- function() {
     submissions <- googlesheets4::read_sheet(sheet_id)
     ids <- submissions[["Submission ID"]]
     new_submission <- is.na(ids)
+    resub_field <- "If this is a resubmission, enter your submission ID (eg 2020-131)"
+    resub_ids <- submissions[[resub_field]][new_submission]
+    is_resub <- !is.na(resub_ids)
+    new_ids <- vector("list", sum(new_submission))
 
-    new_ids <- future_ids(ids[!new_submission], n = sum(new_submission))
+    # Generate IDs
+    new_ids[!is_resub] <- future_ids(ids[!new_submission], n = sum(new_submission) - sum(is_resub))
+    new_ids[is_resub] <- lapply(resub_ids[is_resub], parse_id)
+
     new_articles <- submissions[new_submission,]
     new_articles[["Submission ID"]] <- vapply(new_ids, format, character(1L))
     articles <- lapply(split(new_articles, new_articles[["Submission ID"]]),
            function(form) {
                id <- form[["Submission ID"]]
                path <- create_submission_directory(id)
-               files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
-               extract_files(files, path)
+               if(is.na(form[[resub_field]])) {
+                   # If the article is a new submission
+                   files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
+                   extract_files(files, path)
 
-               art <- make_article(
-                   id = id,
-                   authors = str_c(
-                       c(
-                           str_glue_data(form, "{`Your name:`} <{`Email address`}>"),
-                           setdiff(str_trim(str_split(form$`Names of other authors, comma separated`, ",")[[1]]), form$`Your name:`)
-                       ),
-                       collapse = ", "),
-                   title = form$`Article title`,
-                   path = path,
-                   suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
-               )
+                   art <- make_article(
+                       id = id,
+                       authors = str_c(
+                           c(
+                               str_glue_data(form, "{`Your name:`} <{`Email address`}>"),
+                               setdiff(str_trim(str_split(form$`Names of other authors, comma separated`, ",")[[1]]), form$`Your name:`)
+                           ),
+                           collapse = ", "),
+                       title = form$`Article title`,
+                       path = path,
+                       suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
+                   )
 
-               update_status(art, status = "submitted", date = as.Date(form$Timestamp))
+                   update_status(art, status = "submitted", date = as.Date(form$Timestamp))
+                   cli::cli_alert_success("New submission with ID {id} successfully processed.")
+                   return(TRUE)
+               } else {
+                   # If the article is a re-submission
+
+                   # 1. Get original article
+                   art <- as.article(id)
+
+                   # 2. Check that the metadata matches
+                   matches_title <- art$title == form$`Article title`
+                   matches_email <- art$authors[[1]]$email == form$`Email address`
+                   if(!matches_title && !matches_email) {
+                       cli::cli_alert_danger("Re-submission for {id} does not match original title and email. Contact {form$`Email address`} to clarify.")
+                       return(FALSE)
+                   }
+
+                   # 3. Zip old submission into /history
+                   old_submission <- setdiff(
+                       list.files(art$path, include.dirs = TRUE),
+                       c("DESCRIPTION", "history")
+                   )
+                   num_submissions <- length(list.files(file.path(path, "history")))
+                   dir_create(file.path(path, "history"))
+                   curwd <- setwd(path)
+                   zip(
+                       zipfile = file.path("history", paste0(num_submissions+1, ".zip")),
+                       files = old_submission,
+                       flags = "-r9Xmq"
+                   )
+                   setwd(curwd)
+
+                   # 4. Obtain new submission
+                   files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
+                   extract_files(files, path)
+
+                   # 5. Update article DESCRIPTION
+                   update_status(art, status = "revision received", date = as.Date(form$Timestamp))
+
+                   cli::cli_alert_success("Re-submission for ID {id} successfully processed.")
+                   return(TRUE)
+               }
            })
-
     cli::cli_alert_info("Writing new article IDs to Google Sheets.")
     googlesheets4::range_write(sheet_id, new_articles["Submission ID"], sheet = "Form responses 1", col_names = FALSE,
                               range = str_c(LETTERS[which(names(submissions) == "Submission ID")], range(which(new_submission)) + 1, collapse = ":"))

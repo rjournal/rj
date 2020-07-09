@@ -19,6 +19,7 @@ valid_status <- c(
   "out for review",
   "major revision",
   "minor revision",
+  "revision received",
   "accepted",
   "copy edited",
   "online",
