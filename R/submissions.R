@@ -93,8 +93,9 @@ download_submissions <- function() {
     articles <- lapply(split(new_articles, new_articles[["Submission ID"]]),
            function(form) {
                id <- form[["Submission ID"]]
-               path <- create_submission_directory(id)
                if(is.na(form[[resub_field]])) {
+                   path <- create_submission_directory(id)
+
                    # If the article is a new submission
                    files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
                    extract_files(files, path)
@@ -120,6 +121,11 @@ download_submissions <- function() {
 
                    # 1. Get original article
                    art <- as.article(id)
+                   path <- art$path
+                   path_dir <- basename(dirname(path))
+                   if(path_dir != "Submissions") {
+                       cli::cli_alert_warning("Re-submission for {id} is replacing an article in the '{path_dir}' folder!")
+                   }
 
                    # 2. Check that the metadata matches
                    matches_title <- art$title == form$`Article title`
