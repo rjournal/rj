@@ -96,6 +96,10 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
     }
   }
   message("Do not forget to update the editorial board in ", issue_file)
+
+  if(!exec) {
+    cli_alert_info("If these articles look correct, re-run the function with `exec = TRUE` to execute the move.")
+  }
 }
 
 insert_replace <- function(tex, at, lines) {
