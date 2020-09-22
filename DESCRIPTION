@@ -26,9 +26,9 @@ Imports:
     tibble,
     tth,
     whisker,
-    yaml
+    yaml,
+    ctv
 Suggests:
-    ctv,
     knitr,
     testthat
 Additional_repositories:
