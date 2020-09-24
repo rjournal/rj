@@ -413,7 +413,14 @@ contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
   pre_md <- get_pre_md()
   md <- c(md, list(pre_md))
   md <- c(md, list(list(heading = "Contributed Research Articles")))
-  load("articles.RData")
+
+  arts0 <- list.files(patt="^20[0-9]{2}-[0-9][0-9]*")
+  arts <- strsplit(arts0, "-")
+  arts1 <- t(sapply(arts, as.integer))
+  arts2 <- arts0[order(arts1[,1], arts1[,2])]
+  articles <- arts2
+
+  # load("articles.RData")
   art_mds <- list()
   for (art in articles) {
     cat(art, "\n")
