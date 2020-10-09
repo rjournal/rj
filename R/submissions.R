@@ -54,7 +54,7 @@ extract_files <- function(files, dest) {
         nested <- length(exfiles) == 1L && file.info(exfiles)$isdir
         if (nested) {
             subfiles <- list.files(exfiles, full.names=TRUE)
-            file.rename(subfiles, file.path(dest, basename(subfiles)))
+            file.rename(subfiles, paste0(dest, .Platform$file.sep, basename(subfiles)))
             unlink(exfiles, recursive=TRUE)
         }
     }
@@ -82,6 +82,13 @@ download_submissions <- function() {
     resub_field <- "If this is a resubmission, enter your submission ID (eg 2020-131)"
     resub_ids <- submissions[[resub_field]][new_submission]
     is_resub <- !is.na(resub_ids)
+
+    # Check that resubmitted articles are not yet rejected (warranting a new ID)
+    resub_accepted <- file.exists(file.path(get_articles_path(), "Accepted", resub_ids[is_resub]))
+    resub_submitted <- file.exists(file.path(get_articles_path(), "Submissions", resub_ids[is_resub]))
+    resub_rejected <- file.exists(file.path(get_articles_path(), "Rejected", resub_ids[is_resub]))
+    is_resub[is_resub] <- resub_accepted | resub_submitted
+
     new_ids <- vector("list", sum(new_submission))
 
     # Generate IDs
@@ -93,7 +100,7 @@ download_submissions <- function() {
     articles <- lapply(split(new_articles, new_articles[["Submission ID"]]),
            function(form) {
                id <- form[["Submission ID"]]
-               if(is.na(form[[resub_field]])) {
+               if(!identical(id, form[[resub_field]])) {
                    path <- create_submission_directory(id)
 
                    # If the article is a new submission
@@ -189,17 +196,17 @@ future_ids <- function(ids, n = 1) {
 download_submission_file <- function(url, path = get_articles_path()){
     file <- googledrive::as_dribble(url)
     path <- path_ext_set(path(path, file$id), path_ext(file$name))
-
+    id <- basename(dirname(path))
     if (file_exists(path)) {
         cli::cli_alert_info("Skipping {basename(path)}, it already exists")
         return(path)
     }
     result <- purrr::safely(googledrive::drive_download)(file, path, verbose = FALSE)
     if (is.null(result$error)) {
-        cli::cli_alert_success("{basename(path)}: Downloaded {file$path} successfully")
+        cli::cli_alert_success("{id}: Downloaded {file$id} successfully")
         return(path)
     } else {
-        cli::cli_alert_danger("{basename(path)}: Failed downloading {file$id} (reason: {result$error$message})")
+        cli::cli_alert_danger("{id}: Failed downloading {file$id} (reason: {result$error$message})")
     }
     return(NA_character_)
 }
