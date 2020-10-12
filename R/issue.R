@@ -427,6 +427,7 @@ contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
     cat(art, "\n")
     art_mds[[art]] <- online_metadata_for_article(as.article(art),
                                                   final=TRUE)
+    cat(art_mds[[art]]$pages, "\n")
   }
   md <- c(md, art_mds)
   md <- c(md, list(list(heading = "News and Notes")))

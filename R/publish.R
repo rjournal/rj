@@ -202,6 +202,7 @@ get_refs_from_tex <- function(article_path, final=FALSE)
     start0 <- c(str_locate(start_str, "((\\{)([0-9]*)(\\}))"))
     start <- as.integer(str_sub(start_str, start0[1]+1, start0[2]-1))
     attr(res, "start") <- start
+    cat("start", start, "\n")
   }
   res
 }
@@ -215,6 +216,7 @@ get_md_from_pdf <- function(from, final=FALSE)
 
    t1s <- str_split(text[1], "\\n")[[1L]]
    abs_ <- which(!is.na(str_locate(t1s, "^[ ]*Abstract")[, "start"]))
+   cat("abs_", abs_, "\n")
    aut0 <- paste(t1s[which(!is.na(str_locate(t1s, "^[ ]*by")[, "start"]))[1]:(abs_-1L)], collapse=" ")
    aut1 <- str_trim(str_replace(aut0, "by", ""))
    aut2 <- str_replace_all(aut1, ", and ", ", ")
@@ -231,6 +233,7 @@ get_md_from_pdf <- function(from, final=FALSE)
    abstract <- str_replace_all(substring(abs0, 10, nchar(abs0)), "[-][ ]", "")
    res <- list(author=author, title=title, abstract=abstract,
      bibtitle=bibtitle, bibauthor=bibauthor)
+   cat(pdftools::pdf_info(from)$pages, " pages and final is", final, "\n")
    if (final) attr(res, "len") <- pdftools::pdf_info(from)$pages
    res
 }
@@ -281,6 +284,7 @@ online_metadata_for_article <- function(x, final=FALSE) {
       start <- attr(refs_list, "start")
       len <- attr(pdf_list, "len")
       pages <- as.integer(c(start, start + (len - 1)))
+      cat("pages ", pages, start, len, "\n")
     }
     if (!is.null(refs_list$CRANpkgs))
       refs_list$CTV_rev <- rev_dep_ctv(refs_list$CRANpkgs)

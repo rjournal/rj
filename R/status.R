@@ -25,6 +25,7 @@ valid_status <- c(
   "online",
   "proofed",
   "style checked",
+  "with AE",
   final_status
 )
 
