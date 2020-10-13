@@ -26,6 +26,10 @@ valid_status <- c(
   "proofed",
   "style checked",
   "with AE",
+  "AE: major revision",
+  "AE: minor revision",
+  "AE: accept",
+  "AE: reject",
   final_status
 )
 
