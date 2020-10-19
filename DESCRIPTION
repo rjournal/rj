@@ -31,7 +31,5 @@ Imports:
 Suggests:
     knitr,
     testthat
-Additional_repositories:
-    http://R-Forge.R-project.org
 Encoding: UTF-8
 RoxygenNote: 7.1.0.9000
