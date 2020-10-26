@@ -29,6 +29,21 @@ print_acknowledged = function(latest) {
   cli_ul(items)
 }
 
+print_with_ae = function(latest) {
+  articles = latest[latest$status_status == "with AE", ]
+  if (nrow(articles) == 0) return(invisible(NULL))
+  cli::cli_h1("with AE ({nrow(articles)})")
+  articles$title = stringr::str_trunc(articles$title, 20)
+  cli::cli_ul()
+  for (i in seq_len(nrow(articles))) {
+    article = articles[i, ]
+    item = glue::glue("{article$id} ({article$days_since_submission}, {article$ae}): {article$title}")
+    cli::cli_li(item)
+  }
+
+  cli::cli_end()
+}
+
 print_out_for_review = function(latest) {
   articles = latest[latest$status_status == "out for review", ]
   if (nrow(articles) == 0) return(invisible(NULL))
@@ -37,7 +52,7 @@ print_out_for_review = function(latest) {
   cli::cli_ul()
   for (i in seq_len(nrow(articles))) {
     article = articles[i, ]
-    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
+    item = glue::glue("{article$id} ({article$days_since_submission}, article$AE): {article$title}")
     cli::cli_li(item)
     list_reviewers(article$id)
   }
@@ -62,6 +77,7 @@ summarise_articles = function(editor = NULL,
   latest = get_latest_assignments(all_articles)
   if (isTRUE(rejected)) print_rejected(latest)
   print_acknowledged(latest)
+  print_with_ae(latest)
   print_submitted(latest)
   print_out_for_review(latest)
   return(invisible(all_articles))
@@ -101,6 +117,7 @@ unpack_status = function(x) {
                              id_seq = id$seq,
                              id = format(id),
                              path = x$path,
+                             ae = format(x$AE),
                              title = x$title,
                              "status_date" = .x[[1]],
                              "status_status" = .x[[2]],
