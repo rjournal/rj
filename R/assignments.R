@@ -52,7 +52,7 @@ print_out_for_review = function(latest) {
   cli::cli_ul()
   for (i in seq_len(nrow(articles))) {
     article = articles[i, ]
-    item = glue::glue("{article$id} ({article$days_since_submission}, article$AE): {article$title}")
+    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
     cli::cli_li(item)
     list_reviewers(article$id)
   }
@@ -117,7 +117,7 @@ unpack_status = function(x) {
                              id_seq = id$seq,
                              id = format(id),
                              path = x$path,
-                             ae = format(x$AE),
+                             ae = format(x$ae),
                              title = x$title,
                              "status_date" = .x[[1]],
                              "status_status" = .x[[2]],

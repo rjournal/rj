@@ -60,7 +60,7 @@ as.article <- function(id) {
 }
 
 load_article <- function(path, quiet = FALSE) {
-  fields <- c("ID", "Slug", "Authors", "Title", "Editor", "Reviewers", "Status", "Suppl")
+  fields <- c("ID", "Slug", "Authors", "Title", "Editor", "AE", "Reviewers", "Status", "Suppl")
   dcf <- read.dcf(path, fields = fields, keep.white = fields)
   if (nrow(dcf) != 1) stop("DCF parsing error: ", path, call. = FALSE)
 
@@ -83,7 +83,7 @@ load_article <- function(path, quiet = FALSE) {
 
 is.article <- function(x) inherits(x, "article")
 
-make_article <- function(id, slug = "", authors = "", title = "", editor = "",
+make_article <- function(id, slug = "", authors = "", title = "", editor = "", ae = "",
                          reviewers = "", status = "", path = "", suppl = "") {
   structure(list(
     id = parse_id(id),
@@ -93,6 +93,7 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "",
     authors = parse_address_list(authors),
     title = str_trim(title),
     editor = str_trim(editor),
+    ae = str_trim(ae),
     reviewers = parse_address_list(reviewers),
     status = parse_status_list(status)), class = "article")
 }
@@ -134,6 +135,7 @@ format.article <- function(x, ...) {
     if (!empty(x$suppl)) paste0("Suppl:\n  ", suppl, "\n"),
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     "Editor: ", x$editor, "\n",
+    "AE:", x$AE, "\n",
     "Reviewers:", if (!empty(reviewers)) "\n  ", reviewers, "\n",
     "Status: ", if (!empty(status)) "\n  ", status,
     sep = ""
