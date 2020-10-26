@@ -49,11 +49,14 @@ as.article <- function(id) {
     base <- c("Rejected", "Accepted", "Submissions",
               file.path("Proofs", dir("Proofs")))
     pos <- file.exists(file.path(get_articles_path(), base, id))
+    # Assume working from articles directory
+    # pos <- file.exists(base, id)
 
     if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
     if (sum(pos) > 1) stop(id, " found in multiple locations", call. = FALSE)
 
     path <- file.path(get_articles_path(), base[pos], id, "DESCRIPTION")
+    # path <- file.path(base[pos], id, "DESCRIPTION")
   }
 
   load_article(path)

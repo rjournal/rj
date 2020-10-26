@@ -11,7 +11,7 @@ set_articles_path <- function(path) {
 
 get_articles_path <- function() {
   dir <- .articles$path %||% getwd()
-  if (!(basename(dir) %in% c("articles", "articles_test"))) {
+  if (!(grepl("articles", basename(dir)))) {
     abort(
       sprintf("The current articles path is not correct.
               Set the path to the articles repository with `set_articles_path()`",
