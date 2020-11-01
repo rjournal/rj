@@ -248,3 +248,29 @@ acknowledge_submissions <- function(drafts) {
     }
     invisible(TRUE)
 }
+
+#' Send submission acknowledgement drafts
+#'
+#' @param article article id
+#' @export
+acknowledge_submission_text <- function(article) {
+    article <- as.article(article)
+
+    dest <- file.path(article$path, "correspondence")
+    if (!file.exists(dest)) dir.create(dest)
+
+    name <- "acknowledge.txt"
+    path <- file.path(dest, name)
+
+    data <- as.data(article)
+    data$name <- stringr::str_split(data$name, " ")[[1]][1]
+    data$date <- format(Sys.Date() + 30, "%d %b %Y")
+
+    template <- find_template("acknowledge")
+    email <- whisker.render(readLines(template), data)
+
+    writeLines(email, path)
+
+    update_status(data$id, "acknowledged")
+    invisible(TRUE)
+}
