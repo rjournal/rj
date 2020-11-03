@@ -11,7 +11,12 @@ Would you be willing to review the attached article, "{{title}}" for the R Journ
 
 * Article: Is anything unclear? Is anything missing? Are the examples helpful? Is there sufficient background, including alternative approaches in R?
 
-* Package: Could the functions presented be improved? Some ideas at http://bit.ly/1aYwkp3. Could the code be improved, for example using the "styler" package, or have the features warned against by Jenny Bryan at https://www.tidyverse.org/articles/2017/12/workflow-vs-script/
+* Package: Could the functions presented be improved? Some ideas at http://bit.ly/1aYwkp3. Could the code be improved? Some good advice on code style can be found in
+    - "R packages" chapter 7 by Hadley Wickham at https://r-pkgs.org/r.html,
+    - "rOpenSci Packages: Development, Maintenance, and Peer Review" at https://devguide.ropensci.org/building.html,
+    - "What I look for in 'Software Papers'" by Carl Boettiger at https://www.carlboettiger.info/2013/06/13/what-I-look-for-in-software-papers.html
+    - Using the "styler" package,
+    - and avoiding the features warned against by Jenny Bryan at https://www.tidyverse.org/articles/2017/12/workflow-vs-script/
 
 Reviews are usually anonymous and should be returned by email. Please let me know if you are willing to take on this review. I would like to receive the review, if possible, by {{date}}.
 
