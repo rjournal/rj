@@ -136,6 +136,7 @@ format.article <- function(x, ...) {
   if (!empty(x$suppl)) suppl <- format(x$suppl)
 
   paste(
+    "ID: ", format(x$id), "\n",
     if (!empty(x$other_id)) paste0("OtherIDs: ", x$other_id, "\n"),
     "Title: ", x$title, "\n",
     if (!empty(x$slug)) paste0("Slug: ", x$slug, "\n"),
