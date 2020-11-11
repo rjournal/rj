@@ -112,12 +112,14 @@ download_submissions <- function() {
                        authors = str_c(
                            c(
                                str_glue_data(form, "{`Your name:`} <{`Email address`}>"),
-                               setdiff(str_trim(str_split(form$`Names of other authors, comma separated`, ",")[[1]]), form$`Your name:`)
+                               setdiff(str_trim(str_split(form[["Names of other authors, comma separated"]], ",")[[1]]), form[["Your name:"]])
                            ),
                            collapse = ", "),
-                       title = form$`Article title`,
+                       title = form[["Article title"]],
                        path = path,
-                       suppl = form$`If any absolutely essential additional latex packages are required to build your article, please list here separated by commas.`%NA%""
+                       suppl = form[["If any absolutely essential additional latex packages are required to build your article, please list here separated by commas."]]%NA%"",
+                       keywords = form[["Article tags"]]%NA%"",
+                       otherids = form[[resub_field]]%NA%""
                    )
 
                    update_status(art, status = "submitted", date = as.Date(form$Timestamp))
