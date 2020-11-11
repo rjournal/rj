@@ -63,7 +63,7 @@ as.article <- function(id) {
 }
 
 load_article <- function(path, quiet = FALSE) {
-  fields <- c("ID", "Slug", "Authors", "Title", "Editor", "AE", "Reviewers", "Status", "Suppl")
+  fields <- c("ID", "Slug", "Authors", "Keywords", "OtherIDs", "Title", "Editor", "AE", "Reviewers", "Status", "Suppl")
   dcf <- read.dcf(path, fields = fields, keep.white = fields)
   if (nrow(dcf) != 1) stop("DCF parsing error: ", path, call. = FALSE)
 
@@ -87,13 +87,16 @@ load_article <- function(path, quiet = FALSE) {
 is.article <- function(x) inherits(x, "article")
 
 make_article <- function(id, slug = "", authors = "", title = "", editor = "", ae = "",
-                         reviewers = "", status = "", path = "", suppl = "") {
+                         reviewers = "", status = "", path = "", suppl = "",
+                         keywords = "", otherids = "") {
   structure(list(
     id = parse_id(id),
+    other_id = otherids,
     slug = slug,
     suppl = parse_supplementaries(suppl),
     path = path,
     authors = parse_address_list(authors),
+    keywords = str_c(keywords, sep = ", "),
     title = str_trim(title),
     editor = str_trim(editor),
     ae = str_trim(ae),
@@ -133,12 +136,15 @@ format.article <- function(x, ...) {
   if (!empty(x$suppl)) suppl <- format(x$suppl)
 
   paste(
+    "ID: ", format(x$id), "\n",
+    if (!empty(x$other_id)) paste0("OtherIDs: ", x$other_id, "\n"),
     "Title: ", x$title, "\n",
     if (!empty(x$slug)) paste0("Slug: ", x$slug, "\n"),
     if (!empty(x$suppl)) paste0("Suppl:\n  ", suppl, "\n"),
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
+    if (!empty(x$keywords)) paste0("Keywords: ", x$keywords, "\n"),
     "Editor: ", x$editor, "\n",
-    "AE:", x$AE, "\n",
+    "AE: ", x$ae, "\n",
     "Reviewers:", if (!empty(reviewers)) "\n  ", reviewers, "\n",
     "Status: ", if (!empty(status)) "\n  ", status,
     sep = ""
