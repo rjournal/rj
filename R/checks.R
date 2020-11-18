@@ -7,10 +7,9 @@
 #'
 #' Set the directory of the articles repository using `set_articles_path`.
 #'
-#' @param print_results Indicates whether results should be printed to console
 #'
 #'
-initial_checks <- function(print_results = TRUE) {
+initial_checks <- function() {
 
   # Find articles without initial_check logs, pass that list to do checks
   base <- file.path(get_articles_path(), "Submissions")
@@ -35,7 +34,7 @@ initial_checks <- function(print_results = TRUE) {
 #' @param path Location of the article submission folder to check
 #'
 #' @export
-initial_check_article <- function(path, print_results = TRUE) {
+initial_check_article <- function(path) {
 
   # Documents:
   # Necessary files must be included in submission folder
