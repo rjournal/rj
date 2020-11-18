@@ -13,6 +13,7 @@ final_status <- c(
 valid_status <- c(
   "submitted",
   "acknowledged",
+  "passed initial checks",
   "needs reviewers",
   "needs editor",
   "updated",
