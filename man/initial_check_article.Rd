@@ -4,7 +4,7 @@
 \alias{initial_check_article}
 \title{A single article check}
 \usage{
-initial_check_article(path, print_results = TRUE)
+initial_check_article(path)
 }
 \arguments{
 \item{path}{Location of the article submission folder to check}

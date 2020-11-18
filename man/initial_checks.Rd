@@ -4,10 +4,7 @@
 \alias{initial_checks}
 \title{Complete initial checks for submissions.}
 \usage{
-initial_checks(print_results = TRUE)
-}
-\arguments{
-\item{print_results}{Indicates whether results should be printed to console}
+initial_checks()
 }
 \description{
 There are several initial checks undertaken for each submission.
