@@ -90,12 +90,12 @@ initial_check_article <- function(path) {
 #' @param submission_files a vector of the file names in the submission folder
 #'
 check_wrappers <- function(submission_files) {
-  #' Check for RJwrapper files
+  # Check for RJwrapper files
   wrapper_files <- c("RJwrapper.tex",
                      "RJwrapper.pdf")
 
-  #' Immediate failure?
-  #' Return a warning if either "RJwrapper.tex" and/or "RJwrapper.pdf" not found
+  # Immediate failure?
+  # Return a warning if either "RJwrapper.tex" and/or "RJwrapper.pdf" not found
   if (!all(wrapper_files %in% submission_files)) {
 
     log_error("Submission is missing an RJwrapper file")
@@ -106,7 +106,7 @@ check_wrappers <- function(submission_files) {
 
   }
 
-  #' Remove the two wrapper files that were checked
+  # Remove the two wrapper files that were checked
   remaining_files <-
     submission_files[!(submission_files %in% wrapper_files)]
 
@@ -132,7 +132,7 @@ check_filenames <- function(remaining_files) {
 
   files_exist <- c("tex", "bib", "R") %in% exts
 
-  #' check all files are present
+  # check all files are present
   if (!all(files_exist)) {
 
     missing_type <- exts[!( c("tex", "bib", "R") %in% exts )]
@@ -150,8 +150,8 @@ check_filenames <- function(remaining_files) {
 
   single_filename <- tools::file_path_sans_ext(matching_filename)
 
-  #' Check for all three files with matching names
-  #' Find the file name that should match
+  # Check for all three files with matching names
+  # Find the file name that should match
 
   if (!length(unique(single_filename)) == 1) {
 
@@ -389,6 +389,8 @@ log_note <- log_factory(prefix = "NOTE: ", .f = cli::cli_alert_info)
 
 #' Various handy symbols to use in a command line UI
 #'
+#' Show symbols in console output
+#'
 #' @usage
 #' symbol
 #'
@@ -396,7 +398,6 @@ log_note <- log_factory(prefix = "NOTE: ", .f = cli::cli_alert_info)
 #' @aliases symbol
 #' @export symbol
 #'
-
 symbol_utf8 <- list(
   "tick" = '\u2714',
   "cross" = '\u2716',

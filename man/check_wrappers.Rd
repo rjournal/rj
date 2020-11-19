@@ -7,12 +7,7 @@
 check_wrappers(submission_files)
 }
 \arguments{
-\item{submission_files}{a vector of the file names in the submission folder
-
-Check for RJwrapper files
-Immediate failure?
-Return a warning if either "RJwrapper.tex" and/or "RJwrapper.pdf" not found
-Remove the two wrapper files that were checked}
+\item{submission_files}{a vector of the file names in the submission folder}
 }
 \description{
 Check for the two expected RJwrapper files
