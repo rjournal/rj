@@ -60,6 +60,22 @@ print_out_for_review = function(latest) {
   cli::cli_end()
 }
 
+print_in_revision = function(latest) {
+  articles = latest[grepl("revision", latest$status_status), ]
+  if (nrow(articles) == 0) return(invisible(NULL))
+  cli::cli_h1("In revision ({nrow(articles)})")
+  articles$title = stringr::str_trunc(articles$title, 50)
+  cli::cli_ul()
+  for (i in seq_len(nrow(articles))) {
+    article = articles[i, ]
+    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
+    cli::cli_li(item)
+    list_reviewers(article$id)
+  }
+
+  cli::cli_end()
+}
+
 #' @export
 #' @importFrom cli cli_h1 cli_li cli_ul cli_end
 #' @title Summarise intray
@@ -76,10 +92,15 @@ summarise_articles = function(editor = NULL,
   all_articles = get_assignments(editor)
   latest = get_latest_assignments(all_articles)
   if (isTRUE(rejected)) print_rejected(latest)
+  # get only most recent status
+  latest <- latest %>%
+    group_by(id) %>%
+    dplyr::slice_tail(n=1)
   print_acknowledged(latest)
   print_with_ae(latest)
   print_submitted(latest)
   print_out_for_review(latest)
+  print_in_revision(latest)
   return(invisible(all_articles))
 }
 
