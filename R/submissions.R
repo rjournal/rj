@@ -79,7 +79,7 @@ download_submissions <- function() {
     submissions <- googlesheets4::read_sheet(sheet_id)
     ids <- submissions[["Submission ID"]]
     new_submission <- is.na(ids)
-    resub_field <- "If this is a resubmission, enter your submission ID (eg 2020-131)"
+    resub_field <- "If this is a revision or resubmission, enter your submission ID (eg 2020-131)"
     resub_ids <- submissions[[resub_field]][new_submission]
     is_resub <- !is.na(resub_ids)
 
