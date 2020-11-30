@@ -1,10 +1,10 @@
-name,github_handle,email,start_year,notes,keywords
-Nicholas Tierney,njtierney,nicholas.tierney@gmail.com,2020,,
-Earo Wang,earowang,earo.wang@auckland.ac.nz,2020,,
-Xiaoyue Cheng,chxy,xycheng@unomaha.edu,2020,,
-Emily Zabor,zabore,zabore2@ccf.org,2020,,
-Taylor Arnold,statsmaths,tarnold2@richmond.edu,2020,,
-Susan Vanderplas,srvanderplas,susan.vanderplas@unl.edu,2020,,"Graphics, Machine Learning, Reproducible Research, Web Technologies, Forensics"
-Rafael de Andrade Moral,rafamoral,rafael.deandrademoral@mu.ie,2020,,
-Isabella Gollini,igollini,isabella.gollini@ucd.ie,2020,On maternity leave through 2020,
-Elizabeth Atkinson,bethatkinson,atkinson@mayo.edu,2020,,
+name,github_handle,email,start_year,notes,keywords,github
+Nicholas Tierney,njtierney,nicholas.tierney@gmail.com,2020,,,ae-articles-nt
+Earo Wang,earowang,earo.wang@auckland.ac.nz,2020,,"Graphics, Reproducible Research, Time Series, Web Technologies",ae-articles-ew
+Xiaoyue Cheng,chxy,xycheng@unomaha.edu,2020,,,ae-articles-xcz
+Emily Zabor,zabore,zabore2@ccf.org,2020,,,ae-articles-ez
+Taylor Arnold,statsmaths,tarnold2@richmond.edu,2020,,,ae-articles-ta
+Susan Vanderplas,srvanderplas,susan.vanderplas@unl.edu,2020,,"Graphics, Machine Learning, Reproducible Research, Web Technologies, Forensics",ae-articles-sv
+Rafael de Andrade Moral,rafamoral,rafael.deandrademoral@mu.ie,2020,,,ae-articles-ram
+Isabella Gollini,igollini,isabella.gollini@ucd.ie,2020,On maternity leave through 2020,,ae-articles-ig
+Elizabeth Atkinson,bethatkinson,atkinson@mayo.edu,2020,,,ae-articles-ba
