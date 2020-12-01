@@ -76,6 +76,22 @@ print_in_revision = function(latest) {
   cli::cli_end()
 }
 
+print_revision_received = function(latest) {
+  articles = latest[grepl("received", latest$status_status), ]
+  if (nrow(articles) == 0) return(invisible(NULL))
+  cli::cli_h1("Revision received ({nrow(articles)})")
+  articles$title = stringr::str_trunc(articles$title, 50)
+  cli::cli_ul()
+  for (i in seq_len(nrow(articles))) {
+    article = articles[i, ]
+    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
+    cli::cli_li(item)
+    list_reviewers(article$id)
+  }
+
+  cli::cli_end()
+}
+
 #' @export
 #' @importFrom cli cli_h1 cli_li cli_ul cli_end
 #' @title Summarise intray
@@ -101,6 +117,7 @@ summarise_articles = function(editor = NULL,
   print_submitted(latest)
   print_out_for_review(latest)
   print_in_revision(latest)
+  print_revision_received(latest)
   return(invisible(all_articles))
 }
 
