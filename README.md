@@ -5,12 +5,6 @@ This package provides tools for dealing with the metadata for the R Journal. The
 
 ## Installation
 
-The `jss` package has been archived from CRAN, but can be installed from its R forge site, as follows:
-
-`install.packages("jss", repos = "http://R-Forge.R-project.org")`
-
-Then install `rj` using:
-
 `remotes::install_github("rjournal/rj")`
 
 New editors should be added to the list of editors in `R/email.r`.
