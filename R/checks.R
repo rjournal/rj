@@ -8,7 +8,6 @@
 #' Set the directory of the articles repository using `set_articles_path`.
 #'
 #'
-#'
 initial_checks <- function() {
 
   # Find articles without initial_check logs, pass that list to do checks
@@ -196,7 +195,7 @@ check_unnecessary_files <- function(submission_files) {
 
 #' Check for the two expected RJwrapper files
 #'
-#' @param submission_files a vector of the file names in the submission folder
+#' @param remaining_files a vector of the file names in the submission folder
 #'
 check_cover_letter <- function(remaining_files){
 
@@ -219,6 +218,8 @@ check_cover_letter <- function(remaining_files){
 #' @param name name of the tex file containing the article text
 #'
 #' @importFrom stringr str_extract_all
+#' @importFrom utils available.packages
+#'
 available <- function(path, name) {
 
   # fix to not be dependent on /
@@ -274,7 +275,7 @@ available <- function(path, name) {
 
   pkgs_used <- stringr::str_sub(
     unlist(
-      stringr::str_extract_all(string = file, pattern = "pkg\\{(.*?)\\}")),
+      stringr::str_extract_all(string = file, "pkg\\{(.*?)\\}")),
     start = 5, end = -2)
 
   # Start with full list of pkgs
@@ -355,8 +356,9 @@ log_factory <- function(prefix, .f) {
 #' Append a line in the log file that details an error
 #'
 #' @param text Description of the error that occurred
-#' @param `...` Additional inputs for text passed to the glue function
-#' @param file the console output directed to the log, using `stdout`
+#' @param ... Additional inputs for text passed to the glue function
+#' @param .envir The environment used to find the text string replacements
+#' @param file The console output directed to the log, using `stdout`
 #'
 #'
 log_error <- log_factory(prefix = "ERROR: ", .f = cli::cli_alert_warning)
@@ -365,9 +367,10 @@ log_error <- log_factory(prefix = "ERROR: ", .f = cli::cli_alert_warning)
 #'
 #' Append a line in the log file that details a success
 #'
-#' @param text Description of the success that occurred
-#' @param `...` Additional inputs for text passed to the glue function
-#' @param file the console output directed to the log, using `stdout`
+#' @param text Description of the error that occurred
+#' @param ... Additional inputs for text passed to the glue function
+#' @param .envir The environment used to find the text string replacements
+#' @param file The console output directed to the log, using `stdout`
 #'
 #'
 log_success <- log_factory(prefix = "SUCCESS: ", .f = cli::cli_alert_success)
@@ -377,9 +380,10 @@ log_success <- log_factory(prefix = "SUCCESS: ", .f = cli::cli_alert_success)
 #'
 #' Append a line in the log file that details a note
 #'
-#' @param text Description of the note that occurred
-#' @param `...` Additional inputs for text passed to the glue function
-#' @param file the console output directed to the log, using `stdout`
+#' @param text Description of the error that occurred
+#' @param ... Additional inputs for text passed to the glue function
+#' @param .envir The environment used to find the text string replacements
+#' @param file The console output directed to the log, using `stdout`
 #'
 #'
 log_note <- log_factory(prefix = "NOTE: ", .f = cli::cli_alert_info)
@@ -391,12 +395,9 @@ log_note <- log_factory(prefix = "NOTE: ", .f = cli::cli_alert_info)
 #'
 #' Show symbols in console output
 #'
-#' @usage
-#' symbol
 #'
 #' @name symbol
 #' @aliases symbol
-#' @export symbol
 #'
 symbol_utf8 <- list(
   "tick" = '\u2714',

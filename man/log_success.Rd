@@ -7,11 +7,13 @@
 log_success(text, ..., file = stdout(), .envir = parent.frame())
 }
 \arguments{
-\item{text}{Description of the success that occurred}
+\item{text}{Description of the error that occurred}
 
-\item{file}{the console output directed to the log, using `stdout`}
+\item{...}{Additional inputs for text passed to the glue function}
 
-\item{`...`}{Additional inputs for text passed to the glue function}
+\item{file}{The console output directed to the log, using `stdout`}
+
+\item{.envir}{The environment used to find the text string replacements}
 }
 \description{
 Append a line in the log file that details a success

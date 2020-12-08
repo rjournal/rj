@@ -7,7 +7,7 @@
 check_cover_letter(remaining_files)
 }
 \arguments{
-\item{submission_files}{a vector of the file names in the submission folder}
+\item{remaining_files}{a vector of the file names in the submission folder}
 }
 \description{
 Check for the two expected RJwrapper files

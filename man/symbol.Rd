@@ -9,9 +9,9 @@
 An object of class \code{list} of length 4.
 }
 \usage{
-symbol
+symbol_utf8
 }
 \description{
-Various handy symbols to use in a command line UI
+Show symbols in console output
 }
 \keyword{datasets}
