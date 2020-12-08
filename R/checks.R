@@ -71,7 +71,7 @@ initial_check_article <- function(path) {
 
   # check that packages mentioned in manuscript are available on CRAN
   # if there are no mentions, flag for manual check
-  available(path, filename)
+  check_packages_available(path, filename)
 
   # Show a numeric summary of successes, errors and notes
   check_summary(path)
@@ -220,7 +220,7 @@ check_cover_letter <- function(remaining_files){
 #' @importFrom stringr str_extract_all
 #' @importFrom utils available.packages
 #'
-available <- function(path, name) {
+check_packages_available <- function(path, name) {
 
   # fix to not be dependent on /
   file <- readLines(file.path(path, name))
