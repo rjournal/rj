@@ -1,12 +1,16 @@
 # read article *.bib, replace by url to https://doi.org/<doi>
-#' @importFrom jss fix_bib
 #' @importFrom bibtex read.bib write.bib
 update_bib <- function(bibfile) {
+  if (!requireNamespace("jss", quietly = TRUE)) {
+    abort(
+      'The `jss` package must be installed to use this functionality. It can be installed with `install.packages("jss", repos = "http://R-Forge.R-project.org")`'
+    )
+  }
   safe <- paste0(dirname(bibfile), .Platform$file.sep, "orig_",
     basename(bibfile))
   file.copy(bibfile, safe, overwrite=TRUE)
   biblist <- read.bib(safe)
-  fixed_biblist <- fix_bib(biblist, shortcites=FALSE, doi=FALSE)
+  fixed_biblist <- jss::fix_bib(biblist, shortcites=FALSE, doi=FALSE)
   for(i in 1:length(fixed_biblist)) {
     if(!is.null(fixed_biblist[i]$doi)) {
       if (!is.null(fixed_biblist[i]$url)) fixed_biblist[i]$url <- NULL
