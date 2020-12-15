@@ -6,7 +6,7 @@ print_rejected = function(latest) {
   art = latest[latest$status_status == "rejected", ]
   if (nrow(art) == 0) return(invisible(NULL))
   cli::cli_h1("Rejected ({nrow(art)})")
-  titles = str_trunc(art$title, 50)
+  titles = str_trunc(art$title, getOption("width") - 30)
   items = glue::glue("{art$id}: {titles}")
   cli_ul(items)
 }
@@ -15,7 +15,7 @@ print_submitted = function(latest) {
   art = latest[latest$status_status == "submitted", ]
   if (nrow(art) == 0) return(invisible(NULL))
   cli::cli_h1("Submitted ({nrow(art)})")
-  titles = str_trunc(art$title, 50)
+  titles = str_trunc(art$title, getOption("width") - 30)
   items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
   cli_ul(items)
 }
@@ -24,7 +24,7 @@ print_acknowledged = function(latest) {
   art = latest[latest$status_status == "acknowledged", ]
   if (nrow(art) == 0) return(invisible(NULL))
   cli::cli_h1(glue::glue("Acknowledged ({nrow(art)})"))
-  titles = str_trunc(art$title, 50)
+  titles = str_trunc(art$title, getOption("width") - 30)
   items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
   cli_ul(items)
 }
@@ -33,7 +33,7 @@ print_with_ae = function(latest) {
   articles = latest[latest$status_status == "with AE", ]
   if (nrow(articles) == 0) return(invisible(NULL))
   cli::cli_h1("with AE ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, 20)
+  articles$title = stringr::str_trunc(articles$title, getOption("width") - 60)
   cli::cli_ul()
   for (i in seq_len(nrow(articles))) {
     article = articles[i, ]
@@ -48,7 +48,7 @@ print_out_for_review = function(latest) {
   articles = latest[latest$status_status == "out for review", ]
   if (nrow(articles) == 0) return(invisible(NULL))
   cli::cli_h1("Out for Review ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, 50)
+  articles$title = stringr::str_trunc(articles$title, getOption("width") - 30)
   cli::cli_ul()
   for (i in seq_len(nrow(articles))) {
     article = articles[i, ]
@@ -64,7 +64,7 @@ print_in_revision = function(latest) {
   articles = latest[grepl("revision", latest$status_status), ]
   if (nrow(articles) == 0) return(invisible(NULL))
   cli::cli_h1("In revision ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, 50)
+  articles$title = stringr::str_trunc(articles$title, getOption("width") - 30)
   cli::cli_ul()
   for (i in seq_len(nrow(articles))) {
     article = articles[i, ]
@@ -80,7 +80,7 @@ print_revision_received = function(latest) {
   articles = latest[grepl("received", latest$status_status), ]
   if (nrow(articles) == 0) return(invisible(NULL))
   cli::cli_h1("Revision received ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, 50)
+  articles$title = stringr::str_trunc(articles$title, getOption("width") - 30)
   cli::cli_ul()
   for (i in seq_len(nrow(articles))) {
     article = articles[i, ]
