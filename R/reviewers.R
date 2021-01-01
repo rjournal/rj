@@ -130,27 +130,51 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
 }
 
 #' @rdname invite_reviewers
-#' @param review Path to the review, e.g. pdf, txt, or docx format
-#' @param recommend Summary of review. Accept, minor, major, reject
+#' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used.
+#' @param recommend Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.
+#' @param date Date of the comment, defaults to today's date
 #' @export
-add_review = function(article, reviewer_id, review, recommend = NULL) {
+add_review = function(article, reviewer_id, review, recommend = NULL, date = Sys.Date()) {
   article = as.article(article)
   dest = file.path(article$path, "correspondence")
-  # Determine the number of past reviewers
-  prefix = length(list.files(dest, pattern = paste0("-.*-", reviewer_id, "\\."))) + 1
-  # TODO: Check for duplicates
-  if (!file.exists(review)) {
+  copy <- TRUE
+  ## if no review file is specified we assume the user wants to
+  ## register the file they added in the corresondence directory
+  if (missing(review)) {
+    fn <- list.files(dest, paste0("^[0-9]+-review-", reviewer_id, "\\."))
+    if (!length(fn)) stop("`review' is missing yet no *-review-", reviewer_id,"-.* file is present")
+    review <- file.path(dest, fn[length(fn)])
+    cli::cli_alert_info(paste0("Using existing file ", basename(review)))
+    copy <- FALSE
+  } else if (!file.exists(review)) {
     stop(review, " doesn't exist")
   }
-  ext = tools::file_ext(review)
-  name = paste0(prefix, "-review-", reviewer_id, ".", ext)
-  path = file.path(article$path, "correspondence", name)
-  file.copy(review, to = path)
-  cli::cli_alert_info(paste0("Created ", path))
-  if (is.null(recommend)) {
-    recommend = "Received"
+  if (copy) {
+    # Determine the number of past reviews
+    prefix = length(list.files(dest, pattern = paste0("-review-", reviewer_id, "\\."))) + 1
+    ext = tools::file_ext(review)
+    name = paste0(prefix, "-review-", reviewer_id, ".", ext)
+    path = file.path(article$path, "correspondence", name)
+    file.copy(review, to = path)
+    cli::cli_alert_info(paste0("Created ", path))
   }
-  recommend = paste(recommend, Sys.Date())
+  if (is.null(recommend)) {
+    guess <- tryCatch(suppressWarnings(readLines(review, 30, warn=FALSE, skipNul=TRUE)),
+             error=function(e) "")
+    a.min <- grep("minor", guess, TRUE)
+    a.maj <- grep("major", guess, TRUE)
+    rej   <- grep("reject", guess, TRUE)
+    acc   <- grep("accept", guess, TRUE)
+    if (length(c(a.min, a.maj, rej, acc))) {
+      recommend <- c("Minor", "Major", "Reject", "Accept")[
+        suppressWarnings(which.min(c(min(a.min), min(a.maj), min(rej), min(acc))))]
+      cli::cli_alert_info(paste("Auto-detected recommendation:", recommend))
+    } else {
+      cli::cli_alert_info("Recommendation auto-detection, FAILED, using `Received'")
+      recommend <- "Received"
+    }
+  }
+  recommend = paste(recommend, date)
   add_reviewer_comment(article, reviewer_id = reviewer_id,
                        comment = recommend)
   return(invisible(NULL))

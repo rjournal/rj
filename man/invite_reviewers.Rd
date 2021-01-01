@@ -10,7 +10,7 @@ invite_reviewers(article, prefix = "1")
 
 invite_reviewer(article, reviewer_id, prefix = "1")
 
-add_review(article, reviewer_id, review, recommend = NULL)
+add_review(article, reviewer_id, review, recommend = NULL, date = Sys.Date())
 }
 \arguments{
 \item{article}{article id, like \code{"2014-01"}}
@@ -20,9 +20,11 @@ between multiple rounds of reviewers (if needed)}
 
 \item{reviewer_id}{invite just a single reviewer}
 
-\item{review}{Path to the review, e.g. pdf, txt, or docx format}
+\item{review}{Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used.}
 
-\item{recommend}{Summary of review. Accept, minor, major, reject}
+\item{recommend}{Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.}
+
+\item{date}{Date of the comment, defaults to today's date}
 }
 \description{
 Once you have added reviewers to the DESCRIPTION file, you can use
