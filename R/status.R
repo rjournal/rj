@@ -53,7 +53,8 @@ status <- function(status, date = Sys.Date(), comments = "") {
   stopifnot(is.character(status), length(status) == 1)
   stopifnot(is.character(comments), length(comments) == 1)
 
-  if (date > Sys.Date()) stop("Date must not be in the future")
+  # Date + 1 provides a buffer for timezones with remote resources.
+  if (date > (Sys.Date() + 1)) stop("Date must not be in the future")
   if (date < as.Date("2002-01-01")) {
     stop("Date must not before the R journal was created")
   }
