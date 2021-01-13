@@ -21,15 +21,22 @@ sheet_id <- "15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k"
 #'  \item Manually sends the draft emails
 #' }
 #' @export
-get_submissions <- function() {
+get_submissions <- function(dry_run = FALSE) {
     cli::cat_line("Downloading new submissions")
-    subs <- download_submissions()
+    subs <- download_submissions(dry_run = dry_run)
 
     cli::cat_line("Performing automatic checks on submissions")
     # consume_submissions(subs)
 
-    cli::cat_line("Drafting acknowledgements")
-    draft_acknowledgements(subs)
+    if(!dry_run) {
+        cli::cat_line("Drafting acknowledgements")
+        draft_acknowledgements(subs)
+    }
+
+    if(dry_run) {
+        cli::cli_alert_danger("Dry run complete. Check that the submissions have been loaded correctly, and then reset the changes.")
+        cli::cli_alert_danger("Do not commit these changes to GitHub, only commit new articles when obtained with `dry_run = FALSE`.")
+    }
 
     invisible(NULL)
 }
@@ -75,7 +82,7 @@ as.article.gmail_message <- function(msg, ...) {
 }
 
 #' @importFrom googlesheets4 read_sheet range_write
-download_submissions <- function() {
+download_submissions <- function(dry_run) {
     submissions <- googlesheets4::read_sheet(sheet_id)
     ids <- submissions[["Submission ID"]]
     new_submission <- is.na(ids)
@@ -170,10 +177,11 @@ download_submissions <- function() {
                    return(TRUE)
                }
            })
-    cli::cli_alert_info("Writing new article IDs to Google Sheets.")
-    googlesheets4::range_write(sheet_id, new_articles["Submission ID"], sheet = "Form responses 1", col_names = FALSE,
-                              range = str_c(LETTERS[which(names(submissions) == "Submission ID")], range(which(new_submission)) + 1, collapse = ":"))
-
+    if(!dry_run){
+        cli::cli_alert_info("Writing new article IDs to Google Sheets.")
+        googlesheets4::range_write(sheet_id, new_articles["Submission ID"], sheet = "Form responses 1", col_names = FALSE,
+                                  range = str_c(LETTERS[which(names(submissions) == "Submission ID")], range(which(new_submission)) + 1, collapse = ":"))
+    }
     articles
 }
 
