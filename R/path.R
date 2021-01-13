@@ -6,7 +6,7 @@
 #' @param path Articles path
 #' @export
 set_articles_path <- function(path) {
-  .articles$path <- path
+  .articles$path <- normalizePath(path)
 }
 
 get_articles_path <- function() {
