@@ -3,7 +3,7 @@ Subject: R Journal submission {{id}}
 ---
 Dear {{name}},
 
-We are pleased to receive your submission "{{title}}" to the R journal. It has been given id {{id}}; please use that in future correspondence.
+We are pleased to receive your submission "{{title}}" to the R Journal. It has been given id {{id}}; please use that in future correspondence.
 
 The submission process proceeds as follows:
 

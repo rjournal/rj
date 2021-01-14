@@ -4,7 +4,11 @@
 \alias{get_submissions}
 \title{Download submissions.}
 \usage{
-get_submissions()
+get_submissions(dry_run = FALSE)
+}
+\arguments{
+\item{dry_run}{Use TRUE for testing, which will not change the sheet.
+Default is FALSE.}
 }
 \description{
 Obtains submissions from the Google Sheets spreadsheet and downloads

@@ -25,6 +25,7 @@ valid_status <- c(
   "copy edited",
   "online",
   "proofed",
+  "out for proofing",
   "style checked",
   "with AE",
   "AE: major revision",

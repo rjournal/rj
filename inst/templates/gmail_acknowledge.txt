@@ -1,6 +1,6 @@
 Dear {{name}},
 
-We are pleased to receive your submission "{{title}}" to the R Journal. It has been given id {{id}}; please use that in future correspondence.
+We are pleased to receive your submission "{{title}}" to the R Journal. Prior to publication we would like you to carefully proof your article.
 
 The submission process proceeds as follows:
 
@@ -8,11 +8,7 @@ The submission process proceeds as follows:
 * reviewers solicited (~1-2 weeks)
 * reviews received (~1-2 months)
 
-You should expect to hear from us again within 3 months.
-
-Should you not have included an R script to replicate examples in your submission, could I please request that you send me such a file at your earliest convenience?
-
-Could I at this time also ask you to add any missing but available DOI fields to your *.bib file, removing extraneous URL fields? There is no need to send them now, but missing DOI fields should be in the next version of that file that we receive.
+We are currently experiencing a large number of submissions, and these times are ambitious. The editorial team is juggling many tasks, working from home and child care, which is making processing articles quickly very difficult. The reviewing process can take anywhere from a few weeks to a number of months, but feel free to inquire on the progress of your submission.
 
 Best wishes,
 

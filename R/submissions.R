@@ -4,6 +4,8 @@ sheet_id <- "15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k"
 #'
 #' Obtains submissions from the Google Sheets spreadsheet and downloads
 #' submission files from Google Drive.
+#' @param dry_run Use TRUE for testing, which will not change the sheet.
+#' Default is FALSE.
 #'
 #' @section Process:
 #' The function does three things automatically:

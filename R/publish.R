@@ -358,3 +358,4 @@ bundle <- function(article, dest_path) {
 #names(auths_accept) <- sapply(config$issues, function(x) x$issue)
 #tab_all <- lapply(auths_accept, function(x) {givenNames <- findGivenNames(x); genderize(x, genderDB = givenNames)})
 #do.call("rbind", sapply(tab_all, function(x) table(x$gender)))
+
