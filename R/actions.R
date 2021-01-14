@@ -69,25 +69,40 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   return(invisible(NULL))
 }
 
+#' Get list of articles in the Accepted folder to be proofed
+#'
+#' @export
+get_accepted_articles <- function() {
+  # Warning: this gets all the articles that have been accepted
+  # If any are not to appear in the issue need to work out how to ignore
+  acc <- list.files("Accepted")
+
+  cli::cat_line("Drafting proofing emails")
+  draft_proofing(acc)
+
+  invisible(NULL)
+}
+
 #' @importFrom gmailr mime create_draft
-draft_proofing <- function(subs) {
-  proof_sub <- function(sub) {
-    body <- render_template(sub, "gmail_proof")
+draft_proofing <- function(accepted) {
+  proof_sub <- function(acc) {
+    body <- render_template(acc, "gmail_proofing")
+    acc_meta <- as.data(as.article(acc))
     # Note this should be from current editor's address
     email <- gmailr::mime(From = "dicook.rj@@gmail.com",
-                          To = sub$authors[[1L]]$email,
+                          To = acc_meta$email,
                           Subject = paste("R Journal article proofing",
-                                          format(sub$id)),
+                                          format(acc_meta$id)),
                           body = body)
     gmailr::create_draft(email)
   }
-  ans <- lapply(subs, proof_sub)
-  names(ans) <- vapply(subs, function(s) format(s$id),
+  ans <- lapply(accepted, proof_sub)
+  names(ans) <- vapply(accepted, function(s) format(s$id),
                        FUN.VALUE = character(1L))
   ans
 }
 
-#' Send submission acknowledgement drafts
+#' Send proofing article emails
 #'
 #' @param drafts list of \code{gmail_draft} objects
 #' @importFrom gmailr send_draft
@@ -112,18 +127,19 @@ proofing_article_text <- function(article) {
   dest <- file.path(article$path, "correspondence")
   if (!file.exists(dest)) dir.create(dest)
 
-  name <- "proofing_request.txt"
-  path <- file.path(dest, name)
+  filename <- "proofing_request.txt"
+  path <- file.path(dest, filename)
 
   data <- as.data(article)
   data$name <- stringr::str_split(data$name, " ")[[1]][1]
   data$date <- format(Sys.Date() + 5, "%d %b %Y")
 
-  template <- find_template("gmail_proof")
+  template <- find_template("gmail_proofing")
   email <- whisker.render(readLines(template), data)
 
   writeLines(email, path)
 
   update_status(data$id, "out for proofing")
   invisible(TRUE)
+
 }
