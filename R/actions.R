@@ -83,24 +83,41 @@ get_accepted_articles <- function() {
   invisible(NULL)
 }
 
-#' @importFrom gmailr mime create_draft
-draft_proofing <- function(accepted) {
-  proof_sub <- function(acc) {
-    body <- render_template(acc, "gmail_proofing")
-    acc_meta <- as.data(as.article(acc))
-    # Note this should be from current editor's address
-    email <- gmailr::mime(From = "dicook.rj@@gmail.com",
-                          To = acc_meta$email,
-                          Subject = paste("R Journal article proofing",
-                                          format(acc_meta$id)),
-                          body = body)
-    gmailr::create_draft(email)
-  }
-  ans <- lapply(accepted, proof_sub)
-  names(ans) <- vapply(accepted, function(s) format(s$id),
-                       FUN.VALUE = character(1L))
-  ans
+#' Generate proofing email for one article
+#'
+#' @param article id
+#'
+#' @export
+draft_proofing <- function(article) {
+  data <- as.data(as.article(article))
+  data$name <- stringr::str_split(data$name, " ")[[1]][1]
+  data$date <- format(Sys.Date() + 5, "%d %b %Y")
+
+  template <- find_template("gmail_proofing")
+  email <- whisker.render(readLines(template), data)
+
+  email_text(email)
 }
+
+#draft_proofing <- function(accepted) {
+#  proof_sub <- function(acc) {
+#    body <- render_template(acc, "gmail_proofing")
+#    acc_meta <- as.data(as.article(acc))
+    # Note this should be from current editor's address
+#    email <- gmailr::mime(From = "dicook.rj@@gmail.com",
+#                          To = acc_meta$email,
+#                          Subject = paste("R Journal article proofing",
+#                                          format(acc_meta$id)),
+#                          body = body)
+#    gmailr::create_draft(email)
+#
+#
+#  }
+#  ans <- lapply(accepted, proof_sub)
+#  names(ans) <- vapply(accepted, function(s) format(s$id),
+#                       FUN.VALUE = character(1L))
+#  ans
+#}
 
 #' Send proofing article emails
 #'

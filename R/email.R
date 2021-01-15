@@ -34,6 +34,7 @@ email_template <- function(article, template) {
 }
 
 email_text <- function(text) {
+  message('If your email doesnt open up ready to send, try \n options(browser=Sys.getenv("R_BROWSER"))')
   stopifnot(is.character(text))
   text <- paste(text, collapse = "\n")
 
