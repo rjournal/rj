@@ -70,6 +70,8 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
 }
 
 #' Get list of articles in the Accepted folder to be proofed
+#' This can be used with \code{draft_proofing} to construct
+#' emails to authors on the final version.
 #'
 #' @export
 get_accepted_articles <- function() {
@@ -85,7 +87,7 @@ get_accepted_articles <- function() {
 
 #' Generate proofing email for one article
 #'
-#' @param article id
+#' @param article this is the article id
 #'
 #' @export
 draft_proofing <- function(article) {

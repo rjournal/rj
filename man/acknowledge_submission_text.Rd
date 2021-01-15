@@ -2,7 +2,7 @@
 % Please edit documentation in R/submissions.R
 \name{acknowledge_submission_text}
 \alias{acknowledge_submission_text}
-\title{Send submission acknowledgement drafts}
+\title{Create an acknowledgement email in correspondence folder}
 \usage{
 acknowledge_submission_text(article)
 }
@@ -10,5 +10,5 @@ acknowledge_submission_text(article)
 \item{article}{article id}
 }
 \description{
-Send submission acknowledgement drafts
+Create an acknowledgement email in correspondence folder
 }

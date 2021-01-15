@@ -246,12 +246,30 @@ draft_acknowledgements <- function(subs) {
     ans
 }
 
+#' Send submission acknowledgements
+#'
+#' @param article this is the article id
+#'
+#' @export
+acknowledge_submission <- function(article) {
+    data <- as.data(as.article(article))
+    data$name <- stringr::str_split(data$name, " ")[[1]][1]
+    data$date <- format(Sys.Date() + 5, "%d %b %Y")
+
+    template <- find_template("acknowledge")
+    email <- whisker.render(readLines(template), data)
+
+    update_status(data$id, "acknowledged")
+
+    email_text(email)
+}
+
 #' Send submission acknowledgement drafts
 #'
 #' @param drafts list of \code{gmail_draft} objects
 #' @importFrom gmailr send_draft
 #' @export
-acknowledge_submissions <- function(drafts) {
+draft_acknowledge_submissions <- function(drafts) {
     for (draft in drafts) {
         gmailr::send_draft(draft)
     }
@@ -261,7 +279,7 @@ acknowledge_submissions <- function(drafts) {
     invisible(TRUE)
 }
 
-#' Send submission acknowledgement drafts
+#' Create an acknowledgement email in correspondence folder
 #'
 #' @param article article id
 #' @export
