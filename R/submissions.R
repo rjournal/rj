@@ -126,7 +126,7 @@ download_submissions <- function(dry_run) {
                            collapse = ", "),
                        title = form[["Article title"]],
                        path = path,
-                       suppl = form[["If any absolutely essential additional latex packages are required to build your article, please list here separated by commas."]]%NA%"",
+                       suppl = form[["Please list the paths to any other supplementary files inside the zip (R scripts, data, etc.). Each file path should be separated by commas."]]%NA%"",
                        keywords = form[["Article tags"]]%NA%"",
                        otherids = form[[resub_field]]%NA%""
                    )
