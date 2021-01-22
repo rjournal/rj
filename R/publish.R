@@ -9,7 +9,7 @@
 #' @param article article id
 #' @param home Location of the articles directory
 #' @param legacy (Very) old way of referening the R journal
-publish <- function(article, home = getwd(), legacy=FALSE) {
+publish <- function(article, home = get_articles_path(), legacy=FALSE) {
   article <- as.article(article)
 
   # Make sure we're in the right place
