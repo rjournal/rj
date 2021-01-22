@@ -113,7 +113,7 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "", a
 
 
 parse_supplementaries <- function(suppl) {
-  x <- str_trim(str_split(suppl, "\n")[[1]])
+  x <- str_trim(str_split(suppl, ",\\s*\n")[[1]])
   x <- x[str_length(x) > 0]
   xs <- lapply(x, function(y) {
     class(y) <- "supplfile"; y
