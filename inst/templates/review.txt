@@ -3,9 +3,9 @@ Subject: Review for the R journal {{id}}
 ---
 Dear {{firstname}},
 
-Would you be willing to review the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise. The structure of the review is up to you, but it's usually about a page long and should include:
+Would you be willing to review the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise.
 
-* Overall recommendation: Accept with minor revisions (you won't see it again), accept with major revisions (you'll re-review the revisions), or reject.
+The structure of this review is up to you, but it's usually about a page long and should include:
 
 * Overview: Is the article important to R the community? Is the approach sensible? Are technology and methods up-to-date?
 
@@ -18,7 +18,10 @@ Would you be willing to review the attached article, "{{title}}" for the R Journ
     - Using the "styler" package,
     - and avoiding the features warned against by Jenny Bryan at https://www.tidyverse.org/articles/2017/12/workflow-vs-script/
 
-Reviews are usually anonymous and should be returned by email. Please let me know if you are willing to take on this review. I would like to receive the review, if possible, by {{date}}.
+Reviews should be returned by email. Our preferred format for the review is a text file attachment, but a pdf is also acceptable. This will be sent on to the authors. Your email should also give your overall recommendation (this part is for the editor only): Accept with minor revisions (you won't see it again), accept with major revisions (you'll re-review the revisions), or reject.
+
+
+Please let me know if you are willing to take on this review. I would like to receive the review, if possible, by {{date}}.
 
 Regards,
 
