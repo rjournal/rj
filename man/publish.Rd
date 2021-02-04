@@ -4,7 +4,7 @@
 \alias{publish}
 \title{Publish an article to online first.}
 \usage{
-publish(article, home = getwd(), legacy = FALSE)
+publish(article, home = get_articles_path(), legacy = FALSE)
 }
 \arguments{
 \item{article}{article id}
