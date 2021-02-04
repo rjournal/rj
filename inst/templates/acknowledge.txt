@@ -1,5 +1,5 @@
 To: {{email}}
-Subject: R Journal submission {{id}}
+Subject: [RJournal {{id}}] submission acknowledged
 ---
 Dear {{name}},
 
