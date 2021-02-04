@@ -1,6 +1,6 @@
 To: {{email}}
 CC: {{editor}}
-Subject: Subject: RJ {{id}}: accepted
+Subject: [RJournal {{id}}] accepted
 ---
 Dear {{name}},
 

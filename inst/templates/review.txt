@@ -1,5 +1,5 @@
 To: {{email}}
-Subject: Review for the R journal {{id}}
+Subject: [RJournal {{id}}] Review invitation
 ---
 Dear {{firstname}},
 
