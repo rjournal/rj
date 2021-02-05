@@ -133,8 +133,9 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
 #' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used.
 #' @param recommend Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.
 #' @param date Date of the comment, defaults to today's date
+#' @param AE logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.
 #' @export
-add_review = function(article, reviewer_id, review, recommend = NULL, date = Sys.Date()) {
+add_review = function(article, reviewer_id, review, recommend = NULL, date = Sys.Date(), AE = is_AE()) {
   article = as.article(article)
   dest = file.path(article$path, "correspondence")
   copy <- TRUE
@@ -174,6 +175,8 @@ add_review = function(article, reviewer_id, review, recommend = NULL, date = Sys
       recommend <- "Received"
     }
   }
+  if (AE && !length(grep("^AE: ", recommend)))
+      recommend <- paste("AE:", recommend)
   recommend = paste(recommend, date)
   add_reviewer_comment(article, reviewer_id = reviewer_id,
                        comment = recommend)
