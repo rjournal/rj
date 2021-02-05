@@ -33,7 +33,7 @@ AEs <- function()
 #' @rdname AEs
 detect_AE <- function(path=".", require=FALSE) {
     ae <- AEs()
-    rem <- system(paste("git -C ", shQuote(path.expand(path)), " remote -v"), intern=TRUE)
+    rem <- suppressWarnings(system(paste("git -C ", shQuote(path.expand(path)), " remote -v 2>&1"), intern=TRUE))
     ## if we can't detect it from the repo, try git config
     m <- if (identical(attr(rem, "status"), 128L)) {
         user <- git_user()
@@ -62,7 +62,7 @@ detect_AE <- function(path=".", require=FALSE) {
 AE <- function(path=".") {
     name <- Sys.getenv("RJ_EDITOR")
     if (!nzchar(name))
-        detect_AE(detect, FALSE)
+        detect_AE(path, FALSE)
     else {
         ae <- AEs()
         m <- match(tolower(name), tolower(ae$name))
@@ -75,4 +75,4 @@ AE <- function(path=".") {
 #'         the repository is an AE repository, \code{FALSE} otherwise
 #'
 #' @rdname AEs
-is_AE <- function(path=".") length(AE(path) > 0)
+is_AE <- function(path=".") length(AE(path)) > 0
