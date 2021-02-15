@@ -15,9 +15,13 @@ git_user  <- function() {
 #'
 #' @return \code{AEs} returns a data frame with all associate editors
 #' @export
-AEs <- function()
-    read.csv(system.file("associate-editors.csv", package = "rj"),
-             stringsAsFactors=FALSE)
+AEs <- function() {
+    d <- read.csv(system.file("associate-editors.csv", package = "rj"),
+                  stringsAsFactors=FALSE)
+    valid <- nzchar(d$github)
+    if (any(!valid)) warning("associate-editors.csv contains invalid entries!")
+    d[valid,]
+}
 
 #' @description
 #' \code{detect_AE} tries to determine associate editor (AE) from the
