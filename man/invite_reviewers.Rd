@@ -27,7 +27,7 @@ between multiple rounds of reviewers (if needed)}
 
 \item{reviewer_id}{invite just a single reviewer}
 
-\item{review}{Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used.}
+\item{review}{Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.}
 
 \item{recommend}{Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.}
 

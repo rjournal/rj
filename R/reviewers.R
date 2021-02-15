@@ -130,7 +130,7 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
 }
 
 #' @rdname invite_reviewers
-#' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used.
+#' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.
 #' @param recommend Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.
 #' @param date Date of the comment, defaults to today's date
 #' @param AE logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.
@@ -147,9 +147,15 @@ add_review = function(article, reviewer_id, review, recommend = NULL, date = Sys
     review <- file.path(dest, fn[length(fn)])
     cli::cli_alert_info(paste0("Using existing file ", basename(review)))
     copy <- FALSE
-  } else if (!file.exists(review)) {
-    stop(review, " doesn't exist")
+  } else if (isTRUE(grepl(paste0("^[0-9]+-review-", reviewer_id, "\\."), review)) &&
+             file.exists(file.path(dest, review))) {
+    review <- file.path(dest, review)
+    copy <- FALSE
+    cli::cli_alert_info(paste0("Using existing file in correspondence ", basename(review)))
   }
+  if (!file.exists(review))
+    stop("Review file ", review, " doesn't exist")
+
   if (copy) {
     # Determine the number of past reviews
     prefix = length(list.files(dest, pattern = paste0("-review-", reviewer_id, "\\."))) + 1
