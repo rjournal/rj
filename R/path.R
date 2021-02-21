@@ -9,6 +9,10 @@ set_articles_path <- function(path) {
   .articles$path <- normalizePath(path)
 }
 
+#' Get the directory of the articles repository
+#'
+#' This path is used to point to articles on your file system.
+#' @export
 get_articles_path <- function() {
   dir <- .articles$path %||% getwd()
   if (!(grepl("articles", basename(dir)))) {
