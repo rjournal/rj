@@ -137,6 +137,12 @@ todo <- function(x) {
       "published" = "needs removal (editor)",
       "withdrawn" = "needs removal (editor)",
       "rejected" = "needs removal (editor)",
+      "revision received" = "waiting (editor)",
+
+      "AE: major revision" = "waiting (editor)",
+      "AE: minor revision" = "waiting (editor)",
+      "AE: accept" = "waiting (editor)",
+      "AE: reject" = "waiting (editor)",
 
       "accepted" = "waiting (author)",
       "style checked" = "needs online (editor-in-chief)",

@@ -17,7 +17,7 @@ report_line <- function(x) {
   stopifnot(is.article(x))
 
   todo <- todo(x)
-  #status <- last_status(x)
+  status <- last_status(x)
   last_date <- last_status(x)$date
 
   days_taken <- difftime(Sys.Date(), last_date, "days")
@@ -58,7 +58,7 @@ print.report <- function(x, ...) {
   cat("BY EDITOR:\n")
   actionable <- x[x$ed != "" &
     !(x$status %in% c("accepted", "online", "complete")), ]
-  parts <- split(actionable, actionable$ed)
+parts <- split(actionable, actionable$ed)
   for (nm in names(parts)) {
     part <- parts[[nm]]
 
