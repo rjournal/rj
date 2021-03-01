@@ -70,7 +70,7 @@ AE <- function(path=".") {
     else {
         ae <- AEs()
         m <- match(tolower(name), tolower(ae$name))
-        if (any(m)) ae[m,,drop=FALSE] else NULL
+        if (!is.na(m)) ae[m,,drop=FALSE] else NULL
     }
 }
 
