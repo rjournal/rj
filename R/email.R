@@ -62,7 +62,12 @@ email_text <- function(text) {
 }
 
 find_template <- function(name) {
-  path <- system.file("templates", paste0(name, ".txt"), package = "rj")
+  if (name == "major revision")
+    path <- system.file("templates/revision-major.txt", package = "rj")
+  else if (name == "minor revision")
+    path <- system.file("templates/revision-minor.txt", package = "rj")
+  else
+    path <- system.file("templates", paste0(name, ".txt"), package = "rj")
   if (path == "") stop("Template not found: ", name, call. = FALSE)
 
   path
