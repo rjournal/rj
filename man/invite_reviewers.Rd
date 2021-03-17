@@ -6,9 +6,9 @@
 \alias{add_review}
 \title{Invite reviewer(s).}
 \usage{
-invite_reviewers(article, prefix = "1")
+invite_reviewers(article, prefix = "1", open_email = TRUE)
 
-invite_reviewer(article, reviewer_id, prefix = "1")
+invite_reviewer(article, reviewer_id, prefix = "1", open_email = TRUE)
 
 add_review(
   article,
@@ -22,8 +22,12 @@ add_review(
 \arguments{
 \item{article}{article id, like \code{"2014-01"}}
 
-\item{prefix}{prefix added to start file name - used to distinguish
-between multiple rounds of reviewers (if needed)}
+\item{prefix}{prefix added to start file name - used to
+distinguish between multiple rounds of reviewers
+(if needed)}
+
+\item{open_email}{logical value; should the function attempt to
+open the users email program; default is TRUE}
 
 \item{reviewer_id}{invite just a single reviewer}
 

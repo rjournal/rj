@@ -49,7 +49,7 @@ add_out_for_review = function(article) {
 #' @inheritParams address
 #' @inheritParams invite_reviewers
 #' @export
-add_reviewer = function(article, name, email, invite = TRUE) {
+add_reviewer = function(article, name, email, invite = TRUE, open_email = TRUE) {
   article = as.article(article)
   reviewers = article$reviewers
   new_reviewer = address(email = email, name = name)
@@ -65,7 +65,7 @@ add_reviewer = function(article, name, email, invite = TRUE) {
     article = save_article(article)
   }
   if (isTRUE(invite)) {
-    invite_reviewer(article, reviewer_id = reviewer_id)
+    invite_reviewer(article, reviewer_id = reviewer_id, open_email = open_email)
   }
   return(invisible(article))
 }
@@ -77,21 +77,24 @@ add_reviewer = function(article, name, email, invite = TRUE) {
 #' the emails, it also caches them locally in the \code{correspodence/}
 #' directory of the corresponding article.
 #'
-#' @param article article id, like \code{"2014-01"}
-#' @param reviewer_id invite just a single reviewer
-#' @param prefix prefix added to start file name - used to distinguish
-#'   between multiple rounds of reviewers (if needed)
+#' @param article              article id, like \code{"2014-01"}
+#' @param reviewer_id          invite just a single reviewer
+#' @param prefix               prefix added to start file name - used to
+#'                             distinguish between multiple rounds of reviewers
+#'                             (if needed)
+#' @param open_email           logical value; should the function attempt to
+#'                             open the users email program; default is TRUE
 #' @export
-invite_reviewers <- function(article, prefix = "1") {
+invite_reviewers <- function(article, prefix = "1", open_email = TRUE) {
   article <- as.article(article)
   for (i in seq_along(article$reviewers)) {
-    invite_reviewer(article, i, prefix = prefix)
+    invite_reviewer(article, i, prefix = prefix, open_email = open_email)
   }
 }
 
 #' @export
 #' @rdname invite_reviewers
-invite_reviewer <- function(article, reviewer_id, prefix = "1") {
+invite_reviewer <- function(article, reviewer_id, prefix = "1", open_email = TRUE) {
   article <- as.article(article)
 
   dest <- file.path(article$path, "correspondence")
@@ -126,7 +129,7 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
 
   add_out_for_review(article)
 
-  email_text(email)
+  if (open_email) { email_text(email) }
 }
 
 #' @rdname invite_reviewers
