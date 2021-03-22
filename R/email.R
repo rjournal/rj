@@ -33,8 +33,12 @@ email_template <- function(article, template) {
   email_text(text)
 }
 
-email_text <- function(text) {
-  message('If your email doesnt open up ready to send, try \n options(browser=Sys.getenv("R_BROWSER"))')
+#' @param text character vector, text of the e-mail (including headers)
+#' @param means string, one of "mailto", "browser" (boht uopen mailto: URL),
+#'              "show" (file.show), "edit" (file.edit), "open" (shell open) or
+#'              "clip" (system clipboard). Defaults to RJ_EMAIL_TOOL environment
+#'              variable.
+email_text <- function(text, means=getOption("RJ_EMAIL_TOOL", "mailto")) {
   stopifnot(is.character(text))
   text <- paste(text, collapse = "\n")
 
@@ -58,7 +62,40 @@ email_text <- function(text) {
   url <- paste0("mailto:", to, "?",
     paste0(names(fields), "=", unlist(fields), collapse = "&"))
 
-  browseURL(url)
+  if (means == "mailto" || means == "browser") {
+      if (is.function(getOption("browser")))
+          message("You have setup a custom 'browser' function which may or may not work.\nIf your e-mail doesn't open up ready to send, try\n  options(browser=Sys.getenv('R_BROWSER'))")
+      return (browseURL(url))
+  }
+  tmp <- tempfile("mail",,".txt")
+  writeLines(text, tmp)
+  switch(means,
+         show = file.show(tmp),
+         edit = file.show(tmp),
+         open = system(paste("open", shQuote(tmp))),
+         clip = {
+             if (length(grep("^darwin", R.Version()$os))) {
+                 message("E-mail has been written to the macOS clipboard")
+                 on.exit(unlink(tmp))
+                 con <- pipe("pbcopy")
+                 writeLines(text, con)
+                 close(con)
+             } else if (.Platform$OS.type == "windows") {
+                 message("E-mail has been written to the Windows clipboard")
+                 on.exit(unlink(tmp))
+                 utils::writeClipboard(text, format = 1)
+             } else {
+                 on.exit(unlink(tmp))
+                 if (system("xsel -i -c <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0 &&
+                     system("xclip -selection clipboard <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0)
+                     error("Neither xclip not xsel works - please install either tool")
+                 message("E-mail has been written to the X11 clipboard")
+             }
+         },
+         {
+             unlink(tmp)
+             stop("Unknown RJ_EMAIL_TOOL, must be one of mailto, browser, show, edit, open or clip.")
+         })
 }
 
 find_template <- function(name) {
