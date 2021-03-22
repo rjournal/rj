@@ -1,6 +1,9 @@
 # rj 0.2.19
 
-2021-03-15: modified the email_template function to use the same text as valid_status() for major and minor revision
+2021-03-15
+ - modified the `email_template()` function to use the same text as
+   `valid_status()` for major and minor revision 
+
 2021-03-22
  - RJ_EMAIL_TOOL environment variable can be set to change the tool
    used to handle generated e-mails. If can have one of the
