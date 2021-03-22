@@ -1,9 +1,9 @@
 # rj 0.2.19
 
 2021-03-22
- - RJ_EMAIL_TOOL environment variable can be set to change the tool
-   used to handle generated e-mails. If can have one of the
-   following values:
+ - `RJ_EMAIL_TOOL` environment variable can be set to change the tool
+   used to handle generated e-mails. It can have one of the following
+   values:
    - "mailto" or "browser"
      opens the system browser with _mailto:_ URL, on most
      systems this will open the e-mail client as defined
@@ -28,6 +28,9 @@
 
 # rj 0.2.18
 
-2021-02-22: Exported get_articles_path()
-2021-02-22: getting report function to work, almost there
+2021-02-22
+ - Exported `get_articles_path()`
+
+2021-02-22
+ - getting report function to work, almost there
 
