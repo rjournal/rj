@@ -116,14 +116,18 @@ download_submissions <- function(dry_run) {
                    files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
                    extract_files(files, path)
 
+                   # Combine author fields
+                   authors <- str_glue_data(form, "{`Your name:`} <{`Email address`}>")
+                   other_authors <- form[["Names of other authors, comma separated"]]
+                   if(!is.na(other_authors)) {
+                       other_authors <- str_trim(str_split(other_authors, ",")[[1]])
+                       other_authors <- setdiff(other_authors, form[["Your name:"]])
+                       authors <- str_c(authors, other_authors, collapse = ", ")
+                   }
+
                    art <- make_article(
                        id = id,
-                       authors = str_c(
-                           c(
-                               str_glue_data(form, "{`Your name:`} <{`Email address`}>"),
-                               setdiff(str_trim(str_split(form[["Names of other authors, comma separated"]], ",")[[1]]), form[["Your name:"]])
-                           ),
-                           collapse = ", "),
+                       authors = authors,
                        title = form[["Article title"]],
                        path = path,
                        suppl = form[["Please list the paths to any other supplementary files inside the zip (R scripts, data, etc.). Each file path should be separated by commas."]]%NA%"",
