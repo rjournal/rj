@@ -1,5 +1,11 @@
 # rj 0.2.19
 
+2021-04-05
+ - fix `get_articles_path()` to use the repostiroy root if not
+   defined by `set_articles_path()`. Also check the validity of
+   the path set by `set_articles_path()` and ignore it (with a
+   warning) if it does not exist.
+
 2021-03-22
  - `RJ_EMAIL_TOOL` environment variable can be set to change the tool
    used to handle generated e-mails. It can have one of the following
