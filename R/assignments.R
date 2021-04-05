@@ -2,94 +2,78 @@ globalVariables("titles")
 # XXX: Repetition below. But I intend to split out the different
 # sections in the future
 
-print_rejected = function(latest) {
-  art = latest[latest$status_status == "rejected", ]
-  if (nrow(art) == 0) return(invisible(NULL))
-  cli::cli_h1("Rejected ({nrow(art)})")
-  titles = str_trunc(art$title, getOption("width") - 30)
-  items = glue::glue("{art$id}: {titles}")
-  cli_ul(items)
+## capitalises text except for and/for in the middle
+smart.cap <- function(x) {
+    unlist(lapply(strsplit(x, ' ', TRUE), function(x) {
+        x <- paste0(toupper(substr(x, 1, 1)), substr(x, 2, 999))
+        x <- paste(x, collapse=' ')
+        gsub(" And ", " and ", gsub(" For ", " for ", x))
+    }))
 }
 
-print_submitted = function(latest) {
-  art = latest[latest$status_status == "submitted", ]
-  if (nrow(art) == 0) return(invisible(NULL))
-  cli::cli_h1("Submitted ({nrow(art)})")
-  titles = str_trunc(art$title, getOption("width") - 30)
-  items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
-  cli_ul(items)
+## This is the work-horse for all printing. It uses a template for
+## each entry and optionally calls \code{detail(art$id)} to print
+## additional details for each article, currently it is typically
+## just list_reviewers
+print_sum <- function(arts, status, detail=NULL,
+                      glue="{art$id} ({art$days_since_submission}): {art$title}",
+                      description=smart.cap(status), pre.width=30) {
+    art <- arts[if (is.logical(status)) status else arts$status_status == status, ]
+    if (nrow(art) == 0) return(invisible(NULL))
+    cli::cli_h1(paste(description, "{nrow(art)}"))
+    art$title <- str_trunc(art$title, getOption("width") - pre.width)
+    if (is.function(detail)) {
+        arts <- art
+        cli::cli_ul()
+        for (i in seq_len(nrow(arts))) {
+            art <- arts[i, ]
+            item <- glue::glue(glue)
+            cli::cli_li(item)
+            detail(art$id)
+        }
+        cli::cli_end()
+    } else {
+        items <- glue::glue(glue)
+        cli_ul(items)
+    }
 }
 
-print_acknowledged = function(latest) {
-  art = latest[latest$status_status == "acknowledged", ]
-  if (nrow(art) == 0) return(invisible(NULL))
-  cli::cli_h1(glue::glue("Acknowledged ({nrow(art)})"))
-  titles = str_trunc(art$title, getOption("width") - 30)
-  items = glue::glue("{art$id} ({art$days_since_submission}): {titles}")
-  cli_ul(items)
-}
+print_rejected = function(latest)
+    print_sum(latest, "rejected", "{art$id}: {titles}")
 
-print_with_ae = function(latest) {
-  articles = latest[latest$status_status == "with AE", ]
-  if (nrow(articles) == 0) return(invisible(NULL))
-  cli::cli_h1("with AE ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, getOption("width") - 60)
-  cli::cli_ul()
-  for (i in seq_len(nrow(articles))) {
-    article = articles[i, ]
-    item = glue::glue("{article$id} ({article$days_since_submission}, {article$ae}): {article$title}")
-    cli::cli_li(item)
-  }
+print_submitted = function(latest)
+    print_sum(latest, "submitted")
 
-  cli::cli_end()
-}
+print_acknowledged = function(latest)
+    print_sum(latest, "acknowledged")
 
-print_out_for_review = function(latest) {
-  articles = latest[latest$status_status == "out for review", ]
-  if (nrow(articles) == 0) return(invisible(NULL))
-  cli::cli_h1("Out for Review ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, getOption("width") - 30)
-  cli::cli_ul()
-  for (i in seq_len(nrow(articles))) {
-    article = articles[i, ]
-    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
-    cli::cli_li(item)
-    list_reviewers(article$id)
-  }
+print_with_ae = function(latest)
+    print_sum(latest, "with AE",,
+              "{art$id} ({art$days_since_submission}, {art$ae}): {art$title}",
+	      pre.width=45) ## extra space for AE name
 
-  cli::cli_end()
-}
+print_out_for_review = function(latest)
+    print_sum(latest, "out for review", list_reviewers)
 
-print_in_revision = function(latest) {
-  articles = latest[grepl("revision", latest$status_status), ]
-  if (nrow(articles) == 0) return(invisible(NULL))
-  cli::cli_h1("In revision ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, getOption("width") - 30)
-  cli::cli_ul()
-  for (i in seq_len(nrow(articles))) {
-    article = articles[i, ]
-    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
-    cli::cli_li(item)
-    list_reviewers(article$id)
-  }
+## this covers both minor and major revision status as well as AE: variants
+print_in_revision = function(latest)
+    print_sum(latest, grepl("revision", latest$status_status) &
+                      !grepl("revision received", latest$status_status),
+              list_reviewers,, "In Revision")
 
-  cli::cli_end()
-}
+print_revision_received = function(latest)
+    print_sum(latest, "revision received", list_reviewers)
 
-print_revision_received = function(latest) {
-  articles = latest[grepl("received", latest$status_status), ]
-  if (nrow(articles) == 0) return(invisible(NULL))
-  cli::cli_h1("Revision received ({nrow(articles)})")
-  articles$title = stringr::str_trunc(articles$title, getOption("width") - 30)
-  cli::cli_ul()
-  for (i in seq_len(nrow(articles))) {
-    article = articles[i, ]
-    item = glue::glue("{article$id} ({article$days_since_submission}): {article$title}")
-    cli::cli_li(item)
-    list_reviewers(article$id)
-  }
-
-  cli::cli_end()
+## this is just a a catch-all maintained manually to catch any unwanted
+## entries. Note that if you add cases above, you must also modify this
+## function, it is not maintained automatically.
+print_other <- function(latest) {
+    cond <- grepl("revision", latest$status_status) |
+                              (latest$status_status %in% c("rejected", "submitted", "acknowledged",
+                                                           "with AE", "out for review"))
+    if (any(!cond))
+        print_sum(latest, !cond,, "{art$id} {art$status_status} ({art$days_since_submission}): {art$title}",
+                  description="Other")
 }
 
 #' @export
@@ -100,8 +84,11 @@ print_revision_received = function(latest) {
 #' environment variable \code{RJ_EDITOR}.
 #' @param rejected Default \code{FALSE}. If \code{TRUE}, show
 #' rejected articles.
+#' @param other Default \code{FALSE}. If \code{TRUE}, list all
+#' articles not covered by any of the other options (typically
+#' accepted and online)
 summarise_articles = function(editor = NULL,
-                              rejected = FALSE) {
+                              rejected = FALSE, other = FALSE) {
   if (is.null(editor)) {
     editor = Sys.getenv("RJ_EDITOR")
   }
@@ -118,6 +105,7 @@ summarise_articles = function(editor = NULL,
   print_out_for_review(latest)
   print_in_revision(latest)
   print_revision_received(latest)
+  if (isTRUE(other)) print_other(latest)
   return(invisible(all_articles))
 }
 
