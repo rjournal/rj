@@ -17,7 +17,7 @@ smart.cap <- function(x) {
 ## just list_reviewers
 print_sum <- function(arts, status, detail=NULL,
                       glue="{art$id} ({art$days_since_submission}): {art$title}",
-                      description=smart.cap(status), pre.width=30) {
+                      description=smart.cap(status), pre.width=20) {
     art <- arts[if (is.logical(status)) status else arts$status_status == status, ]
     if (nrow(art) == 0) return(invisible(NULL))
     cli::cli_h1(paste(description, "{nrow(art)}"))
@@ -145,10 +145,10 @@ actionable_articles <- function(editor, invite=7, review=30, verbose=FALSE) {
                                   name, " <", email, "> "))
             })
             if (nrow(rev) < 2)
-                issues <- c(issues, "Needs additional reviewers")
+                issues <- c(issues, paste0("Needs additional reviewer(s), has ", nrow(rev)," of 2"))
         }
         if (length(issues)) {
-            art$title <- str_trunc(art$title, getOption("width") - 30)
+            art$title <- str_trunc(art$title, getOption("width") - 20)
             cli_li()
             cli_li(paste0(id, " ", art$title))
             cli_ul()
