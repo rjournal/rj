@@ -6,7 +6,7 @@
 \title{Summarise intray
 Summarise editors current in-tray}
 \usage{
-summarise_articles(editor = NULL, rejected = FALSE)
+summarise_articles(editor = NULL, rejected = FALSE, other = FALSE)
 
 get_assignments(editor)
 }
@@ -16,6 +16,10 @@ environment variable \code{RJ_EDITOR}.}
 
 \item{rejected}{Default \code{FALSE}. If \code{TRUE}, show
 rejected articles.}
+
+\item{other}{Default \code{FALSE}. If \code{TRUE}, list all
+articles not covered by any of the other options (typically
+accepted and online)}
 }
 \description{
 Summarise intray
