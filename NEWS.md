@@ -6,6 +6,14 @@
    the path set by `set_articles_path()` and ignore it (with a
    warning) if it does not exist.
 
+ - re-factor printing in `summarise_articles()`. This also fixes
+   the duplication of entries with "revision received" status.
+
+ - added `summarise_articles(..., other=TRUE)` option which if
+   set will show articles which have a status not covered by any of
+   the other sections (typically entries like accepted, proofed,
+   online) - possibly useful to check for status errors.
+
 2021-03-22
  - `RJ_EMAIL_TOOL` environment variable can be set to change the tool
    used to handle generated e-mails. It can have one of the following
