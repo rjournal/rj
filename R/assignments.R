@@ -39,7 +39,7 @@ print_sum <- function(arts, status, detail=NULL,
 }
 
 print_rejected = function(latest)
-    print_sum(latest, "rejected", "{art$id}: {titles}")
+    print_sum(latest, "rejected", "{art$id}: {art$title}")
 
 print_submitted = function(latest)
     print_sum(latest, "submitted")
@@ -55,10 +55,12 @@ print_with_ae = function(latest)
 print_out_for_review = function(latest)
     print_sum(latest, "out for review", list_reviewers)
 
+.in_revision <- function(status) grepl("revision", status) &
+                                     (status != "revision received")
+
 ## this covers both minor and major revision status as well as AE: variants
 print_in_revision = function(latest)
-    print_sum(latest, grepl("revision", latest$status_status) &
-                      !grepl("revision received", latest$status_status),
+    print_sum(latest, .in_revision(latest$status_status),
               list_reviewers,, "In Revision")
 
 print_revision_received = function(latest)
@@ -107,6 +109,57 @@ summarise_articles = function(editor = NULL,
   print_revision_received(latest)
   if (isTRUE(other)) print_other(latest)
   return(invisible(all_articles))
+}
+
+#' @export
+#' @title Show articles that require attention with the corresponding action
+#' @param editor string, editor, defaults to \code{RJ_EDITOR} env var
+#' @param invite integer, number of days after which an invite is considered overdue
+#' @param review integer, number of days after which a review is considered overdue. Note that you can extend this by specifying a due date in the comment, e.g.: "2021-03-01 Agreed (until 2021-05-01)" would allow for two months.
+#' @param verbose logical, if \code{TRUE} it will always list the full reviewer report for each entry
+actionable_articles <- function(editor, invite=7, review=30, verbose=FALSE) {
+    if (missing(editor))
+        editor <- Sys.getenv("RJ_EDITOR")
+    all_articles  <- get_assignments(editor)
+    latest <- get_latest_assignments(all_articles)
+    work <- latest$status_status %in% c("acknowledged", "submitted")
+    rev <- latest$status_status == "out for review"
+    cli::cli_h1(paste("Actionable articles"))
+    cli_ul()
+    for (id in unique(latest$id[rev | work])) {
+        art <- as.article(id)
+        rev <- review_status(id)
+        issues <- character()
+        ## less than 2 reviews finished?
+        if (sum(rev$fin) < 2) {
+            # print(rev)
+            inv <- rev[rev$st == "invited" | rev$st == "agreed" | rev$st == "revision",]
+            for (i in seq_len(nrow(inv))) with(inv[i,], {
+                since <- as.numeric(Sys.Date() - date)
+                expected <- if (st == "invited") invite else review
+                if (ext > 0) expected <- ext
+                if (since > expected)
+                    issues <<- c(issues, paste0("r", rid, ": ",
+                                  if (st == "invited") "invite" else "review",
+                                  " overdue (", since, " days, expected ", expected, "): ",
+                                  name, " <", email, "> "))
+            })
+            if (nrow(rev) < 2)
+                issues <- c(issues, "Needs additional reviewers")
+        }
+        if (length(issues)) {
+            art$title <- str_trunc(art$title, getOption("width") - 30)
+            cli_li()
+            cli_li(paste0(id, " ", art$title))
+            cli_ul()
+            cli_li(issues)
+            cli_end()
+            if (verbose)
+                list_reviewers(id)
+            cli_end()
+        }            
+    }
+    cli_end()
 }
 
 globalVariables("status_date")

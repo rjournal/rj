@@ -188,3 +188,56 @@ add_review = function(article, reviewer_id, review, recommend = NULL, date = Sys
                        comment = recommend)
   return(invisible(NULL))
 }
+
+.review_info <- function(rev, id="?") {
+    cc <- strsplit(rev$comment, "; *")[[1]]
+    st <- tolower(gsub("\\s+.*", "", cc, perl=TRUE))
+    dt <- gregexpr("(\\d{4}-\\d{2}-\\d{2})", cc)
+    m <- do.call(rbind, lapply(seq_along(dt), function(i) {
+        o <- dt[[i]]
+        if (any(o < 1))
+            data.frame(date=NA, ext=NA, st=st[i])
+        else {
+            if (length(o) > 2)
+                stop("Review entry ", i," in ", id, " (", cc[i], ") has more than 2 dates.")
+            if (length(o) > 1) { ## assume one is the deadline the other the start
+                d1 <- as.Date(substr(cc[i], o[1], o[1] + 10))
+                d2 <- as.Date(substr(cc[i], o[2], o[2] + 10))
+                ext <- abs(as.numeric(d1 - d2))
+                data.frame(date=min(c(d1, d2)), ext=ext, st=st[i])
+            } else
+                data.frame(date=as.Date(substr(cc[i], o[1], o[1] + 10)), ext=0, st=st[i])
+        }
+    }))
+    m$st[m$st == "accepted"] <- "agreed"
+    m
+}
+
+valid_review_status <-
+    c("invited", "agreed", "declined", "abandoned", ## initial states
+      "revision", ## like accepted for additional rounds after major
+      "minor", "major", "reject") ## final state
+## PS: "Accepted" is silently corrected to "Agreed" but it is
+##     discouraged as it can be confused with the notion of Accept/Reject
+
+review_status <- function(article) {
+    d0 <- data.frame(date=as.Date(character()), ext=integer(), rid=integer(), fin=logical(), name=character(), email=character())
+    article <- as.article(article)
+    if (length(article$reviewers) < 0)
+        return(d0)
+    l <- lapply(article$reviewers, .review_info)
+    for (i in seq_along(l))
+        l[[i]]$rid <- i
+    lsl <- do.call(rbind, lapply(l, function(o) o[nrow(o),]))
+    if (any(! lsl$st %in% valid_review_status))
+        warning("Invalid review status in ", article$id[1],"-",article$id[2],": ", paste(lsl$st[!lsl$st %in% valid_review_status], collapse=", "))
+    ## remove reviewers that declined
+    lsl <- lsl[!lsl$st %in% c("declined", "abandoned"),]
+    if (length(lsl) && nrow(lsl)) {
+        ## final state is minor/major/reject
+        lsl$fin <- lsl$st %in% c("minor", "major", "reject")
+        lsl$name <- sapply(lsl$rid, function(i) article$reviewers[[i]]$name)
+        lsl$email <- sapply(lsl$rid, function(i) article$reviewers[[i]]$email)
+        lsl
+    } else d0
+}

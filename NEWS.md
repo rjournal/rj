@@ -14,6 +14,18 @@
    the other sections (typically entries like accepted, proofed,
    online) - possibly useful to check for status errors.
 
+ - added _experimental_ `actionable_articles()` function which
+   lists articles with potential actions such as "needs reviewers",
+   "review overdue" or "invite overdue". It requires reviewer
+   entries to use well-defined comments such as
+   `[Invited 2020-12-18; Agreed 2020-12-21; Minor 2020-12-29]`
+   Currently only looks at articles with status "out for review",
+   "acknowledged" and "submitted". The supported review states are:
+    - Invited
+    - Agreed, Declined, Abandoned
+    - Revision (subsequent rounds of reviews after Major)
+    - Minor, Major, Reject (final)
+
 2021-03-22
  - `RJ_EMAIL_TOOL` environment variable can be set to change the tool
    used to handle generated e-mails. It can have one of the following
