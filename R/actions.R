@@ -49,7 +49,8 @@ accept <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "accepted", comments = comments, date = date)
 
   system(paste("git mv",
-               article$path, file.path("Accepted", basename(article$path))))
+               shQuote(article$path),
+               shQuote(file.path("Accepted", basename(article$path)))))
   email_template(article, "accept")
 
   return(invisible(NULL))
@@ -63,7 +64,8 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "withdrawn", comments = comments, date = date)
 
   system(paste("git mv",
-               article$path, file.path("Rejected", basename(article$path))))
+               shQuote(article$path),
+               shQuote(file.path("Rejected", basename(article$path)))))
   email_template(article, "widthdraw")
 
   return(invisible(NULL))
