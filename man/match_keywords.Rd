@@ -4,10 +4,12 @@
 \alias{match_keywords}
 \title{Match reviewers for a submitted article based on keywords}
 \usage{
-match_keywords(article_kw)
+match_keywords(article_kw, n = 5)
 }
 \arguments{
 \item{article_kw}{vector; keywords of a submitted article}
+
+\item{n}{numeric; number of reviewer to display}
 }
 \value{
 a tibble of potential reviewers for the article
