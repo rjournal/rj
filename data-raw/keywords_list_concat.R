@@ -42,7 +42,7 @@ keywords_list_reviewer <- tibble::tribble(
   "Tracking",                              "Processing and Analysis of Tracking Data",
   "WebTechnologies",                                         "Web Technologies and Services",
   "gR",                                                 "gRaphical Models in R"
-) %>%  mutate(topics = gsub("([A-Z])", " \\1", topics))
+) %>%  mutate(reviewer_topics = gsub("([A-Z])", " \\1", reviewer_topics))
 
 keywords_list_submission <-
   tibble::tribble(~submission,
@@ -94,4 +94,4 @@ keywords_list_concat <- cbind(keywords_list_reviewer,
                               keywords_list_submission)
 
 
-usethis::use_data(keywords_list_concat, overwrite = TRUE)
+usethis::use_data(keywords_list_concat, overwrite = TRUE, internal = TRUE)

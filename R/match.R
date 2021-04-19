@@ -44,8 +44,12 @@ get_reviewer_keywords <- function(){
 match_keywords <- function(article_kw, n = 5){
   reviewer_kw <- get_reviewer_keywords()
 
-  matched <- map(article_kw,
-                 ~get_reviewer_keywords() %>%
+  article_kw_standardised <- keywords_list_concat %>%
+    dplyr::filter(submission %in% article_kw) %>%
+    dplyr::pull(reviewer_topics)
+
+  matched <- map(article_kw_standardised,
+                 ~reviewer_kw %>%
                    dplyr::filter(keywords == !!.x)) %>%
     dplyr::bind_rows() %>%
     dplyr::group_by(fname) %>%
@@ -70,15 +74,22 @@ match_keywords <- function(article_kw, n = 5){
       pool <- matched %>% dplyr::filter(n == threshold_out) %>% dplyr::pull(fname)
       size <- n - length(out1)
       out2 <- pool %>% sample(size)
-      message(paste0("randomly select ", size,  " reviewers from ",
-                     length(pool), " reviewers with ", threshold_out," matches"))
+      inform(glue("randomly select {size} reviewers from {length(pool)} reviewers with {threshold_out} matches"))
       out <- c(out1, out2)
+    }else if (i == nrow(matched_count) & sum(matched_count$count[i:nrow(matched_count)]) > n){
+      pool <- matched %>% dplyr::filter(n == i) %>% dplyr::pull(fname)
+      inform(glue::glue("randomly select {n} reviewers from {length(pool)} reviewers with {i} matches"))
+      out <- pool %>% sample(n)
     }
 
     i <- i + 1
   }
 
-  out
+  reviewer_kw %>%
+    dplyr::filter(fname %in% out) %>%
+    dplyr::select(fname, gname, email) %>%
+    dplyr::distinct() %>%
+    dplyr::arrange(factor(fname, levels = out))
 
 
 }
