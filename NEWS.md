@@ -1,4 +1,6 @@
 # rj 0.2.19
+2021-04-19
+ - added a new function to handle format reject
 
 2021-04-07
  - fix file path quoting in `git mv` commands (spaces in names

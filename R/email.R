@@ -69,7 +69,7 @@ email_text <- function(text, means=getOption("RJ_EMAIL_TOOL", "mailto")) {
           message("You have setup a custom 'browser' function which may or may not work.\nIf your e-mail doesn't open up ready to send, try\n  options(browser=Sys.getenv('R_BROWSER'))")
       return (browseURL(url))
   }
-  tmp <- tempfile("mail",,".txt")
+  tmp <- tempfile("mail",".txt") # DC:took out an extra comma
   writeLines(text, tmp)
   switch(means,
          show = file.show(tmp),

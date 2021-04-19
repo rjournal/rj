@@ -3,6 +3,7 @@
 \name{update_status}
 \alias{update_status}
 \alias{reject}
+\alias{reject_format}
 \alias{accept}
 \alias{withdraw}
 \title{Update the status of an article.}
@@ -10,6 +11,8 @@
 update_status(article, status, comments = "", date = Sys.Date())
 
 reject(article, comments = "", date = Sys.Date())
+
+reject_format(article, comments = "", date = Sys.Date())
 
 accept(article, comments = "", date = Sys.Date())
 
