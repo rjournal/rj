@@ -54,23 +54,24 @@ match_keywords <- function(article_kw, n = 5){
   matched_count <- matched %>%
     dplyr::group_by(n) %>%
     dplyr::tally(name = "count") %>%
-    dplyr::arrange(dplyr::desc(dplyr::row_number()))
+    dplyr::arrange(dplyr::row_number())
 
   i <- 1
   out <- vector()
   while (length(out) == 0){
-    if (sum(matched_count$count[1:i]) == n){
-      threshold <- matched_count$count[i]
-      out <- matched %>% dplyr::filter(n > threshold) %>% dplyr::pull(fname)
+    if (sum(matched_count$count[i:nrow(matched_count)]) == n){
+      threshold_in <- matched_count$n[i]
+      out <- matched %>% dplyr::filter(n >= threshold_in) %>% dplyr::pull(fname)
 
-    } else if (sum(matched_count$count[1:i]) > n){
-      threshold <- matched_count$count[i-1]
-      out1 <- matched %>% dplyr::filter(n > threshold) %>% dplyr::pull(fname)
-      pool <- matched %>% dplyr::filter(n == threshold) %>% dplyr::pull(fname)
+    } else if (sum(matched_count$count[i:nrow(matched_count)]) < n){
+      threshold_in <- matched_count$n[i]
+      threshold_out <- matched_count$n[i-1]
+      out1 <- matched %>% dplyr::filter(n >= threshold_in) %>% dplyr::pull(fname)
+      pool <- matched %>% dplyr::filter(n == threshold_out) %>% dplyr::pull(fname)
       size <- n - length(out1)
       out2 <- pool %>% sample(size)
       message(paste0("randomly select ", size,  " reviewers from ",
-                     length(pool), " reviewers with ", threshold," matches"))
+                     length(pool), " reviewers with ", threshold_out," matches"))
       out <- c(out1, out2)
     }
 
