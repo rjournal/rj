@@ -65,6 +65,7 @@ match_keywords <- function(article_kw, n = 5){
   while (length(out) == 0){
     if (sum(matched_count$count[i:nrow(matched_count)]) == n){
       threshold_in <- matched_count$n[i]
+      inform(glue::glue("{n} reviewers with {threshold_in} matches"))
       out <- matched %>% dplyr::filter(n >= threshold_in) %>% dplyr::pull(fname)
 
     } else if (sum(matched_count$count[i:nrow(matched_count)]) < n){
@@ -74,11 +75,11 @@ match_keywords <- function(article_kw, n = 5){
       pool <- matched %>% dplyr::filter(n == threshold_out) %>% dplyr::pull(fname)
       size <- n - length(out1)
       out2 <- pool %>% sample(size)
-      inform(glue("randomly select {size} reviewers from {length(pool)} reviewers with {threshold_out} matches"))
+      inform(glue::glue("first {length(out1)} reviewers with {threshold_in} matches; next {size} reviewers with {threshold_out} matches"))
       out <- c(out1, out2)
     }else if (i == nrow(matched_count) & sum(matched_count$count[i:nrow(matched_count)]) > n){
       pool <- matched %>% dplyr::filter(n == i) %>% dplyr::pull(fname)
-      inform(glue::glue("randomly select {n} reviewers from {length(pool)} reviewers with {i} matches"))
+      inform(glue::glue("{n} reviewers with {i} matches"))
       out <- pool %>% sample(n)
     }
 
