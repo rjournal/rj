@@ -33,6 +33,8 @@ email_template <- function(article, template) {
   email_text(text)
 }
 
+#' Generate an email template.
+#'
 #' @param text character vector, text of the e-mail (including headers)
 #' @param means string, one of "mailto", "browser" (boht uopen mailto: URL),
 #'              "show" (file.show), "edit" (file.edit), "open" (shell open) or
