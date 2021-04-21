@@ -3,3 +3,4 @@
 ^README.nm$
 ^\.lintr$
 ^\.github$
+^data-raw$
