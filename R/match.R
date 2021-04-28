@@ -37,11 +37,12 @@ get_reviewer_keywords <- function(){
 
 #kw <- c("Graphics and Visualisation","Multivariate Statistics")
 #' Match reviewers for a submitted article based on keywords
-#' @param article_kw vector; keywords of a submitted article
+#' @param id the article id in the description file
 #' @param n numeric; number of reviewer to display
 #' @return a tibble of potential reviewers for the article
 #' @export
-match_keywords <- function(article_kw, n = 5){
+match_keywords <- function(id, n = 5){
+  article_kw <- get_article_keywords(id)
   reviewer_kw <- get_reviewer_keywords()
 
   article_kw_standardised <- keywords_list_concat %>%

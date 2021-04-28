@@ -4,10 +4,10 @@
 \alias{match_keywords}
 \title{Match reviewers for a submitted article based on keywords}
 \usage{
-match_keywords(article_kw, n = 5)
+match_keywords(id, n = 5)
 }
 \arguments{
-\item{article_kw}{vector; keywords of a submitted article}
+\item{id}{the article id in the description file}
 
 \item{n}{numeric; number of reviewer to display}
 }
