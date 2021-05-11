@@ -4,15 +4,15 @@
 #' @return a vector of the article keywords
 #' @export
 get_article_keywords <- function(id){
-  # ASK: need to know what the article object looks like
-  # ASK: need to know what would trigger this keyword matching step
-  # this function is supposed to output a vector of keywords for a given article
-  keywords_raw <- as.article(id)$keywords
+  article <- as.article(id)
+  keywords_raw <- article$keywords
+  author <- unlist(article$author)
   if (nchar(keywords_raw) == 0) {
     rlang::abort("no keyword detected in the DESCRIPTION file!")
   }
 
-  as.vector(stringr::str_split(keywords_raw, ", ", simplify = TRUE))
+  list(keywords = as.vector(stringr::str_split(keywords_raw, ", ", simplify = TRUE)),
+       author = author[names(author) == "name"] )
 
 }
 
@@ -42,8 +42,12 @@ get_reviewer_keywords <- function(){
 #' @return a tibble of potential reviewers for the article
 #' @export
 match_keywords <- function(id, n = 5){
-  article_kw <- get_article_keywords(id)
-  reviewer_kw <- get_reviewer_keywords()
+
+  article <- get_article_keywords(id)
+  article_kw <- article$keywords
+
+  reviewer_kw <- get_reviewer_keywords() %>%
+    filter(!fname %in% article$author)
 
   article_kw_standardised <- keywords_list_concat %>%
     dplyr::filter(submission %in% article_kw) %>%
