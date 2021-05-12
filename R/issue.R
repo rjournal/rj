@@ -90,7 +90,9 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   ready <- filter_status(arts, "online")
   for (art in ready) {
     if (exec) {
-      system(paste("git mv", art$path, file.path(dir, format(art$id))))
+        system(paste("git mv",
+                     shQuote(art$path),
+                     shQuote(file.path(dir, format(art$id)))))
     } else {
       cat(art$path, file.path(dir, format(art$id)), "\n")
     }

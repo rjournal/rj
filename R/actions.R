@@ -43,13 +43,45 @@ reject <- function(article, comments = "", date = Sys.Date()) {
 
 #' @rdname action
 #' @export
+reject_format <- function(article, comments = "", date = Sys.Date()) {
+  #article <- as.article(article)
+
+  data <- as.data(as.article(article))
+  data$name <- stringr::str_split(data$name, " ")[[1]][1]
+  data$date <- format(Sys.Date() + 5, "%d %b %Y")
+
+  cli::cli_h1(paste("Rejecting paper", format(data$id)))
+  cli::cli_alert_info("Updating DESCRIPTION file")
+  update_status(article, "rejected", comments = comments, date = data$date)
+
+  from = data$path
+  to = file.path("Rejected", basename(data$path))
+  msg = paste("Moving", from, "to", to)
+  cli::cli_alert_info(msg)
+  system2("git", args = c("mv", from, to))
+
+  #cli::cli_alert_info("Creating Email")
+  #email_template(article, "reject_format")
+  #cli::cli_alert_info("If your browser doesn't open, check getOption('browser')")
+
+  template <- find_template("reject_format")
+  email <- whisker.render(readLines(template), data)
+  email_text(email)
+  cli::cli_alert_info("If your browser doesn't open, check getOption('browser') and set options(browser=Sys.getenv('R_BROWSER'))")
+
+  return(invisible(NULL))
+}
+
+#' @rdname action
+#' @export
 accept <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
   message("Accepting ", format(article$id))
   update_status(article, "accepted", comments = comments, date = date)
 
   system(paste("git mv",
-               article$path, file.path("Accepted", basename(article$path))))
+               shQuote(article$path),
+               shQuote(file.path("Accepted", basename(article$path)))))
   email_template(article, "accept")
 
   return(invisible(NULL))
@@ -63,7 +95,8 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "withdrawn", comments = comments, date = date)
 
   system(paste("git mv",
-               article$path, file.path("Rejected", basename(article$path))))
+               shQuote(article$path),
+               shQuote(file.path("Rejected", basename(article$path)))))
   email_template(article, "widthdraw")
 
   return(invisible(NULL))

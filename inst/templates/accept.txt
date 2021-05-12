@@ -6,7 +6,7 @@ Dear {{name}},
 
 Congratulations, your submission to the R journal is now accepted. Next, please:
 
-* Please double check that you're using the most recent version of the style 
+* Please double check that you're using the most recent version of the style
   file and wrapper available http://journal.r-project.org/submissions.html
   and that the article compiles without errors.
 
@@ -14,6 +14,10 @@ Congratulations, your submission to the R journal is now accepted. Next, please:
   http://journal.r-project.org/share/proofreading-checklist.pdf
 
 Once you've done that, please respond to this email with any changes. I'll then make the article available in the online preview, and it will appear in the next issue of the journal. Prior to publication, another editor will also take a look at your paper and perform minor copy-editing; we'll contact you if any major changes are made.
+
+As an R Journal author, we would be delighted to have your expertise as a reviewer for future submissions;
+please fill in your details here: https://journal.r-project.org/reviewer.html
+
 
 Regards,
 

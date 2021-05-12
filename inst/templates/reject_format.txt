@@ -1,0 +1,11 @@
+To: {{email}}
+Subject: [RJournal {{id}}] journal submission
+---
+Dear {{name}},
+
+Thank you for submitting your article "{{title}} to the R Journal. The
+work looks to be very interesting but the files are not in the format required by the R Journal. Please read the author instructions, and re-submit.
+
+Regards,
+
+{{me}}

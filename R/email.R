@@ -33,6 +33,8 @@ email_template <- function(article, template) {
   email_text(text)
 }
 
+#' Generate an email template.
+#'
 #' @param text character vector, text of the e-mail (including headers)
 #' @param means string, one of "mailto", "browser" (boht uopen mailto: URL),
 #'              "show" (file.show), "edit" (file.edit), "open" (shell open) or
@@ -67,7 +69,7 @@ email_text <- function(text, means=getOption("RJ_EMAIL_TOOL", "mailto")) {
           message("You have setup a custom 'browser' function which may or may not work.\nIf your e-mail doesn't open up ready to send, try\n  options(browser=Sys.getenv('R_BROWSER'))")
       return (browseURL(url))
   }
-  tmp <- tempfile("mail",,".txt")
+  tmp <- tempfile("mail",".txt") # DC:took out an extra comma
   writeLines(text, tmp)
   switch(means,
          show = file.show(tmp),
