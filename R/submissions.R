@@ -160,7 +160,7 @@ download_submissions <- function(dry_run) {
                    # 3. Zip old submission into /history
                    old_submission <- setdiff(
                        list.files(art$path, include.dirs = TRUE),
-                       c("DESCRIPTION", "history")
+                       c("DESCRIPTION", "history", "correspondence")
                    )
                    num_submissions <- length(list.files(file.path(path, "history")))
                    dir_create(file.path(path, "history"))
