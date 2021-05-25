@@ -33,9 +33,6 @@ get_reviewer_keywords <- function(){
 }
 
 
-#kw <- c("Graphics", "Official Statistics", "Social Sciences")
-
-#kw <- c("Graphics and Visualisation","Multivariate Statistics")
 #' Match reviewers for a submitted article based on keywords
 #' @param id the article id in the description file
 #' @param n numeric; number of reviewer to display
@@ -45,9 +42,11 @@ match_keywords <- function(id, n = 5){
 
   article <- get_article_keywords(id)
   article_kw <- article$keywords
+  ae <- AEs()
 
   reviewer_kw <- get_reviewer_keywords() %>%
-    filter(!fname %in% article$author)
+    filter(!fname %in% article$author,
+           !email %in% ae$email)
 
   article_kw_standardised <- keywords_list_concat %>%
     dplyr::filter(submission %in% article_kw) %>%
@@ -99,11 +98,4 @@ match_keywords <- function(id, n = 5){
 
 
 }
-
-# it seems that the keywords from the reviewer is not the set of keywords for submission
-
-# how many keywords matches
-# 2 reviewers per article
-
-
 
