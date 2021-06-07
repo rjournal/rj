@@ -207,7 +207,10 @@ get_refs_from_tex <- function(article_path, final=FALSE)
   }
   res
 }
+
 #' @importFrom pdftools pdf_toc pdf_text
+#'
+#' @export
 get_md_from_pdf <- function(from, final=FALSE)
 {
    toc <- pdftools::pdf_toc(from)
@@ -273,6 +276,9 @@ online_metadata <- function() {
   lapply(articles, online_metadata_for_article)
 }
 
+#' Generate metadata for one article.
+#'
+#' @export
 online_metadata_for_article <- function(x, final=FALSE) {
 #    names <- vapply(x$authors, function(x) {
 #                        format(as.person(x),
