@@ -21,8 +21,8 @@ publish <- function(article, home = get_articles_path(), legacy=FALSE) {
 
   if (!any(as.data.frame(article$status)$status == "accepted"))
     stop("not yet accepted")
-  if (!any(as.data.frame(article$status)$status == "style checked"))
-    stop("not yet style checked")
+  #if (!any(as.data.frame(article$status)$status == "style checked"))
+  #  stop("not yet style checked")
 
   message("Publishing ", format(article$id))
   # Build latex
@@ -251,10 +251,10 @@ build_latex <- function(article,
   stopifnot(file.exists(share_path))
 
   # Check RJournal.sty does not exist
-  sty_path <- file.path(article$path, "RJournal.sty")
-  if (file.exists(sty_path)) {
-    stop("Article contains RJournal style file", call. = FALSE)
-  }
+  # sty_path <- file.path(article$path, "RJournal.sty")
+  #if (file.exists(sty_path)) {
+  #  stop("Article contains RJournal style file", call. = FALSE)
+  #}
 
   # Build latex
   in_dir(article$path,
