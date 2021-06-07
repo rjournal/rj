@@ -26,7 +26,8 @@ publish <- function(article, home = get_articles_path(), legacy=FALSE) {
 
   message("Publishing ", format(article$id))
   # Build latex
-  build_latex(article, share_path)
+  if (!file.exists(file.path(article$path, "RJwrapper.pdf")))
+    build_latex(article, share_path)
   from <- file.path(article$path, "RJwrapper.pdf")
 
   if (legacy) {
