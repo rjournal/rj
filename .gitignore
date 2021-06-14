@@ -32,3 +32,4 @@ docs/
 # backups
 *~
 .DS_Store
+inst/doc

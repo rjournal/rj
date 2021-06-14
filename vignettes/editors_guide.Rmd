@@ -1,0 +1,30 @@
+---
+title: "Guide for the editors"
+author: "Di Cook"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Operating procedures for the editors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Editorial structure
+
+The editorial board consists of four editors, including an Editor-in-Chief, and a non-fixed number of associate editors. Each editor serves a term of four years, starting on 1 January and ending on 31 December four years later. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.
+
+In the third year of their term the editor acts as Editor-in-Chief (EIC). The EIC takes primary responsibility for:
+- Production of two journal issues per year, in June and December.
+- Managing the flow of submissions, ensuring that these are handled in a timely manner.
+- Maintaining the R Journal web site http://journal.r-project.org
+- Maintaining the formatting and tools used to manage the journal.
+- Ensuring smooth communication between editors and associate editors.
+
+
