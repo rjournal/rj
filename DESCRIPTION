@@ -27,7 +27,8 @@ Imports:
     whisker,
     yaml,
     ctv,
-    tidyr
+    tidyr,
+    gh
 Suggests:
     knitr,
     jss,

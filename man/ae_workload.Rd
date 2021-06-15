@@ -7,5 +7,5 @@
 ae_workload()
 }
 \description{
-Check the number of articles an AE is currently working on
+The function Github REST API to query the ae prefixed repository and extract the content in the submissions folder.
 }
