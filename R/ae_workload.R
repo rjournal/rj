@@ -20,7 +20,7 @@ ae_workload <- function(){
                                    owner = "rjournal",
                                    repo = ae_repo,
                                    path = "Submissions"))) %>%
-    tidyr::unnest(folder) %>%
-    dplyr::count(ae)
+    tidyr::unnest(.data$folder) %>%
+    dplyr::count(.data$ae)
 
 }
