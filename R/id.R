@@ -46,3 +46,8 @@ year <- function() as.POSIXlt(Sys.Date())$year + 1900
 is.number <- function(x) {
   suppressWarnings(!is.na(as.numeric(x)))
 }
+
+#' @method as.character id
+#' @export
+as.character.id <- function(x, ...)
+  format.id(x)
