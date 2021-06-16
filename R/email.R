@@ -90,7 +90,7 @@ email_text <- function(text, means=getOption("RJ_EMAIL_TOOL", "mailto")) {
                  on.exit(unlink(tmp))
                  if (system("xsel -i -c <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0 &&
                      system("xclip -selection clipboard <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0)
-                     error("Neither xclip not xsel works - please install either tool")
+                     stop("Neither xclip not xsel works - please install either tool")
                  message("E-mail has been written to the X11 clipboard")
              }
          },
