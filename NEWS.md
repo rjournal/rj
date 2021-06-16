@@ -1,4 +1,9 @@
 # rj 0.2.19
+2021-06-07
+ - removed check on RJournal.sty file being in article directory
+ - updated template for minor revision to say "tentatively" accepted
+ - Only build article pdf if it doesn't exist already
+ 
 2021-04-19
  - added a new function to handle format reject
 

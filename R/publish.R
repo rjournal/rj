@@ -21,12 +21,13 @@ publish <- function(article, home = get_articles_path(), legacy=FALSE) {
 
   if (!any(as.data.frame(article$status)$status == "accepted"))
     stop("not yet accepted")
-  if (!any(as.data.frame(article$status)$status == "style checked"))
-    stop("not yet style checked")
+  #if (!any(as.data.frame(article$status)$status == "style checked"))
+  #  stop("not yet style checked")
 
   message("Publishing ", format(article$id))
   # Build latex
-  build_latex(article, share_path)
+  if (!file.exists(file.path(article$path, "RJwrapper.pdf")))
+    build_latex(article, share_path)
   from <- file.path(article$path, "RJwrapper.pdf")
 
   if (legacy) {
@@ -206,7 +207,10 @@ get_refs_from_tex <- function(article_path, final=FALSE)
   }
   res
 }
+
 #' @importFrom pdftools pdf_toc pdf_text
+#'
+#' @export
 get_md_from_pdf <- function(from, final=FALSE)
 {
    toc <- pdftools::pdf_toc(from)
@@ -251,10 +255,10 @@ build_latex <- function(article,
   stopifnot(file.exists(share_path))
 
   # Check RJournal.sty does not exist
-  sty_path <- file.path(article$path, "RJournal.sty")
-  if (file.exists(sty_path)) {
-    stop("Article contains RJournal style file", call. = FALSE)
-  }
+  # sty_path <- file.path(article$path, "RJournal.sty")
+  #if (file.exists(sty_path)) {
+  #  stop("Article contains RJournal style file", call. = FALSE)
+  #}
 
   # Build latex
   in_dir(article$path,
@@ -272,6 +276,9 @@ online_metadata <- function() {
   lapply(articles, online_metadata_for_article)
 }
 
+#' Generate metadata for one article.
+#'
+#' @export
 online_metadata_for_article <- function(x, final=FALSE) {
 #    names <- vapply(x$authors, function(x) {
 #                        format(as.person(x),
