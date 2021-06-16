@@ -1,4 +1,10 @@
 # rj 0.2.19
+2021-06-17
+ - added `git(..)` helper function to call `git` properly.
+   It honors the `GIT` environment variable.
+ - fixed git actions to work when executed in a subdirectory
+   of "articles" by using `get_articles_path()` for the target
+
 2021-06-07
  - removed check on RJournal.sty file being in article directory
  - updated template for minor revision to say "tentatively" accepted
