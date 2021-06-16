@@ -15,6 +15,13 @@
 update_status <- function(article, status, comments = "", date = Sys.Date()) {
   article <- as.article(article)
   if (is.character(date)) date <- as.Date(date)
+  if (length(article$status)) {
+     last <- article$status[length(article$status)]
+     if (last$status == status) {
+       warning("Article ", article$id, "already has last entry ", status, ", replacing it")
+       article$status <- article$status[-length(article$status)]
+     }
+  }
   article$status <- c(article$status, status(status, date, comments))
   save_article(article)
 }
