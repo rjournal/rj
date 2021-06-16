@@ -3,7 +3,11 @@
  - added `git(..)` helper function to call `git` properly.
    It honors the `GIT` environment variable.
  - fixed git actions to work when executed in a subdirectory
-   of "articles" by using `get_articles_path()` for the target
+   of "articles" by using `get_articles_path()` for the target.
+ - add `as.characer.id()` so simple things like
+   `warning("Article ", article$id, " has issues")` works.
+ - `update_status` will update the last entry (with a warning)
+   instead of appending if it is the same status.
 
 2021-06-07
  - removed check on RJournal.sty file being in article directory
