@@ -44,5 +44,5 @@ new_id <- function() {
 #' @param articles A vector of articles
 #' @param status The status you are looking for
 filter_status <- function(articles, status) {
-    Filter(function(a) last_status(a)$status == status, articles)
+  Filter(function(a) last_status(a)$status == status, articles)
 }

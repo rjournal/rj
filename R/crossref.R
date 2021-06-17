@@ -9,63 +9,63 @@
 
 
 ## Constants
-doi_prefix = "10.32614"
-rjournal_url = "https://journal.r-project.org/archive"
+doi_prefix <- "10.32614"
+rjournal_url <- "https://journal.r-project.org/archive"
 
-depositor = list(
-    depositor_name = "R Foundation",
-    depositor_email =  "R-foundation@r-project.org"
+depositor <- list(
+  depositor_name = "R Foundation",
+  depositor_email = "R-foundation@r-project.org"
 )
 
 
-journal_metadata = list(
-    journal_title = "The R Journal",
-    journal_abbreviated_title = "The R Journal",
-    coden = NULL,  # JSS is "JSSOBK", we don't have one?
-    issn  = "2073-4859"  # 1548-7660"
+journal_metadata <- list(
+  journal_title = "The R Journal",
+  journal_abbreviated_title = "The R Journal",
+  coden = NULL, # JSS is "JSSOBK", we don't have one?
+  issn = "2073-4859" # 1548-7660"
 )
 
-doi_batch_id_tpl = "<doi_batch_id>{{ID}}</doi_batch_id>\n"
+doi_batch_id_tpl <- "<doi_batch_id>{{ID}}</doi_batch_id>\n"
 print_doi_batch_id <- function(file) {
-    x <- as.POSIXlt(Sys.time())
-    mon <- if (nchar(x$mon) == 1) paste("0", x$mon, sep="") else x$mon
-    mday <- if (nchar(x$mday) == 1) paste("0", x$mday, sep="") else x$mday
-    hour <- if (nchar(x$hour) == 1) paste("0", x$hour, sep="") else x$hour
-    min <- if (nchar(x$min) == 1) paste("0", x$min, sep="") else x$min
-    sec <- if(nchar(round(x$sec)) == 1) paste("0", round(x$sec), sep="") else round(x$sec)
-    ID = paste(x$year, mon, mday, hour, min, sec, sep="")
-    txt = whisker.render(doi_batch_id_tpl, list(ID=ID))
-    cat(txt, file=file, append=TRUE)
+  x <- as.POSIXlt(Sys.time())
+  mon <- if (nchar(x$mon) == 1) paste("0", x$mon, sep = "") else x$mon
+  mday <- if (nchar(x$mday) == 1) paste("0", x$mday, sep = "") else x$mday
+  hour <- if (nchar(x$hour) == 1) paste("0", x$hour, sep = "") else x$hour
+  min <- if (nchar(x$min) == 1) paste("0", x$min, sep = "") else x$min
+  sec <- if (nchar(round(x$sec)) == 1) paste("0", round(x$sec), sep = "") else round(x$sec)
+  ID <- paste(x$year, mon, mday, hour, min, sec, sep = "")
+  txt <- whisker.render(doi_batch_id_tpl, list(ID = ID))
+  cat(txt, file = file, append = TRUE)
 }
 
 
-timestamp_tpl = "<timestamp>{{TIMESTAMP}}</timestamp>\n"
+timestamp_tpl <- "<timestamp>{{TIMESTAMP}}</timestamp>\n"
 print_timestamp <- function(file) {
-    x <- as.POSIXlt(Sys.time())
-    mon <- if(nchar(x$mon) == 1) paste("0", x$mon, sep="") else x$mon
-    mday <- if(nchar(x$mday) == 1) paste("0", x$mday, sep="") else x$mday
-    hour <-  if(nchar(x$hour) == 1) paste("0", x$hour, sep="") else x$hour
-    min <-  if(nchar(x$min) == 1) paste("0", x$min, sep="") else x$min
-    sec <-  if(nchar(round(x$sec)) == 1) paste("0", round(x$sec), sep="") else round(x$sec)
-    TIMESTAMP = paste(x$year, mon, mday, hour, min, sec, sep="")
-    txt = whisker.render(timestamp_tpl, list(TIMESTAMP=TIMESTAMP))
-    cat(txt, file=file, append=TRUE)
+  x <- as.POSIXlt(Sys.time())
+  mon <- if (nchar(x$mon) == 1) paste("0", x$mon, sep = "") else x$mon
+  mday <- if (nchar(x$mday) == 1) paste("0", x$mday, sep = "") else x$mday
+  hour <- if (nchar(x$hour) == 1) paste("0", x$hour, sep = "") else x$hour
+  min <- if (nchar(x$min) == 1) paste("0", x$min, sep = "") else x$min
+  sec <- if (nchar(round(x$sec)) == 1) paste("0", round(x$sec), sep = "") else round(x$sec)
+  TIMESTAMP <- paste(x$year, mon, mday, hour, min, sec, sep = "")
+  txt <- whisker.render(timestamp_tpl, list(TIMESTAMP = TIMESTAMP))
+  cat(txt, file = file, append = TRUE)
 }
 
 
-depositor_tpl = "
+depositor_tpl <- "
 <depositor>
   <depositor_name>{{depositor_name}}</depositor_name>
   <email_address>{{depositor_email}}</email_address>
 </depositor>
 "
 
-print_depositor = function(file) {
-    txt = whisker.render(depositor_tpl, depositor)
-    cat(txt, file=file, append=TRUE)
+print_depositor <- function(file) {
+  txt <- whisker.render(depositor_tpl, depositor)
+  cat(txt, file = file, append = TRUE)
 }
 
-journal_metadata_tpl = "
+journal_metadata_tpl <- "
 
 <journal_metadata language=\"en\">
   <full_title>{{journal_title}}</full_title>
@@ -76,13 +76,13 @@ journal_metadata_tpl = "
 
 "
 
-print_journal_metadata = function(file) {
-    txt = whisker.render(journal_metadata_tpl, journal_metadata)
-    cat(txt, file=file, append=TRUE)
+print_journal_metadata <- function(file) {
+  txt <- whisker.render(journal_metadata_tpl, journal_metadata)
+  cat(txt, file = file, append = TRUE)
 }
 
 ## jv no {{sf}}{{volume}} here
-journal_issue_tpl = "
+journal_issue_tpl <- "
 <journal_issue>
 <publication_date media_type=\"online\">
   <year>{{year}}</year>
@@ -95,25 +95,26 @@ journal_issue_tpl = "
 
 "
 
-print_journal_issue = function(x, file) { #type, file) {
+print_journal_issue <- function(x, file) { # type, file) {
 
-    data = list(
-        year = x$year,
-        volume=x$volume,
-        number=x$number,
-        issue=x$issue)
+  data <- list(
+    year = x$year,
+    volume = x$volume,
+    number = x$number,
+    issue = x$issue
+  )
 
-    txt = whisker.render(journal_issue_tpl, data)
-    cat(txt, file=file, append=TRUE)
+  txt <- whisker.render(journal_issue_tpl, data)
+  cat(txt, file = file, append = TRUE)
 }
 
 ## from c("a1", "a2", ...) create list(family, given)
-author_list = function(auts) {
-    auts = strsplit(auts, "\\s+")
-    lapply(auts, function(x) list(family=x[length(x)], given=paste(x[-length(x)], sep=" ")))
+author_list <- function(auts) {
+  auts <- strsplit(auts, "\\s+")
+  lapply(auts, function(x) list(family = x[length(x)], given = paste(x[-length(x)], sep = " ")))
 }
 
-author_tpl = "
+author_tpl <- "
 <person_name sequence=\"{{author_order}}\" contributor_role=\"author\">
   <given_name>{{given}}</given_name>
   <surname>{{family}}</surname>
@@ -123,47 +124,48 @@ author_tpl = "
 </person_name>
 "
 
-get_authors <-  function(x) {
-    out = ""
-    for (i in 1:length(x$authors)) {
-        aut = x$authors[[i]]
-        l = list(
-            given=tth::tth(aut$given),
-            family=tth::tth(aut$family),
-            suffix=if (is.null(aut$suffix)) NULL else tth::tth(aut$suffix),
-            affiliation=aut$affiliation,
-            ORCID=aut$ORCID,
-            author_order = ifelse(i==1, "first", "additional")
-            )
-        out = paste(out, whisker.render(author_tpl, l), sep="\n")
-    }
-    out
+get_authors <- function(x) {
+  out <- ""
+  for (i in 1:length(x$authors)) {
+    aut <- x$authors[[i]]
+    l <- list(
+      given = tth::tth(aut$given),
+      family = tth::tth(aut$family),
+      suffix = if (is.null(aut$suffix)) NULL else tth::tth(aut$suffix),
+      affiliation = aut$affiliation,
+      ORCID = aut$ORCID,
+      author_order = ifelse(i == 1, "first", "additional")
+    )
+    out <- paste(out, whisker.render(author_tpl, l), sep = "\n")
+  }
+  out
 }
 
 
 ## our DOI is just the slug
-doi_tpl = "{{doi_prefix}}/{{slug}}"
+doi_tpl <- "{{doi_prefix}}/{{slug}}"
 
 get_doi <- function(x) {
-    data = list(doi_prefix = doi_prefix,
-        slug = x$slug
-        )
-    whisker.render(doi_tpl, data)
+  data <- list(
+    doi_prefix = doi_prefix,
+    slug = x$slug
+  )
+  whisker.render(doi_tpl, data)
 }
 
-url_tpl = "{{rjournal_url}}/{{year}}/{{slug}}/index.html"
+url_tpl <- "{{rjournal_url}}/{{year}}/{{slug}}/index.html"
 
 get_url <- function(x) {
-    data = list(
-        rjournal_url= rjournal_url,
-        year = x$year,
-        slug=x$slug
-        )
-    whisker.render(url_tpl, data)
+  data <- list(
+    rjournal_url = rjournal_url,
+    year = x$year,
+    slug = x$slug
+  )
+  whisker.render(url_tpl, data)
 }
 
 
-journal_article_tpl = "
+journal_article_tpl <- "
 <journal_article publication_type=\"full_text\">
   <titles>
     <title>{{title}}</title>
@@ -187,17 +189,18 @@ journal_article_tpl = "
 </journal_article>
 "
 
-print_journal_article <- function(x,  file) {
-    data = list(title = x$title,
-        authors = get_authors(x),
-        year = x$year,
-        first_page = x$pages[1],
-        last_page = x$pages[2],
-        DOI = get_doi(x),
-        url = get_url(x)
-        )
-    txt = whisker.render(journal_article_tpl, data)
-    cat(txt, file=file, append=TRUE)
+print_journal_article <- function(x, file) {
+  data <- list(
+    title = x$title,
+    authors = get_authors(x),
+    year = x$year,
+    first_page = x$pages[1],
+    last_page = x$pages[2],
+    DOI = get_doi(x),
+    url = get_url(x)
+  )
+  txt <- whisker.render(journal_article_tpl, data)
+  cat(txt, file = file, append = TRUE)
 }
 
 ## Could add citations
@@ -221,16 +224,16 @@ print_journal_article <- function(x,  file) {
 ##     </citation>
 
 
-print_citation = function(cit, file) {
-    ## how to do this for different types...
+print_citation <- function(cit, file) {
+  ## how to do this for different types...
 }
 
-print_citations = function(art, file) {
-    cat("<citation_list>\n", out = file, append = TRUE)
-    for (cit in art$citations) {
-        print_citation(cit, file)
-    }
-    cat("</citation_list>\n", out = file, append = TRUE)
+print_citations <- function(art, file) {
+  cat("<citation_list>\n", out = file, append = TRUE)
+  for (cit in art$citations) {
+    print_citation(cit, file)
+  }
+  cat("</citation_list>\n", out = file, append = TRUE)
 }
 
 
@@ -239,41 +242,38 @@ print_citations = function(art, file) {
 
 
 
-doi_batch_header_old = '<doi_batch xmlns="http://www.crossref.org/schema/4.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.4.0" xsi:schemaLocation="http://www.crossref.org/schema/4.4.0 http://www.crossref.org/schemas/crossref4.4.0.xsd">'
+doi_batch_header_old <- '<doi_batch xmlns="http://www.crossref.org/schema/4.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.4.0" xsi:schemaLocation="http://www.crossref.org/schema/4.4.0 http://www.crossref.org/schemas/crossref4.4.0.xsd">'
 
-doi_batch_header = '<doi_batch xmlns="http://www.crossref.org/schema/4.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.4.0" xsi:schemaLocation="http://www.crossref.org/schema/4.4.0 http://www.crossref.org/schemas/crossref4.4.0.xsd">\n'
+doi_batch_header <- '<doi_batch xmlns="http://www.crossref.org/schema/4.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.4.0" xsi:schemaLocation="http://www.crossref.org/schema/4.4.0 http://www.crossref.org/schemas/crossref4.4.0.xsd">\n'
 
-newDeposit = function(x, out="") {
+newDeposit <- function(x, out = "") {
+  cat(doi_batch_header, file = out)
+  cat("<head>\n", file = out, append = TRUE)
 
-
-    cat(doi_batch_header, file=out)
-    cat("<head>\n", file=out, append=TRUE)
-
-    print_doi_batch_id(out)
-    print_timestamp(out)
-    print_depositor(out)
-    cat("<registrant>CrossRef</registrant> \n </head>\n
-	<body>\n", file=out, append=TRUE)
-    ## this generates xml for all bib items stored in a bib file
-    for (i in 1:length(x$articles)) {
-        cat("<journal>\n", file=out, append=TRUE)
-        print_journal_metadata(out)
-        print_journal_issue(x, out)
-        print_journal_article(x$articles[[i]], out)
-        cat("</journal>\n\n\n", file=out, append=TRUE)
-    }
-    cat("
+  print_doi_batch_id(out)
+  print_timestamp(out)
+  print_depositor(out)
+  cat("<registrant>CrossRef</registrant> \n </head>\n
+	<body>\n", file = out, append = TRUE)
+  ## this generates xml for all bib items stored in a bib file
+  for (i in 1:length(x$articles)) {
+    cat("<journal>\n", file = out, append = TRUE)
+    print_journal_metadata(out)
+    print_journal_issue(x, out)
+    print_journal_article(x$articles[[i]], out)
+    cat("</journal>\n\n\n", file = out, append = TRUE)
+  }
+  cat("
 </body>
 </doi_batch>
-", file=out, append=TRUE)
-    ## test via
-    ## http://test.crossref.org, see http://help.crossref.org/verifying_your_xml
-    ## make real deposits with https://doi.crossref.org/servlet/deposit
+", file = out, append = TRUE)
+  ## test via
+  ## http://test.crossref.org, see http://help.crossref.org/verifying_your_xml
+  ## make real deposits with https://doi.crossref.org/servlet/deposit
 
-    #system(paste("curl -F \'operation=doMDUpload\' -F \'login_id=fast\' -F \'login_passwd=fast_827\' -F \'fname=@", out, "\' ", "https://test.crossref.org/servlet/deposit", sep=""))
+  # system(paste("curl -F \'operation=doMDUpload\' -F \'login_id=fast\' -F \'login_passwd=fast_827\' -F \'fname=@", out, "\' ", "https://test.crossref.org/servlet/deposit", sep=""))
 
-#    system(paste("curl -F \'operation=doMDUpload\' -F \'login_id=fast\' -F \'login_passwd=fast_827\' -F \'fname=@", out, "\' ", "https://doi.crossref.org/servlet/deposit", sep=""))
-
+  #    system(paste("curl -F \'operation=doMDUpload\' -F \'login_id=fast\' -F \'login_passwd=fast_827\' -F \'fname=@", out, "\' ", "https://doi.crossref.org/servlet/deposit", sep=""))
 }
 
 
@@ -283,38 +283,38 @@ newDeposit = function(x, out="") {
 ## i = cfg[[ind]]
 ##
 process_config_yml_component <- function(i) {
-    articles = Filter(function(i) !is.null(i$slug), i$articles)
-    articles = Filter(function(l) grepl("^RJ", l$slug), articles)
+  articles <- Filter(function(i) !is.null(i$slug), i$articles)
+  articles <- Filter(function(l) grepl("^RJ", l$slug), articles)
 
-    out = list()
-    out$year = i$year
-    out$volume = i$volume
-    out$issue = i$num
-    out$articles = list()
-    for (j in 1:length(articles)) {
-        a = articles[[j]]
-        l = list()
-        l$slug = a$slug
-        l$year = i$year
-        l$pages = a$pages
-        l$title = a$title # strip italics? ...
-        l$authors = author_list(a$author)
-        # other?
-        out$articles[[a$slug]] = l
-    }
+  out <- list()
+  out$year <- i$year
+  out$volume <- i$volume
+  out$issue <- i$num
+  out$articles <- list()
+  for (j in 1:length(articles)) {
+    a <- articles[[j]]
+    l <- list()
+    l$slug <- a$slug
+    l$year <- i$year
+    l$pages <- a$pages
+    l$title <- a$title # strip italics? ...
+    l$authors <- author_list(a$author)
+    # other?
+    out$articles[[a$slug]] <- l
+  }
 
-    out
+  out
 }
 
 
 
 load_issues <- function() {
-    if (!grepl("/RJournal/articles$", getwd())) {
-        warning("Not in proper directory: start in RJournal/articles")
-        return()
-    }
-    cfg = yaml.load_file("../rjournal.github.io/_config.yml")
-    cfg$issues
+  if (!grepl("/RJournal/articles$", getwd())) {
+    warning("Not in proper directory: start in RJournal/articles")
+    return()
+  }
+  cfg <- yaml.load_file("../rjournal.github.io/_config.yml")
+  cfg$issues
 }
 
 ## Filter out a specific volume and number:
@@ -322,13 +322,13 @@ load_issues <- function() {
 ## issue = find_volume_num(issues, 9, 2)
 ## create_doi_from_issue(issue)
 find_volume_num <- function(issues, volume, num) {
-    out = Filter(function(i) i$volume==volume && i$num==num, issues)
-    if (length(out) == 1) {
-        out[[1]]
-    } else {
-        warning("Not uniquely identified")
-        return
-    }
+  out <- Filter(function(i) i$volume == volume && i$num == num, issues)
+  if (length(out) == 1) {
+    out[[1]]
+  } else {
+    warning("Not uniquely identified")
+    return
+  }
 }
 
 
@@ -346,35 +346,34 @@ find_volume_num <- function(issues, volume, num) {
 ## https://doi.crossref.org/servlet/submissionAdmin?sf=detail&submissionID=1442846045
 ## to check on a submission, where the ID is shown in the queue.
 upload_dois_from_issue <- function(issue,
-                                   login="rfou", passwd="see_EIC_instructions",
-                                   out=sprintf("/tmp/DOI_%s_%s.xml", issue$volume, issue$num),
-                                   url="test" # or live
-                                   ) {
+                                   login = "rfou", passwd = "see_EIC_instructions",
+                                   out = sprintf("/tmp/DOI_%s_%s.xml", issue$volume, issue$num),
+                                   url = "test" # or live
+) {
+  pissue <- process_config_yml_component(issue)
+  newDeposit(pissue, out)
 
-    pissue = process_config_yml_component(issue)
-    newDeposit(pissue, out)
+  ## test via
+  ## http://test.crossref.org, see http://help.crossref.org/verifying_your_xml
+  ## make real deposits with https://doi.crossref.org/servlet/deposit
 
-    ## test via
-    ## http://test.crossref.org, see http://help.crossref.org/verifying_your_xml
-    ## make real deposits with https://doi.crossref.org/servlet/deposit
+  q_url <- list(
+    "test" = "https://test.crossref.org/servlet/submissionAdmin?sf=showQ",
+    "live" = "https://doi.crossref.org/servlet/submissionAdmin?sf=showQ"
+  )[[url]]
 
-    q_url = list(
-        "test"="https://test.crossref.org/servlet/submissionAdmin?sf=showQ",
-        "live"="https://doi.crossref.org/servlet/submissionAdmin?sf=showQ"
-        )[[url]]
-
-    u_url = list(
-        "test"="https://test.crossref.org/servlet/deposit",
-        "live"="https://doi.crossref.org/servlet/deposit"
-        )[[url]]
+  u_url <- list(
+    "test" = "https://test.crossref.org/servlet/deposit",
+    "live" = "https://doi.crossref.org/servlet/deposit"
+  )[[url]]
 
 
-    cmd = sprintf("curl -F 'operation=doMDUpload' -F 'login_id=%s' -F 'login_passwd=%s' -F 'fname=@%s' %s", login, passwd, out, u_url)
+  cmd <- sprintf("curl -F 'operation=doMDUpload' -F 'login_id=%s' -F 'login_passwd=%s' -F 'fname=@%s' %s", login, passwd, out, u_url)
 
-    system(cmd)
-    resp = system(cmd)
-    print(resp)
-    browseURL(q_url)
+  system(cmd)
+  resp <- system(cmd)
+  print(resp)
+  browseURL(q_url)
 }
 
 ## create a DOI from the an issue component of the config$issues
@@ -393,20 +392,20 @@ upload_dois_from_issue <- function(issue,
 ## create_doi_from_issue(issue)
 ## Then, log onto https://doi.crossref.org
 ## upload this new xml file through upload; cross fingers
-create_doi_from_issue <- function(issue, outdir="/tmp/DOI_XML/") {
-    if (is.null(issue$volume)) {
-        warning("No volume for this issue")
-        return
-    }
-    out = paste0(outdir, "DOI-", issue$volume, "-", issue$num, ".xml")
-    issue = process_config_yml_component(issue)
-    newDeposit(issue, out)
+create_doi_from_issue <- function(issue, outdir = "/tmp/DOI_XML/") {
+  if (is.null(issue$volume)) {
+    warning("No volume for this issue")
+    return
+  }
+  out <- paste0(outdir, "DOI-", issue$volume, "-", issue$num, ".xml")
+  issue <- process_config_yml_component(issue)
+  newDeposit(issue, out)
 }
 
 ## create all DOI entries for initial upload
-create_doi_xmls <- function(outdir="/tmp/DOI_XML/", config="../rjournal.github.io/_config.yml") {
-    cfg =  yaml.load_file(config)
-    ## identify volume, volnum
-    dir.create(outdir)
-    sapply(cfg$issues, create_doi_from_issue, outdir=outdir)
+create_doi_xmls <- function(outdir = "/tmp/DOI_XML/", config = "../rjournal.github.io/_config.yml") {
+  cfg <- yaml.load_file(config)
+  ## identify volume, volnum
+  dir.create(outdir)
+  sapply(cfg$issues, create_doi_from_issue, outdir = outdir)
 }

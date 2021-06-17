@@ -6,7 +6,7 @@
 #' @param path Articles path
 #' @export
 set_articles_path <- function(path) {
-    .articles$path <- normalizePath(path.expand(path))
+  .articles$path <- normalizePath(path.expand(path))
 }
 
 #' Get the directory of the articles repository, either as set by
@@ -15,22 +15,24 @@ set_articles_path <- function(path) {
 #' This path is used to point to articles on your file system.
 #' @export
 get_articles_path <- function() {
-    dir <- .articles$path
-    if (!is.null(.articles$path)) {
-        if (!dir.exists(dir)) {
-            warning("Articles path set via set_articles_path() doe snot exits, ignoring.")
-            dir <- NULL
-        }
+  dir <- .articles$path
+  if (!is.null(.articles$path)) {
+    if (!dir.exists(dir)) {
+      warning("Articles path set via set_articles_path() doe snot exits, ignoring.")
+      dir <- NULL
     }
+  }
 
-    ## not set or not valid, use git
-    if (is.null(dir)) {
-        dir <- try(system("git rev-parse --show-toplevel", intern=TRUE),
-                   silent=TRUE)
-        if (inherits(dir, "try-error"))
-            error("Current directory is not a git repository, use set_articles_path() if you don't have wokring git (error: ", dir)
+  ## not set or not valid, use git
+  if (is.null(dir)) {
+    dir <- try(system("git rev-parse --show-toplevel", intern = TRUE),
+      silent = TRUE
+    )
+    if (inherits(dir, "try-error")) {
+      error("Current directory is not a git repository, use set_articles_path() if you don't have wokring git (error: ", dir)
     }
-    dir
+  }
+  dir
 }
 
 # Articles settings
