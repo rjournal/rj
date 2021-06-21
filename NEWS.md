@@ -1,4 +1,6 @@
 # rj 0.2.19
+2021-06-21
+ - new function to list articles that are accepted but not online
 2021-06-17
  - added `git(..)` helper function to call `git` properly.
    It honors the `GIT` environment variable.
@@ -8,7 +10,6 @@
    `warning("Article ", article$id, " has issues")` works.
  - `update_status` will update the last entry (with a warning)
    instead of appending if it is the same status.
-
 2021-06-07
  - removed check on RJournal.sty file being in article directory
  - updated template for minor revision to say "tentatively" accepted
