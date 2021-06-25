@@ -7,7 +7,7 @@
 filter_status(articles, status)
 }
 \arguments{
-\item{articles}{A vector of articles}
+\item{articles}{A vector of articles, as given by accepted_articles()}
 
 \item{status}{The status you are looking for}
 }

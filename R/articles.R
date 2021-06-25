@@ -41,8 +41,24 @@ new_id <- function() {
 }
 
 #' Find articles with a given status.
-#' @param articles A vector of articles
+#'
+#' @param articles A vector of articles, as given by accepted_articles()
 #' @param status The status you are looking for
+#' @export
 filter_status <- function(articles, status) {
   Filter(function(a) last_status(a)$status == status, articles)
+}
+
+#' Get articles to go online
+#'
+#' Find the articles that are accepted but have not yet been
+#' published to online
+#'
+#' @export
+get_accepted_but_not_online <- function() {
+  l <- accepted_articles()
+  o <- filter_status(l, "online")
+  l_id <- sub("Accepted/", "", sapply(l, '[[', 5))
+  o_id <- sub("Accepted/", "", sapply(o, '[[', 5))
+  l_id[!(l_id %in% o_id)]
 }

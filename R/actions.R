@@ -15,6 +15,13 @@
 update_status <- function(article, status, comments = "", date = Sys.Date()) {
   article <- as.article(article)
   if (is.character(date)) date <- as.Date(date)
+  if (length(article$status)) {
+     last <- article$status[[length(article$status)]]
+     if (last$status == status) {
+       warning("Article ", article$id, " already has last entry ", status, ", replacing it")
+       article$status <- status_list(article$status[-length(article$status)])
+     }
+  }
   article$status <- c(article$status, status(status, date, comments))
   save_article(article)
 }
@@ -28,11 +35,17 @@ reject <- function(article, comments = "", date = Sys.Date()) {
   cli::cli_alert_info("Updating DESCRIPTION file")
   update_status(article, "rejected", comments = comments, date = date)
 
+<<<<<<< HEAD
   from <- article$path
   to <- file.path("Rejected", basename(article$path))
+=======
+  apath <- get_articles_path()
+  from <- article$path
+  to <- file.path(apath, "Rejected", basename(article$path))
+>>>>>>> upstream/master
   msg <- paste("Moving", from, "to", to)
   cli::cli_alert_info(msg)
-  system2("git", args = c("mv", from, to))
+  git("mv", from, to)
 
   cli::cli_alert_info("Creating Email")
   email_template(article, "reject")
@@ -52,11 +65,17 @@ reject_format <- function(article, comments = "", date = Sys.Date()) {
   cli::cli_alert_info("Updating DESCRIPTION file")
   update_status(article, "rejected", comments = comments, date = data$date)
 
+<<<<<<< HEAD
   from <- data$path
   to <- file.path("Rejected", basename(data$path))
+=======
+  apath <- get_articles_path()
+  from <- data$path
+  to <- file.path(apath, "Rejected", basename(data$path))
+>>>>>>> upstream/master
   msg <- paste("Moving", from, "to", to)
   cli::cli_alert_info(msg)
-  system2("git", args = c("mv", from, to))
+  git("mv", from, to)
 
   # cli::cli_alert_info("Creating Email")
   # email_template(article, "reject_format")
@@ -77,11 +96,17 @@ accept <- function(article, comments = "", date = Sys.Date()) {
   message("Accepting ", format(article$id))
   update_status(article, "accepted", comments = comments, date = date)
 
+<<<<<<< HEAD
   system(paste(
     "git mv",
     shQuote(article$path),
     shQuote(file.path("Accepted", basename(article$path)))
   ))
+=======
+  apath <- get_articles_path()
+  git("mv", article$path,
+            file.path(apath, "Accepted", basename(article$path)))
+>>>>>>> upstream/master
   email_template(article, "accept")
 
   return(invisible(NULL))
@@ -94,11 +119,17 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   message("Withdrawing ", format(article$id))
   update_status(article, "withdrawn", comments = comments, date = date)
 
+<<<<<<< HEAD
   system(paste(
     "git mv",
     shQuote(article$path),
     shQuote(file.path("Rejected", basename(article$path)))
   ))
+=======
+  apath <- get_articles_path()
+  git("mv", article$path,
+            file.path(apath, "Rejected", basename(article$path)))
+>>>>>>> upstream/master
   email_template(article, "widthdraw")
 
   return(invisible(NULL))
@@ -118,7 +149,8 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
 get_accepted_articles <- function() {
   # Warning: this gets all the articles that have been accepted
   # If any are not to appear in the issue need to work out how to ignore
-  acc <- list.files("Accepted")
+  apath <- get_articles_path()
+  acc <- list.files(file.path(apath, "Accepted"))
 
   cli::cat_line("Drafting proofing emails")
   draft_proofing(acc)

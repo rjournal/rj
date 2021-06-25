@@ -75,6 +75,7 @@ email_text <- function(text, means = getOption("RJ_EMAIL_TOOL", "mailto")) {
   tmp <- tempfile("mail", ".txt") # DC:took out an extra comma
   writeLines(text, tmp)
   switch(means,
+<<<<<<< HEAD
     show = file.show(tmp),
     edit = file.show(tmp),
     open = system(paste("open", shQuote(tmp))),
@@ -103,6 +104,34 @@ email_text <- function(text, means = getOption("RJ_EMAIL_TOOL", "mailto")) {
       stop("Unknown RJ_EMAIL_TOOL, must be one of mailto, browser, show, edit, open or clip.")
     }
   )
+=======
+         show = file.show(tmp),
+         edit = file.show(tmp),
+         open = system(paste("open", shQuote(tmp))),
+         clip = {
+             if (length(grep("^darwin", R.Version()$os))) {
+                 message("E-mail has been written to the macOS clipboard")
+                 on.exit(unlink(tmp))
+                 con <- pipe("pbcopy")
+                 writeLines(text, con)
+                 close(con)
+             } else if (.Platform$OS.type == "windows") {
+                 message("E-mail has been written to the Windows clipboard")
+                 on.exit(unlink(tmp))
+                 utils::writeClipboard(text, format = 1)
+             } else {
+                 on.exit(unlink(tmp))
+                 if (system("xsel -i -c <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0 &&
+                     system("xclip -selection clipboard <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0)
+                     stop("Neither xclip not xsel works - please install either tool")
+                 message("E-mail has been written to the X11 clipboard")
+             }
+         },
+         {
+             unlink(tmp)
+             stop("Unknown RJ_EMAIL_TOOL, must be one of mailto, browser, show, edit, open or clip.")
+         })
+>>>>>>> upstream/master
 }
 
 find_template <- function(name) {
