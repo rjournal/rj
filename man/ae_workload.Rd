@@ -7,5 +7,5 @@
 ae_workload()
 }
 \description{
-The function Github REST API to query the ae prefixed repository and extract the content in the submissions folder.
+The function uses Github REST API to query the ae prefixed repository and extract the content in the submissions folder.
 }

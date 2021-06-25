@@ -2,18 +2,37 @@
 % Please edit documentation in R/article.R
 \name{article}
 \alias{article}
-\title{Create a new article (S3 class)}
+\alias{as.article}
+\title{S3 class for article objects}
 \usage{
 article(..., quiet = FALSE)
+
+as.article(id)
 }
 \arguments{
 \item{...}{Named arguments giving the components of an article:
 id, authors, title, editor, reviewers, status}
 
 \item{quiet}{if \code{TRUE} suppresses failure messages.}
+
+\item{id}{a path to a DESCRIPTION, a path to a directory containing
+DESCRIPTION, or a article name, found in a sub-directory rejected,
+accepted or submissions}
 }
 \description{
-This function will always succeed: if the article is not parseable it will
+Create or convert input into an s3 article object
+}
+\details{
+if the article is not parsable, \code{article()} will
 print an error message and return a unparsed blob. This ensures that
 information is not lost even if some articles have parsing errors.
+
+Usually the best way to use \code{as_article()} is to have your working directory set to the
+admin repo, and refer to articles by their id. See the examples section.
+}
+\examples{
+\dontrun{
+as.article("2012-01")
+as.article("2012-02")
+}
 }

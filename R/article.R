@@ -1,24 +1,31 @@
-#' Create a new article (S3 class)
+#' S3 class for article objects
 #'
-#' This function will always succeed: if the article is not parseable it will
+#' Create or convert input into an s3 article object
+#'
+#' @details
+#' if the article is not parsable, \code{article()} will
 #' print an error message and return a unparsed blob. This ensures that
 #' information is not lost even if some articles have parsing errors.
+#'
+#' Usually the best way to use \code{as_article()} is to have your working directory set to the
+#' admin repo, and refer to articles by their id. See the examples section.
 #'
 #' @param ... Named arguments giving the components of an article:
 #'   id, authors, title, editor, reviewers, status
 #' @param quiet if \code{TRUE} suppresses failure messages.
 #' @export
+#' @rdname article
 article <- function(..., quiet = FALSE) {
   tryCatch(make_article(...),
-           error = function(e) {
-             article <- unparsed(...)
-             if (!quiet) {
-               message("Failed to parse: ")
-               print(article)
-               message(e, "\n")
-             }
-             article
-           }
+    error = function(e) {
+      article <- unparsed(...)
+      if (!quiet) {
+        message("Failed to parse: ")
+        print(article)
+        message(e, "\n")
+      }
+      article
+    }
   )
 }
 
@@ -29,14 +36,15 @@ article <- function(..., quiet = FALSE) {
 #'   accepted or submissions
 #' @export
 #' @examples
-#' # Usually the best way to use is to have your working directory set to the
-#' # admin repo, and refer to articles by their id.
 #' \dontrun{
 #' as.article("2012-01")
 #' as.article("2012-02")
 #' }
+#' @rdname article
 as.article <- function(id) {
-  if (is.article(id)) return(id)
+  if (is.article(id)) {
+    return(id)
+  }
 
   # Check to see if it's an existing directory
   if (file.exists(id) && is.dir(id)) {
@@ -46,14 +54,16 @@ as.article <- function(id) {
     path <- id
   } else {
     # Otherwise, assume we're in the admin directory
-    base <- c("Rejected", "Accepted", "Submissions",
-              file.path("Proofs", dir("Proofs")))
+    base <- c(
+      "Rejected", "Accepted", "Submissions",
+      file.path("Proofs", dir("Proofs"))
+    )
     pos <- file.exists(file.path(get_articles_path(), base, id))
     # Assume working from articles directory
     # pos <- file.exists(base, id)
 
     if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
-    if (sum(pos) == 2){
+    if (sum(pos) == 2) {
       path <- file.path(get_articles_path(), base, id)
       if ("Rejected" %in% basename(dirname(path))) {
         warning(id, "found in multiple locations, ignoring the Rejected folder copy.")
@@ -108,7 +118,8 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "", a
     editor = str_trim(editor),
     ae = str_trim(ae),
     reviewers = parse_address_list(reviewers),
-    status = parse_status_list(status)), class = "article")
+    status = parse_status_list(status)
+  ), class = "article")
 }
 
 
@@ -116,7 +127,8 @@ parse_supplementaries <- function(suppl) {
   x <- str_trim(str_split(suppl, ",\\s*\n")[[1]])
   x <- x[str_length(x) > 0]
   xs <- lapply(x, function(y) {
-    class(y) <- "supplfile"; y
+    class(y) <- "supplfile"
+    y
   })
   class(xs) <- "supplfile_list"
   xs

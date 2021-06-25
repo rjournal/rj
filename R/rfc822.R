@@ -9,7 +9,9 @@
 #' parse_address_list("<a@@b.com> Alison, <c@@d.com> Colin")
 parse_address_list <- function(x) {
   stopifnot(is.character(x), length(x) == 1)
-  if (empty(x)) return(address_list())
+  if (empty(x)) {
+    return(address_list())
+  }
 
   addresses <- str_trim(str_split(x, ",")[[1]])
   address_list(lapply(addresses, parse_address))
@@ -50,9 +52,9 @@ address <- function(email = NULL, name = NULL, comment = NULL) {
 
 #' @export
 format.address <- function(x, ...) {
-  name <- if (!is.null(x$name))    paste('"', x$name, '"', sep = "")
-  email <- if (!is.null(x$email))  paste("<", x$email, ">", sep = "")
-  comment <- if (!is.null(x$comment))  paste("[", x$comment, "]", sep = "")
+  name <- if (!is.null(x$name)) paste('"', x$name, '"', sep = "")
+  email <- if (!is.null(x$email)) paste("<", x$email, ">", sep = "")
+  comment <- if (!is.null(x$comment)) paste("[", x$comment, "]", sep = "")
 
   paste(c(name, email, comment), collapse = " ")
 }
