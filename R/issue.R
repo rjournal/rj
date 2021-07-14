@@ -64,7 +64,9 @@ issue_file <- function(id) {
 }
 
 # see notes, top of this file
-make_proof <- function(id, share_path = file.path("..", "share"), exec = FALSE) {
+make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
+  old <- setwd(get_articles_path())
+  on.exit(setwd(old))
   dir <- issue_dir(id)
   if (!file.exists(dir)) {
     #        stop("Proof ", id, " already exists")
