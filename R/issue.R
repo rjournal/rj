@@ -33,8 +33,10 @@ cmd_regex <- function(x) {
 }
 
 `$.tex` <- function(x, name) {
-  type.convert(sub(".*\\{(.*?)\\}", "\\1",
-                   grep(cmd_regex(name), x, value = TRUE)))
+  type.convert(sub(
+    ".*\\{(.*?)\\}", "\\1",
+    grep(cmd_regex(name), x, value = TRUE)
+  ))
 }
 
 `$<-.tex` <- function(x, name, value) {
@@ -65,11 +67,11 @@ issue_file <- function(id) {
 make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   old <- setwd(get_articles_path())
   on.exit(setwd(old))
-
   dir <- issue_dir(id)
-  if (!file.exists(dir))
+  if (!file.exists(dir)) {
     #        stop("Proof ", id, " already exists")
     dir.create(dir)
+  }
 
   prev_id <- previous_id(id)
   prev_dir <- file.path("Proofs", prev_id)
@@ -87,22 +89,27 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   }
   issue$volnum <- number
   issue$year <- issue_year(id)
-  issue$month <- switch(number, "1" = "June", "2" = "December")
+  issue$month <- switch(number,
+    "1" = "June",
+    "2" = "December"
+  )
 
   arts <- accepted_articles()
   ready <- filter_status(arts, "online")
   for (art in ready) {
     if (exec) {
-        system(paste("git mv",
-                     shQuote(art$path),
-                     shQuote(file.path(dir, format(art$id)))))
+      system(paste(
+        "git mv",
+        shQuote(art$path),
+        shQuote(file.path(dir, format(art$id)))
+      ))
     } else {
       cat(art$path, file.path(dir, format(art$id)), "\n")
     }
   }
   message("Do not forget to update the editorial board in ", issue_file)
 
-  if(!exec) {
+  if (!exec) {
     cli_alert_info("If these articles look correct, re-run the function with `exec = TRUE` to execute the move.")
   }
 }
@@ -115,7 +122,7 @@ insert_replace_n <- function(tex, at, lines, n) {
   c(tex[1:(at - 1)], lines, tex[(at + n):length(tex)])
 }
 
-#run in Proofs/issue-id
+# run in Proofs/issue-id
 update_RJwrapper_page_no <- function(art_id, start, vol, no, yr, mon) {
   tex <- read_tex(file.path(art_id, "RJwrapper.tex"))
   pos <- grepl(cmd_regex("sectionhead"), tex)
@@ -127,23 +134,26 @@ update_RJwrapper_page_no <- function(art_id, start, vol, no, yr, mon) {
   }
   writeLines(tex, file.path(art_id, "orig_RJwrapper.tex"))
   n <- 5
-  insert <- c("\\sectionhead{Contributed research article}",
-              paste0("\\volume{", vol, "}"),
-              paste0("\\volnumber{", no, "}"),
-              paste0("\\year{", yr, "}"),
-              paste0("\\month{", mon, "}"),
-              paste0("\\setcounter{page}{", start, "}"))
-  #cat(which(pos), n, "\n")
+  insert <- c(
+    "\\sectionhead{Contributed research article}",
+    paste0("\\volume{", vol, "}"),
+    paste0("\\volnumber{", no, "}"),
+    paste0("\\year{", yr, "}"),
+    paste0("\\month{", mon, "}"),
+    paste0("\\setcounter{page}{", start, "}")
+  )
+  # cat(which(pos), n, "\n")
   out <- insert_replace_n(tex, which(pos), insert, n)
   writeLines(out, file.path(art_id, "RJwrapper.tex"))
   insert[6]
 }
 
-#run in Proofs/issue-id
+# run in Proofs/issue-id
 copy_RJwrapper_pdf_slug_archive <- function(art_id, arch_path, arch_yr) {
   slug <- as.article(art_id)$slug
-  if (unlist(strsplit(slug, "-"))[2] != arch_yr)
+  if (unlist(strsplit(slug, "-"))[2] != arch_yr) {
     stop("wrong slug year:", unlist(strsplit(slug, "-"))[2])
+  }
   src <- file.path(art_id, "RJwrapper.pdf")
   dest <- file.path(arch_path, arch_yr, slug, paste0(slug, ".pdf"))
   file.copy(src, dest, overwrite = TRUE)
@@ -186,12 +196,14 @@ convert_bbl_tex <- function(tex_path) {
   out <- insert_replace(tex, bib_line, bbl)
   # change by NM, Sept. 1, 2019; bbl path wrong
   # writeLines(out, sub("/", "/bbl-", tex_path))
-  slashes <- str_locate_all(tex_path, '/')[[1]]
-  sl3 <- slashes[3, 1]  # third slash loc
+  slashes <- str_locate_all(tex_path, "/")[[1]]
+  sl3 <- slashes[3, 1] # third slash loc
   bbltex_path <-
-    paste0(substr(tex_path,1,sl3 - 1),
-           '/bbl-',
-           substr(tex_path,sl3 + 1, nchar(tex_path)))
+    paste0(
+      substr(tex_path, 1, sl3 - 1),
+      "/bbl-",
+      substr(tex_path, sl3 + 1, nchar(tex_path))
+    )
   writeLines(out, bbltex_path)
 
   bbltex_path
@@ -205,8 +217,9 @@ convert_one_bbl <- function(id) {
   if (length(tex_path) > 1L) {
     stop("Multiple tex files included: ", paste(tex_path, collapse = ", "))
   }
-  if (tools::file_ext(tex_path) != "tex")
+  if (tools::file_ext(tex_path) != "tex") {
     tex_path <- paste0(tex_path, ".tex")
+  }
 
   convert_bbl_tex(tex_path)
 }
@@ -216,8 +229,10 @@ convert_bbl <- function(articles) {
 }
 
 article_paths <- function(id) {
-  paths <- dir(file.path("Proofs", id), pattern = "[0-9]{4}-[0-9]+$",
-               full.names = TRUE)
+  paths <- dir(file.path("Proofs", id),
+    pattern = "[0-9]{4}-[0-9]+$",
+    full.names = TRUE
+  )
   paths[file.info(paths)[, "isdir"]]
 }
 
@@ -231,7 +246,8 @@ build_include <- function(tex) {
     "\\begin{article}\n",
     "\\subimport{", basename(dirname(tex)), "/}{", basename(sub("/", "/bbl-", tex)), "}\n",
     "\\end{article}\n",
-    "\\newpage\n")
+    "\\newpage\n"
+  )
 }
 
 # see notes, top of this file
@@ -282,8 +298,9 @@ build_issue <- function(id) {
 ## run from articles
 init_archive_path <- function(id, web_path) {
   archive_path <- file.path(web_path, "archive", id)
-  if (file.exists(archive_path))
+  if (file.exists(archive_path)) {
     unlink(archive_path, recursive = TRUE)
+  }
   dir.create(archive_path)
 
   issue_file <- issue_file(id)
@@ -293,10 +310,14 @@ init_archive_path <- function(id, web_path) {
     writeLines(c("---", as.yaml(header), "---"), file)
   }
 
-  header <- list(layout = "issue_landing-new",
-                 title = paste0("Volume ", issue$volume, "/", issue$volnum,
-                                ", ", issue$month, " ", issue$year),
-                 issue = id)
+  header <- list(
+    layout = "issue_landing-new",
+    title = paste0(
+      "Volume ", issue$volume, "/", issue$volnum,
+      ", ", issue$month, " ", issue$year
+    ),
+    issue = id
+  )
   write_header(header, file.path(archive_path, "index.html"))
 
   header_bib <- header
@@ -348,11 +369,13 @@ articles_metadata <- function(id) {
 
 issue_news_metadata <- function(news) {
   tex <- read_tex(news)
-  list(title = tex$title, author = tex$author,
-       slug = tools::file_path_sans_ext(basename(news)))
+  list(
+    title = tex$title, author = tex$author,
+    slug = tools::file_path_sans_ext(basename(news))
+  )
 }
 
-post_lp_metadata <- function(id, fs=c("foundation", "cran", "bioc", "ch")) {
+post_lp_metadata <- function(id, fs = c("foundation", "cran", "bioc", "ch")) {
   files <- paste0(c("foundation", "cran", "bioc", "ch"), ".tex")
   news <- file.path(issue_dir(id), "news", files)
   lapply(news[file.exists(news)], issue_news_metadata)
@@ -360,36 +383,48 @@ post_lp_metadata <- function(id, fs=c("foundation", "cran", "bioc", "ch")) {
 
 bibtex_escape_case <- function(x) {
   ## Tries to escape the names of languages and packages
-  sub(" ([[:lower:].]+)$", " {\\1}",
-      sub("^([[:lower:].]+)", "{\\1}",
-          gsub(" ([[:upper:]]+[[:upper:][:digit:].]*[+]*)($|[:, ])",
-               " {\\1}\\2",
-               gsub("(\\w+[[:upper:].]+[[:alnum:]*.]*)", "{\\1}",
-                    x))))
+  sub(
+    " ([[:lower:].]+)$", " {\\1}",
+    sub(
+      "^([[:lower:].]+)", "{\\1}",
+      gsub(
+        " ([[:upper:]]+[[:upper:][:digit:].]*[+]*)($|[:, ])",
+        " {\\1}\\2",
+        gsub(
+          "(\\w+[[:upper:].]+[[:alnum:]*.]*)", "{\\1}",
+          x
+        )
+      )
+    )
+  )
 }
 
 bibtex_encode_non_ascii <- function(x) {
-  map <- c("\xc3\xa1" = "{\\\' a}",
-           "\xc3\xa4" = "{\\\" a}",
-           "\xc3\xa9" = "{\\\' e}",
-           "\xc3\xad" = "{\\\' i}",
-           "\xc3\xaf" = "{\\\" i}",
-           "\xc3\xb1" = "{\\~ n}",
-           "\xc3\xb3" = "{\\\' o}")
+  map <- c(
+    "\xc3\xa1" = "{\\\' a}",
+    "\xc3\xa4" = "{\\\" a}",
+    "\xc3\xa9" = "{\\\' e}",
+    "\xc3\xad" = "{\\\' i}",
+    "\xc3\xaf" = "{\\\" i}",
+    "\xc3\xb1" = "{\\~ n}",
+    "\xc3\xb3" = "{\\\' o}"
+  )
   Encoding(names(map)) <- "UTF-8"
   for (i in seq_along(map)) {
-    x <- gsub(names(map)[i], map[i], x, fixed=TRUE)
+    x <- gsub(names(map)[i], map[i], x, fixed = TRUE)
   }
   x
 }
 
 annotate_metadata <- function(article, start, end) {
   bibtitle <- bibtex_escape_case(article$title)
-  if (bibtitle != article$title)
+  if (bibtitle != article$title) {
     article$bibtitle <- bibtitle
+  }
   bibauthor <- bibtex_encode_non_ascii(article$author)
-  if (!identical(bibauthor, article$author))
+  if (!identical(bibauthor, article$author)) {
     article$bibauthor <- bibauthor
+  }
   article$pages <- as.integer(c(start, end))
   article$slug <- tolower(article$slug)
   article
@@ -412,18 +447,20 @@ contents_metadata <- function(id) {
 
 globalVariables("articles")
 # XXX: Articles loaded via .RData file!
-contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
-                                                 "cran"=1, "bioc"=1, "ch"=1)) {
+contents_lp_metadata <- function(id, post_file = c(
+                                   "foundation" = 1, "erum" = 3,
+                                   "cran" = 1, "bioc" = 1, "ch" = 1
+                                 )) {
   setwd(file.path("Proofs", id))
   md <- list()
   pre_md <- get_pre_md()
   md <- c(md, list(pre_md))
   md <- c(md, list(list(heading = "Contributed Research Articles")))
 
-  arts0 <- list.files(pattern="^20[0-9]{2}-[0-9][0-9]*")
+  arts0 <- list.files(pattern = "^20[0-9]{2}-[0-9][0-9]*")
   arts <- strsplit(arts0, "-")
   arts1 <- t(sapply(arts, as.integer))
-  arts2 <- arts0[order(arts1[,1], arts1[,2])]
+  arts2 <- arts0[order(arts1[, 1], arts1[, 2])]
   articles <- arts2
 
   # load("articles.RData")
@@ -431,12 +468,13 @@ contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
   for (art in articles) {
     cat(art, "\n")
     art_mds[[art]] <- online_metadata_for_article(as.article(art),
-                                                  final=TRUE)
+      final = TRUE
+    )
     cat(art_mds[[art]]$pages, "\n")
   }
   md <- c(md, art_mds)
   md <- c(md, list(list(heading = "News and Notes")))
-  post_md <- get_post_md("news", file=post_file)
+  post_md <- get_post_md("news", file = post_file)
   md <- c(md, post_md)
   setwd("../..")
   md
@@ -444,24 +482,28 @@ contents_lp_metadata <- function(id, post_file=c("foundation"=1, "erum"=3,
 
 issue_metadata <- function(id) {
   tex <- read_tex(issue_file(id))
-  list(issue=id,
-       year=tex$year,
-       volume=tex$volume,
-       num=tex$volnum,
-       month=tex$month,
-       bibmonth=tolower(tex$month),
-       articles=contents_metadata(id))
+  list(
+    issue = id,
+    year = tex$year,
+    volume = tex$volume,
+    num = tex$volnum,
+    month = tex$month,
+    bibmonth = tolower(tex$month),
+    articles = contents_metadata(id)
+  )
 }
 
-issue_lp_metadata <- function(id, post_file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
+issue_lp_metadata <- function(id, post_file = c("foundation" = 1, "cran" = 1, "bioc" = 1, "ch" = 1)) {
   tex <- read_tex(issue_file(id))
-  list(issue=id,
-       year=tex$year,
-       volume=tex$volume,
-       num=tex$volnum,
-       month=tex$month,
-       bibmonth=tolower(tex$month),
-       articles=unname(contents_lp_metadata(id, post_file=post_file)))
+  list(
+    issue = id,
+    year = tex$year,
+    volume = tex$volume,
+    num = tex$volnum,
+    month = tex$month,
+    bibmonth = tolower(tex$month),
+    articles = unname(contents_lp_metadata(id, post_file = post_file))
+  )
 }
 
 write_issue_metadata <- function(web_path, md) {
@@ -481,7 +523,7 @@ replace_ext <- function(f, new) {
 page_bounds <- function(id) {
   toc_path <- replace_ext(issue_file(id), "toc")
   toc <- readLines(toc_path)
-  chapters <- toc[grepl("{chapter}", toc, fixed=TRUE)]
+  chapters <- toc[grepl("{chapter}", toc, fixed = TRUE)]
   start <- as.integer(sub(".*\\}\\{([0-9]+)\\}\\{.*", "\\1", chapters))
   pdf_path <- replace_ext(toc_path, "pdf")
   pages <- pdftools::pdf_info(pdf_path)$pages
@@ -492,11 +534,13 @@ page_bounds <- function(id) {
 
 write_article_pdfs <- function(id, archives_path, md) {
   issue_pdf <- replace_ext(issue_file(id), "pdf")
-  for(x in md) {
+  for (x in md) {
     if (!is.null(x$heading)) next
-    pdftk(issue_pdf,
-          "cat ", x$pages[1], "-", x$pages[2], " ",
-          "output ", file.path(archives_path, paste0(x$slug, ".pdf")))
+    pdftk(
+      issue_pdf,
+      "cat ", x$pages[1], "-", x$pages[2], " ",
+      "output ", file.path(archives_path, paste0(x$slug, ".pdf"))
+    )
   }
 }
 
@@ -510,7 +554,8 @@ pdftk <- function(input, ...) {
 
   if (!is.null(attr(res, "status"))) {
     stop("Non-zero exit: ", attr(res, "status"), "\n", attr(res, "errmsg"),
-         call. = FALSE)
+      call. = FALSE
+    )
   }
   res
 }
@@ -539,11 +584,12 @@ update_layout <- function(id, web_path) {
 #' @param post_file XXX
 #' @export
 publish_issue <- function(id,
-                          web_path=file.path("..", "rjournal.github.io"),
-                          post_file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
-  if (!file.exists(web_path))
+                          web_path = file.path("..", "rjournal.github.io"),
+                          post_file = c("foundation" = 1, "cran" = 1, "bioc" = 1, "ch" = 1)) {
+  if (!file.exists(web_path)) {
     stop("web_path '", web_path, "' does not exist, please specify")
-  md <- issue_lp_metadata(id, post_file=post_file)
+  }
+  md <- issue_lp_metadata(id, post_file = post_file)
   archive_path <- init_archive_path(id, web_path)
   write_article_pdfs(id, archive_path, md$articles)
   cleanup_accepted(id, web_path)
@@ -557,49 +603,51 @@ get_startpg_from_nonart_tex <- function(dir, file) {
   str_search_start <- "((\\\\setcounter\\{page\\}\\{)([0-9]*)(\\}))"
   start_str <- c(na.omit(str_trim(str_extract(RJw, str_search_start))))
   start0 <- c(str_locate(start_str, "((\\{)([0-9]*)(\\}))"))
-  start <- as.integer(str_sub(start_str, start0[1]+1, start0[2]-1))
+  start <- as.integer(str_sub(start_str, start0[1] + 1, start0[2] - 1))
   start
 }
 
-get_md_from_nonart_pdf <- function(from, nautlns=1) {
+get_md_from_nonart_pdf <- function(from, nautlns = 1) {
   from <- paste0(from, ".pdf")
   toc <- pdftools::pdf_toc(from)
   title <- toc$children[[1L]]$title
-  bibtitle <- str_wrap(title, width=60, exdent=10)
+  bibtitle <- str_wrap(title, width = 60, exdent = 10)
   text <- pdftools::pdf_text(from)
 
   t1s <- str_split(text[1], "\\n")[[1L]]
   byln <- which(!is.na(str_locate(t1s, "^[ ]*by")[, "start"]))[1]
-  aut0 <- paste(t1s[byln:(byln+nautlns-1)], collapse=" ")
+  aut0 <- paste(t1s[byln:(byln + nautlns - 1)], collapse = " ")
   aut1 <- str_trim(str_replace(aut0, "by", ""))
   aut2 <- str_replace_all(aut1, ", and ", ", ")
   aut3 <- str_replace_all(aut2, " and ", ", ")
   author <- unlist(str_split(aut3, ", "))
-  bibauthor <- str_wrap(paste(author, collapse=" and "), width=60, exdent=10)
-  res <- list(author=author, title=title, bibtitle=bibtitle,
-              bibauthor=bibauthor)
+  bibauthor <- str_wrap(paste(author, collapse = " and "), width = 60, exdent = 10)
+  res <- list(
+    author = author, title = title, bibtitle = bibtitle,
+    bibauthor = bibauthor
+  )
   attr(res, "len") <- pdftools::pdf_info(from)$pages
   res
 }
 
-get_pre_md <- function(dir="editorial", file="editorial") {
+get_pre_md <- function(dir = "editorial", file = "editorial") {
   res <- get_md_from_nonart_pdf(file.path(dir, file))
   start <- get_startpg_from_nonart_tex(dir, file)
-  res$pages <- as.integer(c(start, start+attr(res, "len")-1))
+  res$pages <- as.integer(c(start, start + attr(res, "len") - 1))
   attr(res, "len") <- NULL
-  res <- c(list(slug=file, cat="Editorial"), res)
+  res <- c(list(slug = file, cat = "Editorial"), res)
   res
 }
 
-get_post_md <- function(dir="news", file=c("foundation"=1, "cran"=1, "bioc"=1, "ch"=1)) {
-  res <- vector(mode="list", length=length(file))
+get_post_md <- function(dir = "news", file = c("foundation" = 1, "cran" = 1, "bioc" = 1, "ch" = 1)) {
+  res <- vector(mode = "list", length = length(file))
   nms <- names(file)
-  for (i in seq(along=file)) {
+  for (i in seq(along = file)) {
     resi <- get_md_from_nonart_pdf(file.path(dir, nms[i]), unname(file[i]))
     starti <- get_startpg_from_nonart_tex(dir, nms[i])
-    resi$pages <- as.integer(c(starti, starti+attr(resi, "len")-1))
+    resi$pages <- as.integer(c(starti, starti + attr(resi, "len") - 1))
     attr(resi, "len") <- NULL
-    res[[i]] <- c(list(slug=nms[i]), resi)
+    res[[i]] <- c(list(slug = nms[i]), resi)
   }
   res
 }
@@ -611,10 +659,12 @@ get_post_md <- function(dir="news", file=c("foundation"=1, "cran"=1, "bioc"=1, "
 #' @param macros Latex macros
 #' @export
 suffix_labels <- function(file, suffix,
-                          macros = c("label", "ref", "cref", "autoref",
-                                     "pageref", "subref", "nameref", "eqref",
-                                     "bibitem", "cite", "citep", "citealt",
-                                     "citet", "citealp")){
+                          macros = c(
+                            "label", "ref", "cref", "autoref",
+                            "pageref", "subref", "nameref", "eqref",
+                            "bibitem", "cite", "citep", "citealt",
+                            "citet", "citealp"
+                          )) {
   macros <- paste0(macros, collapse = "|")
   pattern <- paste0("\\\\(", macros, ")\\s*((\\[([^\\]]*)\\]\\s*)*)\\{([^\\}]+)\\}")
   txt <- readLines(file)
@@ -624,82 +674,83 @@ suffix_labels <- function(file, suffix,
     txt,
     "(?<!%)\\\\input\\s*\\{([^\\}]+)\\}"
   )
-  subarticles <- subarticles[!is.na(subarticles[,2]),2]
+  subarticles <- subarticles[!is.na(subarticles[, 2]), 2]
   lapply(file.path(dirname(file), subarticles), suffix_labels, suffix = suffix, macros = macros)
 
   txt <- stringr::str_replace_all(
     paste(txt, collapse = "\n"), pattern,
-    function(x){
+    function(x) {
       x <- stringr::str_match(x, pattern)
       sprintf(
         "\\%s%s{%s}",
-        x[,2], if(is.na(x[,3])) "" else x[,3],
-        paste(stringr::str_trim(stringr::str_split(x[,6], ",")[[1]]), suffix,
-              sep = "-", collapse = ",")
+        x[, 2], if (is.na(x[, 3])) "" else x[, 3],
+        paste(stringr::str_trim(stringr::str_split(x[, 6], ",")[[1]]), suffix,
+          sep = "-", collapse = ","
+        )
       )
     }
   )
   writeLines(txt, file)
 }
 
-#init_archive_path(id, web_path)
-#md <- issue_lp_metadata(id)
-#write_article_pdfs(id, archive_path, md$articles) ??
+# init_archive_path(id, web_path)
+# md <- issue_lp_metadata(id)
+# write_article_pdfs(id, archive_path, md$articles) ??
 
-#write_non_articles_pdf(???)
+# write_non_articles_pdf(???)
 
-#cleanup_accepted(id, web_path)
-#write_issue_metadata(web_path, md)
-#update_lp_layout(id, web_path) ??
+# cleanup_accepted(id, web_path)
+# write_issue_metadata(web_path, md)
+# update_lp_layout(id, web_path) ??
 
 
 
 # run in Proofs/<id>
-#arts0 <- list.files(patt="^201[0-9]-[0-9][0-9]*")
-#arts <- strsplit(arts0, "-")
-#arts1 <- t(sapply(arts, as.integer))
-#arts2 <- arts0[order(arts1[,1], arts1[,2])]
-#articles <- arts2
-#save(articles, file="articles.RData")
+# arts0 <- list.files(patt="^201[0-9]-[0-9][0-9]*")
+# arts <- strsplit(arts0, "-")
+# arts1 <- t(sapply(arts, as.integer))
+# arts2 <- arts0[order(arts1[,1], arts1[,2])]
+# articles <- arts2
+# save(articles, file="articles.RData")
 
-#bib_keys <- list()
+# bib_keys <- list()
 # for (i in seq(along=articles)) {
-#bib_keys[[articles[i]]] <- rj:::find_stack_bib_keys(articles[i])
+# bib_keys[[articles[i]]] <- rj:::find_stack_bib_keys(articles[i])
 
-#for (ii in seq(along=bib_keys)) { if(ii > 1) { nms <- names(bib_keys); cat(ii, nms[1], ":", nms[ii-1], "|", nms[i]); cat(" ", any(unlist(bib_keys[1:(ii-1)]) %in% bib_keys[[ii]])); cat("\n") }}
-#bib_keys[[i]][which(bib_keys[[i]] %in% unlist(bib_keys[1:(i-1)]))]
-#}
+# for (ii in seq(along=bib_keys)) { if(ii > 1) { nms <- names(bib_keys); cat(ii, nms[1], ":", nms[ii-1], "|", nms[i]); cat(" ", any(unlist(bib_keys[1:(ii-1)]) %in% bib_keys[[ii]])); cat("\n") }}
+# bib_keys[[i]][which(bib_keys[[i]] %in% unlist(bib_keys[1:(i-1)]))]
+# }
 
 
 # for (i in seq(along=articles)) {
-#rj:::convert_one_bbl(articles[i])
-#}
+# rj:::convert_one_bbl(articles[i])
+# }
 
-#run from articles
-#pb_2017_1_contr <- rj:::page_bounds(<id>)[2:(length(articles)+1),]
+# run from articles
+# pb_2017_1_contr <- rj:::page_bounds(<id>)[2:(length(articles)+1),]
 
-#pb_2017_1_contr$what <- articles
-#save(pb_2017_1_contr, file="Proofs/<id>/pb_2017_1_contr.RData")
-
-
-#load("pb_2017_1_contr.RData")
-
-#this_art <- 1L
-#rj:::update_RJwrapper_page_no(as.character(pb_2017_1_contr$what[this_art]), as.character(pb_2017_1_contr$start[this_art]), "9", "1", "2017", "June")
-#build_latex(as.character(pb_2017_1_contr$what[this_art]), "/home/rsb/proj/R-Journal/share")
-#this_art <- this_art + 1L
-
-#this_art <- 1L
-#rj:::copy_RJwrapper_pdf_slug_archive(as.character(pb_2017_1_contr$what[this_art]), "../../../rjournal.github.io/archive", "2017")
-#this_art <- this_art + 1L; pb_2017_1_contr$what[this_art]
-#rj:::copy_RJwrapper_pdf_slug_archive(as.character(pb_2017_1_contr$what[this_art]), "../../../rjournal.github.io/archive", "2017")
+# pb_2017_1_contr$what <- articles
+# save(pb_2017_1_contr, file="Proofs/<id>/pb_2017_1_contr.RData")
 
 
+# load("pb_2017_1_contr.RData")
+
+# this_art <- 1L
+# rj:::update_RJwrapper_page_no(as.character(pb_2017_1_contr$what[this_art]), as.character(pb_2017_1_contr$start[this_art]), "9", "1", "2017", "June")
+# build_latex(as.character(pb_2017_1_contr$what[this_art]), "/home/rsb/proj/R-Journal/share")
+# this_art <- this_art + 1L
+
+# this_art <- 1L
+# rj:::copy_RJwrapper_pdf_slug_archive(as.character(pb_2017_1_contr$what[this_art]), "../../../rjournal.github.io/archive", "2017")
+# this_art <- this_art + 1L; pb_2017_1_contr$what[this_art]
+# rj:::copy_RJwrapper_pdf_slug_archive(as.character(pb_2017_1_contr$what[this_art]), "../../../rjournal.github.io/archive", "2017")
 
 
 
-#rj:::online_metadata_for_article(as.article("2015-17"), final=TRUE)
+
+
+# rj:::online_metadata_for_article(as.article("2015-17"), final=TRUE)
 # run in Proofs/<id>
-#load("articles.RData")
-#art_mds <- list()
-#for (art in articles) { cat(art, "\n"); art_mds[[art]] <- rj:::online_metadata_for_article(as.article(art), final=TRUE)}
+# load("articles.RData")
+# art_mds <- list()
+# for (art in articles) { cat(art, "\n"); art_mds[[art]] <- rj:::online_metadata_for_article(as.article(art), final=TRUE)}

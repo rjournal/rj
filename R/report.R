@@ -41,7 +41,6 @@ last_status <- function(x) {
 
 #' @export
 print.report <- function(x, ...) {
-
   cat("BY STATUS:\n")
   parts <- split(x, x$status)
   for (nm in names(parts)) {
@@ -50,23 +49,27 @@ print.report <- function(x, ...) {
     str_sub(nm, 1, 1) <- toupper(str_sub(nm, 1, 1))
     cat(str_pad(nm, 60, "right", "-"), "\n")
 
-    out <- capture.output(print.data.frame(part[, -1], row.names = FALSE,
-      right = FALSE))
+    out <- capture.output(print.data.frame(part[, -1],
+      row.names = FALSE,
+      right = FALSE
+    ))
     cat(paste(out[-1], collapse = "\n"), "\n\n")
   }
 
   cat("BY EDITOR:\n")
   actionable <- x[x$ed != "" &
     !(x$status %in% c("accepted", "online", "complete")), ]
-parts <- split(actionable, actionable$ed)
+  parts <- split(actionable, actionable$ed)
   for (nm in names(parts)) {
     part <- parts[[nm]]
 
     str_sub(nm, 1, 1) <- toupper(str_sub(nm, 1, 1))
     cat(str_pad(nm, 60, "right", "-"), "\n")
 
-    out <- capture.output(print.data.frame(part[, c("id", "status", "date", "stars")], row.names = FALSE,
-      right = FALSE))
+    out <- capture.output(print.data.frame(part[, c("id", "status", "date", "stars")],
+      row.names = FALSE,
+      right = FALSE
+    ))
     cat(paste(out[-1], collapse = "\n"), "\n\n")
   }
 }
@@ -80,6 +83,8 @@ order_status <- function(x) {
 }
 
 editor_abbr <- function(x) {
-  if (empty(x)) return("")
+  if (empty(x)) {
+    return("")
+  }
   toupper(str_c(str_sub(str_split(x, " ")[[1]], 1, 1), collapse = ""))
 }

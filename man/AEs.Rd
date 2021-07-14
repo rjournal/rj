@@ -23,31 +23,31 @@ for detection.}
 the AE is considered an error}
 }
 \value{
-\code{AEs} returns a data frame with all associate editors
+\itemize{
+  \item{\code{AEs()}: a data frame with all associate editors}
+  \item{\code{detect_AE()}:  \code{NULL} if not found or the
+       row from \code{AEs()} corresponding to the AE}
+  \item{	\code{AE}: \code{NULL} if not an AE or a row from \code{AEs()}}
+  \item{\code{is_AE}: \code{TRUE} if the user if an AE or
+  the repository is an AE repository, \code{FALSE} otherwise}
+}
 
-\code{detect_AE} returns \code{NULL} if not found or the
-       row from \code{AEs()} corresponding to the AE
 
-\code{AE} returns \code{NULL} if not an AE or a row from
-        \code{AEs()}
-
-\code{is_AE} returns \code{TRUE} if the user if an AE or
-        the repository is an AE repository, \code{FALSE} otherwise
 }
 \description{
-\code{AEs()} returns a data frame with information on
-associate editors
-
-\code{detect_AE} tries to determine associate editor (AE) from the
-remote of the repository in \code{path} or from the git config e-mail.
-Note that for editors this will fail.
-
-\code{AE} returns the corresponding row from \code{AEs()} if called
+Functions to determine if the user is an AE and retrieve relevant AE information
+}
+\details{
+\itemize{
+ \item{\code{AEs()}:  read the associate-editors.csv in the rj package as a data frame}
+ \item{\code{detect_AE()}: determine AE from the remote of the repository in
+ \code{path} or from the git config e-mail.this only work for AE and will fail for editors}
+ \item{\code{AE()}: returns the corresponding row from \code{AEs()} if called
 by an associate editor or in an AE repository, otherwise
 \code{NULL}. It relies on either \code{RJ_EDITOR} environment
 variable to contain the name of the editor or detection from the
 git repository pointed to by \code{path} (see
-\code{\link{detect_AE}}).
-
-\code{is_AE()} is a shorthand for \code{!is.null(AE())}
+\code{\link{detect_AE}}).}
+ \item{\code{is_AE()}: determine if the user is an AE or the repository is an AE repository}
+}
 }

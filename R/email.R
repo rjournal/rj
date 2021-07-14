@@ -40,7 +40,7 @@ email_template <- function(article, template) {
 #'              "show" (file.show), "edit" (file.edit), "open" (shell open) or
 #'              "clip" (system clipboard). Defaults to RJ_EMAIL_TOOL environment
 #'              variable.
-email_text <- function(text, means=getOption("RJ_EMAIL_TOOL", "mailto")) {
+email_text <- function(text, means = getOption("RJ_EMAIL_TOOL", "mailto")) {
   stopifnot(is.character(text))
   text <- paste(text, collapse = "\n")
 
@@ -61,15 +61,18 @@ email_text <- function(text, means=getOption("RJ_EMAIL_TOOL", "mailto")) {
   fields$body <- str_trim(body)
   fields <- lapply(fields, URLencode, reserved = TRUE)
 
-  url <- paste0("mailto:", to, "?",
-    paste0(names(fields), "=", unlist(fields), collapse = "&"))
+  url <- paste0(
+    "mailto:", to, "?",
+    paste0(names(fields), "=", unlist(fields), collapse = "&")
+  )
 
   if (means == "mailto" || means == "browser") {
-      if (is.function(getOption("browser")))
-          message("You have setup a custom 'browser' function which may or may not work.\nIf your e-mail doesn't open up ready to send, try\n  options(browser=Sys.getenv('R_BROWSER'))")
-      return (browseURL(url))
+    if (is.function(getOption("browser"))) {
+      message("You have setup a custom 'browser' function which may or may not work.\nIf your e-mail doesn't open up ready to send, try\n  options(browser=Sys.getenv('R_BROWSER'))")
+    }
+    return(browseURL(url))
   }
-  tmp <- tempfile("mail",".txt") # DC:took out an extra comma
+  tmp <- tempfile("mail", ".txt") # DC:took out an extra comma
   writeLines(text, tmp)
   switch(means,
          show = file.show(tmp),
@@ -101,26 +104,28 @@ email_text <- function(text, means=getOption("RJ_EMAIL_TOOL", "mailto")) {
 }
 
 find_template <- function(name) {
-  if (name == "major revision")
+  if (name == "major revision") {
     path <- system.file("templates/revision-major.txt", package = "rj")
-  else if (name == "minor revision")
+  } else if (name == "minor revision") {
     path <- system.file("templates/revision-minor.txt", package = "rj")
-  else
+  } else {
     path <- system.file("templates", paste0(name, ".txt"), package = "rj")
+  }
   if (path == "") stop("Template not found: ", name, call. = FALSE)
 
   path
 }
 
 guess_real_name <- function() {
-    Sys.getenv("RJ_NAME",
-               unset = if (.Platform$OS.type == "unix") {
-                   login <- Sys.info()[["login"]]
-                   finger <- system(paste("finger", login), intern = TRUE)
-                   sub(".*Name: ", "", finger[1L])
-               } else {
-                   "Use RJ_NAME envvar to set your name"
-               })
+  Sys.getenv("RJ_NAME",
+    unset = if (.Platform$OS.type == "unix") {
+      login <- Sys.info()[["login"]]
+      finger <- system(paste("finger", login), intern = TRUE)
+      sub(".*Name: ", "", finger[1L])
+    } else {
+      "Use RJ_NAME envvar to set your name"
+    }
+  )
 }
 
 as.data <- function(x) {
@@ -140,7 +145,7 @@ editors <- function() {
   cli::cli_alert_info("Reading inst/editor.csv")
   fname <- system.file("editors.csv", package = "rj")
   out <- read.csv(fname, stringsAsFactors = FALSE)
-#  out <- read.csv("editors.csv", stringsAsFactors = FALSE)
+  #  out <- read.csv("editors.csv", stringsAsFactors = FALSE)
   `names<-`(out[["name"]], out[["email"]])
 }
 

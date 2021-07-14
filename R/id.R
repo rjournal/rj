@@ -1,5 +1,7 @@
 parse_id <- function(x) {
-  if (is.id(x)) return(x)
+  if (is.id(x)) {
+    return(x)
+  }
 
   re <- "^([0-9]{4})-([0-9]{2,3})[a-z]?$"
 
