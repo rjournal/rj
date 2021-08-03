@@ -1,6 +1,6 @@
 # RJ
 
-This package provides tools for dealing with the metadata for the R Journal. The overall goal of the package is to automate common tasks performed by the editors, particularly the editor-in-chief.
+This package provides tools for dealing with reviewing articles for, and building issues of, the R Journal. The overall goal of the package is to make common tasks performed by the editors, associate editors, and the editor-in-chief, easier.
 
 
 ## Installation
