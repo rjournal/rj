@@ -1,6 +1,6 @@
 # RJ
 
-This package provides tools for dealing with reviewing articles for, and building issues of, the R Journal. The overall goal of the package is to make common tasks performed by the editors, associate editors, and the editor-in-chief, easier.
+This package provides tools for dealing with reviewing articles for, and building issues of, the R Journal. The overall goal of the package is to make common tasks performed by the EDITORS, ASSOCIATE EDITORS, and the EDITOR-IN-CHIEF, easier.
 
 
 ## Installation
@@ -51,11 +51,7 @@ remotes::install_github("rjournal/rj")
   
 ```
 library(rj)
-# Make sure your working directory in the articles directory then:
-
-as.article("2010-15")
-new_id()
-report()
+# Make sure your working directory in the `articles` directory then:
 
 # Accept, reject or withdraw an article, by updating status, moving to
 # correct directory and drafting emails.
