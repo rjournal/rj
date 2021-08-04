@@ -90,7 +90,7 @@ download_submissions <- function(dry_run) {
   submissions <- googlesheets4::read_sheet(sheet_id)
   ids <- submissions[["Submission ID"]]
   new_submission <- is.na(ids)
-  resub_field <- "If this is a revision or resubmission, enter your submission ID (eg 2020-131)"
+  resub_field <- "If this is a revision or resubmission or was previously rejected, enter the original submission ID (eg 2020-131)"
   resub_ids <- submissions[[resub_field]][new_submission]
   is_resub <- !is.na(resub_ids)
 
@@ -133,7 +133,7 @@ download_submissions <- function(dry_run) {
           authors = authors,
           title = form[["Article title"]],
           path = path,
-          suppl = form[["Please list the paths to any other supplementary files inside the zip (R scripts, data, etc.). Each file path should be separated by commas."]] %NA% "",
+          suppl = form[["Please list the paths to any other supplementary files inside the zip (R scripts, data, etc.). Each file path should be separated by commas. This list will be used to construct the supplementary zip file for your article if it is accepted for publication."]] %NA% "",
           keywords = form[["Article tags"]] %NA% "",
           otherids = form[[resub_field]] %NA% ""
         )
