@@ -2,10 +2,15 @@
 % Please edit documentation in R/ae_workload.R
 \name{ae_workload}
 \alias{ae_workload}
+\alias{get_AE}
 \title{Check the number of articles an AE is currently working on}
 \usage{
 ae_workload()
+
+get_AE(x)
 }
 \description{
-The function uses Github REST API to query the ae prefixed repository and extract the content in the submissions folder.
+This will examine the DESCRIPTION files for articles in
+the Submissions folder, check articles that have status
+"with AE".
 }

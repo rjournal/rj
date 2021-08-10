@@ -1,25 +1,28 @@
 #' Check the number of articles an AE is currently working on
 #'
-#' The function uses Github REST API to query the ae prefixed repository and extract the content in the submissions folder.
+#' This will examine the DESCRIPTION files for articles in
+#' the Submissions folder, check articles that have status
+#' "with AE".
 #'
-#' @importFrom gh gh
-#' @importFrom stringr str_detect
-#' @importFrom dplyr mutate count
-#' @importFrom tidyr unnest
+#' @importFrom dplyr count
+#' @importFrom cli cli_li cli_ul cli_end
 #' @export
 ae_workload <- function() {
-  org_repos <- gh("GET /orgs/{org}/repos", org = "rjournal", type = "all")
+  # Get list of current articles
+  current_articles <- active_articles()
 
-  repo <- vapply(org_repos, "[[", "", "name")
+  # Check that the most recent status is "with AE"
+  with_AE <- filter_status(current_articles, "with AE")
 
-  ae_repo <- repo[stringr::str_detect(repo, "ae")]
+  # Extract the AE line from DESCRIPTION file
+  AE_assignments <- do.call("rbind", lapply(with_AE, get_AE))
 
-  tibble::tibble(ae = ae_repo) %>%
-    dplyr::mutate(folder = list(gh("GET /repos/{owner}/{repo}/contents/{path}",
-      owner = "rjournal",
-      repo = ae_repo,
-      path = "Submissions"
-    ))) %>%
-    tidyr::unnest(.data$folder) %>%
-    dplyr::count(.data$ae)
+  # Count assignments
+  as.data.frame(AE_assignments) %>% count(ae, sort=TRUE)
+}
+
+#' @rdname ae_workload
+#' @export
+get_AE <- function(x){
+  list(id = format(x$id), ae = x$ae)
 }
