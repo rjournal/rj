@@ -1,3 +1,37 @@
+#' Add AE to the DESCRIPTION
+#'
+#' Fuzzy match to find the initial of the AE to fill in the article DESCRIPTION.
+#' The status field is also updated with a new line of add AE.
+#'
+#' @param article article id
+#' @param name a name used to match AE. Allow fuzzy match of the whole or part of the AE name, github handle, or email
+#' @param date the date for updating status
+#' @export
+add_ae <- function(article, name, date = Sys.Date()){
+  article <- as.article(article)
+
+  ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
+    mutate(concat = paste0(name, github_handle, email))
+
+  person <- ae_list$github[str_detect(ae_list$concat, name)]
+  person_name <- as.character(ae_list$name[str_detect(ae_list$concat, name)])
+
+  if (length(person) != 0){
+    # github start with "ae-articles-xxx"
+    ae_abbr <- str_sub(person, 13, -1)
+    article$ae <- ae_abbr
+    update_status(article, "add AE", comments = person_name, date = date)
+
+  }else {
+    cli::cli_alert_warning("No AE found. Input the name as the whole or part of the AE name, github handle, or email")
+  }
+
+
+  return(invisible(article))
+
+}
+
+
 list_reviewers <- function(article) {
   article <- as.article(article)
   reviewers <- article$reviewers

@@ -32,7 +32,8 @@ valid_status <- c(
   "AE: minor revision",
   "AE: accept",
   "AE: reject",
-  final_status
+  final_status,
+  "add AE"
 )
 
 # Status class and methods -----------------------------------------------------
