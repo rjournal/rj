@@ -64,7 +64,7 @@ as.article <- function(id) {
 
     if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
     if (sum(pos) == 2) {
-      path <- file.path(get_articles_path(), base, id)
+      path <- file.path(get_articles_path(), base[pos], id)
       if ("Rejected" %in% basename(dirname(path))) {
         warning(id, "found in multiple locations, ignoring the Rejected folder copy.")
         pos[1] <- FALSE
