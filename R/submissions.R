@@ -125,7 +125,7 @@ download_submissions <- function(dry_run) {
         if (!is.na(other_authors)) {
           other_authors <- str_trim(str_split(other_authors, ",")[[1]])
           other_authors <- setdiff(other_authors, form[["Your name:"]])
-          authors <- str_c(authors, other_authors, collapse = ", ")
+          authors <- str_c(c(authors, other_authors), collapse = ", ")
         }
 
         art <- make_article(
