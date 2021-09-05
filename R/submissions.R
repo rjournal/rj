@@ -293,7 +293,7 @@ acknowledge_revision <- function(article) {
   template <- find_template("acknowledge_revision")
   email <- whisker.render(readLines(template), data)
 
-  update_status(data$id, "acknowledged")
+  #update_status(data$id, "acknowledged")
 
   email_text(email)
 }
