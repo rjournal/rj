@@ -1,4 +1,10 @@
+# rj 0.2.20
+
+2021-09-06
+ - Added a function and template to acknowledge revisions
+
 # rj 0.2.19
+
 2021-06-21
  - new function to list articles that are accepted but not online
 2021-06-17

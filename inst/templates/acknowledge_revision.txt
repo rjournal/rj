@@ -1,0 +1,12 @@
+To: {{email}}
+Subject: [RJournal {{id}}] submission acknowledged
+Cc: HANDLING_EDITOR
+---
+Dear {{name}},
+
+We are pleased to receive the revision of your submission "{{title}}" to the R Journal. 
+
+Regards,
+
+{{me}}
+
