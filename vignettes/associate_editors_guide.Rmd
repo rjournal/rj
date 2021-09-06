@@ -1,6 +1,6 @@
 ---
-title: "Guide for the associate editors"
-author: "Di Cook"
+title: "Associate Editor's Guide"
+author: "First draft written by Di Cook"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -12,6 +12,135 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  echo = FALSE, 
+  warning = FALSE,
+  message = FALSE
 )
 ```
+
+# Mission
+
+As an Associate Editor, you will receive manuscripts from one of the four current Editors. You will be responsible for:
+
+1. Soliciting 1-3 reviewers: In general we prefer at least two reviewers. However, one is acceptable when reviewers are sufficiently difficult to find, and the subject area is esoteric. If you feel that the article is not sufficient quality for the R Journal, you can provide a review and recommend rejection, or even further refinement before you send it to reviewers. 
+2. Receiving those reviews: Reviewers are given approximately 1 - 3 month to review a paper. 
+3. Deciding if the paper should be rejected, accepted with major revisions, accepted with minor revisions, or accepted as is. 
+4. Write a short summary explaining the reason for the recommendation. Ultimately it is the handling editor who makes the final decision on a paper. The handling editor manages all communication with authors.
+
+The expected workload is 1-2 paper per month. 
+
+Terms are for three years, with an opportunity to renew. 
+
+# Communication
+
+Each AE is provided a Github repo for handling papers, with the name in the form of `ae-articles-XX`. It mirrors the full articles repo that only Editors have access to.
+
+Slack is used for communication, and general information about operations. The channel for AEs is `associate-editors` and there are numerous other channels focusing on different aspects of operations, including `rj-software`, `general`, `journal-website`, that you are welcome to join. This is the best place to receive messages from an editor that a paper is assigned to you, and for you to notify that editor when you have received reviews, made your summary and are ready to hand it back. 
+
+Meetings with the Editors and Associate Editors will be held monthly, typically the first Tuesday of each month, which may be a Monday or a Tuesday depending on your location around the globe. The meeting time is set by the Editor-in-Chief.
+
+Email is usually the best way to communicate with reviewers. 
+
+# Workflow and operations
+
+## Getting started
+
+Install the `rj` package with 
+
+```{r eval=FALSE, echo=TRUE}
+remotes::install_github("rjournal/rj")
+```
+
+The package is being updated and revised regularly, so you may want to re-install occasionally.
+
+## Potential reviewers
+
+There is a [form for people to volunteer to review for the R Journal](https://docs.google.com/forms/d/e/1FAIpQLSf8EmpF85ASWqPHXqV0vdQd-GHhNBaAZZEYf4qxO3gTl-eGyA/viewform). Please complete this form yourself. 
+
+This form populates a [spreadsheet](https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit#gid=1594007907) that is used to match keywords between articles and reviewers. Once you are set up as an AE, you need access to this sheet in order to use the `match_keywords()` function. You can request access from the assigning editor if it isn't visible to you. 
+
+## Workflow
+
+When you received an article from an editor, you will find it n the `Submissions` folder of your repo, in a folder with the number ID of the article, eg `2021-12`. This folder will contain a number of files:
+
+- article files: RJwrapper.tex, `.tex`, `.bib`, `motivating-letter.pdf` and possibly `.R`, `.Rmd`, data and figure files. 
+- our operation files: 
+    - `DESCRIPTION`: contains up to date information about the state of the article. It is plan text but you should use the `rj` function to modify it, if possible.
+    - `correspondence` folder: will be created when you assign your first referee. This will contain text invitations to each reviewer added, and will also store the reviews once they have been returned by reviewers. 
+
+```{r wfgraph, fig.width=8, fig.height=12, fig.align='center'}
+library(DiagrammeR)
+AE_df <- create_node_df(n=10, 
+   type=c("decision", #1
+          "action", #2
+          "action", #3
+          "action", #4
+          "action", #5
+          "decision", #6
+          "decision", #7
+          "action", #8
+          "action", #9
+          "action"), #10
+   label=c("Send for review?", #1
+           "Select reviewer (ideally two), rj::match_keywords() or use your own experts", #2
+           "Update reviewer in DESCRIPTION, rj::add_reviewer()", #3
+           "Invite reviewers \n (1) generate email template into correspondence folder using rj::invite_reviewers(), \n(2) send email which includes pdf and R files", #4
+           "Check all file changes into GitHub", #5
+           "Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()", #6
+           "Reviews received", #7
+           "Save reviews into correspondence folder, rj::add_review()", #8
+           "Make recommendation (AE: major revision, AE: minor revision, AE: accept or AE: reject),\n update DESCRIPTION using rj::update_status(), notify editor, check all into GitHub", #9
+           "Send reminder email"), #10
+   shape = c("rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle", 
+             "rectangle"),
+   width = c(3, 5, 4, 6, 3, 4, 3, 4, 6, 2),
+   fillcolor = c("orange", "grey90", 
+                 "grey90", "grey90", "grey90",
+                 "orange", "orange", "grey90", 
+                 "aquamarine2", "grey90"),
+   fontcolor = "black")
+
+AE_edge_df <- create_edge_df(from = c(1:8,6,7,10,1), 
+                             to = c(2:9,2,10,7,9), 
+                             label = c("Y", rep(".", 4), "Y", 
+                                       "Y", ".", "N", "N","done","N"),
+                             color = c("dodgerblue2", 
+                                       "grey50", "grey50", 
+                                       "grey50", "grey50",
+                                       "dodgerblue2",
+                                       "dodgerblue2",
+                                       "grey50",
+                                       "red", "red", 
+                                       "grey50", "red"
+                                       ))
+
+AE <- create_graph(AE_df, AE_edge_df, 
+                   directed = TRUE, attr_theme = "tb")
+render_graph(AE)
+```
+
+## Package usage
+
+These are the primary functions that are useful for AE operations
+
+- `match_keywords`
+- `add_reviewer`
+- `invite_reviewers`
+- `agree_reviewer`, `decline_reviewer`
+- `add_review`
+- `update_status` using `AE:major_revision`, `AE:minor_revision`, `AE:major_reject`
+- `valid_status` lists the available statuses to use
+
+# Resources
+
+This document is provided as a vignette to the `rj` package. 

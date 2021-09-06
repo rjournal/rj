@@ -3,6 +3,15 @@
 2021-09-06
  - Added a function and template to acknowledge revisions
 
+2021-08-25 
+  - add_ae function added
+  - fixes to get_submissions  
+  - new function to tabulate_articles which helps to count keywords, reviewer loads, ...
+  - updates to vignettes on operations
+
+2021-08-10
+  - fix to match_keywords
+  
 # rj 0.2.19
 
 2021-06-21
