@@ -4,15 +4,15 @@
 #' \code{tabulate_articles} and count the number of accept and decline
 #' of each reviewer.
 #' @param articles a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}
-#'
 #' @importFrom tidyr separate_rows pivot_wider
 #' @importFrom stringr str_detect word
 #' @examples
 #' \dontrun{
 #' articles <- tabulate_articles()
-#' reviewer_workload(articles)
+#' reviewer_summary(articles)
 #' }
-reviewer_workload <- function(articles){
+#' @export
+reviewer_summary <- function(articles){
   articles %>%
     dplyr::select(id, reviewers) %>%
     tidyr::unnest(reviewers) %>%
