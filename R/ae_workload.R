@@ -1,3 +1,30 @@
+#' Tabulate reviewer's Accept/Decline incidence
+#'
+#' The function examine the DESCRIPTION files of articles tabulated by
+#' \code{tabulate_articles} and count the number of accept and decline
+#' of each reviewer.
+#' @param articles a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}
+#'
+#' @importFrom tidyr separate_rows pivot_wider
+#' @importFrom stringr str_detect word
+#' @examples
+#' \dontrun{
+#' articles <- tabulate_articles()
+#' reviewer_workload(articles)
+#' }
+reviewer_workload <- function(articles){
+  articles %>%
+    dplyr::select(id, reviewers) %>%
+    tidyr::unnest(reviewers) %>%
+    tidyr::separate_rows(comment, sep = "; ") %>%
+    dplyr::filter(stringr::str_detect(comment, "Agreed|Accepted|Declined")) %>%
+    dplyr::mutate(comment = stringr::word(comment),
+           comment = ifelse(comment == "Agreed", "Accepted", comment)) %>%
+    dplyr::group_by(name, comment) %>%
+    dplyr::count() %>%
+    dplyr::ungroup() %>%
+    tidyr::pivot_wider(names_from = comment, values_from = n)
+}
 #' Check the number of articles an AE is currently working on
 #'
 #' This will examine the DESCRIPTION files for articles in
