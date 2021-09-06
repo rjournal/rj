@@ -3,22 +3,30 @@
 #' This will examine the DESCRIPTION files for articles in
 #' the Submissions folder, check articles that have status
 #' "with AE".
-#'
-#' @importFrom dplyr count
-#' @importFrom cli cli_li cli_ul cli_end
+#' @param articles a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}
+#' @param day_back number of day to go back for calculating AE workload.
+#' @importFrom dplyr select count left_join
+#' @importFrom tidyr unnest
+#' @examples
+#' \dontrun{
+#' articles <- tabulate_articles()
+#' ae_workload(articles)
+#' }
 #' @export
-ae_workload <- function() {
-  # Get list of current articles
-  current_articles <- active_articles()
+ae_workload <- function(articles, day_back = 365) {
 
-  # Check that the most recent status is "with AE"
-  with_AE <- filter_status(current_articles, "with AE")
+  ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
+    select(name, email)
 
-  # Extract the AE line from DESCRIPTION file
-  AE_assignments <- do.call("rbind", lapply(with_AE, get_AE))
-
-  # Count assignments
-  as.data.frame(AE_assignments) %>% count(ae, sort=TRUE)
+  articles %>%
+    dplyr::select(id, status) %>%
+    tidyr::unnest(status) %>%
+    dplyr::filter(status == "with AE") %>%
+    dplyr::rename(ae = comments) %>%
+    dplyr::group_by(ae) %>%
+    dplyr::filter(date >= Sys.Date()- day_back) %>%
+    dplyr::count(ae) %>%
+    dplyr::left_join(ae_rj, by = c("ae" = "name"))
 }
 
 #' @rdname ae_workload

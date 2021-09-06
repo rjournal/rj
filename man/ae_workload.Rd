@@ -5,12 +5,23 @@
 \alias{get_AE}
 \title{Check the number of articles an AE is currently working on}
 \usage{
-ae_workload()
+ae_workload(articles, day_back = 365)
 
 get_AE(x)
+}
+\arguments{
+\item{articles}{a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}}
+
+\item{day_back}{number of day to go back for calculating AE workload.}
 }
 \description{
 This will examine the DESCRIPTION files for articles in
 the Submissions folder, check articles that have status
 "with AE".
+}
+\examples{
+\dontrun{
+articles <- tabulate_articles()
+ae_workload(articles)
+}
 }
