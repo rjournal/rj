@@ -31,7 +31,6 @@ Imports:
     gh
 Suggests:
     knitr,
-    jss,
     testthat,
     rmarkdown
 Encoding: UTF-8

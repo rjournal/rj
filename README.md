@@ -41,9 +41,7 @@ See `valid_status` for a list of all known statuses, and `todo()` for the next a
 ## Installation
 
 ```
-# First install the jss package from R-forge
-install.packages("jss", repos="http://R-Forge.R-project.org")
-# Then install rj
+# Install rj from GitHub
 remotes::install_github("rjournal/rj")
 ```
 
