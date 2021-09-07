@@ -31,3 +31,4 @@ In the third year of their term the editor acts as Editor-in-Chief (EIC). The EI
 
 New editors and associate editors should be added to the `editors.csv` and `associate_editors.csv` files in `inst` folder.
 
+
