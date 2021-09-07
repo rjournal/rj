@@ -18,10 +18,13 @@ ae_workload <- function() {
   AE_assignments <- do.call("rbind", lapply(with_AE, get_AE))
 
   # Count assignments
-  as.data.frame(AE_assignments) %>% count(ae, sort=TRUE)
+  as.data.frame(AE_assignments) %>% count(!!sym("ae"), sort=TRUE)
 }
 
 #' @rdname ae_workload
+#'
+#' @param x An article object
+#'
 #' @export
 get_AE <- function(x){
   list(id = format(x$id), ae = x$ae)
@@ -40,7 +43,7 @@ add_ae <- function(article, name, date = Sys.Date()){
   article <- as.article(article)
 
   ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    mutate(concat = paste0(name, github_handle, email))
+    mutate(concat = paste0(!!sym("name"), !!sym("github_handle"), !!sym("email")))
 
   person <- ae_list$github[str_detect(ae_list$concat, name)]
   person_name <- as.character(ae_list$name[str_detect(ae_list$concat, name)])

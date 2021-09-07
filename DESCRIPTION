@@ -30,6 +30,7 @@ Imports:
     tidyr,
     gh
 Suggests:
+    DiagrammeR,
     knitr,
     testthat,
     rmarkdown

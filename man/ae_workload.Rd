@@ -9,6 +9,9 @@ ae_workload()
 
 get_AE(x)
 }
+\arguments{
+\item{x}{An article object}
+}
 \description{
 This will examine the DESCRIPTION files for articles in
 the Submissions folder, check articles that have status

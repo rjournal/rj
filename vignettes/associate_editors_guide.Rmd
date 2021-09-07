@@ -4,7 +4,7 @@ author: "First draft written by Di Cook"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Guide for the associate editors}
+  %\VignetteIndexEntry{Associate Editor's Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

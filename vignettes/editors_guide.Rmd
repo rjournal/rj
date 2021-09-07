@@ -1,5 +1,5 @@
 ---
-title: "Guide for the editors"
+title: "Operating procedures for the editors"
 author: "Di Cook"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
