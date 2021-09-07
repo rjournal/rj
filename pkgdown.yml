@@ -1,0 +1,9 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  associate_editors_guide: associate_editors_guide.html
+  editor_in_chief_guide: editor_in_chief_guide.html
+  editors_guide: editors_guide.html
+last_built: 2021-09-07T02:47Z
+
