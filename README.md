@@ -1,13 +1,12 @@
-# RJ
+# rj
 
-This package provides tools for dealing with reviewing articles for, and building issues of, the R Journal. The overall goal of the package is to make common tasks performed by the EDITORS, ASSOCIATE EDITORS, and the EDITOR-IN-CHIEF, easier.
-
+This package is for the editorial team to conduct operations for the R Journal. 
 
 ## Installation
 
-`remotes::install_github("rjournal/rj")`
+Install the package from the rjournal github site:
 
-New editors should be added to the list of editors in `R/email.r`.
+`remotes::install_github("rjournal/rj")`
 
 ## `DESCRIPTION` format
 
@@ -37,13 +36,6 @@ Most of these fields are self-explanatory, apart from the `Status` field, which 
 * If reviewers field is blank, then status is "Needs reviewers"
 
 See `valid_status` for a list of all known statuses, and `todo()` for the next action to be taken based on each status.
-
-## Installation
-
-```
-# Install rj from GitHub
-remotes::install_github("rjournal/rj")
-```
 
 ## Useful actions
   
