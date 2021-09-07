@@ -27,4 +27,7 @@ In the third year of their term the editor acts as Editor-in-Chief (EIC). The EI
 - Maintaining the formatting and tools used to manage the journal.
 - Ensuring smooth communication between editors and associate editors.
 
+# New editors and associate editors
+
+New editors and associate editors should be added to the `editors.csv` and `associate_editors.csv` files in `inst` folder.
 
