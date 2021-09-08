@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -137,8 +137,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-modifying-description" class="hasAnchor"><a href="#section-modifying-description" class="anchor"></a>Modifying DESCRIPTION</h2>
+          <p class="section-desc"><p>Functions that make modifications to DESCRIPTOIN file for article handling</p></p>
         </th>
       </tr>
       
@@ -149,15 +149,83 @@
       <tr>
         
         <td>
-          <p><code><a href="AEs.html">AEs()</a></code> <code><a href="AEs.html">detect_AE()</a></code> <code><a href="AEs.html">AE()</a></code> <code><a href="AEs.html">is_AE()</a></code> </p>
+          <p><code><a href="action.html">update_status()</a></code> <code><a href="action.html">reject()</a></code> <code><a href="action.html">reject_format()</a></code> <code><a href="action.html">accept()</a></code> <code><a href="action.html">withdraw()</a></code> </p>
         </td>
-        <td><p>Associate editor (AE) functions</p></td>
+        <td><p>Update the status of an article.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="acknowledge_revision.html">acknowledge_revision()</a></code> </p>
+          <p><code><a href="valid_status.html">valid_status</a></code> </p>
         </td>
-        <td><p>Send revision received acknowledgement</p></td>
+        <td><p>A list of all valid statuses.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_reviewer.html">add_reviewer()</a></code> </p>
+        </td>
+        <td><p>Add review to DESCRIPTION</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="decline_reviewer.html">decline_reviewer()</a></code> <code><a href="decline_reviewer.html">agree_reviewer()</a></code> </p>
+        </td>
+        <td><p>Review helper function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="email_template.html">email_template()</a></code> </p>
+        </td>
+        <td><p>Send an email template.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="invite_reviewers.html">invite_reviewers()</a></code> <code><a href="invite_reviewers.html">invite_reviewer()</a></code> <code><a href="invite_reviewers.html">add_review()</a></code> </p>
+        </td>
+        <td><p>Invite reviewer(s).</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-editor-functions" class="hasAnchor"><a href="#section-editor-functions" class="anchor"></a>Editor  functions</h2>
+          <p class="section-desc"><p>Functions to assist the Editors handle submissions</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="action.html">update_status()</a></code> <code><a href="action.html">reject()</a></code> <code><a href="action.html">reject_format()</a></code> <code><a href="action.html">accept()</a></code> <code><a href="action.html">withdraw()</a></code> </p>
+        </td>
+        <td><p>Update the status of an article.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_ae.html">add_ae()</a></code> </p>
+        </td>
+        <td><p>Add AE to the DESCRIPTION</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-editor-in-chief-functions" class="hasAnchor"><a href="#section-editor-in-chief-functions" class="anchor"></a>Editor-in-Chief functions</h2>
+          <p class="section-desc"><p>Functions to assist the EiC extract new submissions, build the article folder</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="get_submissions.html">get_submissions()</a></code> </p>
+        </td>
+        <td><p>Download submissions.</p></td>
       </tr><tr>
         
         <td>
@@ -173,233 +241,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="action.html">update_status()</a></code> <code><a href="action.html">reject()</a></code> <code><a href="action.html">reject_format()</a></code> <code><a href="action.html">accept()</a></code> <code><a href="action.html">withdraw()</a></code> </p>
+          <p><code><a href="acknowledge_revision.html">acknowledge_revision()</a></code> </p>
         </td>
-        <td><p>Update the status of an article.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="actionable_articles.html">actionable_articles()</a></code> </p>
-        </td>
-        <td><p>Show articles that require attention with the corresponding action</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="active_articles.html">active_articles()</a></code> <code><a href="active_articles.html">accepted_articles()</a></code> </p>
-        </td>
-        <td><p>List articles.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="add_ae.html">add_ae()</a></code> </p>
-        </td>
-        <td><p>Add AE to the DESCRIPTION</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="add_reviewer.html">add_reviewer()</a></code> </p>
-        </td>
-        <td><p>Add review to DESCRIPTION</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="address.html">address()</a></code> </p>
-        </td>
-        <td><p>An S3 class to represent email addresses.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ae_workload.html">ae_workload()</a></code> <code><a href="ae_workload.html">get_AE()</a></code> </p>
-        </td>
-        <td><p>Check the number of articles an AE is currently working on</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="article.html">article()</a></code> <code><a href="article.html">as.article()</a></code> </p>
-        </td>
-        <td><p>S3 class for article objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="build_issue.html">build_issue()</a></code> </p>
-        </td>
-        <td><p>Build an issue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="build_latex.html">build_latex()</a></code> </p>
-        </td>
-        <td><p>Build article from LaTeX</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="decline_reviewer.html">decline_reviewer()</a></code> <code><a href="decline_reviewer.html">agree_reviewer()</a></code> </p>
-        </td>
-        <td><p>Review helper function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="draft_acknowledge_submissions.html">draft_acknowledge_submissions()</a></code> </p>
-        </td>
-        <td><p>Send submission acknowledgement drafts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="email_template.html">email_template()</a></code> </p>
-        </td>
-        <td><p>Send an email template.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="email_text.html">email_text()</a></code> </p>
-        </td>
-        <td><p>Generate an email template.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filter_status.html">filter_status()</a></code> </p>
-        </td>
-        <td><p>Find articles with a given status.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="future_ids.html">future_ids()</a></code> </p>
-        </td>
-        <td><p>Generate a new id value.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_accepted_but_not_online.html">get_accepted_but_not_online()</a></code> </p>
-        </td>
-        <td><p>Get articles to go online</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_articles_path.html">get_articles_path()</a></code> </p>
-        </td>
-        <td><p>Get the directory of the articles repository, either as set by
-set_articles_path() or using git to determine repository root</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_md_from_pdf.html">get_md_from_pdf()</a></code> </p>
-        </td>
-        <td><p>Get metadata from a PDF file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_submissions.html">get_submissions()</a></code> </p>
-        </td>
-        <td><p>Download submissions.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="git_user.html">git_user()</a></code> </p>
-        </td>
-        <td><p>Detect user name and e-mail from GIT</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="invite_reviewers.html">invite_reviewers()</a></code> <code><a href="invite_reviewers.html">invite_reviewer()</a></code> <code><a href="invite_reviewers.html">add_review()</a></code> </p>
-        </td>
-        <td><p>Invite reviewer(s).</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="match_keywords.html">match_keywords()</a></code> <code><a href="match_keywords.html">get_article_keywords()</a></code> <code><a href="match_keywords.html">get_reviewer_keywords()</a></code> </p>
-        </td>
-        <td><p>Match reviewers for a submitted article based on keywords</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="new_id.html">new_id()</a></code> </p>
-        </td>
-        <td><p>Generate a new id value.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="online_metadata.html">online_metadata()</a></code> </p>
-        </td>
-        <td><p>Generate metadata needed for website.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="online_metadata_for_article.html">online_metadata_for_article()</a></code> </p>
-        </td>
-        <td><p>Generate metadata for one article.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parse_address_list.html">parse_address_list()</a></code> </p>
-        </td>
-        <td><p>Parse a string into a rfc822 address list.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="proofing.html">get_accepted_articles()</a></code> <code><a href="proofing.html">draft_proofing()</a></code> <code><a href="proofing.html">proofing_article()</a></code> <code><a href="proofing.html">proofing_article_text()</a></code> </p>
-        </td>
-        <td><p>Functions for proofing articles</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="publish.html">publish()</a></code> </p>
-        </td>
-        <td><p>Publish an article to online first.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="publish_issue.html">publish_issue()</a></code> </p>
-        </td>
-        <td><p>Publish an issue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="report.html">report()</a></code> </p>
-        </td>
-        <td><p>Generate a status report.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="reviewer_summary.html">reviewer_summary()</a></code> </p>
-        </td>
-        <td><p>Tabulate reviewer's Accept/Decline incidence</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rj.html">rj</a></code> </p>
-        </td>
-        <td><p>R Journal Package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="set_articles_path.html">set_articles_path()</a></code> </p>
-        </td>
-        <td><p>Set the directory of the articles repository</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="suffix_labels.html">suffix_labels()</a></code> </p>
-        </td>
-        <td><p>Make article labels and bibliographies unique with a suffix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="summarise_articles.html">summarise_articles()</a></code> <code><a href="summarise_articles.html">get_assignments()</a></code> </p>
-        </td>
-        <td><p>Summarise intray
-Summarise editors current in-tray</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tabulate_articles.html">tabulate_articles()</a></code> </p>
-        </td>
-        <td><p>Tabulate article descriptions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="valid_status.html">valid_status</a></code> </p>
-        </td>
-        <td><p>A list of all valid statuses.</p></td>
+        <td><p>Send revision received acknowledgement</p></td>
       </tr>
     </tbody>
     </table>
