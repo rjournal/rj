@@ -1,0 +1,31 @@
+url: https://rjournal.github.io/rj/
+
+template:
+  params:
+    bootswatch: cosmo
+
+reference:
+- title: Modifying DESCRIPTION
+  desc: Functions that make modifications to DESCRIPTOIN file for article handling
+  contents:
+  - update_status
+  - valid_status
+  - add_reviewer
+  - agree_reviewer
+  - decline_reviewer
+  - email_template
+  - add_review
+- title: Editor  functions
+  desc: Functions to assist the Editors handle submissions
+  contents:
+  - accept
+  - reject
+  - withdraw
+  - add_ae
+- title: Editor-in-Chief functions
+  desc: Functions to assist the EiC extract new submissions, build the article folder
+  contents:
+  - get_submissions
+  - acknowledge_submission
+  - acknowledge_submission_text
+  - acknowledge_revision
