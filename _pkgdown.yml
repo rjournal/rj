@@ -8,7 +8,6 @@ reference:
 - title: Modify DESCRIPTION automatically
   desc: Functions that make modifications to DESCRIPTOIN file for article handling
   contents:
-  - match_keywords
   - add_reviewer
   - agree_reviewer
   - decline_reviewer
@@ -17,6 +16,7 @@ reference:
 - title: Primarily AE and Editor article management functions
   desc: Functions to assist the Editors handle submissions
   contents:
+  - match_keywords
   - update_status
   - valid_status
   - filter_status
