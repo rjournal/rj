@@ -225,7 +225,10 @@ get_refs_from_tex <- function(article_path, final = FALSE) {
   res
 }
 
-#' @importFrom pdftools pdf_toc pdf_text
+#' Get metadata from a PDF file
+#'
+#' @param from pdf file
+#' @inheritParams online_metadata_for_article
 #'
 #' @export
 get_md_from_pdf <- function(from, final = FALSE) {
@@ -297,6 +300,9 @@ online_metadata <- function() {
 }
 
 #' Generate metadata for one article.
+#'
+#' @param x An article
+#' @param final If in a final state, then also include page information.
 #'
 #' @export
 online_metadata_for_article <- function(x, final = FALSE) {

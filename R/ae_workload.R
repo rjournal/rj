@@ -54,9 +54,13 @@ ae_workload <- function(articles, day_back = 365) {
     dplyr::filter(date >= Sys.Date()- day_back) %>%
     dplyr::count(ae) %>%
     dplyr::left_join(ae_rj, by = c("ae" = "name"))
+
 }
 
 #' @rdname ae_workload
+#'
+#' @param x An article object
+#'
 #' @export
 get_AE <- function(x){
   list(id = format(x$id), ae = x$ae)
@@ -75,7 +79,7 @@ add_ae <- function(article, name, date = Sys.Date()){
   article <- as.article(article)
 
   ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    mutate(concat = paste0(name, github_handle, email))
+    mutate(concat = paste0(!!sym("name"), !!sym("github_handle"), !!sym("email")))
 
   person <- ae_list$github[str_detect(ae_list$concat, name)]
   person_name <- as.character(ae_list$name[str_detect(ae_list$concat, name)])

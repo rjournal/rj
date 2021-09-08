@@ -6,6 +6,11 @@
 \usage{
 online_metadata_for_article(x, final = FALSE)
 }
+\arguments{
+\item{x}{An article}
+
+\item{final}{If in a final state, then also include page information.}
+}
 \description{
 Generate metadata for one article.
 }

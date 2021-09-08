@@ -24,7 +24,7 @@ This is done once the issue is built.
 
 You need to generate the `xml` for the DOI links by:
 
-```{r}
+```{r, eval = FALSE}
 # From the articles directory
 library(rj)
 library(yaml)

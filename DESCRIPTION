@@ -1,9 +1,9 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.19
-Author: EiC <R-journal@r-project.org>
-Maintainer: EiC <R-journal@r-project.org>
+Version: 0.2.20
+Author: Editor-in-Chief <R-journal@r-project.org>
+Maintainer: Editor-in-Chief <R-journal@r-project.org>
 Description: This package provides useful functions for the
     editors of the R journal.
 License: MIT + file LICENSE
@@ -30,8 +30,8 @@ Imports:
     tidyr,
     gh
 Suggests:
+    DiagrammeR,
     knitr,
-    jss,
     testthat,
     rmarkdown
 Encoding: UTF-8

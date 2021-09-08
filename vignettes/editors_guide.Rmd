@@ -1,5 +1,5 @@
 ---
-title: "Guide for the editors"
+title: "Operating procedures for the editors"
 author: "Di Cook"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -26,5 +26,9 @@ In the third year of their term the editor acts as Editor-in-Chief (EIC). The EI
 - Maintaining the R Journal web site http://journal.r-project.org
 - Maintaining the formatting and tools used to manage the journal.
 - Ensuring smooth communication between editors and associate editors.
+
+# New editors and associate editors
+
+New editors and associate editors should be added to the `editors.csv` and `associate_editors.csv` files in `inst` folder.
 
 

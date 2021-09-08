@@ -280,6 +280,24 @@ acknowledge_submission <- function(article) {
   email_text(email)
 }
 
+#' Send revision received acknowledgement
+#'
+#' @param article this is the article id
+#'
+#' @export
+acknowledge_revision <- function(article) {
+  data <- as.data(as.article(article))
+  data$name <- stringr::str_split(data$name, " ")[[1]][1]
+  data$date <- format(Sys.Date() + 5, "%d %b %Y")
+
+  template <- find_template("acknowledge_revision")
+  email <- whisker.render(readLines(template), data)
+
+  #update_status(data$id, "acknowledged")
+
+  email_text(email)
+}
+
 #' Send submission acknowledgement drafts
 #'
 #' @param drafts list of \code{gmail_draft} objects

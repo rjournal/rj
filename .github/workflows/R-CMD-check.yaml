@@ -38,9 +38,6 @@ jobs:
       - name: Query dependencies
         run: Rscript -e "install.packages('remotes')" -e "saveRDS(remotes::dev_package_deps(dependencies = TRUE), 'depends.Rds', version = 2)"
 
-      - name: Install jss
-        run: Rscript -e "install.packages('jss', repos = 'https://R-Forge.R-project.org', type = 'source')"
-
       - name: Cache R packages
         if: runner.os != 'Windows'
         uses: actions/cache@v1

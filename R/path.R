@@ -29,7 +29,7 @@ get_articles_path <- function() {
       silent = TRUE
     )
     if (inherits(dir, "try-error")) {
-      error("Current directory is not a git repository, use set_articles_path() if you don't have wokring git (error: ", dir)
+      abort("Current directory is not a git repository, use set_articles_path() if you don't have wokring git (error: ", dir)
     }
   }
   dir
