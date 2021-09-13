@@ -1,5 +1,5 @@
 ---
-title: "Associate Editor's Guide"
+title: "Associate Editors' Guide"
 author: "First draft written by Di Cook"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -25,7 +25,7 @@ As an Associate Editor, you will receive manuscripts from one of the four curren
 
 1. Soliciting 1-3 reviewers: In general we prefer at least two reviewers. However, one is acceptable when reviewers are sufficiently difficult to find, and the subject area is esoteric. If you feel that the article is not sufficient quality for the R Journal, you can provide a review and recommend rejection, or even further refinement before you send it to reviewers. 
 2. Receiving those reviews: Reviewers are given approximately 1 - 3 month to review a paper. 
-3. Deciding if the paper should be rejected, accepted with major revisions, accepted with minor revisions, or accepted as is. 
+3. Recommending if the paper should be rejected, accepted with major revisions, accepted with minor revisions, or accepted as is.
 4. Write a short summary explaining the reason for the recommendation. Ultimately it is the handling editor who makes the final decision on a paper. The handling editor manages all communication with authors.
 
 The expected workload is 1-2 paper per month. 
