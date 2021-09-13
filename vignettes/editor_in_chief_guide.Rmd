@@ -116,3 +116,4 @@ This will generate the file `DOI-yr-num.xml` where `yr` is the year of the issue
 
 Click on "Upload submissions", then "Metadata" and upload the file. 
 
+## Check for orphaned papers
