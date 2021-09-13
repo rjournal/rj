@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Operating procedures for the editors • rj</title>
+<title>Editors' Guide • rj</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Operating procedures for the editors">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Editors' Guide">
 <meta property="og:description" content="rj">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -54,13 +54,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/associate_editors_guide.html">Associate Editor's Guide</a>
+      <a href="../articles/associate_editors_guide.html">Associate Editors' Guide</a>
     </li>
     <li>
-      <a href="../articles/editor_in_chief_guide.html">Guide for the Editor-in-Chief</a>
+      <a href="../articles/editor_in_chief_guide.html">Editor-in-Chief's Guide</a>
     </li>
     <li>
-      <a href="../articles/editors_guide.html">Operating procedures for the editors</a>
+      <a href="../articles/editors_guide.html">Editors' Guide</a>
     </li>
   </ul>
 </li>
@@ -78,13 +78,14 @@
 
       
 
-      </header><script src="editors_guide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="editors_guide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="editors_guide_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="editors_guide_files/viz-1.8.2/viz.js"></script><link href="editors_guide_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="editors_guide_files/grViz-binding-1.0.6.1/grViz.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Operating procedures for the editors</h1>
-                        <h4 class="author">Di Cook</h4>
+      <h1 data-toc-skip>Editors’ Guide</h1>
+                        <h4 class="author">First draft by Di Cook</h4>
             
-            <h4 class="date">2021-09-08</h4>
+            <h4 class="date">2021-09-13</h4>
       
       
       <div class="hidden name"><code>editors_guide.Rmd</code></div>
@@ -93,16 +94,63 @@
 
     
     
+<div id="mission" class="section level1">
+<h1 class="hasAnchor">
+<a href="#mission" class="anchor"></a>Mission</h1>
+<p>As an Executive Editor (EE) for the R Journal you will be the primary article handler for about a quarter of submissions per year, with assignments given by the Editor-in-Chief (EIC). You will be responsible for:</p>
+<ul>
+<li>matching the article with an appropriate Associate Editor (AE) or handling the reviews yourself.</li>
+<li>communicating with AEs on submitted articles, and if necessary providing guidance to an AE about use of how GitHub is used, and relevant <code>rj</code> functionality</li>
+<li>communicating progress and reviews with the corresponding author.</li>
+<li>deciding if an article should be accepted, or rejected, or on an appropriate revision status, usually based on reviewer and AE feedback.</li>
+<li>maintaining and enhancing the <code>rj</code> and <code>rjtools</code> software, in collaboration with other editors.</li>
+</ul>
+</div>
 <div id="editorial-structure" class="section level1">
 <h1 class="hasAnchor">
 <a href="#editorial-structure" class="anchor"></a>Editorial structure</h1>
 <p>The editorial board consists of four editors, including an Editor-in-Chief, and a non-fixed number of associate editors. Each editor serves a term of four years, starting on 1 January and ending on 31 December four years later. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.</p>
-<p>In the third year of their term the editor acts as Editor-in-Chief (EIC). The EIC takes primary responsibility for: - Production of two journal issues per year, in June and December. - Managing the flow of submissions, ensuring that these are handled in a timely manner. - Maintaining the R Journal web site <a href="http://journal.r-project.org" class="uri">http://journal.r-project.org</a> - Maintaining the formatting and tools used to manage the journal. - Ensuring smooth communication between editors and associate editors.</p>
+<p>In the third year of their term the editor acts as Editor-in-Chief. The EIC takes primary responsibility for: - Production of two journal issues per year, in June and December. - Managing the flow of submissions, ensuring that these are handled in a timely manner. - Maintaining the R Journal web site <a href="http://journal.r-project.org" class="uri">http://journal.r-project.org</a> - Maintaining the formatting and tools used to manage the journal. - Ensuring smooth communication between editors and associate editors.</p>
 </div>
 <div id="new-editors-and-associate-editors" class="section level1">
 <h1 class="hasAnchor">
 <a href="#new-editors-and-associate-editors" class="anchor"></a>New editors and associate editors</h1>
 <p>New editors and associate editors should be added to the <code>editors.csv</code> and <code>associate_editors.csv</code> files in <code>inst</code> folder.</p>
+</div>
+<div id="communications" class="section level1">
+<h1 class="hasAnchor">
+<a href="#communications" class="anchor"></a>Communications</h1>
+<p>Article repos need to be copied to the relevant <code>ae-articles-XX</code>. The <code>articles</code> repo is the master copy, and once a paper is retrieved from an AE, the <code>DESCRIPTION</code> file is updated, and the <code>correspondence</code> folder is populated.</p>
+<p>Slack is used for communication, between EIC, EEs and AEs, and general information about operations. The channel <code>editors_private</code> can be used for protected conversations between EEs.</p>
+<p>Weekly virtual meetings are held to keep communication between editors current.</p>
+</div>
+<div id="workflow-and-operations" class="section level1">
+<h1 class="hasAnchor">
+<a href="#workflow-and-operations" class="anchor"></a>Workflow and operations</h1>
+<div id="getting-started" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-started" class="anchor"></a>Getting started</h2>
+<p>Install the <code>rj</code> package with</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rjournal/rj"</span><span class="op">)</span></code></pre></div>
+<p>The package is being updated and revised regularly, so you may want to re-install occasionally.</p>
+</div>
+<div id="potential-ae" class="section level2">
+<h2 class="hasAnchor">
+<a href="#potential-ae" class="anchor"></a>Potential AE</h2>
+<p>The keywords of a paper should be matched against the keywords of AEs available in <code>associate_editors.csv</code>. Also, the function <code><a href="../reference/ae_workload.html">ae_workload()</a></code> should be used to ensure that the potential AE hasn’t got too many current assignments.</p>
+</div>
+<div id="workflow" class="section level2">
+<h2 class="hasAnchor">
+<a href="#workflow" class="anchor"></a>Workflow</h2>
+<div id="htmlwidget-4ff5d2816d55f92aa92c" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4ff5d2816d55f92aa92c">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check status of papers being handled: summarise_articles()\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"has the paper been acknowledged?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"acknowledge paper \n acknowledge_submission() \", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"4\" [label = \"is this a new submission?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"5\" [label = \"examine article: should the paper progress to review?\", shape = \"ellipse\", width = \"7\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"6\" [label = \"is there a suitable AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"update status to be `with AE`, update_status(), copy repo to AEs\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"8\" [label = \"message/email AE, hopefully they accept assignment\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"9\" [label = \"has AE returned reviews and decision?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"10\" [label = \"send reviews and decision to author, update_status(), \n notify/thank AE about decision\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"11\" [label = \"is the revision adequate?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"12\" [label = \"should it go back to AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"13\" [label = \"reject, update status(), contact authors\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"14\" [label = \"act as AE, find reviewers, update status, follow AE flow chart\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"Y\"] \n\"2\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \"Y\"] \n\"5\"->\"6\" [label = \"Y\"] \n\"6\"->\"7\" [label = \"Y\"] \n\"7\"->\"8\" [label = \".\"] \n\"8\"->\"9\" [label = \".\"] \n\"9\"->\"10\" [label = \"Y\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"11\" [label = \"N\"] \n\"11\"->\"12\" [label = \"Y\"] \n\"12\"->\"7\" [label = \"Y\"] \n\"12\"->\"13\" [label = \"N\"] \n\"5\"->\"13\" [label = \"N\"] \n\"6\"->\"14\" [label = \"N\"] \n\"9\"->\"8\" [label = \"N\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="dealing-with-problematic-authors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#dealing-with-problematic-authors" class="anchor"></a>Dealing with problematic authors</h2>
+<p><code>vexing_authors.csv</code></p>
+</div>
 </div>
   </div>
 
