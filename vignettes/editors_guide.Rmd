@@ -21,36 +21,49 @@ knitr::opts_chunk$set(
 
 # Mission
 
-As an Executive Editor (EE) for the R Journal you will be the primary article handler for about a quarter of submissions per year, with  assignments given by the Editor-in-Chief (EIC). You will be responsible for:
+Executive Editor (EE) of the R Journal are the primary article handler for about a quarter of submissions per year, responsible for:
 
-- matching the article with an appropriate Associate Editor (AE) or handling the reviews yourself.
-- communicating with AEs on submitted articles, and if necessary providing guidance to an AE about use of how GitHub is used, and relevant `rj` functionality
+- matching the article with an appropriate Associate Editor (AE) or handling obtaining reviews without an AE.
+- communicating with AEs on submitted articles, and if necessary providing guidance to an AE about use of how GitHub is used, and relevant `rj` functionality.
 - communicating progress and reviews with the corresponding author.
-- deciding if an article should be accepted, or rejected, or on an appropriate revision status, usually based on reviewer and AE feedback. 
-- maintaining and enhancing the `rj` and `rjtools` software, in collaboration with other editors.
+- making a final decision if an article should be accepted, or rejected, or on an appropriate revision status, usually based on reviewer and AE feedback. 
+- maintaining and enhancing the `rj` and `rjtools` software, in collaboration with other EEs and AEs.
 
-# Editorial structure
+# Overview of editorial board
 
-The editorial board consists of four editors, including an Editor-in-Chief, and a non-fixed number of associate editors. Each editor serves a term of four years, starting on 1 January and ending on 31 December four years later. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.
+The editorial board consists of four editors, including an Editor-in-Chief (EIC), and a non-fixed number of associate editors. Each editor serves a roughly four year term. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.
 
-In the third year of their term the editor acts as Editor-in-Chief. The EIC takes primary responsibility for:
-- Production of two journal issues per year, in June and December.
+In the third calendar year of their term the EE acts as EIC. The EIC takes primary responsibility for:
+
+- Production of two journal issues per year, in June and December. The issue typically appears a month or two after the publication date, because articles accepted up to June 30, and mid-Dec, respectively will likely be included. 
 - Managing the flow of submissions, ensuring that these are handled in a timely manner.
-- Maintaining the R Journal web site http://journal.r-project.org
+- Maintaining the R Journal web site http://journal.r-project.org. 
 - Maintaining the formatting and tools used to manage the journal.
-- Ensuring smooth communication between editors and associate editors.
+- Ensuring smooth communication between editors and associate editors and authors.
+
+EE's have the primary responsibility for handling any particular submission.
+
+AE's have the primary responsibility for obtaining reviews and making recommendations for their assigned articles. 
 
 # New editors and associate editors
 
-New editors and associate editors should be added to the `editors.csv` and `associate_editors.csv` files in `inst` folder.
+New editors and associate editors should be added to the `editors.csv` and `associate_editors.csv` files in `inst` folder. 
+
+# Article assignment to AE
+
+An article repo needs to be created for any new AEs in the for of the articles repo, named `ae-articles-XX`. Initials replace XX and match the codes in the `csv` file.
+
+The AE should be notified of any new assignment.
 
 # Communications
 
-Article repos need to be copied to the relevant `ae-articles-XX`. The `articles` repo is the master copy, and once a paper is retrieved from an AE, the `DESCRIPTION` file is updated, and the `correspondence` folder is populated. 
+A newly assigned article for an AE needs to have the directory need to be copied from the `articles` repo to the relevant `ae-articles-XX`. The `articles` repo is the master copy, and once a paper is retrieved from an AE, the `DESCRIPTION` file is updated, and the `correspondence` folder is populated. 
 
 Slack is used for communication, between EIC, EEs and AEs, and general information about operations. The channel `editors_private` can be used for protected conversations between EEs. 
 
 Weekly virtual meetings are held to keep communication between editors current.
+
+Email is the primary manner for communicating with authors. The EE, not AEs, should communicate with authors. 
 
 # Workflow and operations
 
@@ -70,45 +83,53 @@ The keywords of a paper should be matched against the keywords of AEs available 
 
 ## Timeline for reviews
 
-add note from template letter to authors
+This is what the acknowledgement letter tells authors about the timeline for their paper to be handled:
+
+```
+The submission process proceeds as follows:
+
+* review by editorial board & assignment of associate editor (~1-2 weeks)
+* reviewers solicited (~1-2 weeks)
+* reviews received (~1-2 months)
+```
+
 
 ## Workflow
 
 ```{r wfgraph, fig.width=8, fig.height=12, fig.align='center'}
 library(DiagrammeR)
-editor_df <- create_node_df(n=14,  
-    label=c("check status of papers being handled: summarise_articles()", # 1
-            "has the paper been acknowledged?", # 2
-            "acknowledge paper \n acknowledge_submission() ", # 3
-            "is this a new submission?", # 4
-            "examine article: should the paper progress to review?", # 5
-            "is there a suitable AE?", # 6
-            "update status to be `with AE`, update_status(), copy repo to AEs", # 7
-            "message/email AE, hopefully they accept assignment", # 8
-            "has AE returned reviews and decision?", # 9
-            "send reviews and decision to author, update_status(), \n notify/thank AE about decision", # 10
-            "is the revision adequate?", # 11
-            "should it go back to AE?", # 12
-            "reject, update status(), contact authors", # 13
-            "act as AE, find reviewers, update status, follow AE flow chart"), # 14
-   shape = c("rectangle", "ellipse", "rectangle", 
-             "ellipse", "ellipse", "ellipse", 
+editor_df <- create_node_df(n=11,  
+    label=c("is this a new submission?", # 1
+            "examine article: should the paper progress to review?", # 2
+            "is there a suitable AE?", # 3
+            "update status to be `with AE`, update_status(), copy folder to AEs repo", # 4
+            "message/email AE", # 5
+            "has AE returned reviews and decision?", # 6
+            "add_review() to correspondence folder, send decision to author, \n with reviews if appropriate, update_status(), \n notify and thank AE about decision, if appropriate", # 7
+            "is the revision adequate?", # 8
+            "should it go back to AE?", # 9
+            "reject(), contact authors", # 10
+            "act as AE, find reviewers, update status, follow AE flow chart"), # 11
+   shape = c("ellipse", "ellipse", "ellipse", 
              "rectangle", "rectangle", 
              "ellipse", "rectangle", "ellipse", 
              "ellipse", "rectangle", "rectangle"),
-   width = c(5, 3, 2, 3, 7, 3, 5, 5, 3, 4, 3, 3, 3, 4),
-   fillcolor = c("grey90", "orange", "grey90",  
-                 "orange", "orange", "orange", 
+   width = c(3, 5, 3, 5, 2, 3, 4, 3, 3, 3, 4),
+   fillcolor = c("orange", "orange", "orange", 
                  "grey90", "grey90",
                  "orange", "salmon", "orange", 
                  "orange", "salmon", "turquoise"),
    fontcolor = "black")
 
 editor_edge_df <- create_edge_df(
-  from = c(1,2,2,4,5,6,7,8,9,3,4,11,12,12,5,6,9), 
-  to = c(2,3,4,5,6,7,8,9,10,4,11,12,7,13,13,14,8), 
-  label = c(".", "Y", ".", "Y", "Y", "Y", ".", ".",
-            "Y",".","N", "Y", "Y", "N", "N","N"))
+  from = c(1,2,3,4,5,6,1,8, 8,9,9, 2, 3, 6), 
+  to =   c(2,3,4,5,6,7,8,9,10,7,4,10, 11, 5), 
+  label = c("Y", "Y", "Y", ".", ".", "Y",
+            "N","Y","N", "N", "Y", "N", "N", "N"),
+  color = c("dodgerblue2", "dodgerblue2", "dodgerblue2", 
+            "grey50", "grey50", "dodgerblue2",
+            "red", "dodgerblue2", "red", "red", 
+            "dodgerblue2", "red", "red", "red"))
 
 editor <- create_graph(editor_df, 
                        editor_edge_df, 
