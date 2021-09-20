@@ -85,7 +85,7 @@
       <h1 data-toc-skip>Editors’ Guide</h1>
                         <h4 class="author">First draft by Di Cook</h4>
             
-            <h4 class="date">2021-09-13</h4>
+            <h4 class="date">2021-09-20</h4>
       
       
       <div class="hidden name"><code>editors_guide.Rmd</code></div>
@@ -97,32 +97,48 @@
 <div id="mission" class="section level1">
 <h1 class="hasAnchor">
 <a href="#mission" class="anchor"></a>Mission</h1>
-<p>As an Executive Editor (EE) for the R Journal you will be the primary article handler for about a quarter of submissions per year, with assignments given by the Editor-in-Chief (EIC). You will be responsible for:</p>
+<p>Executive Editor (EE) of the R Journal are the primary article handler for about a quarter of submissions per year, responsible for:</p>
 <ul>
-<li>matching the article with an appropriate Associate Editor (AE) or handling the reviews yourself.</li>
-<li>communicating with AEs on submitted articles, and if necessary providing guidance to an AE about use of how GitHub is used, and relevant <code>rj</code> functionality</li>
+<li>matching the article with an appropriate Associate Editor (AE) or handling obtaining reviews without an AE.</li>
+<li>communicating with AEs on submitted articles, and if necessary providing guidance to an AE about use of how GitHub is used, and relevant <code>rj</code> functionality.</li>
 <li>communicating progress and reviews with the corresponding author.</li>
-<li>deciding if an article should be accepted, or rejected, or on an appropriate revision status, usually based on reviewer and AE feedback.</li>
-<li>maintaining and enhancing the <code>rj</code> and <code>rjtools</code> software, in collaboration with other editors.</li>
+<li>making a final decision if an article should be accepted, or rejected, or on an appropriate revision status, usually based on reviewer and AE feedback.</li>
+<li>maintaining and enhancing the <code>rj</code> and <code>rjtools</code> software, in collaboration with other EEs and AEs.</li>
 </ul>
 </div>
-<div id="editorial-structure" class="section level1">
+<div id="overview-of-editorial-board" class="section level1">
 <h1 class="hasAnchor">
-<a href="#editorial-structure" class="anchor"></a>Editorial structure</h1>
-<p>The editorial board consists of four editors, including an Editor-in-Chief, and a non-fixed number of associate editors. Each editor serves a term of four years, starting on 1 January and ending on 31 December four years later. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.</p>
-<p>In the third year of their term the editor acts as Editor-in-Chief. The EIC takes primary responsibility for: - Production of two journal issues per year, in June and December. - Managing the flow of submissions, ensuring that these are handled in a timely manner. - Maintaining the R Journal web site <a href="http://journal.r-project.org" class="uri">http://journal.r-project.org</a> - Maintaining the formatting and tools used to manage the journal. - Ensuring smooth communication between editors and associate editors.</p>
+<a href="#overview-of-editorial-board" class="anchor"></a>Overview of editorial board</h1>
+<p>The editorial board consists of four editors, including an Editor-in-Chief (EIC), and a non-fixed number of associate editors. Each editor serves a roughly four year term. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.</p>
+<p>In the third calendar year of their term the EE acts as EIC. The EIC takes primary responsibility for:</p>
+<ul>
+<li>Production of two journal issues per year, in June and December. The issue typically appears a month or two after the publication date, because articles accepted up to June 30, and mid-Dec, respectively will likely be included.</li>
+<li>Managing the flow of submissions, ensuring that these are handled in a timely manner.</li>
+<li>Maintaining the R Journal web site <a href="http://journal.r-project.org" class="uri">http://journal.r-project.org</a>.</li>
+<li>Maintaining the formatting and tools used to manage the journal.</li>
+<li>Ensuring smooth communication between editors and associate editors and authors.</li>
+</ul>
+<p>EE’s have the primary responsibility for handling any particular submission.</p>
+<p>AE’s have the primary responsibility for obtaining reviews and making recommendations for their assigned articles.</p>
 </div>
 <div id="new-editors-and-associate-editors" class="section level1">
 <h1 class="hasAnchor">
 <a href="#new-editors-and-associate-editors" class="anchor"></a>New editors and associate editors</h1>
 <p>New editors and associate editors should be added to the <code>editors.csv</code> and <code>associate_editors.csv</code> files in <code>inst</code> folder.</p>
 </div>
+<div id="article-assignment-to-ae" class="section level1">
+<h1 class="hasAnchor">
+<a href="#article-assignment-to-ae" class="anchor"></a>Article assignment to AE</h1>
+<p>An article repo needs to be created for any new AEs in the for of the articles repo, named <code>ae-articles-XX</code>. Initials replace XX and match the codes in the <code>csv</code> file.</p>
+<p>The AE should be notified of any new assignment.</p>
+</div>
 <div id="communications" class="section level1">
 <h1 class="hasAnchor">
 <a href="#communications" class="anchor"></a>Communications</h1>
-<p>Article repos need to be copied to the relevant <code>ae-articles-XX</code>. The <code>articles</code> repo is the master copy, and once a paper is retrieved from an AE, the <code>DESCRIPTION</code> file is updated, and the <code>correspondence</code> folder is populated.</p>
+<p>A newly assigned article for an AE needs to have the directory need to be copied from the <code>articles</code> repo to the relevant <code>ae-articles-XX</code>. The <code>articles</code> repo is the master copy, and once a paper is retrieved from an AE, the <code>DESCRIPTION</code> file is updated, and the <code>correspondence</code> folder is populated.</p>
 <p>Slack is used for communication, between EIC, EEs and AEs, and general information about operations. The channel <code>editors_private</code> can be used for protected conversations between EEs.</p>
 <p>Weekly virtual meetings are held to keep communication between editors current.</p>
+<p>Email is the primary manner for communicating with authors. The EE, not AEs, should communicate with authors.</p>
 </div>
 <div id="workflow-and-operations" class="section level1">
 <h1 class="hasAnchor">
@@ -143,13 +159,18 @@
 <div id="timeline-for-reviews" class="section level2">
 <h2 class="hasAnchor">
 <a href="#timeline-for-reviews" class="anchor"></a>Timeline for reviews</h2>
-<p>add note from template letter to authors</p>
+<p>This is what the acknowledgement letter tells authors about the timeline for their paper to be handled:</p>
+<pre><code>The submission process proceeds as follows:
+
+* review by editorial board &amp; assignment of associate editor (~1-2 weeks)
+* reviewers solicited (~1-2 weeks)
+* reviews received (~1-2 months)</code></pre>
 </div>
 <div id="workflow" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
-<div id="htmlwidget-34f7e0c8986655d61ee7" style="width:768px;height:1152px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-34f7e0c8986655d61ee7">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check status of papers being handled: summarise_articles()\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"has the paper been acknowledged?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"acknowledge paper \n acknowledge_submission() \", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"4\" [label = \"is this a new submission?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"5\" [label = \"examine article: should the paper progress to review?\", shape = \"ellipse\", width = \"7\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"6\" [label = \"is there a suitable AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"update status to be `with AE`, update_status(), copy repo to AEs\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"8\" [label = \"message/email AE, hopefully they accept assignment\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"9\" [label = \"has AE returned reviews and decision?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"10\" [label = \"send reviews and decision to author, update_status(), \n notify/thank AE about decision\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"11\" [label = \"is the revision adequate?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"12\" [label = \"should it go back to AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"13\" [label = \"reject, update status(), contact authors\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"14\" [label = \"act as AE, find reviewers, update status, follow AE flow chart\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"Y\"] \n\"2\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \"Y\"] \n\"5\"->\"6\" [label = \"Y\"] \n\"6\"->\"7\" [label = \"Y\"] \n\"7\"->\"8\" [label = \".\"] \n\"8\"->\"9\" [label = \".\"] \n\"9\"->\"10\" [label = \"Y\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"11\" [label = \"N\"] \n\"11\"->\"12\" [label = \"Y\"] \n\"12\"->\"7\" [label = \"Y\"] \n\"12\"->\"13\" [label = \"N\"] \n\"5\"->\"13\" [label = \"N\"] \n\"6\"->\"14\" [label = \"N\"] \n\"9\"->\"8\" [label = \"N\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0f3342c1d5aae7cd4c55" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0f3342c1d5aae7cd4c55">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"is this a new submission?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"2\" [label = \"examine article: should the paper progress to review?\", shape = \"ellipse\", width = \"5\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"is there a suitable AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"4\" [label = \"update status to be `with AE`, update_status(), copy folder to AEs repo\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"message/email AE\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"has AE returned reviews and decision?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"add_review() to correspondence folder, send decision to author, \n with reviews if appropriate, update_status(), \n notify and thank AE about decision, if appropriate\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"8\" [label = \"is the revision adequate?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"9\" [label = \"should it go back to AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"10\" [label = \"reject(), contact authors\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"11\" [label = \"act as AE, find reviewers, update status, follow AE flow chart\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \"Y\", color = \"dodgerblue2\"] \n\"3\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"1\"->\"8\" [label = \"N\", color = \"red\"] \n\"8\"->\"9\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"10\" [label = \"N\", color = \"red\"] \n\"9\"->\"7\" [label = \"N\", color = \"red\"] \n\"9\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"10\" [label = \"N\", color = \"red\"] \n\"3\"->\"11\" [label = \"N\", color = \"red\"] \n\"6\"->\"5\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="dealing-with-problematic-authors" class="section level2">
 <h2 class="hasAnchor">
