@@ -3,17 +3,26 @@
 \name{decline_reviewer}
 \alias{decline_reviewer}
 \alias{agree_reviewer}
-\title{Review helper function}
+\title{Update whether the invited reviewer agree or decline the review}
 \usage{
 decline_reviewer(article, reviewer_id)
 
 agree_reviewer(article, reviewer_id)
 }
 \arguments{
-\item{article}{article id, like \code{"2014-01"}}
+\item{article}{Article id, like \code{"2014-01"}}
 
-\item{reviewer_id}{invite just a single reviewer}
+\item{reviewer_id}{Numeric, the index of the intended reviewer in the Reviewer field.
+1 for the first reviewer, 2 for the second}
 }
 \description{
-Review helper function
+This function updates the Reviewers field in the DESCRIPTION
+}
+\examples{
+\dontrun{
+# first reviewer declined
+decline_reviewer("2020-114", reviewer_id = 1)
+# second reviewer agreed
+agree_reviewer("2020-114", reviewer_id = 2)
+}
 }

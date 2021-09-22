@@ -35,8 +35,8 @@ print.address_list <- function(x, ...) cat(format(x), "\n")
 
 #' An S3 class to represent email addresses.
 #'
-#' @param email email address
-#' @param name display name, optional
+#' @param email Email address of the reviewer
+#' @param name Display name, optional
 #' @param comment comment, optional
 #' @export
 #' @examples

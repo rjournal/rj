@@ -7,9 +7,9 @@
 address(email = NULL, name = NULL, comment = NULL)
 }
 \arguments{
-\item{email}{email address}
+\item{email}{Email address of the reviewer}
 
-\item{name}{display name, optional}
+\item{name}{Display name, optional}
 
 \item{comment}{comment, optional}
 }

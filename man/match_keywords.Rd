@@ -2,18 +2,12 @@
 % Please edit documentation in R/match.R
 \name{match_keywords}
 \alias{match_keywords}
-\alias{get_article_keywords}
-\alias{get_reviewer_keywords}
 \title{Match reviewers for a submitted article based on keywords}
 \usage{
 match_keywords(id, n = 5)
-
-get_article_keywords(id)
-
-get_reviewer_keywords()
 }
 \arguments{
-\item{id}{the article id}
+\item{id}{the article id in the description file}
 
 \item{n}{numeric; number of reviewer to display}
 }
@@ -23,10 +17,6 @@ get_reviewer_keywords()
 \item{\code{get_article_keywords}: a list with 2 elements: 1) a vector of keywords, and 2) a vector of author names}
 \item{\code{get_reviewer_keywords}: a tibble of reviewer information from the googlesheet. Variables include email, gname (given name), fname (family name), and keywords}
 }
-
-
-
-
 }
 \description{
 \code{match_keywords} matches an article to potential reviewers through

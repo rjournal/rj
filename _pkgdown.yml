@@ -11,8 +11,8 @@ reference:
   - add_reviewer
   - agree_reviewer
   - decline_reviewer
-  - email_template
   - add_review
+  - update_status
 - title: Primarily AE and Editor article management functions
   desc: Functions to assist the Editors handle submissions
   contents:
