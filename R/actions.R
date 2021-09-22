@@ -1,16 +1,27 @@
-#' Update the status of an article.
+#' Update the status field in the DESCRIPTION
 #'
+#' This function updates the Status field in the DESCRIPTION.
 #' \code{reject}, \code{accept} and \code{withdraw} update the status,
 #' move the file to the correct directory and draft an email from a
 #' template of the corresponding name. Use \code{valid_status} to check
 #' for possible statuses.
 #'
-#' @param article as \code{\link{article}} object, path, or ID. See
-#'   \code{\link{as.article}} for more details about how article is located.
-#' @param status new status to add
-#' @param comments any additional comments
-#' @param date date of status update. If omitted defaults to today.
-#' @rdname action
+#' @param article Article id, like \code{"2014-01"}
+#' @param status new status to add, see details section for more
+#' @param comments Any additional comments
+#' @param date Date of status update. If omitted defaults to today.
+#'
+#' @details
+#' Possible status:
+#'
+#'\describe{
+#'  \item{AE making recommendation}{"AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject"}
+#'  \item{Editors}{"with AE", "accepted", "rejected", "withdraw"}
+#'}
+#'@examples
+#'\dontrun{
+#' update_status("2020-114", status = "AE: major revision")
+#'}
 #' @export
 update_status <- function(article, status, comments = "", date = Sys.Date()) {
   article <- as.article(article)
@@ -26,6 +37,12 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
   save_article(article)
 }
 
+#' Shortcut for updating status of accept, reject, and withdraw.
+#'
+#' This set of functions update the Status field in the DESCRIPTION file and
+#' then draft an email for accepting, rejecting, and withdraw the paper.
+#'
+#' @inheritParams update_status
 #' @rdname action
 #' @export
 reject <- function(article, comments = "", date = Sys.Date()) {
