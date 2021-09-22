@@ -57,15 +57,6 @@ ae_workload <- function(articles, day_back = 365) {
 
 }
 
-#' @rdname ae_workload
-#'
-#' @param x An article object
-#'
-#' @export
-get_AE <- function(x){
-  list(id = format(x$id), ae = x$ae)
-}
-
 #' Add AE to the DESCRIPTION
 #'
 #' Fuzzy match to find the initial of the AE to fill in the article DESCRIPTION.

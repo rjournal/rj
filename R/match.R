@@ -108,8 +108,6 @@ match_keywords <- function(id, n = 5) {
 #' @param id the article id
 #'
 #' @return
-#' @export
-#' @rdname match_keywords
 get_article_keywords <- function(id) {
   article <- as.article(id)
   keywords_raw <- article$keywords
@@ -126,8 +124,6 @@ get_article_keywords <- function(id) {
 
 #' Extract keywords from reviewer list
 #' @return
-#' @export
-#' @rdname match_keywords
 get_reviewer_keywords <- function() {
   sheet_raw <- suppressMessages(googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit?ts=606a86e4#gid=1594007907"))
   reviewer_info <- tibble::tibble(
