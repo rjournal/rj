@@ -10,8 +10,17 @@ list_reviewers <- function(article) {
   return(invisible(NULL))
 }
 
-#' @title Review helper function
+#' Update whether the invited reviewer agree or decline the review
+#'
+#' This function updates the Reviewers field in the DESCRIPTION
 #' @inheritParams invite_reviewers
+#' @examples
+#' \dontrun{
+#' # first reviewer declined
+#' decline_reviewer("2020-114", reviewer_id = 1)
+#' # second reviewer agreed
+#' agree_reviewer("2020-114", reviewer_id = 2)
+#' }
 #' @export
 decline_reviewer <- function(article, reviewer_id) {
   check_dup_comment(article, reviewer_id, "Declined")
@@ -44,12 +53,17 @@ add_out_for_review <- function(article) {
   return(invisible(NULL))
 }
 
-#' Add review to DESCRIPTION
+#' Add reviewer to DESCRIPTION
 #'
-#' Add a reviewers name to the DESCRIPTION file
-#' @param invite Automatically construct email
+#' This function adds the reviewer information(name and email) to the Reviewers field in the DESCRIPTION.
+#' @param name Full name of the reviewer
+#' @param invite Logical, whether to automatically construct an email to invite the reviewer
 #' @inheritParams address
 #' @inheritParams invite_reviewers
+#' @examples
+#' \dontrun{
+#' add_reviewer("2020-114", "Przemyslaw Biecek", "przemyslaw.biecek@gmail.com")
+#' }
 #' @export
 add_reviewer <- function(article, name, email, invite = TRUE) {
   article <- as.article(article)
@@ -79,9 +93,10 @@ add_reviewer <- function(article, name, email, invite = TRUE) {
 #' the emails, it also caches them locally in the \code{correspodence/}
 #' directory of the corresponding article.
 #'
-#' @param article article id, like \code{"2014-01"}
-#' @param reviewer_id invite just a single reviewer
-#' @param prefix prefix added to start file name - used to distinguish
+#' @param article Article id, like \code{"2014-01"}
+#' @param reviewer_id Numeric, the index of the intended reviewer in the Reviewer field.
+#' 1 for the first reviewer, 2 for the second
+#' @param prefix Prefix added to start file name - used to distinguish
 #'   between multiple rounds of reviewers (if needed)
 #' @export
 invite_reviewers <- function(article, prefix = "1") {
@@ -91,8 +106,8 @@ invite_reviewers <- function(article, prefix = "1") {
   }
 }
 
-#' @export
 #' @rdname invite_reviewers
+#' @export
 invite_reviewer <- function(article, reviewer_id, prefix = "1") {
   article <- as.article(article)
 
@@ -131,11 +146,20 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
   email_text(email)
 }
 
-#' @rdname invite_reviewers
+#' Add the review file to the correspondence folder
+#'
+#' After receiving the review file from the reviewer,
+#' this function adds it to the correspondence folder of the article.
+#'
 #' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.
 #' @param recommend Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.
 #' @param date Date of the comment, defaults to today's date
-#' @param AE logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.
+#' @param AE Logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.
+#' @examples
+#' \dontrun{
+#' # add review file from the first reviewer and recommend accepting it
+#' add_review("2020-114", reviewer_id = 1, review = file.choose(), recommend = "Accept")
+#' }
 #' @export
 add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sys.Date(), AE = is_AE()) {
   article <- as.article(article)
