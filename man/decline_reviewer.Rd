@@ -3,11 +3,14 @@
 \name{decline_reviewer}
 \alias{decline_reviewer}
 \alias{agree_reviewer}
-\title{Update whether the invited reviewer agree or decline the review}
+\alias{abandon_reviewer}
+\title{Update whether the invited reviewer agree, decline, or doesn't replay (abandon) to review}
 \usage{
 decline_reviewer(article, reviewer_id)
 
 agree_reviewer(article, reviewer_id)
+
+abandon_reviewer(article, reviewer_id)
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
@@ -22,7 +25,11 @@ This function updates the Reviewers field in the DESCRIPTION
 \dontrun{
 # first reviewer declined
 decline_reviewer("2020-114", reviewer_id = 1)
+
 # second reviewer agreed
 agree_reviewer("2020-114", reviewer_id = 2)
+
+# third reviewer doesn't reply and deemed abandon
+abandon_reviewer("2020-114", reviwer_id = 3)
 }
 }

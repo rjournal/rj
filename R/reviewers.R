@@ -10,7 +10,7 @@ list_reviewers <- function(article) {
   return(invisible(NULL))
 }
 
-#' Update whether the invited reviewer agree or decline the review
+#' Update whether the invited reviewer agree, decline, or doesn't replay (abandon) to review
 #'
 #' This function updates the Reviewers field in the DESCRIPTION
 #' @inheritParams invite_reviewers
@@ -18,8 +18,12 @@ list_reviewers <- function(article) {
 #' \dontrun{
 #' # first reviewer declined
 #' decline_reviewer("2020-114", reviewer_id = 1)
+#'
 #' # second reviewer agreed
 #' agree_reviewer("2020-114", reviewer_id = 2)
+#'
+#' # third reviewer doesn't reply and deemed abandon
+#' abandon_reviewer("2020-114", reviwer_id = 3)
 #' }
 #' @export
 decline_reviewer <- function(article, reviewer_id) {
@@ -40,6 +44,16 @@ agree_reviewer <- function(article, reviewer_id) {
     reviewer_id = reviewer_id,
     comment = comment
   )
+}
+
+#' @rdname decline_reviewer
+#' @export
+abandon_reviewer <- function(article, reviewer_id){
+  check_dup_comment(article, reviewer_id, "Abandoned")
+  comment <- paste("Abandoned", Sys.Date())
+  add_reviewer_comment(article,
+                       reviewer_id = reviewer_id,
+                       comment = comment)
 }
 
 add_out_for_review <- function(article) {
@@ -151,6 +165,9 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
 #' After receiving the review file from the reviewer,
 #' this function adds it to the correspondence folder of the article.
 #'
+#' @param article Article id, like \code{"2014-01"}
+#' @param reviewer_id Numeric, the index of the intended reviewer in the Reviewer field.
+#' 1 for the first reviewer, 2 for the second
 #' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.
 #' @param recommend Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.
 #' @param date Date of the comment, defaults to today's date
@@ -213,6 +230,7 @@ add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sy
   if (AE && !length(grep("^AE: ", recommend))) {
     recommend <- paste("AE:", recommend)
   }
+
   recommend <- paste(recommend, date)
   add_reviewer_comment(article,
     reviewer_id = reviewer_id,
