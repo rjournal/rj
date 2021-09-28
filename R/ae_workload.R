@@ -43,7 +43,7 @@ reviewer_summary <- function(articles){
 ae_workload <- function(articles, day_back = 365) {
 
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    select(name, email)
+    select(.data$name, .data$email)
 
   articles %>%
     dplyr::select(id, status) %>%

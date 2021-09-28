@@ -5,7 +5,7 @@
 \alias{reject_format}
 \alias{accept}
 \alias{withdraw}
-\title{Shortcut for updating status of accept, reject, and withdraw.}
+\title{Accept, reject, or withdraw an article}
 \usage{
 reject(article, comments = "", date = Sys.Date())
 
@@ -24,5 +24,6 @@ withdraw(article, comments = "", date = Sys.Date())
 }
 \description{
 This set of functions update the Status field in the DESCRIPTION file and
-then draft an email for accepting, rejecting, and withdraw the paper.
+then draft an email to accept, reject, or withdraw the paper. It can be seen
+as shortcut to \code{update_status} with relevant status plus automatic email drafting.
 }

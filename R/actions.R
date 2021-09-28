@@ -37,10 +37,11 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
   save_article(article)
 }
 
-#' Shortcut for updating status of accept, reject, and withdraw.
+#' Accept, reject, or withdraw an article
 #'
 #' This set of functions update the Status field in the DESCRIPTION file and
-#' then draft an email for accepting, rejecting, and withdraw the paper.
+#' then draft an email to accept, reject, or withdraw the paper. It can be seen
+#' as shortcut to \code{update_status} with relevant status plus automatic email drafting.
 #'
 #' @inheritParams update_status
 #' @rdname action

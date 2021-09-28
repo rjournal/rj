@@ -14,6 +14,11 @@ add_review(
 )
 }
 \arguments{
+\item{article}{Article id, like \code{"2014-01"}}
+
+\item{reviewer_id}{Numeric, the index of the intended reviewer in the Reviewer field.
+1 for the first reviewer, 2 for the second}
+
 \item{review}{Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.}
 
 \item{recommend}{Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.}
@@ -29,6 +34,6 @@ this function adds it to the correspondence folder of the article.
 \examples{
 \dontrun{
 # add review file from the first reviewer and recommend accepting it
-add_review("2020-114", reviewer_id = 1, review = file.choose(), recommend = "Accepted")
+add_review("2020-114", reviewer_id = 1, review = file.choose(), recommend = "Accept")
 }
 }
