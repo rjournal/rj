@@ -10,9 +10,10 @@ list_reviewers <- function(article) {
   return(invisible(NULL))
 }
 
-#' Update whether the invited reviewer agree, decline, or doesn't replay (abandon) to review
+#' Update reviewer's response to invite
 #'
-#' This function updates the Reviewers field in the DESCRIPTION
+#' This function updates the reviewers field in the DESCRIPTION with reviewer's response:
+#' accept, decline, or abandon if no reply from the reviewer for a period of time.
 #' @inheritParams invite_reviewers
 #' @examples
 #' \dontrun{
@@ -67,9 +68,10 @@ add_out_for_review <- function(article) {
   return(invisible(NULL))
 }
 
-#' Add reviewer to DESCRIPTION
+#' Invite an reviewer
 #'
-#' This function adds the reviewer information(name and email) to the Reviewers field in the DESCRIPTION.
+#' This function adds the reviewer information(name and email) to the reviewers
+#' field in the DESCRIPTION as well as draft an email to invite teh reviewer.
 #' @param name Full name of the reviewer
 #' @param invite Logical, whether to automatically construct an email to invite the reviewer
 #' @inheritParams address
@@ -160,16 +162,18 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
   email_text(email)
 }
 
-#' Add the review file to the correspondence folder
+#' Add the review file received from the reviewer
 #'
-#' After receiving the review file from the reviewer,
-#' this function adds it to the correspondence folder of the article.
+#' This function adds the review file received from the reviewer to
+#' the correspondence folder of the article.
 #'
 #' @param article Article id, like \code{"2014-01"}
 #' @param reviewer_id Numeric, the index of the intended reviewer in the Reviewer field.
 #' 1 for the first reviewer, 2 for the second
 #' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.
-#' @param recommend Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.
+#' @param recommend Reviewer's recommendation, one of: Accept, Minor, Major, Reject.
+#' If not specified, an attempt is made to auto-detect it from the file by
+#' looking at the first occurrence of those keywords. If auto-detect fails, use "Received".
 #' @param date Date of the comment, defaults to today's date
 #' @param AE Logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.
 #' @examples
@@ -227,9 +231,16 @@ add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sy
       recommend <- "Received"
     }
   }
-  if (AE && !length(grep("^AE: ", recommend))) {
-    recommend <- paste("AE:", recommend)
+
+  recommend <- tools::toTitleCase(recommend)
+  if (recommend == "Accepted"){
+    recommend <- "Accept"
+    cli::cli_alert_info("Auto-correct recommendataion from `Accepted` to `Accept`")
   }
+  if (!recommend %in% c("Accept", "Major", "Minor", "Reject")){
+    cli::cli_abort("Recommandation is invalid, use one of `Accept`, `Major`, `Minor`, or `Reject`")
+  }
+
 
   recommend <- paste(recommend, date)
   add_reviewer_comment(article,
@@ -261,20 +272,30 @@ add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sy
       }
     }
   }))
-  m$st[m$st == "accepted"] <- "agreed"
+  #m$st[m$st == "accepted"] <- "agreed"
   m
 }
 
-valid_review_status <-
+#' @export
+valid_reviewer_status <-
   c(
     "invited", "agreed", "declined", "abandoned", ## initial states
     "revision", ## like accepted for additional rounds after major
-    "minor", "major", "reject"
+    "minor", "major", "reject", "accept"
   ) ## final state
-## PS: "Accepted" is silently corrected to "Agreed" but it is
-##     discouraged as it can be confused with the notion of Accept/Reject
+# PS: "Accepted" is silently corrected to "Agreed" but it is
+#     discouraged as it can be confused with the notion of Accept/Reject
 
-review_status <- function(article) {
+#' Summarise reviewers' progression of an article
+#'
+#' This function summarises the status of reviewers who are willing to review
+#' for a particular article.
+#'
+#' @param article Article id, like \code{"2014-01"}
+#' @examples
+#' reviewer_status("Submissions/2020-114")
+#' @export
+reviewer_status <- function(article) {
   d0 <- data.frame(date = as.Date(character()), ext = integer(), rid = integer(), fin = logical(), name = character(), email = character())
   article <- as.article(article)
   if (length(article$reviewers) < 0) {
@@ -285,14 +306,14 @@ review_status <- function(article) {
     l[[i]]$rid <- i
   }
   lsl <- do.call(rbind, lapply(l, function(o) o[nrow(o), ]))
-  if (any(!lsl$st %in% valid_review_status)) {
-    warning("Invalid review status in ", article$id[1], "-", article$id[2], ": ", paste(lsl$st[!lsl$st %in% valid_review_status], collapse = ", "))
+  if (any(!lsl$st %in% valid_reviewer_status)) {
+    warning("Invalid review status in ", article$id[1], "-", article$id[2], ": ", paste(lsl$st[!lsl$st %in% valid_reviewer_status], collapse = ", "))
   }
   ## remove reviewers that declined
   lsl <- lsl[!lsl$st %in% c("declined", "abandoned"), ]
   if (length(lsl) && nrow(lsl)) {
     ## final state is minor/major/reject
-    lsl$fin <- lsl$st %in% c("minor", "major", "reject")
+    lsl$fin <- lsl$st %in% c("minor", "major", "reject", "accept")
     lsl$name <- sapply(lsl$rid, function(i) article$reviewers[[i]]$name)
     lsl$email <- sapply(lsl$rid, function(i) article$reviewers[[i]]$email)
     lsl
