@@ -1,31 +1,41 @@
-#' Update the status field in the DESCRIPTION
+#' Update the article status
 #'
-#' This function updates the Status field in the DESCRIPTION.
-#' \code{reject}, \code{accept} and \code{withdraw} update the status,
-#' move the file to the correct directory and draft an email from a
-#' template of the corresponding name. Use \code{valid_status} to check
-#' for possible statuses.
+#' This is a general function for updating the status field in the DESCRIPTION.
+#'
 #'
 #' @param article Article id, like \code{"2014-01"}
 #' @param status new status to add, see details section for more
 #' @param comments Any additional comments
 #' @param date Date of status update. If omitted defaults to today.
+#' @param AE Logical, if \code{TRUE}, \code{"AE: "} is prefixed to the status
 #'
 #' @details
-#' Possible status:
+#' For AEs, status is prefixed with "AE: " and valid status includes
+#' "AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject".
 #'
-#'\describe{
-#'  \item{AE making recommendation}{"AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject"}
-#'  \item{Editors}{"with AE", "accepted", "rejected", "withdraw"}
-#'}
+#' For Editors, use \code{accept()}, \code{reject()}, and \code{withdraw()} to
+#' update the status as well as draft an email to the correspondence author.
+#'
+#' Check valid status with \code{valid_status}.
 #'@examples
 #'\dontrun{
 #' update_status("2020-114", status = "AE: major revision")
 #'}
 #' @export
-update_status <- function(article, status, comments = "", date = Sys.Date()) {
+update_status <- function(article, status, comments = "", date = Sys.Date(), AE = is_AE()) {
   article <- as.article(article)
   if (is.character(date)) date <- as.Date(date)
+
+  if (AE && !length(grep("^AE: ", status))) {
+    status <- paste("AE:", status)
+    valid_ae_status <- grep("AE:", valid_status, value = TRUE)
+    if (!status %in% valid_ae_status){
+      cli::cli_abort('Status Invalid.
+                     Valid status for AE are "AE: major revision",
+                     "AE: minor revision", "AE: accept", and "AE: reject"')
+    }
+  }
+
   if (length(article$status)) {
      last <- article$status[[length(article$status)]]
      if (last$status == status) {
@@ -33,13 +43,14 @@ update_status <- function(article, status, comments = "", date = Sys.Date()) {
        article$status <- status_list(article$status[-length(article$status)])
      }
   }
+
   article$status <- c(article$status, status(status, date, comments))
   save_article(article)
 }
 
 #' Accept, reject, or withdraw an article
 #'
-#' This set of functions update the Status field in the DESCRIPTION file and
+#' This set of functions update the status field in the DESCRIPTION file and
 #' then draft an email to accept, reject, or withdraw the paper. It can be seen
 #' as shortcut to \code{update_status} with relevant status plus automatic email drafting.
 #'
