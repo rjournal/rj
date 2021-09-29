@@ -8,6 +8,7 @@
 #' @param articles a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}
 #' @importFrom tidyr separate_rows pivot_wider
 #' @importFrom stringr str_detect word
+#' @importFrom scales label_percent
 #' @examples
 #' \dontrun{
 #' articles <- tabulate_articles()

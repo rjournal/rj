@@ -28,7 +28,8 @@ Imports:
     yaml,
     ctv,
     tidyr,
-    gh
+    gh,
+    scales
 Suggests:
     DiagrammeR,
     knitr,

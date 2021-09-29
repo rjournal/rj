@@ -276,7 +276,11 @@ add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sy
   m
 }
 
+#' A list of all valid reviewer statuses.
+#'
 #' @export
+#' @examples
+#' valid_reviewer_status
 valid_reviewer_status <-
   c(
     "invited", "agreed", "declined", "abandoned", ## initial states
@@ -293,7 +297,9 @@ valid_reviewer_status <-
 #'
 #' @param article Article id, like \code{"2014-01"}
 #' @examples
+#' \dontrun{
 #' reviewer_status("Submissions/2020-114")
+#' }
 #' @export
 reviewer_status <- function(article) {
   d0 <- data.frame(date = as.Date(character()), ext = integer(), rid = integer(), fin = logical(), name = character(), email = character())

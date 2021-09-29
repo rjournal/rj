@@ -14,5 +14,7 @@ This function summarises the status of reviewers who are willing to review
 for a particular article.
 }
 \examples{
+\dontrun{
 reviewer_status("Submissions/2020-114")
+}
 }
