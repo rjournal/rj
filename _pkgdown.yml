@@ -6,27 +6,29 @@ template:
 
 reference:
 - title: Primarily AE article management functions
-  desc: Functions to contact reviewers and add review file
+  desc: Functions needed in the AE workflow
   contents:
+  - match_keywords
   - add_reviewer
   - agree_reviewer
   - decline_reviewer
   - abandon_reviwer
   - add_review
+  - reviewer_status
   - update_status
-  - match_keywords
 - title: Primarily Editor article management functions
   desc: Functions to assist the Editors handle submissions
   contents:
+  - ae_workload
+  - add_ae
   - update_status
-  - filter_status
   - accept
   - reject
   - withdraw
-  - add_ae
+  - reviewer_status
   - summarise_articles
   - tabulate_articles
-  - ae_workload
+  - reviewer_status
   - reviewer_summary
 - title: Primarily Editor-in-Chief functions
   desc: Functions to assist the EiC extract new submissions, build the article folder
@@ -42,4 +44,4 @@ reference:
   desc: Vectors of valid status
   contents:
   - valid_status
-  - valid_review_status
+  - valid_reviewer_status

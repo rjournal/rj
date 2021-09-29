@@ -4,7 +4,7 @@
 \alias{decline_reviewer}
 \alias{agree_reviewer}
 \alias{abandon_reviewer}
-\title{Update whether the invited reviewer agree, decline, or doesn't replay (abandon) to review}
+\title{Update reviewer's response to invite}
 \usage{
 decline_reviewer(article, reviewer_id)
 
@@ -19,7 +19,8 @@ abandon_reviewer(article, reviewer_id)
 1 for the first reviewer, 2 for the second}
 }
 \description{
-This function updates the Reviewers field in the DESCRIPTION
+This function updates the reviewers field in the DESCRIPTION with reviewer's response:
+accept, decline, or abandon if no reply from the reviewer for a period of time.
 }
 \examples{
 \dontrun{

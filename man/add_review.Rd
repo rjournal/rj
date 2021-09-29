@@ -2,7 +2,7 @@
 % Please edit documentation in R/reviewers.R
 \name{add_review}
 \alias{add_review}
-\title{Add the review file to the correspondence folder}
+\title{Add the review file received from the reviewer}
 \usage{
 add_review(
   article,
@@ -21,15 +21,17 @@ add_review(
 
 \item{review}{Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.}
 
-\item{recommend}{Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.}
+\item{recommend}{Reviewer's recommendation, one of: Accept, Minor, Major, Reject.
+If not specified, an attempt is made to auto-detect it from the file by
+looking at the first occurrence of those keywords. If auto-detect fails, use "Received".}
 
 \item{date}{Date of the comment, defaults to today's date}
 
 \item{AE}{Logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.}
 }
 \description{
-After receiving the review file from the reviewer,
-this function adds it to the correspondence folder of the article.
+This function adds the review file received from the reviewer to
+the correspondence folder of the article.
 }
 \examples{
 \dontrun{

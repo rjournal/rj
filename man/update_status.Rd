@@ -2,9 +2,9 @@
 % Please edit documentation in R/actions.R
 \name{update_status}
 \alias{update_status}
-\title{Update the status field in the DESCRIPTION}
+\title{Update the article status}
 \usage{
-update_status(article, status, comments = "", date = Sys.Date())
+update_status(article, status, comments = "", date = Sys.Date(), AE = is_AE())
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
@@ -14,21 +14,20 @@ update_status(article, status, comments = "", date = Sys.Date())
 \item{comments}{Any additional comments}
 
 \item{date}{Date of status update. If omitted defaults to today.}
+
+\item{AE}{Logical, if \code{TRUE}, \code{"AE: "} is prefixed to the status}
 }
 \description{
-This function updates the Status field in the DESCRIPTION.
-\code{reject}, \code{accept} and \code{withdraw} update the status,
-move the file to the correct directory and draft an email from a
-template of the corresponding name. Use \code{valid_status} to check
-for possible statuses.
+This is a general function for updating the status field in the DESCRIPTION.
 }
 \details{
-Possible status:
+For AEs, status is prefixed with "AE: " and valid status includes
+"AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject".
 
-\describe{
- \item{AE making recommendation}{"AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject"}
- \item{Editors}{"with AE", "accepted", "rejected", "withdraw"}
-}
+For Editors, use \code{accept()}, \code{reject()}, and \code{withdraw()} to
+update the status as well as draft an email to the correspondence author.
+
+Check valid status with \code{valid_status}.
 }
 \examples{
 \dontrun{

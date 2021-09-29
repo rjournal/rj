@@ -23,7 +23,7 @@ withdraw(article, comments = "", date = Sys.Date())
 \item{date}{Date of status update. If omitted defaults to today.}
 }
 \description{
-This set of functions update the Status field in the DESCRIPTION file and
+This set of functions update the status field in the DESCRIPTION file and
 then draft an email to accept, reject, or withdraw the paper. It can be seen
 as shortcut to \code{update_status} with relevant status plus automatic email drafting.
 }

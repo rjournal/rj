@@ -2,7 +2,7 @@
 % Please edit documentation in R/reviewers.R
 \name{add_reviewer}
 \alias{add_reviewer}
-\title{Add reviewer to DESCRIPTION}
+\title{Invite an reviewer}
 \usage{
 add_reviewer(article, name, email, invite = TRUE)
 }
@@ -16,7 +16,8 @@ add_reviewer(article, name, email, invite = TRUE)
 \item{invite}{Logical, whether to automatically construct an email to invite the reviewer}
 }
 \description{
-This function adds the reviewer information(name and email) to the Reviewers field in the DESCRIPTION.
+This function adds the reviewer information(name and email) to the reviewers
+field in the DESCRIPTION as well as draft an email to invite teh reviewer.
 }
 \examples{
 \dontrun{

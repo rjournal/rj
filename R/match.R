@@ -1,11 +1,9 @@
-#' Match reviewers for a submitted article based on keywords
+#' Find reviewers through keywords matching
 #'
-#' \code{match_keywords} matches an article to potential reviewers through
-#'   first extract the keywords of the article (\code{get_article_keywords})
-#'   and then query the reviewer googlesheet for registered reviewers and their
-#'   interested reviewing areas (\code{get_reviewer_keywords}). Notice that a
-#'   googlesheet authenticate, with your email address printed, will first pop up
-#'   to verify the access to the reviewer googlesheet.
+#' Find reviewers for an article through matching the article keywords
+#' to the keywords reviewers provided when registering.
+#' Notice that a googlesheet authenticate, with your email address printed,
+#' will first pop up to verify the access to the reviewer googlesheet.
 #'
 #'   All the reviewers are ranked based on the number of matching keywords
 #'   and when there is a tie, a random draw is used.
@@ -21,13 +19,6 @@
 #' \dontrun{
 #' match_keywords("2021-13")
 #' match_keywords("2021-13", n = 10)
-#' }
-#'
-#' @return
-#' \itemize{
-#' \item{\code{match_keywords}: a tibble of potential reviewers for the article}
-#' \item{\code{get_article_keywords}: a list with 2 elements: 1) a vector of keywords, and 2) a vector of author names}
-#' \item{\code{get_reviewer_keywords}: a tibble of reviewer information from the googlesheet. Variables include email, gname (given name), fname (family name), and keywords}
 #' }
 #'
 #' @importFrom rlang .data
