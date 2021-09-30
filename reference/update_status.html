@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check the number of articles an AE is currently working on — ae_workload • rj</title>
+<title>Update the article status — update_status • rj</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Check the number of articles an AE is currently working on — ae_workload" />
-<meta property="og:description" content="This will examine the DESCRIPTION files for articles in
-the Submissions folder, check articles that have status
-&quot;with AE&quot;." />
+<meta property="og:title" content="Update the article status — update_status" />
+<meta property="og:description" content="This is a general function for updating the status field in the DESCRIPTION." />
 
 
 
@@ -129,37 +127,53 @@ the Submissions folder, check articles that have status
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check the number of articles an AE is currently working on</h1>
+    <h1>Update the article status</h1>
     
-    <div class="hidden name"><code>ae_workload.Rd</code></div>
+    <div class="hidden name"><code>update_status.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This will examine the DESCRIPTION files for articles in
-the Submissions folder, check articles that have status
-"with AE".</p>
+    <p>This is a general function for updating the status field in the DESCRIPTION.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ae_workload</span><span class='op'>(</span><span class='va'>articles</span>, day_back <span class='op'>=</span> <span class='fl'>365</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>update_status</span><span class='op'>(</span><span class='va'>article</span>, <span class='va'>status</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, AE <span class='op'>=</span> <span class='fu'><a href='AEs.html'>is_AE</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>articles</th>
-      <td><p>a tibble summary of articles in the accepted and submissions folder. Output of <code><a href='tabulate_articles.html'>tabulate_articles()</a></code></p></td>
+      <th>article</th>
+      <td><p>Article id, like <code>"2014-01"</code></p></td>
     </tr>
     <tr>
-      <th>day_back</th>
-      <td><p>number of day to go back for calculating AE workload.</p></td>
+      <th>status</th>
+      <td><p>new status to add, see details section for more</p></td>
+    </tr>
+    <tr>
+      <th>comments</th>
+      <td><p>Any additional comments</p></td>
+    </tr>
+    <tr>
+      <th>date</th>
+      <td><p>Date of status update. If omitted defaults to today.</p></td>
+    </tr>
+    <tr>
+      <th>AE</th>
+      <td><p>Logical, if <code>TRUE</code>, <code>"AE: "</code> is prefixed to the status</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>For AEs, status is prefixed with "AE: " and valid status includes
+"AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject".</p>
+<p>For Editors, use <code><a href='reject.html'>accept()</a></code>, <code><a href='reject.html'>reject()</a></code>, and <code><a href='reject.html'>withdraw()</a></code> to
+update the status as well as draft an email to the correspondence author.</p>
+<p>Check valid status with <code>valid_status</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>articles</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tabulate_articles.html'>tabulate_articles</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>ae_workload</span><span class='op'>(</span><span class='va'>articles</span><span class='op'>)</span>
+<span class='fu'>update_status</span><span class='op'>(</span><span class='st'>"2020-114"</span>, status <span class='op'>=</span> <span class='st'>"AE: major revision"</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

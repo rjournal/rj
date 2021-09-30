@@ -28,6 +28,9 @@
     <loc>https://rjournal.github.io/rj//reference/add_ae.html</loc>
   </url>
   <url>
+    <loc>https://rjournal.github.io/rj//reference/add_review.html</loc>
+  </url>
+  <url>
     <loc>https://rjournal.github.io/rj//reference/add_reviewer.html</loc>
   </url>
   <url>
@@ -67,10 +70,16 @@
     <loc>https://rjournal.github.io/rj//reference/get_accepted_but_not_online.html</loc>
   </url>
   <url>
+    <loc>https://rjournal.github.io/rj//reference/get_article_keywords.html</loc>
+  </url>
+  <url>
     <loc>https://rjournal.github.io/rj//reference/get_articles_path.html</loc>
   </url>
   <url>
     <loc>https://rjournal.github.io/rj//reference/get_md_from_pdf.html</loc>
+  </url>
+  <url>
+    <loc>https://rjournal.github.io/rj//reference/get_reviewer_keywords.html</loc>
   </url>
   <url>
     <loc>https://rjournal.github.io/rj//reference/get_submissions.html</loc>
@@ -109,6 +118,9 @@
     <loc>https://rjournal.github.io/rj//reference/report.html</loc>
   </url>
   <url>
+    <loc>https://rjournal.github.io/rj//reference/reviewer_status.html</loc>
+  </url>
+  <url>
     <loc>https://rjournal.github.io/rj//reference/reviewer_summary.html</loc>
   </url>
   <url>
@@ -128,6 +140,12 @@
   </url>
   <url>
     <loc>https://rjournal.github.io/rj//reference/tabulate_articles.html</loc>
+  </url>
+  <url>
+    <loc>https://rjournal.github.io/rj//reference/update_status.html</loc>
+  </url>
+  <url>
+    <loc>https://rjournal.github.io/rj//reference/valid_reviewer_status.html</loc>
   </url>
   <url>
     <loc>https://rjournal.github.io/rj//reference/valid_status.html</loc>

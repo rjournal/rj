@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update the status of an article. — update_status • rj</title>
+<title>Accept, reject, or withdraw an article — reject • rj</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,10 @@
 
 
 
-<meta property="og:title" content="Update the status of an article. — update_status" />
-<meta property="og:description" content="reject, accept and withdraw update the status,
-move the file to the correct directory and draft an email from a
-template of the corresponding name. Use valid_status to check
-for possible statuses." />
+<meta property="og:title" content="Accept, reject, or withdraw an article — reject" />
+<meta property="og:description" content="This set of functions update the status field in the DESCRIPTION file and
+then draft an email to accept, reject, or withdraw the paper. It can be seen
+as shortcut to update_status with relevant status plus automatic email drafting." />
 
 
 
@@ -130,21 +129,18 @@ for possible statuses." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update the status of an article.</h1>
+    <h1>Accept, reject, or withdraw an article</h1>
     
     <div class="hidden name"><code>action.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>reject</code>, <code>accept</code> and <code>withdraw</code> update the status,
-move the file to the correct directory and draft an email from a
-template of the corresponding name. Use <code>valid_status</code> to check
-for possible statuses.</p>
+    <p>This set of functions update the status field in the DESCRIPTION file and
+then draft an email to accept, reject, or withdraw the paper. It can be seen
+as shortcut to <code>update_status</code> with relevant status plus automatic email drafting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>update_status</span><span class='op'>(</span><span class='va'>article</span>, <span class='va'>status</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'>reject</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>reject</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'>reject_format</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -157,20 +153,15 @@ for possible statuses.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>article</th>
-      <td><p>as <code><a href='article.html'>article</a></code> object, path, or ID. See
-<code><a href='article.html'>as.article</a></code> for more details about how article is located.</p></td>
-    </tr>
-    <tr>
-      <th>status</th>
-      <td><p>new status to add</p></td>
+      <td><p>Article id, like <code>"2014-01"</code></p></td>
     </tr>
     <tr>
       <th>comments</th>
-      <td><p>any additional comments</p></td>
+      <td><p>Any additional comments</p></td>
     </tr>
     <tr>
       <th>date</th>
-      <td><p>date of status update. If omitted defaults to today.</p></td>
+      <td><p>Date of status update. If omitted defaults to today.</p></td>
     </tr>
     </table>
 

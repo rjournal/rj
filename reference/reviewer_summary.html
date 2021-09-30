@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tabulate reviewer's Accept/Decline incidence — reviewer_summary • rj</title>
+<title>Summarise the reviewer's agree/decline ratio based on past invites — reviewer_summary • rj</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,11 @@
 
 
 
-<meta property="og:title" content="Tabulate reviewer's Accept/Decline incidence — reviewer_summary" />
-<meta property="og:description" content="The function examine the DESCRIPTION files of articles tabulated by
-tabulate_articles and count the number of accept and decline
-of each reviewer." />
+<meta property="og:title" content="Summarise the reviewer's agree/decline ratio based on past invites — reviewer_summary" />
+<meta property="og:description" content="The function pulls out the agree/decline incidence of all the reviewers
+based on past invite and calculate the agree percentage of each reviewer.
+Use tabulate_articles first to tabulate all the articles in a particular directory
+and then apply this function." />
 
 
 
@@ -129,15 +130,16 @@ of each reviewer." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tabulate reviewer's Accept/Decline incidence</h1>
+    <h1>Summarise the reviewer's agree/decline ratio based on past invites</h1>
     
     <div class="hidden name"><code>reviewer_summary.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The function examine the DESCRIPTION files of articles tabulated by
-<code>tabulate_articles</code> and count the number of accept and decline
-of each reviewer.</p>
+    <p>The function pulls out the agree/decline incidence of all the reviewers
+based on past invite and calculate the agree percentage of each reviewer.
+Use <code>tabulate_articles</code> first to tabulate all the articles in a particular directory
+and then apply this function.</p>
     </div>
 
     <pre class="usage"><span class='fu'>reviewer_summary</span><span class='op'>(</span><span class='va'>articles</span><span class='op'>)</span></pre>

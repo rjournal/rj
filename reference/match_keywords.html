@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Match reviewers for a submitted article based on keywords — match_keywords • rj</title>
+<title>Find reviewers through keywords matching — match_keywords • rj</title>
 
 
 <!-- jquery -->
@@ -39,13 +39,11 @@
 
 
 
-<meta property="og:title" content="Match reviewers for a submitted article based on keywords — match_keywords" />
-<meta property="og:description" content="match_keywords matches an article to potential reviewers through
-  first extract the keywords of the article (get_article_keywords)
-  and then query the reviewer googlesheet for registered reviewers and their
-  interested reviewing areas (get_reviewer_keywords). Notice that a
-  googlesheet authenticate, with your email address printed, will first pop up
-  to verify the access to the reviewer googlesheet." />
+<meta property="og:title" content="Find reviewers through keywords matching — match_keywords" />
+<meta property="og:description" content="Find reviewers for an article through matching the article keywords
+to the keywords reviewers provided when registering.
+Notice that a googlesheet authenticate, with your email address printed,
+will first pop up to verify the access to the reviewer googlesheet." />
 
 
 
@@ -132,51 +130,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Match reviewers for a submitted article based on keywords</h1>
+    <h1>Find reviewers through keywords matching</h1>
     
     <div class="hidden name"><code>match_keywords.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>match_keywords</code> matches an article to potential reviewers through
-  first extract the keywords of the article (<code>get_article_keywords</code>)
-  and then query the reviewer googlesheet for registered reviewers and their
-  interested reviewing areas (<code>get_reviewer_keywords</code>). Notice that a
-  googlesheet authenticate, with your email address printed, will first pop up
-  to verify the access to the reviewer googlesheet.</p>
+    <p>Find reviewers for an article through matching the article keywords
+to the keywords reviewers provided when registering.
+Notice that a googlesheet authenticate, with your email address printed,
+will first pop up to verify the access to the reviewer googlesheet.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>match_keywords</span><span class='op'>(</span><span class='va'>id</span>, n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-
-<span class='fu'>get_article_keywords</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
-
-<span class='fu'>get_reviewer_keywords</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>match_keywords</span><span class='op'>(</span><span class='va'>id</span>, n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>the article id</p></td>
+      <td><p>the article id in the description file</p></td>
     </tr>
     <tr>
       <th>n</th>
       <td><p>numeric; number of reviewer to display</p></td>
     </tr>
     </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    
-<ul>
-<li><p><code>match_keywords</code>: a tibble of potential reviewers for the article</p></li>
-<li><p><code>get_article_keywords</code>: a list with 2 elements: 1) a vector of keywords, and 2) a vector of author names</p></li>
-<li><p><code>get_reviewer_keywords</code>: a tibble of reviewer information from the googlesheet. Variables include email, gname (given name), fname (family name), and keywords</p></li>
-</ul>
-
-
-
-
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
