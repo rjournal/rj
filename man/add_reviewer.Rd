@@ -2,19 +2,25 @@
 % Please edit documentation in R/reviewers.R
 \name{add_reviewer}
 \alias{add_reviewer}
-\title{Add review to DESCRIPTION}
+\title{Invite an reviewer}
 \usage{
 add_reviewer(article, name, email, invite = TRUE)
 }
 \arguments{
-\item{article}{article id, like \code{"2014-01"}}
+\item{article}{Article id, like \code{"2014-01"}}
 
-\item{name}{display name, optional}
+\item{name}{Full name of the reviewer}
 
-\item{email}{email address}
+\item{email}{Email address of the reviewer}
 
-\item{invite}{Automatically construct email}
+\item{invite}{Logical, whether to automatically construct an email to invite the reviewer}
 }
 \description{
-Add a reviewers name to the DESCRIPTION file
+This function adds the reviewer information(name and email) to the reviewers
+field in the DESCRIPTION as well as draft an email to invite teh reviewer.
+}
+\examples{
+\dontrun{
+add_reviewer("2020-114", "Przemyslaw Biecek", "przemyslaw.biecek@gmail.com")
+}
 }

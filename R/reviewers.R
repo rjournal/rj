@@ -10,8 +10,22 @@ list_reviewers <- function(article) {
   return(invisible(NULL))
 }
 
-#' @title Review helper function
+#' Update reviewer's response to invite
+#'
+#' This function updates the reviewers field in the DESCRIPTION with reviewer's response:
+#' accept, decline, or abandon if no reply from the reviewer for a period of time.
 #' @inheritParams invite_reviewers
+#' @examples
+#' \dontrun{
+#' # first reviewer declined
+#' decline_reviewer("2020-114", reviewer_id = 1)
+#'
+#' # second reviewer agreed
+#' agree_reviewer("2020-114", reviewer_id = 2)
+#'
+#' # third reviewer doesn't reply and deemed abandon
+#' abandon_reviewer("2020-114", reviwer_id = 3)
+#' }
 #' @export
 decline_reviewer <- function(article, reviewer_id) {
   check_dup_comment(article, reviewer_id, "Declined")
@@ -33,6 +47,16 @@ agree_reviewer <- function(article, reviewer_id) {
   )
 }
 
+#' @rdname decline_reviewer
+#' @export
+abandon_reviewer <- function(article, reviewer_id){
+  check_dup_comment(article, reviewer_id, "Abandoned")
+  comment <- paste("Abandoned", Sys.Date())
+  add_reviewer_comment(article,
+                       reviewer_id = reviewer_id,
+                       comment = comment)
+}
+
 add_out_for_review <- function(article) {
   article <- as.article(article)
   status <- article$status
@@ -44,12 +68,18 @@ add_out_for_review <- function(article) {
   return(invisible(NULL))
 }
 
-#' Add review to DESCRIPTION
+#' Invite an reviewer
 #'
-#' Add a reviewers name to the DESCRIPTION file
-#' @param invite Automatically construct email
+#' This function adds the reviewer information(name and email) to the reviewers
+#' field in the DESCRIPTION as well as draft an email to invite teh reviewer.
+#' @param name Full name of the reviewer
+#' @param invite Logical, whether to automatically construct an email to invite the reviewer
 #' @inheritParams address
 #' @inheritParams invite_reviewers
+#' @examples
+#' \dontrun{
+#' add_reviewer("2020-114", "Przemyslaw Biecek", "przemyslaw.biecek@gmail.com")
+#' }
 #' @export
 add_reviewer <- function(article, name, email, invite = TRUE) {
   article <- as.article(article)
@@ -79,9 +109,10 @@ add_reviewer <- function(article, name, email, invite = TRUE) {
 #' the emails, it also caches them locally in the \code{correspodence/}
 #' directory of the corresponding article.
 #'
-#' @param article article id, like \code{"2014-01"}
-#' @param reviewer_id invite just a single reviewer
-#' @param prefix prefix added to start file name - used to distinguish
+#' @param article Article id, like \code{"2014-01"}
+#' @param reviewer_id Numeric, the index of the intended reviewer in the Reviewer field.
+#' 1 for the first reviewer, 2 for the second
+#' @param prefix Prefix added to start file name - used to distinguish
 #'   between multiple rounds of reviewers (if needed)
 #' @export
 invite_reviewers <- function(article, prefix = "1") {
@@ -91,8 +122,8 @@ invite_reviewers <- function(article, prefix = "1") {
   }
 }
 
-#' @export
 #' @rdname invite_reviewers
+#' @export
 invite_reviewer <- function(article, reviewer_id, prefix = "1") {
   article <- as.article(article)
 
@@ -131,11 +162,25 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
   email_text(email)
 }
 
-#' @rdname invite_reviewers
+#' Add the review file received from the reviewer
+#'
+#' This function adds the review file received from the reviewer to
+#' the correspondence folder of the article.
+#'
+#' @param article Article id, like \code{"2014-01"}
+#' @param reviewer_id Numeric, the index of the intended reviewer in the Reviewer field.
+#' 1 for the first reviewer, 2 for the second
 #' @param review Path to the review file, e.g. pdf, txt, or docx format. If not specified it is assumed that you added the new file into the correspondence directory and the last file for that reviewer will be used. If you specify \code{<i>-review-<j>.} filename (no path) and it already exists in the correspondence directory, it will be used.
-#' @param recommend Summary of review, one of: Accept, Minor, Major, Reject. If not specified, an attempt is made to auto-detect it from the file by looking at the first occurrence of those keywords.
+#' @param recommend Reviewer's recommendation, one of: Accept, Minor, Major, Reject.
+#' If not specified, an attempt is made to auto-detect it from the file by
+#' looking at the first occurrence of those keywords. If auto-detect fails, use "Received".
 #' @param date Date of the comment, defaults to today's date
-#' @param AE logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.
+#' @param AE Logical, if \code{TRUE} then \code{"AE: "} prefix is added to the recommendation.
+#' @examples
+#' \dontrun{
+#' # add review file from the first reviewer and recommend accepting it
+#' add_review("2020-114", reviewer_id = 1, review = file.choose(), recommend = "Accept")
+#' }
 #' @export
 add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sys.Date(), AE = is_AE()) {
   article <- as.article(article)
@@ -186,9 +231,17 @@ add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sy
       recommend <- "Received"
     }
   }
-  if (AE && !length(grep("^AE: ", recommend))) {
-    recommend <- paste("AE:", recommend)
+
+  recommend <- tools::toTitleCase(recommend)
+  if (recommend == "Accepted"){
+    recommend <- "Accept"
+    cli::cli_alert_info("Auto-correct recommendataion from `Accepted` to `Accept`")
   }
+  if (!recommend %in% c("Accept", "Major", "Minor", "Reject")){
+    cli::cli_abort("Recommandation is invalid, use one of `Accept`, `Major`, `Minor`, or `Reject`")
+  }
+
+
   recommend <- paste(recommend, date)
   add_reviewer_comment(article,
     reviewer_id = reviewer_id,
@@ -219,20 +272,36 @@ add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sy
       }
     }
   }))
-  m$st[m$st == "accepted"] <- "agreed"
+  #m$st[m$st == "accepted"] <- "agreed"
   m
 }
 
-valid_review_status <-
+#' A list of all valid reviewer statuses.
+#'
+#' @export
+#' @examples
+#' valid_reviewer_status
+valid_reviewer_status <-
   c(
     "invited", "agreed", "declined", "abandoned", ## initial states
     "revision", ## like accepted for additional rounds after major
-    "minor", "major", "reject"
+    "minor", "major", "reject", "accept"
   ) ## final state
-## PS: "Accepted" is silently corrected to "Agreed" but it is
-##     discouraged as it can be confused with the notion of Accept/Reject
+# PS: "Accepted" is silently corrected to "Agreed" but it is
+#     discouraged as it can be confused with the notion of Accept/Reject
 
-review_status <- function(article) {
+#' Summarise reviewers' progression of an article
+#'
+#' This function summarises the status of reviewers who are willing to review
+#' for a particular article.
+#'
+#' @param article Article id, like \code{"2014-01"}
+#' @examples
+#' \dontrun{
+#' reviewer_status("Submissions/2020-114")
+#' }
+#' @export
+reviewer_status <- function(article) {
   d0 <- data.frame(date = as.Date(character()), ext = integer(), rid = integer(), fin = logical(), name = character(), email = character())
   article <- as.article(article)
   if (length(article$reviewers) < 0) {
@@ -243,14 +312,14 @@ review_status <- function(article) {
     l[[i]]$rid <- i
   }
   lsl <- do.call(rbind, lapply(l, function(o) o[nrow(o), ]))
-  if (any(!lsl$st %in% valid_review_status)) {
-    warning("Invalid review status in ", article$id[1], "-", article$id[2], ": ", paste(lsl$st[!lsl$st %in% valid_review_status], collapse = ", "))
+  if (any(!lsl$st %in% valid_reviewer_status)) {
+    warning("Invalid review status in ", article$id[1], "-", article$id[2], ": ", paste(lsl$st[!lsl$st %in% valid_reviewer_status], collapse = ", "))
   }
   ## remove reviewers that declined
   lsl <- lsl[!lsl$st %in% c("declined", "abandoned"), ]
   if (length(lsl) && nrow(lsl)) {
     ## final state is minor/major/reject
-    lsl$fin <- lsl$st %in% c("minor", "major", "reject")
+    lsl$fin <- lsl$st %in% c("minor", "major", "reject", "accept")
     lsl$name <- sapply(lsl$rid, function(i) article$reviewers[[i]]$name)
     lsl$email <- sapply(lsl$rid, function(i) article$reviewers[[i]]$email)
     lsl

@@ -3,17 +3,34 @@
 \name{decline_reviewer}
 \alias{decline_reviewer}
 \alias{agree_reviewer}
-\title{Review helper function}
+\alias{abandon_reviewer}
+\title{Update reviewer's response to invite}
 \usage{
 decline_reviewer(article, reviewer_id)
 
 agree_reviewer(article, reviewer_id)
+
+abandon_reviewer(article, reviewer_id)
 }
 \arguments{
-\item{article}{article id, like \code{"2014-01"}}
+\item{article}{Article id, like \code{"2014-01"}}
 
-\item{reviewer_id}{invite just a single reviewer}
+\item{reviewer_id}{Numeric, the index of the intended reviewer in the Reviewer field.
+1 for the first reviewer, 2 for the second}
 }
 \description{
-Review helper function
+This function updates the reviewers field in the DESCRIPTION with reviewer's response:
+accept, decline, or abandon if no reply from the reviewer for a period of time.
+}
+\examples{
+\dontrun{
+# first reviewer declined
+decline_reviewer("2020-114", reviewer_id = 1)
+
+# second reviewer agreed
+agree_reviewer("2020-114", reviewer_id = 2)
+
+# third reviewer doesn't reply and deemed abandon
+abandon_reviewer("2020-114", reviwer_id = 3)
+}
 }

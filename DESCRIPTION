@@ -28,12 +28,13 @@ Imports:
     yaml,
     ctv,
     tidyr,
-    gh
+    gh,
+    scales
 Suggests:
     DiagrammeR,
     knitr,
     testthat,
     rmarkdown
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr

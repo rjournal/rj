@@ -2,7 +2,7 @@
 % Please edit documentation in R/ae_workload.R
 \name{reviewer_summary}
 \alias{reviewer_summary}
-\title{Tabulate reviewer's Accept/Decline incidence}
+\title{Summarise the reviewer's agree/decline ratio based on past invites}
 \usage{
 reviewer_summary(articles)
 }
@@ -10,9 +10,10 @@ reviewer_summary(articles)
 \item{articles}{a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}}
 }
 \description{
-The function examine the DESCRIPTION files of articles tabulated by
-\code{tabulate_articles} and count the number of accept and decline
-of each reviewer.
+The function pulls out the agree/decline incidence of all the reviewers
+based on past invite and calculate the agree percentage of each reviewer.
+Use \code{tabulate_articles} first to tabulate all the articles in a particular directory
+and then apply this function.
 }
 \examples{
 \dontrun{

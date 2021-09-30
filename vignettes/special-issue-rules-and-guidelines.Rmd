@@ -4,7 +4,7 @@ author: "Michael Kane"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Operating procedures for the editors}
+  %\VignetteIndexEntry{Special Issue Rules and Guidelines}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

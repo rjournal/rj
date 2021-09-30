@@ -1,11 +1,14 @@
-#' Tabulate reviewer's Accept/Decline incidence
+#' Summarise the reviewer's agree/decline ratio based on past invites
 #'
-#' The function examine the DESCRIPTION files of articles tabulated by
-#' \code{tabulate_articles} and count the number of accept and decline
-#' of each reviewer.
+#' The function pulls out the agree/decline incidence of all the reviewers
+#' based on past invite and calculate the agree percentage of each reviewer.
+#' Use \code{tabulate_articles} first to tabulate all the articles in a particular directory
+#' and then apply this function.
+#'
 #' @param articles a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}
 #' @importFrom tidyr separate_rows pivot_wider
 #' @importFrom stringr str_detect word
+#' @importFrom scales label_percent
 #' @examples
 #' \dontrun{
 #' articles <- tabulate_articles()
@@ -17,13 +20,15 @@ reviewer_summary <- function(articles){
     dplyr::select(id, reviewers) %>%
     tidyr::unnest(reviewers) %>%
     tidyr::separate_rows(comment, sep = "; ") %>%
-    dplyr::filter(stringr::str_detect(comment, "Agreed|Accepted|Declined")) %>%
-    dplyr::mutate(comment = stringr::word(comment),
-           comment = ifelse(comment == "Agreed", "Accepted", comment)) %>%
+    dplyr::filter(stringr::str_detect(comment, "Agreed|Declined")) %>%
+    dplyr::mutate(comment = tolower(stringr::word(comment))) %>%
     dplyr::group_by(name, comment) %>%
     dplyr::count() %>%
     dplyr::ungroup() %>%
-    tidyr::pivot_wider(names_from = comment, values_from = n)
+    tidyr::pivot_wider(names_from = comment, values_from = n, values_fill = 0) %>%
+    dplyr::relocate(name, agreed, declined) %>%
+    dplyr::mutate(ratio = agreed / (agreed + declined),
+                  ratio = scales::label_percent()(ratio))
 }
 #' Check the number of articles an AE is currently working on
 #'
@@ -43,7 +48,7 @@ reviewer_summary <- function(articles){
 ae_workload <- function(articles, day_back = 365) {
 
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    select(name, email)
+    select(.data$name, .data$email)
 
   articles %>%
     dplyr::select(id, status) %>%
@@ -55,15 +60,6 @@ ae_workload <- function(articles, day_back = 365) {
     dplyr::count(ae) %>%
     dplyr::left_join(ae_rj, by = c("ae" = "name"))
 
-}
-
-#' @rdname ae_workload
-#'
-#' @param x An article object
-#'
-#' @export
-get_AE <- function(x){
-  list(id = format(x$id), ae = x$ae)
 }
 
 #' Add AE to the DESCRIPTION

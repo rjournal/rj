@@ -5,27 +5,30 @@ template:
     bootswatch: cosmo
 
 reference:
-- title: Modify DESCRIPTION automatically
-  desc: Functions that make modifications to DESCRIPTOIN file for article handling
+- title: Primarily AE article management functions
+  desc: Functions needed in the AE workflow
   contents:
+  - match_keywords
   - add_reviewer
   - agree_reviewer
   - decline_reviewer
-  - email_template
+  - abandon_reviwer
   - add_review
-- title: Primarily AE and Editor article management functions
+  - reviewer_status
+  - update_status
+- title: Primarily Editor article management functions
   desc: Functions to assist the Editors handle submissions
   contents:
-  - match_keywords
+  - ae_workload
+  - add_ae
   - update_status
-  - valid_status
-  - filter_status
   - accept
   - reject
   - withdraw
-  - add_ae
+  - reviewer_status
   - summarise_articles
-  - ae_workload
+  - tabulate_articles
+  - reviewer_status
   - reviewer_summary
 - title: Primarily Editor-in-Chief functions
   desc: Functions to assist the EiC extract new submissions, build the article folder
@@ -37,3 +40,8 @@ reference:
   - online_metadata
   - actionable_articles
   - active_articles
+- title: Utilities
+  desc: Vectors of valid status
+  contents:
+  - valid_status
+  - valid_reviewer_status
