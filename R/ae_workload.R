@@ -68,23 +68,36 @@ ae_workload <- function(articles, day_back = 365) {
 #' The status field is also updated with a new line of add AE.
 #'
 #' @param article article id
-#' @param name a name used to match AE. Allow fuzzy match of the whole or part of the AE name, github handle, or email
+#' @param name a name used to match AE, can be AE initials, name, github handle, or email
 #' @param date the date for updating status
 #' @export
 add_ae <- function(article, name, date = Sys.Date()){
   article <- as.article(article)
 
-  ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    mutate(concat = paste0(!!sym("name"), !!sym("github_handle"), !!sym("email")))
+  ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) #%>%
+    #mutate(concat = paste0(!!sym("name"), !!sym("github_handle"), !!sym("email")))
 
-  person <- ae_list$github[str_detect(ae_list$concat, name)]
-  person_name <- as.character(ae_list$name[str_detect(ae_list$concat, name)])
+  found <- NA
+  # Check if matches initials
+  found <- which(str_detect(ae_list$initials, name))
+  # If not initials, check name
+  if (is.na(found))
+    found <- which(str_detect(ae_list$name, name))
+  # If not initials, check github
+  if (is.na(found))
+    found <- which(str_detect(ae_list$github, name))
+  # If not initials, check email
+  if (is.na(found))
+    found <- which(str_detect(ae_list$email, name))
 
-  if (length(person) != 0){
+  #person <- ae_list$github[str_detect(ae_list$concat, name)]
+  #person_name <- as.character(ae_list$name[str_detect(ae_list$concat, name)])
+
+  if (!is.na(found)){
     # github start with "ae-articles-xxx"
-    ae_abbr <- str_sub(person, 13, -1)
-    article$ae <- ae_abbr
-    update_status(article, "with AE", comments = person_name, date = date)
+    #ae_abbr <- str_sub(person, 13, -1)
+    article$ae <- ae_list$initials[found]
+    update_status(article, "with AE", comments = ae_list$name[found], date = date)
 
   } else {
     cli::cli_alert_warning("No AE found. Input the name as the whole or part of the AE name, github handle, or email")

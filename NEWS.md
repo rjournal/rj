@@ -1,5 +1,8 @@
 # rj 0.2.20
 
+2021-10-04
+ - revised add_ae function
+ 
 2021-09-06
  - Added a function and template to acknowledge revisions
 

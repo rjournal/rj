@@ -9,7 +9,7 @@ add_ae(article, name, date = Sys.Date())
 \arguments{
 \item{article}{article id}
 
-\item{name}{a name used to match AE. Allow fuzzy match of the whole or part of the AE name, github handle, or email}
+\item{name}{a name used to match AE, can be AE initials, name, github handle, or email}
 
 \item{date}{the date for updating status}
 }
