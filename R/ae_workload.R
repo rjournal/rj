@@ -30,6 +30,13 @@ reviewer_summary <- function(articles){
     dplyr::mutate(ratio = agreed / (agreed + declined),
                   ratio = scales::label_percent()(ratio))
 }
+
+#' @rdname ae_workload
+#' @export
+get_AE <- function(x){
+  list(id = format(x$id), ae = x$ae)
+}
+
 #' Check the number of articles an AE is currently working on
 #'
 #' This will examine the DESCRIPTION files for articles in
@@ -50,15 +57,28 @@ ae_workload <- function(articles, day_back = 365) {
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
     select(.data$name, .data$email)
 
-  articles %>%
-    dplyr::select(id, status) %>%
-    tidyr::unnest(status) %>%
-    dplyr::filter(status == "with AE") %>%
-    dplyr::rename(ae = comments) %>%
-    dplyr::group_by(ae) %>%
-    dplyr::filter(date >= Sys.Date()- day_back) %>%
-    dplyr::count(ae) %>%
-    dplyr::left_join(ae_rj, by = c("ae" = "name"))
+  # Get list of current articles
+  current_articles <- active_articles()
+
+  # Only keep articles that have been handled by an AE
+  # at some point
+  with_AE <- filter_status(current_articles, "with AE")
+
+  # Extract the AE line from DESCRIPTION file
+  AE_assignments <- do.call("rbind", lapply(with_AE, get_AE))
+
+  # Count assignments
+  as.data.frame(AE_assignments) %>% count(ae, sort=TRUE)
+
+#  articles %>%
+#    dplyr::select(id, status) %>%
+#    tidyr::unnest(status) %>%
+#    dplyr::filter(status == "with AE") %>%
+#    dplyr::rename(ae = comments) %>%
+#    dplyr::group_by(ae) %>%
+#    dplyr::filter(date >= Sys.Date()- day_back) %>%
+#    dplyr::count(ae) %>%
+#    dplyr::left_join(ae_rj, by = c("ae" = "name"))
 
 }
 
