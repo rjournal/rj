@@ -55,7 +55,7 @@ get_AE <- function(x){
 ae_workload <- function(articles, day_back = 365) {
 
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    select(.data$name, .data$email)
+    select(name, initials, email)
 
   # Get list of current articles
   current_articles <- active_articles()
@@ -67,8 +67,14 @@ ae_workload <- function(articles, day_back = 365) {
   # Extract the AE line from DESCRIPTION file
   AE_assignments <- do.call("rbind", lapply(with_AE, get_AE))
 
+  # Match initials and replace if necessary
+  AE_assignments <- as.data.frame(AE_assignments)
+  initials <- which(str_length(AE_assignments$ae) < 4)
+  for (i in initials)
+    AE_assignments$ae[i] <- ae_rj$name[ae_rj$initials == AE_assignments$ae[i]]
+
   # Count assignments
-  as.data.frame(AE_assignments) %>% count(ae, sort=TRUE)
+  AE_assignments %>% count(ae, sort=TRUE)
 
 #  articles %>%
 #    dplyr::select(id, status) %>%
