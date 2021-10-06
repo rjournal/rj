@@ -1,3 +1,8 @@
+#' @param article Article id, like \code{"2014-01"}
+#' @examples
+#' list_reviewers("Submissions/2020-114")
+#' @export
+#' @rdname reviewer_status
 list_reviewers <- function(article) {
   article <- as.article(article)
   reviewers <- article$reviewers

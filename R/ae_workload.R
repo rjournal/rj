@@ -53,7 +53,6 @@ get_AE <- function(x){
 #' }
 #' @export
 ae_workload <- function(articles, day_back = 365) {
-
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
     select(name, initials, email)
 
@@ -130,4 +129,32 @@ add_ae <- function(article, name, date = Sys.Date()){
   }
 
   return(invisible(article))
+}
+
+
+#' Extract corresponding author from an article
+#' @param article Article id, like \code{"2014-01"}
+#' @examples
+#' # extract from a single article
+#' corr_author("Submissions/2020-114")
+#'
+#' # extract corresponding authors from the active articles
+#' all <- active_articles()
+#' purrr::map_dfr(all, corr_author)
+#' @importFrom purrr pluck map
+#' @importFrom tibble tibble
+corr_author <- function(article){
+
+  article <- as.article(article)
+
+  all_authors <- article$authors
+  # find the index of the author that provide the email
+  email <- purrr::map(1:length(all_authors), ~purrr::pluck(all_authors, .x)$email)
+  idx <- which(purrr::map_lgl(email, ~!is_null(.x)))
+
+  tibble::tibble(
+    corr_author = purrr::pluck(all_authors, idx)$name,
+    email = purrr::pluck(all_authors, idx)$email
+  )
+
 }
