@@ -1,5 +1,5 @@
-keywords_list_reviewer <- tibble::tribble(
-  ~reviewer_topics, ~details,
+reviewer <- tibble::tribble(
+  ~reviewer, ~details,
   "Bayesian", "Bayesian Inference",
   "ChemPhys", "Chemometrics and Computational Physics",
   "ClinicalTrials", "Clinical Trial Design, Monitoring, and Analysis",
@@ -42,9 +42,11 @@ keywords_list_reviewer <- tibble::tribble(
   "Tracking", "Processing and Analysis of Tracking Data",
   "WebTechnologies", "Web Technologies and Services",
   "gR", "gRaphical Models in R"
-) %>% mutate(reviewer_topics = gsub("([A-Z])", " \\1", reviewer_topics))
+) %>%
+  mutate(reviewer = gsub("([A-Z])", " \\1", reviewer),
+         reviewer = stringr::str_trim(reviewer))
 
-keywords_list_submission <-
+submission <-
   tibble::tribble(
     ~submission,
     "Bayesian Inference",
@@ -91,10 +93,10 @@ keywords_list_submission <-
     "gRaphical Models in R",
   )
 
-keywords_list_concat <- cbind(
-  keywords_list_reviewer,
-  keywords_list_submission
+keywords_list <- cbind(
+  reviewer,
+  submission
 )
 
 
-usethis::use_data(keywords_list_concat, overwrite = TRUE, internal = TRUE)
+usethis::use_data(keywords_list, overwrite = TRUE, internal = TRUE)
