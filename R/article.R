@@ -45,6 +45,7 @@ as.article <- function(id) {
   if (is.article(id)) {
     return(id)
   }
+  if (length(id) != 1) stop("Invalid ID")
 
   # Check to see if it's an existing directory
   if (file.exists(id) && is.dir(id)) {
@@ -53,27 +54,24 @@ as.article <- function(id) {
   if (file.exists(id)) {
     path <- id
   } else {
-    # Otherwise, assume we're in the admin directory
+    # Otherwise we use the articles root
     base <- c(
       "Rejected", "Accepted", "Submissions",
       file.path("Proofs", dir("Proofs"))
     )
-    pos <- file.exists(file.path(get_articles_path(), base, id))
-    # Assume working from articles directory
-    # pos <- file.exists(base, id)
+    pos <- file.exists(file.path(get_articles_path(), base, id, "DESCRIPTION"))
 
     if (sum(pos) == 0) stop("Can't find ", id, call. = FALSE)
-    if (sum(pos) == 2) {
+    if (sum(pos) > 1) {
       path <- file.path(get_articles_path(), base[pos], id)
-      if ("Rejected" %in% basename(dirname(path))) {
-        warning(id, "found in multiple locations, ignoring the Rejected folder copy.")
+      if (sum(pos) == 2 && "Rejected" %in% basename(dirname(path))) {
+        warning(id, " found in multiple locations, ignoring the Rejected folder copy.")
         pos[1] <- FALSE
       } else {
-        stop(id, " found in multiple locations", call. = FALSE)
+        stop(id, " found in multiple locations: ", paste(path, collapse=", "), call. = FALSE)
       }
     }
     path <- file.path(get_articles_path(), base[pos], id, "DESCRIPTION")
-    # path <- file.path(base[pos], id, "DESCRIPTION")
   }
 
   load_article(path)
