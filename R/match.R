@@ -24,71 +24,52 @@
 #' @importFrom rlang .data
 #' @export
 match_keywords <- function(id, n = 5) {
+
   article <- get_article_keywords(id)
-  article_kw <- article$keywords
+
+  # the kw list for article submission & reviewer application is slightly different
+  # i.e. graphic is split into two in the article submission form.
+  # keywords_list is stored internally
+  kw_fm_article <- keywords_list %>%
+    dplyr::filter(.data$submission %in% article$keywords) %>%
+    dplyr::pull(.data$reviewer)
+
+  reviewer <- get_reviewer_keywords()
   ae <- AEs()
 
-  reviewer_kw <- get_reviewer_keywords() %>%
+  # remove all the AE and authors from the potential reviewer
+  reviewer_kw <- reviewer %>%
+    tidyr::separate_rows(.data$keywords, sep = ", ") %>%
     filter(
       !.data$fname %in% article$author,
       !.data$email %in% ae$email
     )
 
-  article_kw_standardised <- keywords_list_concat %>%
-    dplyr::filter(.data$submission %in% article_kw) %>%
-    dplyr::pull(.data$reviewer_topics)
-
-  matched <- map(
-    article_kw_standardised,
-    ~ reviewer_kw %>%
-      dplyr::filter(.data$keywords == !!.x)
-  ) %>%
-    dplyr::bind_rows() %>%
+  match_list <- reviewer_kw %>%
+    filter(keywords %in% kw_fm_article) %>%
     dplyr::group_by(.data$fname) %>%
     dplyr::tally(sort = TRUE)
 
-  matched_count <- matched %>%
-    dplyr::group_by(n) %>%
-    dplyr::tally(name = "count") %>%
-    dplyr::arrange(dplyr::row_number())
-
-  i <- 1
   out <- vector()
-  while (length(out) == 0) {
-    if (sum(matched_count$count[i:nrow(matched_count)]) == n) {
-      threshold_in <- matched_count$n[i]
-      inform(glue::glue("{n} reviewers with {threshold_in} matches"))
-      out <- matched %>%
-        dplyr::filter(n >= threshold_in) %>%
-        dplyr::pull(.data$fname)
-    } else if (sum(matched_count$count[i:nrow(matched_count)]) < n) {
-      threshold_in <- matched_count$n[i]
-      threshold_out <- matched_count$n[i - 1]
-      out1 <- matched %>%
-        dplyr::filter(n >= threshold_in) %>%
-        dplyr::pull(.data$fname)
-      pool <- matched %>%
-        dplyr::filter(n == threshold_out) %>%
-        dplyr::pull(.data$fname)
-      size <- n - length(out1)
-      out2 <- pool %>% sample(size)
-      inform(glue::glue("first {length(out1)} reviewers with {threshold_in} matches; next {size} reviewers with {threshold_out} matches"))
-      out <- c(out1, out2)
-    } else if (i == nrow(matched_count) & sum(matched_count$count[i:nrow(matched_count)]) > n) {
-      pool <- matched %>%
-        dplyr::filter(n == i) %>%
-        dplyr::pull(.data$fname)
-      inform(glue::glue("{n} reviewers with {i} matches"))
-      out <- pool %>% sample(n)
+  i <- 0
+  while (length(out) < n){
+    matched <- match_list %>% dplyr::filter(n == max(n) - i)
+    n_space <- n - length(out)
+
+    if (n_space >= nrow(matched)){
+      out <- c(out, matched$fname)
+      cli_alert_info("{length(matched$fname)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
+    } else{
+      out <- c(out, sample(matched$fname, n_space))
+      cli_alert_info("Randomly select {n_space} from {nrow(matched)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
     }
 
     i <- i + 1
   }
 
-  reviewer_kw %>%
+
+  reviewer %>%
     dplyr::filter(.data$fname %in% out) %>%
-    dplyr::select(.data$fname, .data$gname, .data$email) %>%
-    dplyr::distinct() %>%
     dplyr::arrange(factor(.data$fname, levels = out))
 }
 
@@ -118,12 +99,11 @@ get_article_keywords <- function(id) {
 get_reviewer_keywords <- function() {
   sheet_raw <- suppressMessages(googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit?ts=606a86e4#gid=1594007907"))
   reviewer_info <- tibble::tibble(
-    email = sheet_raw$`Email address`,
     gname = sheet_raw$`What's your given name, eg how you would like to be addressed (eg Mike)?`,
     fname = sheet_raw$`What's your full name (eg Michael Kane)?`,
+    email = sheet_raw$`Email address`,
     keywords = sheet_raw$`Please indicate your areas of expertise, check as many as you feel are appropriate.  (Based on available CRAN Task Views.)`
-  ) %>%
-    tidyr::separate_rows(.data$keywords, sep = ",")
+  )
 
   reviewer_info
 }
