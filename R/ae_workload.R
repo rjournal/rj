@@ -32,6 +32,12 @@ reviewer_summary <- function(articles){
 }
 
 #' @rdname ae_workload
+#' @param x a single article, i.e. as.article("Submissions/2020-114")
+#' @examples
+#' \dontrun{
+#' art <- as.article("Submissions/2020-114")
+#' get_AE(art)
+#' }
 #' @export
 get_AE <- function(x){
   list(id = format(x$id), ae = x$ae)
@@ -135,14 +141,17 @@ add_ae <- function(article, name, date = Sys.Date()){
 #' Extract corresponding author from an article
 #' @param article Article id, like \code{"2014-01"}
 #' @examples
+#' \dontrun{
 #' # extract from a single article
 #' corr_author("Submissions/2020-114")
 #'
 #' # extract corresponding authors from the active articles
 #' all <- active_articles()
 #' purrr::map_dfr(all, corr_author)
+#' }
 #' @importFrom purrr pluck map
 #' @importFrom tibble tibble
+#' @export
 corr_author <- function(article){
 
   article <- as.article(article)

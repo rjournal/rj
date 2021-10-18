@@ -13,10 +13,12 @@ corr_author(article)
 Extract corresponding author from an article
 }
 \examples{
+\dontrun{
 # extract from a single article
 corr_author("Submissions/2020-114")
 
 # extract corresponding authors from the active articles
 all <- active_articles()
 purrr::map_dfr(all, corr_author)
+}
 }
