@@ -102,7 +102,7 @@ load_article <- function(path, quiet = FALSE) {
 is.article <- function(x) inherits(x, "article")
 
 make_article <- function(id, slug = "", authors = "", title = "", editor = "", ae = "",
-                         reviewers = "", status = "", path = "", suppl = "",
+                         reviewers = "", status = "", path = "",type = "", suppl = "",
                          keywords = "", otherids = "") {
   structure(list(
     id = parse_id(id),
@@ -110,6 +110,7 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "", a
     slug = slug,
     suppl = parse_supplementaries(suppl),
     path = path,
+    type = type,
     authors = parse_address_list(authors),
     keywords = str_c(keywords, sep = ", "),
     title = str_trim(title),
