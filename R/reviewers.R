@@ -67,7 +67,7 @@ add_out_for_review <- function(article) {
   status <- article$status
   latest_status <- article$status[[length(status)]]
   comments <- latest_status$comments
-  if (!stringr::str_detect("out for review", comments)) {
+  if (!stringr::str_detect(comments, "out for review")) {
     update_status(article, "out for review")
   }
   return(invisible(NULL))
