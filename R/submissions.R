@@ -133,6 +133,7 @@ download_submissions <- function(dry_run) {
           authors = authors,
           title = form[["Article title"]],
           path = path,
+          type = form[["Article type"]],
           suppl = form[["Please list the paths to any other supplementary files inside the zip (R scripts, data, etc.). Each file path should be separated by commas. This list will be used to construct the supplementary zip file for your article if it is accepted for publication."]] %NA% "",
           keywords = form[["Article tags"]] %NA% "",
           otherids = form[[resub_field]] %NA% ""

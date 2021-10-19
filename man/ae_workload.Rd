@@ -10,6 +10,8 @@ get_AE(x)
 ae_workload(articles, day_back = 365)
 }
 \arguments{
+\item{x}{a single article, i.e. as.article("Submissions/2020-114")}
+
 \item{articles}{a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}}
 
 \item{day_back}{number of day to go back for calculating AE workload.}
@@ -20,6 +22,10 @@ the Submissions folder, check articles that have status
 "with AE".
 }
 \examples{
+\dontrun{
+art <- as.article("Submissions/2020-114")
+get_AE(art)
+}
 \dontrun{
 articles <- tabulate_articles()
 ae_workload(articles)

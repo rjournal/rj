@@ -26,14 +26,11 @@ update_status <- function(article, status, comments = "", date = Sys.Date(), AE 
   article <- as.article(article)
   if (is.character(date)) date <- as.Date(date)
 
-  if (AE && !length(grep("^AE: ", status))) {
-    status <- paste("AE:", status)
-    valid_ae_status <- grep("AE:", valid_status, value = TRUE)
-    if (!status %in% valid_ae_status){
-      cli::cli_abort('Status Invalid.
-                     Valid status for AE are "AE: major revision",
-                     "AE: minor revision", "AE: accept", and "AE: reject"')
-    }
+  if (AE && status %in% c("major revision", "minor revision", "accept", "rejected")) {
+      cli::cli_abort(
+        'AE should use "AE: " prefixed status for major revision,
+        minor revision, accept, and rejected.
+        See {.code valid_status} for all valid status.')
   }
 
   if (length(article$status)) {

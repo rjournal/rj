@@ -3,7 +3,7 @@
 \name{list_reviewers}
 \alias{list_reviewers}
 \alias{reviewer_status}
-\title{List the reviewers of an article}
+\title{Summarise reviewers' progression of an article}
 \usage{
 list_reviewers(article)
 
@@ -17,7 +17,7 @@ This function summarises the status of reviewers who are willing to review
 for a particular article.
 }
 \examples{
-list_reviewers("Submissions/2020-114")
+\dontrun{list_reviewers("Submissions/2020-114")}
 \dontrun{
 reviewer_status("Submissions/2020-114")
 }
