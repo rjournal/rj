@@ -84,9 +84,9 @@ AE_df <- create_node_df(n=10,
           "action"), #10
    label=c("Send for review?", #1
            "Select reviewer (ideally two), rj::match_keywords() or use your own experts", #2
-           "Update reviewer in DESCRIPTION, rj::add_reviewer()", #3
-           "Invite reviewers \n (1) generate email template into correspondence folder using rj::invite_reviewers(), \n(2) send email which includes pdf and R files", #4
-           "Check all file changes into GitHub", #5
+           "Update reviewer in DESCRIPTION, rj::add_reviewer() \n This also generates the correspondence folder, containing the email template", #3
+           "Send email to reviewers, which includes motivating letter, pdf and R files \n rj::update_status() to out for review", #4
+           "Check all file changes into GitHub, \n including correspondence folder", #5
            "Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()", #6
            "Reviews received", #7
            "Save reviews into correspondence folder, rj::add_review()", #8
@@ -103,7 +103,7 @@ AE_df <- create_node_df(n=10,
              "rectangle", 
              "rectangle", 
              "rectangle"),
-   width = c(3, 5, 4, 6, 3, 4, 3, 4, 6, 2),
+   width = c(3, 5, 6, 6, 3, 4, 3, 4, 6, 2),
    fillcolor = c("orange", "grey90", 
                  "grey90", "grey90", "grey90",
                  "orange", "orange", "grey90", 
