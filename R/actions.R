@@ -47,9 +47,9 @@ update_status <- function(article, status, comments = "", date = Sys.Date(), AE 
 
 #' Accept, reject, or withdraw an article
 #'
-#' This set of functions update the status field in the DESCRIPTION file and
-#' then draft an email to accept, reject, or withdraw the paper. It can be seen
-#' as shortcut to \code{update_status} with relevant status plus automatic email drafting.
+#' This set of functions wraps around \code{update_status()} and \code{email_template}
+#' to first update the status field in the DESCRIPTION file and
+#' then draft an email from the template.
 #'
 #' @inheritParams update_status
 #' @rdname action
@@ -70,7 +70,6 @@ reject <- function(article, comments = "", date = Sys.Date()) {
 
   cli::cli_alert_info("Creating Email")
   email_template(article, "reject")
-  cli::cli_alert_info("If your browser doesn't open, check getOption('browser')")
 
   return(invisible(NULL))
 }
@@ -100,7 +99,6 @@ reject_format <- function(article, comments = "", date = Sys.Date()) {
   template <- find_template("reject_format")
   email <- whisker.render(readLines(template), data)
   email_text(email)
-  cli::cli_alert_info("If your browser doesn't open, check getOption('browser') and set options(browser=Sys.getenv('R_BROWSER'))")
 
   return(invisible(NULL))
 }
@@ -132,6 +130,28 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
             file.path(apath, "Rejected", basename(article$path)))
   email_template(article, "widthdraw")
 
+  return(invisible(NULL))
+}
+
+#' @rdname action
+#' @export
+major_revision <- function(article, comments = "", date = Sys.Date()){
+  article <- as.article(article)
+  cli::cli_inform("Major revision: {.field {article$id}}")
+  update_status(article, "major revision", comments = comments, date = date)
+
+  email_template(article, "revision-major")
+  return(invisible(NULL))
+}
+
+#' @rdname action
+#' @export
+minor_revision <- function(article, comments = "", date = Sys.Date()){
+  article <- as.article(article)
+  cli::cli_inform("Minor revision: {.field {article$id}}")
+  update_status(article, "minor revision", comments = comments, date = date)
+
+  email_template(article, "revision-minor")
   return(invisible(NULL))
 }
 

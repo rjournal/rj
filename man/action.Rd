@@ -5,6 +5,8 @@
 \alias{reject_format}
 \alias{accept}
 \alias{withdraw}
+\alias{major_revision}
+\alias{minor_revision}
 \title{Accept, reject, or withdraw an article}
 \usage{
 reject(article, comments = "", date = Sys.Date())
@@ -14,6 +16,10 @@ reject_format(article, comments = "", date = Sys.Date())
 accept(article, comments = "", date = Sys.Date())
 
 withdraw(article, comments = "", date = Sys.Date())
+
+major_revision(article, comments = "", date = Sys.Date())
+
+minor_revision(article, comments = "", date = Sys.Date())
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
@@ -23,7 +29,7 @@ withdraw(article, comments = "", date = Sys.Date())
 \item{date}{Date of status update. If omitted defaults to today.}
 }
 \description{
-This set of functions update the status field in the DESCRIPTION file and
-then draft an email to accept, reject, or withdraw the paper. It can be seen
-as shortcut to \code{update_status} with relevant status plus automatic email drafting.
+This set of functions wraps around \code{update_status()} and \code{email_template}
+to first update the status field in the DESCRIPTION file and
+then draft an email from the template.
 }
