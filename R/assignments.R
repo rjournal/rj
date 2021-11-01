@@ -192,16 +192,24 @@ globalVariables("status_date")
 #' @rdname summarise_articles
 #' @export
 get_assignments <- function(editor) {
-  grep_str <- system2("find",
-    args = c(
-      ".", "-name", "DESCRIPTION", "-print",
-      "| xargs grep Editor",
-      "| grep", editor
-    ),
-    stdout = TRUE
+  suppressWarnings(
+    grep_str <- system2("find",
+                        args = c(
+                          ".", "-name", "DESCRIPTION", "-print",
+                          "| xargs grep Editor",
+                          "| grep", editor
+                        ),
+                        stdout = TRUE
+    )
   )
+
   path <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor: .*")
   id <- stringr::str_remove(path, "^./(Rejected|Submissions)/")
+
+  if (length(id) == 0) {
+    cli::cli_abort("Editor not detected. Please enter the correct editor initial.")
+  }
+
   map(id, as.article) %>%
     map(~ unpack_status(.x)) %>%
     map_df(rbind) %>%

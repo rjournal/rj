@@ -68,7 +68,10 @@ email_text <- function(text, means = getOption("RJ_EMAIL_TOOL", "mailto")) {
 
   if (means == "mailto" || means == "browser") {
     if (is.function(getOption("browser"))) {
-      message("You have setup a custom 'browser' function which may or may not work.\nIf your e-mail doesn't open up ready to send, try\n  options(browser=Sys.getenv('R_BROWSER'))")
+      cli::cli_alert_info(
+        "You have setup a custom 'browser' function which may or may not work.
+        If your e-mail doesn't open up ready to send, try
+        {.code options(browser=Sys.getenv('R_BROWSER'))}")
     }
     return(browseURL(url))
   }
