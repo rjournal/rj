@@ -159,7 +159,7 @@
 <li>new function to list articles that are accepted but not online 2021-06-17</li>
 <li>added <code>git(..)</code> helper function to call <code>git</code> properly. It honors the <code>GIT</code> environment variable.</li>
 <li>fixed git actions to work when executed in a subdirectory of “articles” by using <code><a href="../reference/get_articles_path.html">get_articles_path()</a></code> for the target.</li>
-<li>add <code>as.characer.id()</code> so simple things like <code><a href="https://rdrr.io/r/base/warning.html">warning("Article ", article$id, " has issues")</a></code> works.</li>
+<li>add <code>as.characer.id()</code> so simple things like <code>warning("Article ", article$id, " has issues")</code> works.</li>
 <li>
 <code>update_status</code> will update the last entry (with a warning) instead of appending if it is the same status. 2021-06-07</li>
 <li>removed check on RJournal.sty file being in article directory</li>
@@ -178,7 +178,7 @@
 <ul>
 <li><p>fix <code><a href="../reference/get_articles_path.html">get_articles_path()</a></code> to use the repostiroy root if not defined by <code><a href="../reference/set_articles_path.html">set_articles_path()</a></code>. Also check the validity of the path set by <code><a href="../reference/set_articles_path.html">set_articles_path()</a></code> and ignore it (with a warning) if it does not exist.</p></li>
 <li><p>re-factor printing in <code><a href="../reference/summarise_articles.html">summarise_articles()</a></code>. This also fixes the duplication of entries with “revision received” status.</p></li>
-<li><p>added <code><a href="../reference/summarise_articles.html">summarise_articles(..., other=TRUE)</a></code> option which if set will show articles which have a status not covered by any of the other sections (typically entries like accepted, proofed, online) - possibly useful to check for status errors.</p></li>
+<li><p>added <code>summarise_articles(..., other=TRUE)</code> option which if set will show articles which have a status not covered by any of the other sections (typically entries like accepted, proofed, online) - possibly useful to check for status errors.</p></li>
 <li>
 <p>added <em>experimental</em> <code><a href="../reference/actionable_articles.html">actionable_articles()</a></code> function which lists articles with potential actions such as “needs reviewers”, “review overdue” or “invite overdue”. It requires reviewer entries to use well-defined comments such as <code>[Invited 2020-12-18; Agreed 2020-12-21; Minor 2020-12-29]</code> Currently only looks at articles with status “out for review”, “acknowledged” and “submitted”. The supported review states are:</p>
 <ul>

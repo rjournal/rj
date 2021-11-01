@@ -40,9 +40,9 @@
 
 
 <meta property="og:title" content="Accept, reject, or withdraw an article — reject" />
-<meta property="og:description" content="This set of functions update the status field in the DESCRIPTION file and
-then draft an email to accept, reject, or withdraw the paper. It can be seen
-as shortcut to update_status with relevant status plus automatic email drafting." />
+<meta property="og:description" content="This set of functions wraps around update_status() and email_template
+to first update the status field in the DESCRIPTION file and
+then draft an email from the template." />
 
 
 
@@ -132,9 +132,9 @@ as shortcut to update_status with relevant status plus automatic email drafting.
     </div>
 
     <div class="ref-description">
-    <p>This set of functions update the status field in the DESCRIPTION file and
-then draft an email to accept, reject, or withdraw the paper. It can be seen
-as shortcut to <code>update_status</code> with relevant status plus automatic email drafting.</p>
+    <p>This set of functions wraps around <code><a href='update_status.html'>update_status()</a></code> and <code>email_template</code>
+to first update the status field in the DESCRIPTION file and
+then draft an email from the template.</p>
     </div>
 
     <pre class="usage"><span class='fu'>reject</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
@@ -143,7 +143,11 @@ as shortcut to <code>update_status</code> with relevant status plus automatic em
 
 <span class='fu'>accept</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>withdraw</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+<span class='fu'>withdraw</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>major_revision</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>minor_revision</span><span class='op'>(</span><span class='va'>article</span>, comments <span class='op'>=</span> <span class='st'>""</span>, date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
