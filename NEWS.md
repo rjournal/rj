@@ -1,3 +1,10 @@
+# rj 0.2.21
+
+2021-11-01
+  - fixes to erroring in summarise_articles
+  - make anonymous example for add_reviewer()
+  - email_template also updates status
+
 # rj 0.2.20
 
 2021-10-04

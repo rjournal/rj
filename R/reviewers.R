@@ -83,7 +83,7 @@ add_out_for_review <- function(article) {
 #' @inheritParams invite_reviewers
 #' @examples
 #' \dontrun{
-#' add_reviewer("2020-114", "Przemyslaw Biecek", "przemyslaw.biecek@gmail.com")
+#' add_reviewer("2019-117", "Quiet Quokka", "qqplot@waspot.com")
 #' }
 #' @export
 add_reviewer <- function(article, name, email, invite = TRUE) {
