@@ -18,7 +18,7 @@ get_articles_path <- function() {
   dir <- .articles$path
   if (!is.null(.articles$path)) {
     if (!dir.exists(dir)) {
-      warning("Articles path set via set_articles_path() doe snot exits, ignoring.")
+      warning("Articles path set via set_articles_path() does not exits, ignoring.")
       dir <- NULL
     }
   }
