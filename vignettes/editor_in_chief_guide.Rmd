@@ -91,6 +91,7 @@ The EIC is responsible for recruiting and setting up the GitHub repos for AEs. I
 
 # Web site
 
+TO BE UPDATED WITH NEW WEB SITE DESIGN
 
 # Obtaining DOIs for articles in new issue
 
