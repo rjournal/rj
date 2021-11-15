@@ -39,7 +39,6 @@ reference:
   - acknowledge_revision
   - online_metadata
   - active_articles
-  - get_accepted_articles
   - get_accepted_but_not_online
 - title: Utilities
   desc: Vectors of valid status
