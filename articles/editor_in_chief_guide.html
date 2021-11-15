@@ -85,7 +85,7 @@
       <h1 data-toc-skip>Editor-in-Chief’s Guide</h1>
                         <h4 class="author">Di Cook</h4>
             
-            <h4 class="date">2021-11-01</h4>
+            <h4 class="date">2021-11-15</h4>
       
       
       <div class="hidden name"><code>editor_in_chief_guide.Rmd</code></div>
@@ -114,8 +114,8 @@
 <div id="workflow" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
-<div id="htmlwidget-b8e690336982a9d5996f" style="width:768px;height:1152px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b8e690336982a9d5996f">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0cec366820a46d6b2eca" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0cec366820a46d6b2eca">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="search-for-new-editorial-board-members" class="section level1">
@@ -169,6 +169,13 @@
 <div id="check-for-orphaned-papers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#check-for-orphaned-papers" class="anchor"></a>Check for orphaned papers</h2>
+<p>The function <code><a href="../reference/active_articles.html">active_articles()</a></code> gives a long list of current papers being handled. And also <code><a href="../reference/tabulate_articles.html">tabulate_articles()</a></code> can be helpful to find papers that are lagging in the system.</p>
+</div>
+<div id="archives-of-submissions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#archives-of-submissions" class="anchor"></a>Archives of submissions</h2>
+<p>In the <code>articles</code> repo, the <code>Proofs</code> folder contains all the supporting files of Accepted articles. The <code>Rejected</code> folder contains all of the supporting files for rejected submisisons.</p>
+<p>From time to time, papers with dates older than two years should be moved to the <code>archive</code> repo, to make the <code>articles</code> repo smaller. Recommend that this is done at the hand-over of the EiC role at the end of each year.</p>
 </div>
 </div>
   </div>
