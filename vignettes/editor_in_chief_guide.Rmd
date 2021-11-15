@@ -95,6 +95,12 @@ TO BE UPDATED WITH NEW WEB SITE DESIGN - new articles likely can get uploaded to
 
 The web site is a static html page, build from `rjournal.github.io` (currently `dev` branch). The site is built locally, using RStudio Build Website. Preview locally and if ok, push files to GitHub.
 
+The procedure for getting the web site public has multiple steps:
+
+1. `master` branch is the sandbox to stage changes.
+2. Generate a pull request and accept it from `master` to `published`.
+3. The `deploy` branch is automatically built using GitHub actions to populate the web site.
+
 # Obtaining DOIs for articles in new issue
 
 This is done once the issue is built. 
