@@ -89,9 +89,11 @@ The EIC is responsible for recruiting and setting up the GitHub repos for AEs. I
 
 # Making articles available online
 
+TO BE UPDATED WITH NEW WEB SITE DESIGN - new articles likely can get uploaded to articles tab once accepted, before being bundled into an issue.
+
 # Web site
 
-TO BE UPDATED WITH NEW WEB SITE DESIGN
+The web site is a static html page, build from `rjournal.github.io` (currently `dev` branch). The site is built locally, using RStudio Build Website. Preview locally and if ok, push files to GitHub.
 
 # Obtaining DOIs for articles in new issue
 
