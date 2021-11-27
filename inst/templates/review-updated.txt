@@ -3,7 +3,7 @@ Subject: [RJournal {{id}}] Revised Manuscript
 ---
 Dear {{firstname}},
 
-We have received revisions for manuscript {{id}}, "{{title}” incorporating your and other reviewers' feedback. Would you please provide an updated review with the following.  
+We have received revisions for manuscript {{id}}, "{{title}}” incorporating your and other reviewers' feedback. Would you please provide an updated review with the following.  
     - Have your comments have been sufficiently addressed? If not, please provide suggestions to better.
     - Are there other issues with either the package or the manuscript that have been introduced?
 
