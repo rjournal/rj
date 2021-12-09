@@ -116,5 +116,16 @@ get_reviewer_keywords <- function() {
     keywords = sheet_raw$`Please indicate your areas of expertise, check as many as you feel are appropriate.  (Based on available CRAN Task Views.)`
   )
 
-  reviewer_info
+  dup <- reviewer_info %>%
+    dplyr::mutate(dup = duplicated(email)) %>%
+    filter(dup) %>%
+    dplyr::pull(email)
+
+  fix_dup <- reviewer_info %>%
+    dplyr::filter(email %in% dup) %>%
+    dplyr::group_by(email) %>%
+    dplyr::filter(dplyr::row_number() == max(dplyr::row_number()))
+
+  dplyr::bind_rows(reviewer_info %>% filter(!email %in% dup),
+                   fix_dup)
 }
