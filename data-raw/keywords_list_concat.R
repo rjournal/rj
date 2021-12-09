@@ -51,7 +51,7 @@ submission <-
     ~submission,
     "Bayesian Inference",
     "Chemometrics and Computational Physics",
-    "Clinical Trial Design, Monitoring, and Analysis",
+    "Clinical Trial Design Monitoring and Analysis",
     "Cluster Analysis & Finite Mixture Models",
     "Databases with R",
     "Differential Equations",
