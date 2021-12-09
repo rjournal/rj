@@ -88,8 +88,19 @@ get_article_keywords <- function(id) {
     rlang::abort("no keyword detected in the DESCRIPTION file!")
   }
 
+  ctr_str <- "Clinical Trial Design, Monitoring, and Analysis"
+  has_clinical_trial <- str_detect(keywords_raw, ctr_str)
+
+  if (has_clinical_trial){
+    keywords_raw <- str_remove(keywords_raw, ctr_str)
+  }
+
+  keywords <- as.vector(stringr::str_split(keywords_raw, ", ", simplify = TRUE))
+
+  if(has_clinical_trial) keywords <- c(ctr_str, keywords)
+
   list(
-    keywords = as.vector(stringr::str_split(keywords_raw, ", ", simplify = TRUE)),
+    keywords = keywords,
     author = author[names(author) == "name"]
   )
 }
