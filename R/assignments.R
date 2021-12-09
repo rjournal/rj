@@ -147,7 +147,7 @@ actionable_articles <- function(editor, invite = 7, review = 30, verbose = FALSE
   cli_ul()
   for (id in unique(latest$id[rev | work])) {
     art <- as.article(id)
-    rev <- review_status(id)
+    rev <- reviewer_status(id)
     issues <- character()
     ## less than 2 reviews finished?
     if (sum(rev$fin) < 2) {
