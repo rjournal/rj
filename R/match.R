@@ -88,8 +88,19 @@ get_article_keywords <- function(id) {
     rlang::abort("no keyword detected in the DESCRIPTION file!")
   }
 
+  ctr_str <- "Clinical Trial Design, Monitoring, and Analysis"
+  has_clinical_trial <- str_detect(keywords_raw, ctr_str)
+
+  if (has_clinical_trial){
+    keywords_raw <- str_remove(keywords_raw, ctr_str)
+  }
+
+  keywords <- as.vector(stringr::str_split(keywords_raw, ", ", simplify = TRUE))
+
+  if(has_clinical_trial) keywords <- c(ctr_str, keywords)
+
   list(
-    keywords = as.vector(stringr::str_split(keywords_raw, ", ", simplify = TRUE)),
+    keywords = keywords,
     author = author[names(author) == "name"]
   )
 }
@@ -105,5 +116,16 @@ get_reviewer_keywords <- function() {
     keywords = sheet_raw$`Please indicate your areas of expertise, check as many as you feel are appropriate.  (Based on available CRAN Task Views.)`
   )
 
-  reviewer_info
+  dup <- reviewer_info %>%
+    dplyr::mutate(dup = duplicated(email)) %>%
+    filter(dup) %>%
+    dplyr::pull(email)
+
+  fix_dup <- reviewer_info %>%
+    dplyr::filter(email %in% dup) %>%
+    dplyr::group_by(email) %>%
+    dplyr::filter(dplyr::row_number() == max(dplyr::row_number()))
+
+  dplyr::bind_rows(reviewer_info %>% filter(!email %in% dup),
+                   fix_dup)
 }
