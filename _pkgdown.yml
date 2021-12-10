@@ -38,8 +38,8 @@ reference:
   - acknowledge_submission_text
   - acknowledge_revision
   - online_metadata
-  - actionable_articles
   - active_articles
+  - get_accepted_but_not_online
 - title: Utilities
   desc: Vectors of valid status
   contents:

@@ -202,15 +202,36 @@ format.unparsed <- function(x, ...) {
   )
 }
 
+article_ids <- function(dirs = TRUE) {
+  if(identical(dirs, TRUE)) {
+    dirs <- c("Accepted", "Proofs", "Rejected", "Submissions")
+  }
+  c(
+    # Articles not in proofs
+    dir(file.path(get_articles_path(), setdiff(dirs, "Proofs")), pattern = "\\d{4}-\\d{2,}"),
+    # Articles in proofs
+    dir(
+      # In all proofs...
+      dir(file.path(get_articles_path(), intersect(dirs, "Proofs")), pattern = "\\d{4}-[1-2]", full.names = TRUE),
+      # Search for articles
+      pattern = "\\d{4}-\\d{2,}"
+    )
+  )
+}
+
 #' Tabulate article descriptions
 #'
 #' Produce a table describing articles in specific directories.
 #'
 #' @param dirs The directories containing articles to be searched and tabulated.
+#'   If TRUE, then all directories will be searched.
 #'
 #' @export
 tabulate_articles <- function(dirs = c("Accepted", "Submissions")) {
-  ids <- dir(file.path(get_articles_path(), dirs))
+  # Find matching ids
+  ids <- article_ids(dirs)
+
+  # Read DESCRIPTION from ids and arrange in data frame.
   purrr::map_dfr(ids, function(art){
     art <- tryCatch(as.article(art), error = function(e) {
       stop(stringr::str_glue("Failed to parse the DESCRIPTION file of {art}: {e$message}"))

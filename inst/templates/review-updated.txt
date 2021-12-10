@@ -1,0 +1,17 @@
+To: {{email}}
+Subject: [RJournal {{id}}] Revised Manuscript
+---
+Dear {{firstname}},
+
+We have received revisions for manuscript {{id}}, "{{title}}” incorporating your and other reviewers' feedback. Would you please provide an updated review with the following.  
+    - Have your comments have been sufficiently addressed? If not, please provide suggestions to better.
+    - Are there other issues with either the package or the manuscript that have been introduced?
+
+As with the first review, it should be returned by email. Our preferred format for the review is a text file attachment, but a pdf is also acceptable. This will be sent on to the authors. Your email should also give your overall recommendation (this part is for the editor only): Accept with minor revisions (you won't see it again), accept with major revisions (you'll re-review the revisions), or reject.
+
+
+Please let me know if you are unwilling or unable to provide an updated review. I would like to receive the review, if possible, in the next month.
+
+Regards,
+
+{{me}}

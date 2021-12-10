@@ -87,11 +87,19 @@ The EIC may take on outstanding handling editor duties of the outgoing member.
 
 The EIC is responsible for recruiting and setting up the GitHub repos for AEs. Ideally, keywords of submissions over the past year are summarised, and compared with keywords of current AEs. New AEs should be recruited for topics where there is the most need.
 
-
 # Making articles available online
+
+TO BE UPDATED WITH NEW WEB SITE DESIGN - new articles likely can get uploaded to articles tab once accepted, before being bundled into an issue.
 
 # Web site
 
+The web site is a static html page, build from `rjournal.github.io` (currently `dev` branch). The site is built locally, using RStudio Build Website. Preview locally and if ok, push files to GitHub.
+
+The procedure for getting the web site public has multiple steps:
+
+1. `master` branch is the sandbox to stage changes.
+2. Generate a pull request and accept it from `master` to `published`.
+3. The `deploy` branch is automatically built using GitHub actions to populate the web site.
 
 # Obtaining DOIs for articles in new issue
 
@@ -117,3 +125,11 @@ This will generate the file `DOI-yr-num.xml` where `yr` is the year of the issue
 Click on "Upload submissions", then "Metadata" and upload the file. 
 
 ## Check for orphaned papers
+
+The function `active_articles()` gives a long list of current papers being handled. And also `tabulate_articles()` can be helpful to find papers that are lagging in the system.
+
+## Archives of submissions
+
+In the `articles` repo, the `Proofs` folder contains all the supporting files of Accepted articles. The `Rejected` folder contains all of the supporting files for rejected submisisons.
+
+From time to time, papers with dates older than two years should be moved to the `archive` repo, to make the `articles` repo smaller. Recommend that this is done at the hand-over of the EiC role at the end of each year.
