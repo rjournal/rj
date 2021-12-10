@@ -2,7 +2,7 @@ reviewer <- tibble::tribble(
   ~reviewer, ~details,
   "Bayesian", "Bayesian Inference",
   "ChemPhys", "Chemometrics and Computational Physics",
-  "ClinicalTrials", "Clinical Trial Design, Monitoring, and Analysis",
+  "ClinicalTrials", "Clinical Trial Design Monitoring and Analysis",
   "Cluster", "Cluster Analysis & Finite Mixture Models",
   "Databases", "Databases with R",
   "DifferentialEquations", "Differential Equations",
@@ -99,4 +99,6 @@ keywords_list <- cbind(
 )
 
 
-usethis::use_data(keywords_list, overwrite = TRUE, internal = TRUE)
+usethis::use_data(keywords_list,
+                  overwrite = TRUE,
+                  internal = TRUE)
