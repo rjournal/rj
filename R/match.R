@@ -51,27 +51,38 @@ match_keywords <- function(id, n = 5) {
     dplyr::group_by(.data$fname) %>%
     dplyr::tally(sort = TRUE)
 
-  out <- vector()
-  i <- 0
-  while (length(out) < n){
-    matched <- match_list %>% dplyr::filter(n == max(n) - i)
-    n_space <- n - length(out)
 
-    if (n_space >= nrow(matched)){
-      out <- c(out, matched$fname)
-      cli_alert_info("{length(matched$fname)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
-    } else{
-      out <- c(out, sample(matched$fname, n_space))
-      cli_alert_info("Randomly select {n_space} from {nrow(matched)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
+  if (nrow(match_list) == 0) {
+    cli_alert_info(
+      "At least one keyword specified by the authors needs to be from the CRAN Task View, but none of keywords is. No match returned."
+    )
+  } else{
+    out <- vector()
+    i <- 0
+    while (length(out) < n) {
+      matched <- match_list %>% dplyr::filter(n == max(n) - i)
+      n_space <- n - length(out)
+
+      if (n_space >= nrow(matched)) {
+        out <- c(out, matched$fname)
+        cli_alert_info("{length(matched$fname)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
+      } else{
+        out <- c(out, sample(matched$fname, n_space))
+        cli_alert_info(
+          "Randomly select {n_space} from {nrow(matched)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}"
+        )
+      }
+
+      i <- i + 1
     }
 
-    i <- i + 1
+
+    reviewer %>%
+      dplyr::filter(.data$fname %in% out) %>%
+      dplyr::arrange(factor(.data$fname, levels = out))
   }
 
 
-  reviewer %>%
-    dplyr::filter(.data$fname %in% out) %>%
-    dplyr::arrange(factor(.data$fname, levels = out))
 }
 
 ## --------------------
@@ -137,7 +148,7 @@ reviewer <- tibble::tribble(
   ~reviewer, ~details,
   "Bayesian", "Bayesian Inference",
   "ChemPhys", "Chemometrics and Computational Physics",
-  "ClinicalTrials", "Clinical Trial Design, Monitoring, and Analysis",
+  "ClinicalTrials", "Clinical Trial Design Monitoring and Analysis",
   "Cluster", "Cluster Analysis & Finite Mixture Models",
   "Databases", "Databases with R",
   "DifferentialEquations", "Differential Equations",
@@ -186,7 +197,7 @@ submission <-
     ~submission,
     "Bayesian Inference",
     "Chemometrics and Computational Physics",
-    "Clinical Trial Design, Monitoring, and Analysis",
+    "Clinical Trial Design Monitoring and Analysis",
     "Cluster Analysis & Finite Mixture Models",
     "Databases with R",
     "Differential Equations",
@@ -229,7 +240,7 @@ submission <-
   )
 
 keywords_list <- cbind(reviewer, submission)
-write.csv(keywords_list, file = "inst/keywords-list.csv")
+#write.csv(keywords_list, file = "inst/keywords-list.csv")
 
 
 
