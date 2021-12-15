@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.21</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -83,9 +79,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Editors’ Guide</h1>
-                        <h4 class="author">First draft by Di Cook</h4>
+                        <h4 data-toc-skip class="author">First draft by Di Cook</h4>
             
-            <h4 class="date">2021-11-30</h4>
+            <h4 data-toc-skip class="date">2021-12-15</h4>
       
       
       <div class="hidden name"><code>editors_guide.Rmd</code></div>
@@ -94,9 +90,9 @@
 
     
     
-<div id="mission" class="section level1">
-<h1 class="hasAnchor">
-<a href="#mission" class="anchor"></a>Mission</h1>
+<div class="section level1">
+<h1 id="mission">Mission<a class="anchor" aria-label="anchor" href="#mission"></a>
+</h1>
 <p>Executive Editor (EE) of the R Journal are the primary article handler for about a quarter of submissions per year, responsible for:</p>
 <ul>
 <li>matching the article with an appropriate Associate Editor (AE) or handling obtaining reviews without an AE.</li>
@@ -106,59 +102,59 @@
 <li>maintaining and enhancing the <code>rj</code> and <code>rjtools</code> software, in collaboration with other EEs and AEs.</li>
 </ul>
 </div>
-<div id="overview-of-editorial-board" class="section level1">
-<h1 class="hasAnchor">
-<a href="#overview-of-editorial-board" class="anchor"></a>Overview of editorial board</h1>
+<div class="section level1">
+<h1 id="overview-of-editorial-board">Overview of editorial board<a class="anchor" aria-label="anchor" href="#overview-of-editorial-board"></a>
+</h1>
 <p>The editorial board consists of four editors, including an Editor-in-Chief (EIC), and a non-fixed number of associate editors. Each editor serves a roughly four year term. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.</p>
 <p>In the third calendar year of their term the EE acts as EIC. The EIC takes primary responsibility for:</p>
 <ul>
 <li>Production of two journal issues per year, in June and December. The issue typically appears a month or two after the publication date, because articles accepted up to June 30, and mid-Dec, respectively will likely be included.</li>
 <li>Managing the flow of submissions, ensuring that these are handled in a timely manner.</li>
-<li>Maintaining the R Journal web site <a href="http://journal.r-project.org" class="uri">http://journal.r-project.org</a>.</li>
+<li>Maintaining the R Journal web site <a href="http://journal.r-project.org" class="external-link uri">http://journal.r-project.org</a>.</li>
 <li>Maintaining the formatting and tools used to manage the journal.</li>
 <li>Ensuring smooth communication between editors and associate editors and authors.</li>
 </ul>
 <p>EE’s have the primary responsibility for handling any particular submission.</p>
 <p>AE’s have the primary responsibility for obtaining reviews and making recommendations for their assigned articles.</p>
 </div>
-<div id="new-editors-and-associate-editors" class="section level1">
-<h1 class="hasAnchor">
-<a href="#new-editors-and-associate-editors" class="anchor"></a>New editors and associate editors</h1>
+<div class="section level1">
+<h1 id="new-editors-and-associate-editors">New editors and associate editors<a class="anchor" aria-label="anchor" href="#new-editors-and-associate-editors"></a>
+</h1>
 <p>New editors and associate editors should be added to the <code>editors.csv</code> and <code>associate_editors.csv</code> files in <code>inst</code> folder.</p>
 </div>
-<div id="article-assignment-to-ae" class="section level1">
-<h1 class="hasAnchor">
-<a href="#article-assignment-to-ae" class="anchor"></a>Article assignment to AE</h1>
+<div class="section level1">
+<h1 id="article-assignment-to-ae">Article assignment to AE<a class="anchor" aria-label="anchor" href="#article-assignment-to-ae"></a>
+</h1>
 <p>An article repo needs to be created for any new AEs in the for of the articles repo, named <code>ae-articles-XX</code>. Initials replace XX and match the codes in the <code>csv</code> file.</p>
 <p>The AE should be notified of any new assignment.</p>
 </div>
-<div id="communications" class="section level1">
-<h1 class="hasAnchor">
-<a href="#communications" class="anchor"></a>Communications</h1>
+<div class="section level1">
+<h1 id="communications">Communications<a class="anchor" aria-label="anchor" href="#communications"></a>
+</h1>
 <p>A newly assigned article for an AE needs to have the directory need to be copied from the <code>articles</code> repo to the relevant <code>ae-articles-XX</code>. The <code>articles</code> repo is the master copy, and once a paper is retrieved from an AE, the <code>DESCRIPTION</code> file is updated, and the <code>correspondence</code> folder is populated.</p>
 <p>Slack is used for communication, between EIC, EEs and AEs, and general information about operations. The channel <code>editors_private</code> can be used for protected conversations between EEs.</p>
 <p>Weekly virtual meetings are held to keep communication between editors current.</p>
 <p>Email is the primary manner for communicating with authors. The EE, not AEs, should communicate with authors.</p>
 </div>
-<div id="workflow-and-operations" class="section level1">
-<h1 class="hasAnchor">
-<a href="#workflow-and-operations" class="anchor"></a>Workflow and operations</h1>
-<div id="getting-started" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting started</h2>
+<div class="section level1">
+<h1 id="workflow-and-operations">Workflow and operations<a class="anchor" aria-label="anchor" href="#workflow-and-operations"></a>
+</h1>
+<div class="section level2">
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
 <p>Install the <code>rj</code> package with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rjournal/rj"</span><span class="op">)</span></code></pre></div>
 <p>The package is being updated and revised regularly, so you may want to re-install occasionally.</p>
 </div>
-<div id="potential-ae" class="section level2">
-<h2 class="hasAnchor">
-<a href="#potential-ae" class="anchor"></a>Potential AE</h2>
-<p>The keywords of a paper should be matched against the keywords of AEs available in <code>associate_editors.csv</code>. Also, the function <code><a href="../reference/get_AE.html">ae_workload()</a></code> should be used to ensure that the potential AE hasn’t got too many current assignments.</p>
+<div class="section level2">
+<h2 id="potential-ae">Potential AE<a class="anchor" aria-label="anchor" href="#potential-ae"></a>
+</h2>
+<p>The keywords of a paper should be matched against the keywords of AEs available in <code>associate_editors.csv</code>. Also, the function <code><a href="../reference/ae_workload.html">ae_workload()</a></code> should be used to ensure that the potential AE hasn’t got too many current assignments.</p>
 </div>
-<div id="timeline-for-reviews" class="section level2">
-<h2 class="hasAnchor">
-<a href="#timeline-for-reviews" class="anchor"></a>Timeline for reviews</h2>
+<div class="section level2">
+<h2 id="timeline-for-reviews">Timeline for reviews<a class="anchor" aria-label="anchor" href="#timeline-for-reviews"></a>
+</h2>
 <p>This is what the acknowledgement letter tells authors about the timeline for their paper to be handled:</p>
 <pre><code>The submission process proceeds as follows:
 
@@ -166,15 +162,15 @@
 * reviewers solicited (~1-2 weeks)
 * reviews received (~1-2 months)</code></pre>
 </div>
-<div id="workflow" class="section level2">
-<h2 class="hasAnchor">
-<a href="#workflow" class="anchor"></a>Workflow</h2>
-<div id="htmlwidget-2cbafc4b95af7580edec" style="width:768px;height:1152px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2cbafc4b95af7580edec">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"is this a new submission?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"2\" [label = \"examine article: should the paper progress to review?\", shape = \"ellipse\", width = \"5\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"is there a suitable AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"4\" [label = \"update status to be `with AE`, update_status(), copy folder to AEs repo\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"message/email AE\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"has AE returned reviews and decision?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"add_review() to correspondence folder, send decision to author, \n with reviews if appropriate, update_status(), \n notify and thank AE about decision, if appropriate\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"8\" [label = \"is the revision adequate?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"9\" [label = \"should it go back to AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"10\" [label = \"reject(), contact authors\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"11\" [label = \"act as AE, find reviewers, update status, follow AE flow chart\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \"Y\", color = \"dodgerblue2\"] \n\"3\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"1\"->\"8\" [label = \"N\", color = \"red\"] \n\"8\"->\"9\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"10\" [label = \"N\", color = \"red\"] \n\"9\"->\"7\" [label = \"N\", color = \"red\"] \n\"9\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"10\" [label = \"N\", color = \"red\"] \n\"3\"->\"11\" [label = \"N\", color = \"red\"] \n\"6\"->\"5\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="section level2">
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h2>
+<div id="htmlwidget-650b8975290cf5843f7e" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-650b8975290cf5843f7e">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"is this a new submission?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"2\" [label = \"examine article: should the paper progress to review?\", shape = \"ellipse\", width = \"5\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"is there a suitable AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"4\" [label = \"update status to be `with AE`, update_status(), copy folder to AEs repo\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"message/email AE\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"has AE returned reviews and decision?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"add_review() to correspondence folder, send decision to author, \n with reviews if appropriate, update_status(), \n notify and thank AE about decision, if appropriate\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"8\" [label = \"is the revision adequate?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"9\" [label = \"should it go back to AE?\", shape = \"ellipse\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"10\" [label = \"reject(), contact authors\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"11\" [label = \"act as AE, find reviewers, update status, follow AE flow chart\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \"Y\", color = \"dodgerblue2\"] \n\"3\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"1\"->\"8\" [label = \"N\", color = \"red\"] \n\"8\"->\"9\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"10\" [label = \"N\", color = \"red\"] \n\"9\"->\"7\" [label = \"N\", color = \"red\"] \n\"9\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"10\" [label = \"N\", color = \"red\"] \n\"3\"->\"11\" [label = \"N\", color = \"red\"] \n\"6\"->\"5\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="dealing-with-problematic-authors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dealing-with-problematic-authors" class="anchor"></a>Dealing with problematic authors</h2>
+<div class="section level2">
+<h2 id="dealing-with-problematic-authors">Dealing with problematic authors<a class="anchor" aria-label="anchor" href="#dealing-with-problematic-authors"></a>
+</h2>
 <p><code>vexing_authors.csv</code></p>
 </div>
 </div>
@@ -191,11 +187,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by  Editor-in-Chief.</p>
+  <p></p>
+<p>Developed by Editor-in-Chief.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -203,6 +201,8 @@
 
   
 
+
+  
 
   </body>
 </html>

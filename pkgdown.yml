@@ -1,12 +1,12 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   associate_editors_guide: associate_editors_guide.html
   editor_in_chief_guide: editor_in_chief_guide.html
   editors_guide: editors_guide.html
-last_built: 2021-11-30T21:42Z
+last_built: 2021-12-15T11:30Z
 urls:
-  reference: https://rjournal.github.io/rj//reference
-  article: https://rjournal.github.io/rj//articles
+  reference: https://rjournal.github.io/rj/reference
+  article: https://rjournal.github.io/rj/articles
 

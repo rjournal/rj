@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.21</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -83,9 +79,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Editor-in-Chief’s Guide</h1>
-                        <h4 class="author">Di Cook</h4>
+                        <h4 data-toc-skip class="author">Di Cook</h4>
             
-            <h4 class="date">2021-11-30</h4>
+            <h4 data-toc-skip class="date">2021-12-15</h4>
       
       
       <div class="hidden name"><code>editor_in_chief_guide.Rmd</code></div>
@@ -94,61 +90,61 @@
 
     
     
-<div id="downloading-new-submissions-and-revisions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#downloading-new-submissions-and-revisions" class="anchor"></a>Downloading new submissions and revisions</h1>
-<p>Articles are submitted through a <a href="https://forms.gle/ykj6QcoGQD5ctnA5A">Google form</a> which populates a <a href="https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370">Google sheet</a>. This sheet contains details of the submission, and also a zip file with the necessary files.</p>
+<div class="section level1">
+<h1 id="downloading-new-submissions-and-revisions">Downloading new submissions and revisions<a class="anchor" aria-label="anchor" href="#downloading-new-submissions-and-revisions"></a>
+</h1>
+<p>Articles are submitted through a <a href="https://forms.gle/ykj6QcoGQD5ctnA5A" class="external-link">Google form</a> which populates a <a href="https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370" class="external-link">Google sheet</a>. This sheet contains details of the submission, and also a zip file with the necessary files.</p>
 <p>On a regular basis, download newly submitted items:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_submissions.html">get_submissions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>This will create a new folder in the <code>Submissions</code> directory of the <code>articles</code> repo, and a <code>DESCRIPTION</code> file with the meta data.</p>
 <p>You should check that this file has been constructed correctly, and that the zip file has unpacked into the top level of the folder. Common missing items are the <code>Suppl:</code> line which should list the <code>.R</code> files and any data needed to reproduce the paper.</p>
 </div>
-<div id="assigning-articles-to-an-ee" class="section level1">
-<h1 class="hasAnchor">
-<a href="#assigning-articles-to-an-ee" class="anchor"></a>Assigning articles to an EE</h1>
+<div class="section level1">
+<h1 id="assigning-articles-to-an-ee">Assigning articles to an EE<a class="anchor" aria-label="anchor" href="#assigning-articles-to-an-ee"></a>
+</h1>
 </div>
-<div id="workflow-and-operations" class="section level1">
-<h1 class="hasAnchor">
-<a href="#workflow-and-operations" class="anchor"></a>Workflow and operations</h1>
-<div id="workflow" class="section level2">
-<h2 class="hasAnchor">
-<a href="#workflow" class="anchor"></a>Workflow</h2>
-<div id="htmlwidget-2ef3d4b2bd5b984da2c6" style="width:768px;height:1152px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2ef3d4b2bd5b984da2c6">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="section level1">
+<h1 id="workflow-and-operations">Workflow and operations<a class="anchor" aria-label="anchor" href="#workflow-and-operations"></a>
+</h1>
+<div class="section level2">
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h2>
+<div id="htmlwidget-2cf6926e080d34a0d417" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2cf6926e080d34a0d417">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<div id="search-for-new-editorial-board-members" class="section level1">
-<h1 class="hasAnchor">
-<a href="#search-for-new-editorial-board-members" class="anchor"></a>Search for new editorial board members</h1>
-<div id="executive-editors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#executive-editors" class="anchor"></a>Executive editors</h2>
+<div class="section level1">
+<h1 id="search-for-new-editorial-board-members">Search for new editorial board members<a class="anchor" aria-label="anchor" href="#search-for-new-editorial-board-members"></a>
+</h1>
+<div class="section level2">
+<h2 id="executive-editors">Executive editors<a class="anchor" aria-label="anchor" href="#executive-editors"></a>
+</h2>
 <p>The EIC is responsible to navigating the search for a new EE. The search for a new editorial board member should begin in September, giving enough time to find a replacement before the outgoing member leaves at the end of December. Nominations for the new member are discussed by the editorial board first, and then preferably also with the advisory committee so that they can provide historical perspective.</p>
 <p>Once a shortlist of candidates is created, but before approaching anyone on the list, it should be sent to the R Foundation Board members (<a href="mailto:R-foundation-board@r-project.org" class="email">R-foundation-board@r-project.org</a>) for their feedback and approval. People on the list are then approached by the EIC or an EE, and once someone agrees, the EIC informs the members of the R Foundation (<a href="mailto:R-foundation-members@r-project.org" class="email">R-foundation-members@r-project.org</a>). The new editor is formally appointed by the R Foundation president.</p>
 <p>Once a new member is found, the following steps take place:</p>
 <ul>
 <li>The EIC informs Martin Maechler of the new board member</li>
-<li>The incoming board member requests access to the mailing lists by visiting <a href="https://stat.ethz.ch/mailman/listinfo/r-journal-editors" class="uri">https://stat.ethz.ch/mailman/listinfo/r-journal-editors</a> and <a href="https://stat.ethz.ch/mailman/listinfo/r-journal-advisory" class="uri">https://stat.ethz.ch/mailman/listinfo/r-journal-advisory</a>.</li>
+<li>The incoming board member requests access to the mailing lists by visiting <a href="https://stat.ethz.ch/mailman/listinfo/r-journal-editors" class="external-link uri">https://stat.ethz.ch/mailman/listinfo/r-journal-editors</a> and <a href="https://stat.ethz.ch/mailman/listinfo/r-journal-advisory" class="external-link uri">https://stat.ethz.ch/mailman/listinfo/r-journal-advisory</a>.</li>
 <li>The outgoing member unsubscribes from r-journal-editors by visiting the web page above, but should remain subscribed to r-journal-advisory</li>
 <li>New EE is added to the Editors team at <code>https://github.com/rjournal</code> and to the <code>rjournal.slack.com</code> organisation.</li>
 </ul>
 <p>The EIC may take on outstanding handling editor duties of the outgoing member.</p>
 </div>
-<div id="associate-editors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#associate-editors" class="anchor"></a>Associate editors</h2>
+<div class="section level2">
+<h2 id="associate-editors">Associate editors<a class="anchor" aria-label="anchor" href="#associate-editors"></a>
+</h2>
 <p>The EIC is responsible for recruiting and setting up the GitHub repos for AEs. Ideally, keywords of submissions over the past year are summarised, and compared with keywords of current AEs. New AEs should be recruited for topics where there is the most need.</p>
 </div>
 </div>
-<div id="making-articles-available-online" class="section level1">
-<h1 class="hasAnchor">
-<a href="#making-articles-available-online" class="anchor"></a>Making articles available online</h1>
+<div class="section level1">
+<h1 id="making-articles-available-online">Making articles available online<a class="anchor" aria-label="anchor" href="#making-articles-available-online"></a>
+</h1>
 <p>TO BE UPDATED WITH NEW WEB SITE DESIGN - new articles likely can get uploaded to articles tab once accepted, before being bundled into an issue.</p>
 </div>
-<div id="web-site" class="section level1">
-<h1 class="hasAnchor">
-<a href="#web-site" class="anchor"></a>Web site</h1>
+<div class="section level1">
+<h1 id="web-site">Web site<a class="anchor" aria-label="anchor" href="#web-site"></a>
+</h1>
 <p>The web site is a static html page, build from <code>rjournal.github.io</code> (currently <code>dev</code> branch). The site is built locally, using RStudio Build Website. Preview locally and if ok, push files to GitHub.</p>
 <p>The procedure for getting the web site public has multiple steps:</p>
 <ol style="list-style-type: decimal">
@@ -158,31 +154,31 @@
 <li>The <code>deploy</code> branch is automatically built using GitHub actions to populate the web site.</li>
 </ol>
 </div>
-<div id="obtaining-dois-for-articles-in-new-issue" class="section level1">
-<h1 class="hasAnchor">
-<a href="#obtaining-dois-for-articles-in-new-issue" class="anchor"></a>Obtaining DOIs for articles in new issue</h1>
+<div class="section level1">
+<h1 id="obtaining-dois-for-articles-in-new-issue">Obtaining DOIs for articles in new issue<a class="anchor" aria-label="anchor" href="#obtaining-dois-for-articles-in-new-issue"></a>
+</h1>
 <p>This is done once the issue is built.</p>
 <p><strong>Note:</strong> It is easier if the December issue gets their slug BEFORE the end of the year, because the DOI links assume the issue date, which is the December the year before it actually gets published. If the slugs are in the new year, you need to update links in a tricky way.</p>
 <p>You need to generate the <code>xml</code> for the DOI links by:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># From the articles directory</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rj</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/viking/r-yaml/">yaml</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rj</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/viking/r-yaml/" class="external-link">yaml</a></span><span class="op">)</span>
 <span class="co"># Assuming the rjournal.github.io is a parallel directory</span>
-<span class="va">cfg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/yaml/man/yaml.load.html">yaml.load_file</a></span><span class="op">(</span><span class="st">"../rjournal.github.io/_config.yml"</span><span class="op">)</span>
-<span class="va">issue</span> <span class="op">=</span> <span class="va">cfg</span><span class="op">$</span><span class="va">issue</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">cfg</span><span class="op">$</span><span class="va">issue</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="co"># last one is typically desired</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>volume<span class="op">=</span><span class="va">issue</span><span class="op">$</span><span class="va">volume</span>, num<span class="op">=</span><span class="va">issue</span><span class="op">$</span><span class="va">num</span><span class="op">)</span><span class="op">)</span>  <span class="co"># double check</span>
+<span class="va">cfg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/yaml/man/yaml.load.html" class="external-link">yaml.load_file</a></span><span class="op">(</span><span class="st">"../rjournal.github.io/_config.yml"</span><span class="op">)</span>
+<span class="va">issue</span> <span class="op">=</span> <span class="va">cfg</span><span class="op">$</span><span class="va">issue</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cfg</span><span class="op">$</span><span class="va">issue</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="co"># last one is typically desired</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>volume<span class="op">=</span><span class="va">issue</span><span class="op">$</span><span class="va">volume</span>, num<span class="op">=</span><span class="va">issue</span><span class="op">$</span><span class="va">num</span><span class="op">)</span><span class="op">)</span>  <span class="co"># double check</span>
 <span class="fu">rj</span><span class="fu">:::</span><span class="fu">create_doi_from_issue</span><span class="op">(</span><span class="va">issue</span>, outdir<span class="op">=</span><span class="st">"./"</span><span class="op">)</span>  <span class="co"># Change outdir to your preference</span></code></pre></div>
-<p>This will generate the file <code>DOI-yr-num.xml</code> where <code>yr</code> is the year of the issue and <code>num</code> is the number (1 or 2). Then you need to login into <a href="https://doi.crossref.org/" class="uri">https://doi.crossref.org/</a> using username <code>rfou</code> and password provided by previous editor.</p>
+<p>This will generate the file <code>DOI-yr-num.xml</code> where <code>yr</code> is the year of the issue and <code>num</code> is the number (1 or 2). Then you need to login into <a href="https://doi.crossref.org/" class="external-link uri">https://doi.crossref.org/</a> using username <code>rfou</code> and password provided by previous editor.</p>
 <p>Click on “Upload submissions”, then “Metadata” and upload the file.</p>
-<div id="check-for-orphaned-papers" class="section level2">
-<h2 class="hasAnchor">
-<a href="#check-for-orphaned-papers" class="anchor"></a>Check for orphaned papers</h2>
+<div class="section level2">
+<h2 id="check-for-orphaned-papers">Check for orphaned papers<a class="anchor" aria-label="anchor" href="#check-for-orphaned-papers"></a>
+</h2>
 <p>The function <code><a href="../reference/active_articles.html">active_articles()</a></code> gives a long list of current papers being handled. And also <code><a href="../reference/tabulate_articles.html">tabulate_articles()</a></code> can be helpful to find papers that are lagging in the system.</p>
 </div>
-<div id="archives-of-submissions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#archives-of-submissions" class="anchor"></a>Archives of submissions</h2>
+<div class="section level2">
+<h2 id="archives-of-submissions">Archives of submissions<a class="anchor" aria-label="anchor" href="#archives-of-submissions"></a>
+</h2>
 <p>In the <code>articles</code> repo, the <code>Proofs</code> folder contains all the supporting files of Accepted articles. The <code>Rejected</code> folder contains all of the supporting files for rejected submisisons.</p>
 <p>From time to time, papers with dates older than two years should be moved to the <code>archive</code> repo, to make the <code>articles</code> repo smaller. Recommend that this is done at the hand-over of the EiC role at the end of each year.</p>
 </div>
@@ -200,11 +196,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by  Editor-in-Chief.</p>
+  <p></p>
+<p>Developed by Editor-in-Chief.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -212,6 +210,8 @@
 
   
 
+
+  
 
   </body>
 </html>
