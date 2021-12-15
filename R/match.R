@@ -30,24 +30,35 @@ match_keywords <- function(id, n = 5) {
   # the kw list for article submission & reviewer application is slightly different
   # i.e. graphic is split into two in the article submission form.
   # see the bottom of the file for creating the keyword list
-  kw_fm_article <- read.csv(system.file("keywords-list.csv", package = "rj"),
-                            stringsAsFactors = FALSE) %>%
+  ctv <- read.csv(system.file("keywords-list.csv", package = "rj"),
+                  stringsAsFactors = FALSE)
+
+  ctv_keywords <- ctv %>%
     dplyr::filter(.data$submission %in% article$keywords) %>%
     dplyr::pull(.data$reviewer)
+  other_keywords <- article$keywords[!article$keywords %in% ctv$submission] %>%
+    stringr::str_to_title()
 
   reviewer <- get_reviewer_keywords()
   ae <- AEs()
-
   # remove all the AE and authors from the potential reviewer
-  reviewer_kw <- reviewer %>%
-    tidyr::separate_rows(.data$keywords, sep = ", ") %>%
-    filter(
-      !.data$fname %in% article$author,
-      !.data$email %in% ae$email
+  reviewer <- reviewer %>%
+    dplyr::filter(!.data$fname %in% article$author,!.data$email %in% ae$email)
+
+  potential <- reviewer %>%
+    dplyr::filter(keywords %in% c(ctv_keywords, other_keywords))
+
+  reviewer_summary <- potential %>%
+    dplyr::count(keywords) %>%
+    dplyr::mutate(msg = glue::glue("{keywords} ({n})")) %>%
+    dplyr::pull(msg) %>%
+    paste0(collapse = "\n ")
+
+  cli::cli_alert_info(
+    glue::glue("Number of reviewers found for each standardised keyword: \n {reviewer_summary}")
     )
 
-  match_list <- reviewer_kw %>%
-    filter(keywords %in% kw_fm_article) %>%
+  match_list <- potential %>%
     dplyr::group_by(.data$fname) %>%
     dplyr::tally(sort = TRUE)
 
@@ -79,7 +90,10 @@ match_keywords <- function(id, n = 5) {
 
     reviewer %>%
       dplyr::filter(.data$fname %in% out) %>%
-      dplyr::arrange(factor(.data$fname, levels = out))
+      dplyr::arrange(factor(.data$fname, levels = out)) %>%
+      dplyr::group_by(gname, fname, email) %>%
+      dplyr::summarise(keywords = list(keywords)) %>%
+      ungroup()
   }
 
 
@@ -120,6 +134,7 @@ get_article_keywords <- function(id) {
 #' Extract keywords from reviewer list
 #' @return
 get_reviewer_keywords <- function() {
+  cli::cli_alert_info("Select the email adress having access to the reviewer googlesheet: ")
   sheet_raw <- suppressMessages(googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit?ts=606a86e4#gid=1594007907"))
   reviewer_info <- tibble::tibble(
     gname = sheet_raw$`What's your given name, eg how you would like to be addressed (eg Mike)?`,
@@ -138,8 +153,9 @@ get_reviewer_keywords <- function() {
     dplyr::group_by(email) %>%
     dplyr::filter(dplyr::row_number() == max(dplyr::row_number()))
 
-  dplyr::bind_rows(reviewer_info %>% filter(!email %in% dup),
-                   fix_dup)
+  dplyr::bind_rows(reviewer_info %>% filter(!email %in% dup), fix_dup) %>%
+    tidyr::separate_rows(.data$keywords, sep = ", ") %>%
+    mutate(keywords = stringr::str_to_title(.data$keywords))
 }
 
 ####################################
@@ -239,7 +255,7 @@ submission <-
     "gRaphical Models in R",
   )
 
-keywords_list <- cbind(reviewer, submission)
+keywords_list <- cbind(reviewer, submission) %>% tibble::as_tibble()
 #write.csv(keywords_list, file = "inst/keywords-list.csv")
 
 
