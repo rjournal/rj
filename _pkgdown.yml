@@ -45,3 +45,33 @@ reference:
   contents:
   - valid_status
   - valid_reviewer_status
+- title: Misc
+  contents:
+  - AEs
+  - actionable_articles
+  - address
+  - article
+  - build_issue
+  - build_latex
+  - corr_author
+  - draft_acknowledge_submissions
+  - email_template
+  - email_text
+  - filter_status
+  - future_ids
+  - get_article_keywords
+  - get_articles_path
+  - get_md_from_pdf
+  - get_reviewer_keywords
+  - git_user
+  - invite_reviewers
+  - new_id
+  - online_metadata_for_article
+  - parse_address_list
+  - get_accepted_articles
+  - publish
+  - publish_issue
+  - report
+  - rj
+  - set_articles_path
+  - suffix_labels
