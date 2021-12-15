@@ -17,8 +17,8 @@
 #' @param n numeric; number of reviewer to display
 #' @examples
 #' \dontrun{
-#' match_keywords("2021-13")
-#' match_keywords("2021-13", n = 10)
+#' m1 <- match_keywords("2021-13")
+#' m2 <- match_keywords("2021-13", n = 10)
 #' }
 #'
 #' @importFrom rlang .data
@@ -48,17 +48,59 @@ match_keywords <- function(id, n = 5) {
   potential <- reviewer %>%
     dplyr::filter(keywords %in% c(ctv_keywords, other_keywords))
 
-  reviewer_summary <- potential %>%
+  total <- n # since n conflicts with the n column from count
+  meta <- potential %>%
     dplyr::count(keywords) %>%
     dplyr::mutate(msg = glue::glue("{keywords} ({n})")) %>%
-    dplyr::pull(msg) %>%
-    paste0(collapse = "\n ")
+    dplyr::mutate(weight = allocate_reviewer(n, n = total)) %>%
+    dplyr::arrange(weight)
 
-  cli::cli_alert_info(
-    glue::glue("Number of reviewers found for each standardised keyword: \n {reviewer_summary}")
-    )
+  cli::cli_alert_info("Reviewer found for each standardised keyword: [keywords (n_selected/ total): selected]")
+  out <- vector(); i <- 1
+  for (i in seq_len(nrow(meta))){
+    this_round <- match_single(df = potential,
+                               keywords = meta$keywords[i],
+                               n = meta$weight[i],
+                               already = out)
+    r <- paste0(this_round, collapse = ", ")
+    cli::cli_alert_info(
+      glue::glue("{meta$keywords[i]} ({length(this_round)}/ {meta$n[i]}): {r}"))
 
-  match_list <- potential %>%
+    out <- out %>% append(this_round)
+    i <- i + 1
+  }
+
+    reviewer %>%
+      dplyr::filter(.data$fname %in% out) %>%
+      dplyr::arrange(factor(.data$fname, levels = out)) %>%
+      dplyr::group_by(gname, fname, email) %>%
+      dplyr::summarise(keywords = list(keywords)) %>%
+      dplyr::ungroup()
+
+
+}
+
+## --------------------
+## helper
+allocate_reviewer <- function(vec, n){
+  out <- ceiling(vec/sum(vec) * n)
+
+  vec_order <- order(vec, decreasing = TRUE); i <- 1
+  while(sum(out) != n){
+    idx <- vec_order[i]
+    out[idx] <- out[idx] - 1
+    i <- i + 1
+  }
+
+  out
+}
+
+match_single <- function(df, keywords, n, already){
+
+  selected <- df %>% dplyr::filter(keywords == keywords) %>% dplyr::pull(email)
+
+  match_list <- df %>%
+    dplyr::filter(email %in% selected, !fname %in% already) %>%
     dplyr::group_by(.data$fname) %>%
     dplyr::tally(sort = TRUE)
 
@@ -68,39 +110,27 @@ match_keywords <- function(id, n = 5) {
       "At least one keyword specified by the authors needs to be from the CRAN Task View, but none of keywords is. No match returned."
     )
   } else{
-    out <- vector()
-    i <- 0
+    i <- 0; out <- vector()
     while (length(out) < n) {
       matched <- match_list %>% dplyr::filter(n == max(n) - i)
       n_space <- n - length(out)
 
       if (n_space >= nrow(matched)) {
         out <- c(out, matched$fname)
-        cli_alert_info("{length(matched$fname)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
+        #cli_alert_info("{length(matched$fname)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
       } else{
         out <- c(out, sample(matched$fname, n_space))
-        cli_alert_info(
-          "Randomly select {n_space} from {nrow(matched)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}"
-        )
+        # cli_alert_info("Randomly select {n_space} from {nrow(matched)} reviewer{?s} with {unique(matched$n)} matc{?h/hes}")
       }
 
       i <- i + 1
     }
 
+    return(out)
 
-    reviewer %>%
-      dplyr::filter(.data$fname %in% out) %>%
-      dplyr::arrange(factor(.data$fname, levels = out)) %>%
-      dplyr::group_by(gname, fname, email) %>%
-      dplyr::summarise(keywords = list(keywords)) %>%
-      ungroup()
   }
-
-
 }
 
-## --------------------
-## helper
 
 #' Extract keywords from a submitted article
 #' @param id the article id
@@ -134,7 +164,7 @@ get_article_keywords <- function(id) {
 #' Extract keywords from reviewer list
 #' @return
 get_reviewer_keywords <- function() {
-  cli::cli_alert_info("Select the email adress having access to the reviewer googlesheet: ")
+  cli::cli_alert_info("Select the email adress having access to the reviewer googlesheet (if applicable):  ")
   sheet_raw <- suppressMessages(googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit?ts=606a86e4#gid=1594007907"))
   reviewer_info <- tibble::tibble(
     gname = sheet_raw$`What's your given name, eg how you would like to be addressed (eg Mike)?`,
@@ -257,6 +287,3 @@ submission <-
 
 keywords_list <- cbind(reviewer, submission) %>% tibble::as_tibble()
 #write.csv(keywords_list, file = "inst/keywords-list.csv")
-
-
-
