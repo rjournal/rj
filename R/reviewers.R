@@ -102,6 +102,7 @@ add_reviewer <- function(article, name, email, invite = TRUE) {
     article <- save_article(article)
   }
   if (isTRUE(invite)) {
+    test_string <- paste("Invited", Sys.Date())
     invite_reviewer(article, reviewer_id = reviewer_id)
   }
   return(invisible(article))
