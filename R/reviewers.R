@@ -159,7 +159,7 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
   comment <- article$reviewers[[reviewer_id]]$comment
   test_string <- paste("Invited", Sys.Date())
   if (is.null(comment) || !stringr::str_detect(comment, pattern = test_string)) {
-    add_reviewer_comment(article, reviewer_id = reviewer_id, test_string)
+    article <- add_reviewer_comment(article, reviewer_id = reviewer_id, comment = test_string)
   }
 
   add_out_for_review(article)
