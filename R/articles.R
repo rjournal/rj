@@ -46,7 +46,7 @@ new_id <- function() {
 #' @param status The status you are looking for
 #' @export
 filter_status <- function(articles, status) {
-  Filter(function(a) last_status(a)$status == status, articles)
+  Filter(function(a) has_status(a, status), articles)
 }
 
 #' Get articles to go online

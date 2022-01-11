@@ -39,6 +39,11 @@ last_status <- function(x) {
   x$status[[length(x$status)]]
 }
 
+has_status <- function(x, status) {
+  stopifnot(is.article(x))
+  status %in% vapply(x$status, `[[`, character(1L), "status")
+}
+
 #' @export
 print.report <- function(x, ...) {
   cat("BY STATUS:\n")
