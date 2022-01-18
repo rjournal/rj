@@ -75,13 +75,13 @@
       
 
       </header><script src="associate_editors_guide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="associate_editors_guide_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="associate_editors_guide_files/viz-1.8.2/viz.js"></script><link href="associate_editors_guide_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="associate_editors_guide_files/grViz-binding-1.0.6.1/grViz.js"></script><div class="row">
+<script src="associate_editors_guide_files/grViz-binding-1.0.7/grViz.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Associate Editors’ Guide</h1>
                         <h4 data-toc-skip class="author">First draft written by Di Cook</h4>
             
-            <h4 data-toc-skip class="date">2022-01-11</h4>
+            <h4 data-toc-skip class="date">2022-01-18</h4>
       
       
       <div class="hidden name"><code>associate_editors_guide.Rmd</code></div>
@@ -90,9 +90,9 @@
 
     
     
-<div class="section level1">
-<h1 id="mission">Mission<a class="anchor" aria-label="anchor" href="#mission"></a>
-</h1>
+<div class="section level2">
+<h2 id="mission">Mission<a class="anchor" aria-label="anchor" href="#mission"></a>
+</h2>
 <p>As an Associate Editor, you will receive manuscripts from one of the four current Editors. You will be responsible for:</p>
 <ol style="list-style-type: decimal">
 <li>Soliciting 1-3 reviewers: In general we prefer at least two reviewers. However, one is acceptable when reviewers are sufficiently difficult to find, and the subject area is esoteric. If you feel that the article is not sufficient quality for the R Journal, you can provide a review and recommend rejection, or even further refinement before you send it to reviewers.</li>
@@ -103,34 +103,34 @@
 <p>The expected workload is 1-2 paper per month.</p>
 <p>Terms are for three years, with an opportunity to renew.</p>
 </div>
-<div class="section level1">
-<h1 id="communication">Communication<a class="anchor" aria-label="anchor" href="#communication"></a>
-</h1>
+<div class="section level2">
+<h2 id="communication">Communication<a class="anchor" aria-label="anchor" href="#communication"></a>
+</h2>
 <p>Each AE is provided a Github repo for handling papers, with the name in the form of <code>ae-articles-XX</code>. It mirrors the full articles repo that only Editors have access to.</p>
 <p>Slack is used for communication, and general information about operations. The channel for AEs is <code>associate-editors</code> and there are numerous other channels focusing on different aspects of operations, including <code>rj-software</code>, <code>general</code>, <code>journal-website</code>, that you are welcome to join. This is the best place to receive messages from an editor that a paper is assigned to you, and for you to notify that editor when you have received reviews, made your summary and are ready to hand it back.</p>
 <p>Meetings with the Editors and Associate Editors will be held monthly, typically the first Tuesday of each month, which may be a Monday or a Tuesday depending on your location around the globe. The meeting time is set by the Editor-in-Chief.</p>
 <p>Email is usually the best way to communicate with reviewers.</p>
 </div>
-<div class="section level1">
-<h1 id="workflow-and-operations">Workflow and operations<a class="anchor" aria-label="anchor" href="#workflow-and-operations"></a>
-</h1>
 <div class="section level2">
-<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+<h2 id="workflow-and-operations">Workflow and operations<a class="anchor" aria-label="anchor" href="#workflow-and-operations"></a>
 </h2>
+<div class="section level3">
+<h3 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h3>
 <p>Install the <code>rj</code> package with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rjournal/rj"</span><span class="op">)</span></code></pre></div>
 <p>The package is being updated and revised regularly, so you may want to re-install occasionally.</p>
 </div>
-<div class="section level2">
-<h2 id="potential-reviewers">Potential reviewers<a class="anchor" aria-label="anchor" href="#potential-reviewers"></a>
-</h2>
+<div class="section level3">
+<h3 id="potential-reviewers">Potential reviewers<a class="anchor" aria-label="anchor" href="#potential-reviewers"></a>
+</h3>
 <p>There is a <a href="https://docs.google.com/forms/d/e/1FAIpQLSf8EmpF85ASWqPHXqV0vdQd-GHhNBaAZZEYf4qxO3gTl-eGyA/viewform" class="external-link">form for people to volunteer to review for the R Journal</a>. Please complete this form yourself.</p>
 <p>This form populates a <a href="https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit#gid=1594007907" class="external-link">spreadsheet</a> that is used to match keywords between articles and reviewers. Once you are set up as an AE, you need access to this sheet in order to use the <code><a href="../reference/match_keywords.html">match_keywords()</a></code> function. You can request access from the assigning editor if it isn’t visible to you.</p>
 </div>
-<div class="section level2">
-<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
-</h2>
+<div class="section level3">
+<h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h3>
 <p>When you received an article from an editor, you will find it n the <code>Submissions</code> folder of your repo, in a folder with the number ID of the article, eg <code>2021-12</code>. This folder will contain a number of files:</p>
 <ul>
 <li>article files: RJwrapper.tex, <code>.tex</code>, <code>.bib</code>, <code>motivating-letter.pdf</code> and possibly <code>.R</code>, <code>.Rmd</code>, data and figure files.</li>
@@ -143,12 +143,12 @@
 </ul>
 </li>
 </ul>
-<div id="htmlwidget-03d25a1445702e674d19" style="width:768px;height:1152px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-03d25a1445702e674d19">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Send for review?\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"2\" [label = \"Select reviewer (ideally two), rj::match_keywords() or use your own experts\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"3\" [label = \"Update reviewer in DESCRIPTION, rj::add_reviewer() \n This also generates the correspondence folder, containing the email template\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"4\" [label = \"Send email to reviewers, which includes motivating letter, pdf and R files \n rj::update_status() to out for review\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"Check all file changes into GitHub, \n including correspondence folder\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"Reviews received\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"8\" [label = \"Save reviews into correspondence folder, rj::add_review()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"9\" [label = \"Make recommendation (AE: major revision, AE: minor revision, AE: accept or AE: reject),\n update DESCRIPTION using rj::update_status(), notify editor, check all into GitHub\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#76EEC6\"] \n  \"10\" [label = \"Send reminder email\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \".\", color = \"grey50\"] \n\"3\"->\"4\" [label = \".\", color = \"grey50\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"7\"->\"8\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"9\" [label = \".\", color = \"grey50\"] \n\"6\"->\"2\" [label = \"N\", color = \"red\"] \n\"7\"->\"10\" [label = \"N\", color = \"red\"] \n\"10\"->\"7\" [label = \"done\", color = \"grey50\"] \n\"1\"->\"9\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f57da86430f3704923b1" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f57da86430f3704923b1">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Send for review?\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"2\" [label = \"Select reviewer (ideally two), rj::match_keywords() or use your own experts\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"3\" [label = \"Update reviewer in DESCRIPTION, rj::add_reviewer() \n This also generates the correspondence folder, containing the email template\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"4\" [label = \"Send email to reviewers, which includes motivating letter, pdf and R files \n rj::update_status() to out for review\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"Check all file changes into GitHub, \n including correspondence folder\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"Reviews received\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"8\" [label = \"Save reviews into correspondence folder, rj::add_review()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"9\" [label = \"Make recommendation (AE: major revision, AE: minor revision, AE: accept or AE: reject),\n update DESCRIPTION using rj::update_status(), notify editor, check all into GitHub\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#76EEC6\"] \n  \"10\" [label = \"Send reminder email\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \".\", color = \"grey50\"] \n\"3\"->\"4\" [label = \".\", color = \"grey50\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"7\"->\"8\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"9\" [label = \".\", color = \"grey50\"] \n\"6\"->\"2\" [label = \"N\", color = \"red\"] \n\"7\"->\"10\" [label = \"N\", color = \"red\"] \n\"10\"->\"7\" [label = \"done\", color = \"grey50\"] \n\"1\"->\"9\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="section level2">
-<h2 id="package-usage">Package usage<a class="anchor" aria-label="anchor" href="#package-usage"></a>
-</h2>
+<div class="section level3">
+<h3 id="package-usage">Package usage<a class="anchor" aria-label="anchor" href="#package-usage"></a>
+</h3>
 <p>These are the primary functions that are useful for AE operations</p>
 <ul>
 <li><code>match_keywords</code></li>
@@ -166,9 +166,9 @@
 </ul>
 </div>
 </div>
-<div class="section level1">
-<h1 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
-</h1>
+<div class="section level2">
+<h2 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
+</h2>
 <p>This document is provided as a vignette to the <code>rj</code> package.</p>
 </div>
   </div>
@@ -190,7 +190,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
