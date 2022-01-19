@@ -21,6 +21,6 @@ field in the DESCRIPTION as well as draft an email to invite teh reviewer.
 }
 \examples{
 \dontrun{
-add_reviewer("2020-114", "Przemyslaw Biecek", "przemyslaw.biecek@gmail.com")
+add_reviewer("2019-117", "Quiet Quokka", "qqplot@waspot.com")
 }
 }

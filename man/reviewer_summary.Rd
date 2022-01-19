@@ -4,10 +4,12 @@
 \alias{reviewer_summary}
 \title{Summarise the reviewer's agree/decline ratio based on past invites}
 \usage{
-reviewer_summary(articles)
+reviewer_summary(articles, push = FALSE)
 }
 \arguments{
 \item{articles}{a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}}
+
+\item{push}{whether the reviewer number of review completed by the reviewer should be pushed to the reviewer sheet}
 }
 \description{
 The function pulls out the agree/decline incidence of all the reviewers

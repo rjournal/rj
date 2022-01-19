@@ -7,7 +7,8 @@
 tabulate_articles(dirs = c("Accepted", "Submissions"))
 }
 \arguments{
-\item{dirs}{The directories containing articles to be searched and tabulated.}
+\item{dirs}{The directories containing articles to be searched and tabulated.
+If TRUE, then all directories will be searched.}
 }
 \description{
 Produce a table describing articles in specific directories.

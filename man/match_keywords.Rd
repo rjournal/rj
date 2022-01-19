@@ -28,8 +28,8 @@ All the reviewers are ranked based on the number of matching keywords
 }
 \examples{
 \dontrun{
-match_keywords("2021-13")
-match_keywords("2021-13", n = 10)
+m1 <- match_keywords("2021-13")
+m2 <- match_keywords("2021-13", n = 10)
 }
 
 }

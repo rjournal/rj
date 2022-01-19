@@ -165,13 +165,7 @@ get_article_keywords <- function(id) {
 #' @return
 get_reviewer_keywords <- function() {
   cli::cli_alert_info("Select the email adress having access to the reviewer googlesheet (if applicable):  ")
-  sheet_raw <- suppressMessages(googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit?ts=606a86e4#gid=1594007907"))
-  reviewer_info <- tibble::tibble(
-    gname = sheet_raw$`What's your given name, eg how you would like to be addressed (eg Mike)?`,
-    fname = sheet_raw$`What's your full name (eg Michael Kane)?`,
-    email = sheet_raw$`Email address`,
-    keywords = sheet_raw$`Please indicate your areas of expertise, check as many as you feel are appropriate.  (Based on available CRAN Task Views.)`
-  )
+  reviewer_info <- read_reviewer_sheet()
 
   dup <- reviewer_info %>%
     dplyr::mutate(dup = duplicated(email)) %>%
@@ -188,7 +182,17 @@ get_reviewer_keywords <- function() {
     mutate(keywords = stringr::str_to_title(.data$keywords))
 }
 
-####################################
+read_reviewer_sheet <- function(){
+  sheet_raw <- suppressMessages(googlesheets4::read_sheet(reviewer_sheet_url))
+  colnames(sheet_raw) <- c("timestamp", "email","gname","fname",
+                           "website","github","twitter","keywords",
+                           "blank1", "blank2", "review_completed", "comments")
+  sheet_raw
+}
+
+reviewer_sheet_url <- "https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit?ts=606a86e4#gid=1594007907"
+
+###################################
 # creating the keyword matching list
 reviewer <- tibble::tribble(
   ~reviewer, ~details,

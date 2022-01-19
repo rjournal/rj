@@ -6,6 +6,7 @@
 #' and then apply this function.
 #'
 #' @param articles a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}
+#' @param push whether the reviewer number of review completed by the reviewer should be pushed to the reviewer sheet
 #' @importFrom tidyr separate_rows pivot_wider
 #' @importFrom stringr str_detect word
 #' @importFrom scales label_percent
@@ -15,8 +16,8 @@
 #' reviewer_summary(articles)
 #' }
 #' @export
-reviewer_summary <- function(articles){
-  articles %>%
+reviewer_summary <- function(articles, push = FALSE){
+  res <- articles %>%
     dplyr::select(id, reviewers) %>%
     tidyr::unnest(reviewers) %>%
     tidyr::separate_rows(comment, sep = "; ") %>%
@@ -29,6 +30,17 @@ reviewer_summary <- function(articles){
     dplyr::relocate(name, agreed, declined) %>%
     dplyr::mutate(ratio = agreed / (agreed + declined),
                   ratio = scales::label_percent()(ratio))
+
+  if (push){
+    sheet_raw <- read_reviewer_sheet()
+    out <- sheet_raw %>%
+      dplyr::left_join(res %>% dplyr::select(name, agreed), by = c("fname" = "name")) %>%
+      dplyr::select(agreed)
+    range <- paste0("I1:I", nrow(sheet_raw))
+    googlesheets4::range_write(reviewer_sheet_url, out, range = range)
+  }
+
+  res
 }
 
 #' @rdname ae_workload
