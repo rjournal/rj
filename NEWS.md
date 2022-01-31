@@ -1,3 +1,12 @@
+# rj 0.2.22
+
+2022-01-31
+  - fixes to `ae_workload()`; now handles "" empty AE field without failing,
+    and will show the AE initials, name, and email address alongside the
+    assignment count. Now works as previously documented, and `day_back`
+    argument works again (but note the meaning of this is not what users might
+    expect.)
+
 # rj 0.2.21
 
 2021-11-01
