@@ -60,49 +60,65 @@ get_AE <- function(x){
 #' This will examine the DESCRIPTION files for articles in
 #' the Submissions folder, check articles that have status
 #' "with AE".
-#' @param articles a tibble summary of articles in the accepted and submissions folder. Output of \code{tabulate_articles()}
-#' @param day_back number of day to go back for calculating AE workload.
-#' @importFrom dplyr select count left_join
+#'
+#' @param articles a tibble summary of articles in the accepted and submissions
+#'   folder. Output of \code{tabulate_articles()}
+#' @param day_back numeric; positive number of day to go back for calculating AE
+#'   workload. Retains any article where any status entry for an article is
+#'   newer than `day_back` days ago.
+#'
+#' @importFrom dplyr select count left_join filter distinct rename bind_rows
 #' @importFrom tidyr unnest
+#' @importFrom tibble as_tibble
 #' @examples
 #' \dontrun{
-#' articles <- tabulate_articles()
-#' ae_workload(articles)
+#' ae_workload()
 #' }
 #' @export
-ae_workload <- function(articles, day_back = 365) {
+ae_workload <- function(articles = NULL, day_back = NULL) {
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    select(name, initials, email)
+    select(name, initials, email) %>%
+    as_tibble()
 
-  # Get list of current articles
-  current_articles <- active_articles()
+  # if don't supply articles, use documented(!) source
+  if (is.null(articles)) {
+    articles <- tabulate_articles()
+  }
 
-  # Only keep articles that have been handled by an AE
-  # at some point
-  with_AE <- filter_status(current_articles, "with AE")
+  # throw away most of the columns & then unnest status
+  articles <- articles %>%
+    select(id, ae, status) %>%
+    unnest(status)
 
-  # Extract the AE line from DESCRIPTION file
-  AE_assignments <- do.call("rbind", lapply(with_AE, get_AE))
+  # filter articles if day back is provided
+  # allow this to be NULL but check if is a numeric if supplied
+  if (!is.null(day_back)) {
+    stopifnot(is.numeric(day_back))
+    articles <- articles %>%
+      filter(date >= Sys.Date() - day_back)
+  }
 
-  # Match initials and replace if necessary
-  AE_assignments <- as.data.frame(AE_assignments)
-  initials <- which(str_length(AE_assignments$ae) < 4)
-  for (i in initials)
-    AE_assignments$ae[i] <- ae_rj$name[ae_rj$initials == AE_assignments$ae[i]]
+  # take only those with "with_AE" status & return rows
+  # after this we don't need comments or status
+  assignments <- articles %>%
+    filter(status == "with AE", ae != "") %>%
+    select(-c(comments, status)) %>%
+    distinct(id, .keep_all = TRUE)
 
-  # Count assignments
-  AE_assignments %>% count(ae, sort=TRUE)
+  # some people use names, other initials for AEs
+  # this finds those with only initials and replace the ae with the full name
+  tmp <- assignments %>%
+    filter(str_length(ae) < 4) %>%
+    left_join(ae_rj, by = c("ae" = "initials")) %>%
+    select(id, name, date) %>%
+    rename(ae = name)
 
-#  articles %>%
-#    dplyr::select(id, status) %>%
-#    tidyr::unnest(status) %>%
-#    dplyr::filter(status == "with AE") %>%
-#    dplyr::rename(ae = comments) %>%
-#    dplyr::group_by(ae) %>%
-#    dplyr::filter(date >= Sys.Date()- day_back) %>%
-#    dplyr::count(ae) %>%
-#    dplyr::left_join(ae_rj, by = c("ae" = "name"))
-
+  # ... which allows us to take all those with full names...
+  assignments %>%
+    filter(str_length(ae) >= 4) %>%
+    bind_rows(tmp) %>% #... bind on those that had initials
+    count(ae, sort = TRUE) %>% # count the assignments by AE
+    left_join(ae_rj, by = c("ae" = "name")) # add some some useful info
 }
 
 #' Add AE to the DESCRIPTION
