@@ -75,13 +75,13 @@
       
 
       </header><script src="editor_in_chief_guide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="editor_in_chief_guide_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="editor_in_chief_guide_files/viz-1.8.2/viz.js"></script><link href="editor_in_chief_guide_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="editor_in_chief_guide_files/grViz-binding-1.0.7/grViz.js"></script><div class="row">
+<script src="editor_in_chief_guide_files/grViz-binding-1.0.8/grViz.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Editor-in-Chief’s Guide</h1>
                         <h4 data-toc-skip class="author">Di Cook</h4>
             
-            <h4 data-toc-skip class="date">2022-01-19</h4>
+            <h4 data-toc-skip class="date">2022-01-31</h4>
       
       
       <div class="hidden name"><code>editor_in_chief_guide.Rmd</code></div>
@@ -110,8 +110,8 @@
 <div class="section level3">
 <h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h3>
-<div id="htmlwidget-6bc37a1456f84fd52bb9" style="width:768px;height:1152px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6bc37a1456f84fd52bb9">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7617a7b35ac3578f2f9d" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7617a7b35ac3578f2f9d">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#FA8072\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#40E0D0\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="section level2">
@@ -163,7 +163,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># From the articles directory</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rj</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/viking/r-yaml/" class="external-link">yaml</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vubiostat/r-yaml/" class="external-link">yaml</a></span><span class="op">)</span>
 <span class="co"># Assuming the rjournal.github.io is a parallel directory</span>
 <span class="va">cfg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/yaml/man/yaml.load.html" class="external-link">yaml.load_file</a></span><span class="op">(</span><span class="st">"../rjournal.github.io/_config.yml"</span><span class="op">)</span>
 <span class="va">issue</span> <span class="op">=</span> <span class="va">cfg</span><span class="op">$</span><span class="va">issue</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cfg</span><span class="op">$</span><span class="va">issue</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="co"># last one is typically desired</span>
