@@ -69,7 +69,7 @@ the Submissions folder, check articles that have status
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_AE</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 
-<span class="fu">ae_workload</span><span class="op">(</span><span class="va">articles</span>, day_back <span class="op">=</span> <span class="fl">365</span><span class="op">)</span></code></pre></div>
+<span class="fu">ae_workload</span><span class="op">(</span>articles <span class="op">=</span> <span class="cn">NULL</span>, day_back <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -77,9 +77,12 @@ the Submissions folder, check articles that have status
     <dl><dt>x</dt>
 <dd><p>a single article, i.e. as.article("Submissions/2020-114")</p></dd>
 <dt>articles</dt>
-<dd><p>a tibble summary of articles in the accepted and submissions folder. Output of <code><a href="tabulate_articles.html">tabulate_articles()</a></code></p></dd>
+<dd><p>a tibble summary of articles in the accepted and submissions
+folder. Output of <code><a href="tabulate_articles.html">tabulate_articles()</a></code></p></dd>
 <dt>day_back</dt>
-<dd><p>number of day to go back for calculating AE workload.</p></dd>
+<dd><p>numeric; positive number of day to go back for calculating AE
+workload. Retains any article where any status entry for an article is
+newer than `day_back` days ago.</p></dd>
 </dl></div>
 
     <div id="ref-examples">
@@ -89,8 +92,7 @@ the Submissions folder, check articles that have status
 <span class="r-in"><span class="fu">get_AE</span><span class="op">(</span><span class="va">art</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">articles</span> <span class="op">&lt;-</span> <span class="fu"><a href="tabulate_articles.html">tabulate_articles</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">ae_workload</span><span class="op">(</span><span class="va">articles</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">ae_workload</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
