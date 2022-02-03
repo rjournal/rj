@@ -18,26 +18,24 @@ smart.cap <- function(x) {
 print_sum <- function(arts, status, detail = NULL,
                       glue = "{art$id} ({art$days_since_submission}): {art$title}",
                       description = smart.cap(status), pre.width = 20) {
-  art <- arts[if (is.logical(status)) status else arts$status_status == status, ]
-  if (nrow(art) == 0) {
-    return(invisible(NULL))
-  }
-  cli::cli_h1(paste(description, "{nrow(art)}"))
-  art$title <- str_trunc(art$title, getOption("width") - pre.width)
-  if (is.function(detail)) {
-    arts <- art
+    arts <- arts[if (is.logical(status)) status else arts$status_status == status, ]
+    if (nrow(arts) == 0)
+        return(invisible(NULL))
+
+    cli::cli_h1("{description} {nrow(arts)}")
+    arts$title <- str_trunc(arts$title, getOption("width") - pre.width)
     cli::cli_ul()
+    ## sadly, cannot vectorise, because cli_lu screws up
+    ## the format for simple output as in acknowledged.
+    ## Also cli always calls glue with fixed options,
+    ## so there is no way to override it (really bad design)
+    ## or provide direct (non-glue) output.
     for (i in seq_len(nrow(arts))) {
-      art <- arts[i, ]
-      item <- glue::glue(glue)
-      cli::cli_li(item)
-      detail(art$id)
+        art <- arts[i, ]
+        cli::cli_li(glue)
+        if (is.function(detail)) detail(art$id)
+        cli::cli_end()
     }
-    cli::cli_end()
-  } else {
-    items <- glue::glue(glue)
-    cli_ul(items)
-  }
 }
 
 print_rejected <- function(latest) {
