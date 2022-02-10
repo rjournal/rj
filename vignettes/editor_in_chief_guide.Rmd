@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 # Downloading new submissions and revisions
 
-Articles are submitted through a [Google form](https://forms.gle/ykj6QcoGQD5ctnA5A) which populates a [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370). This sheet contains details of the submission, and also a zip file with the necessary files. 
+Articles are submitted through a [Google form](https://forms.gle/ykj6QcoGQD5ctnA5A) which populates a [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and a [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g). This sheet contains details of the submission, and also a zip file with the necessary files. You will need to have permission to see the sheet and the drive, and `get_submissions()` will authenticate against both.
 
 On a regular basis, download newly submitted items:
 
@@ -35,12 +35,15 @@ You should check that this file has been constructed correctly, and that the zip
 
 # Assigning articles to an EE
 
+New articles should be assigned to one of the three EE's. This is good to do at the time of acknowledging the submission, so that the EE can be cc'd on the email. The function `acknowledge_submission()` is used to generate an automatic email. 
+
+(It helps to have `options(browser=Sys.getenv('R_BROWSER'))` set so that your email handler pops up with the message to send.)
 
 # Workflow and operations
 
 ## Workflow
 
-```{r wfgraph, fig.width=8, fig.height=12, fig.align='center'}
+```{r wfgraph, out.width="100%", fig.width=6, fig.height=6, fig.align='center', fig.align='center'}
 library(DiagrammeR)
 eic_df <- create_node_df(n=6,  
     label=c("check for new submissions or revisions get_submissions()", # 1
@@ -54,38 +57,20 @@ eic_df <- create_node_df(n=6,
    width = c(4, 1, 2, 3, 3, 3),
    fillcolor = c("grey90", "orange", "salmon",  
                  "grey90", "grey90", "turquoise"),
-   fontcolor = "black")
+   fontcolor = "black",
+   type = c("a", "a", "a", "a", "a", "a"))
 
 eic_edge_df <- create_edge_df(
   from = c(1,2,3,4,2), 
   to = c(2,3,4,5,6), 
+  rel = "a",
   label = c(".", "new submission", ".", ".","revision"))
 
 eic <- create_graph(eic_df, 
                        eic_edge_df, 
                        directed = TRUE, attr_theme = "tb")
-render_graph(eic)
+render_graph(eic, width=400, height=400)
 ```
-# Search for new editorial board members
-
-## Executive editors
-
-The EIC is responsible to navigating the search for a new EE. The search for a new editorial board member should begin in September, giving enough time to find a replacement before the outgoing member leaves at the end of December. Nominations for the new member are discussed by the editorial board first, and then preferably also with the advisory committee so that they can provide historical perspective.
-
-Once a shortlist of candidates is created, but before approaching anyone on the list, it should be sent to the R Foundation Board members (R-foundation-board@r-project.org) for their feedback and approval. People on the list are then approached by the EIC or an EE, and once someone agrees, the EIC informs the members of the R Foundation (R-foundation-members@r-project.org). The new editor is formally appointed by the R Foundation president.
-
-Once a new member is found, the following steps take place:
-
-- The EIC informs Martin Maechler of the new board member
-- The incoming board member requests access to the mailing lists by visiting https://stat.ethz.ch/mailman/listinfo/r-journal-editors and https://stat.ethz.ch/mailman/listinfo/r-journal-advisory.
-- The outgoing member unsubscribes from r-journal-editors by visiting the web page above, but should remain subscribed to r-journal-advisory
-- New EE is added to the Editors team at `https://github.com/rjournal` and to the `rjournal.slack.com` organisation.
-
-The EIC may take on outstanding handling editor duties of the outgoing member.
-
-## Associate editors
-
-The EIC is responsible for recruiting and setting up the GitHub repos for AEs. Ideally, keywords of submissions over the past year are summarised, and compared with keywords of current AEs. New AEs should be recruited for topics where there is the most need.
 
 # Making articles available online
 
@@ -133,3 +118,32 @@ The function `active_articles()` gives a long list of current papers being handl
 In the `articles` repo, the `Proofs` folder contains all the supporting files of Accepted articles. The `Rejected` folder contains all of the supporting files for rejected submisisons.
 
 From time to time, papers with dates older than two years should be moved to the `archive` repo, to make the `articles` repo smaller. Recommend that this is done at the hand-over of the EiC role at the end of each year.
+
+## Building an issue
+
+## Revising wikipedia page
+
+# Search for new editorial board members
+
+## Executive editors
+
+The EIC is responsible to navigating the search for a new EE. The search for a new editorial board member should begin in September, giving enough time to find a replacement before the outgoing member leaves at the end of December. Nominations for the new member are discussed by the editorial board first, and then preferably also with the advisory committee so that they can provide historical perspective.
+
+Once a shortlist of candidates is created, but before approaching anyone on the list, it should be sent to the R Foundation Board members (R-foundation-board@r-project.org) for their feedback and approval. People on the list are then approached by the EIC or an EE, and once someone agrees, the EIC informs the members of the R Foundation (R-foundation-members@r-project.org). The new editor is formally appointed by the R Foundation president.
+
+Once a new member is found, the following steps take place:
+
+- The EIC informs Martin Maechler of the new board member
+- The incoming board member requests access to the mailing lists by visiting https://stat.ethz.ch/mailman/listinfo/r-journal-editors and https://stat.ethz.ch/mailman/listinfo/r-journal-advisory.
+- The outgoing member unsubscribes from r-journal-editors by visiting the web page above, but should remain subscribed to r-journal-advisory
+- New EE is added to the Editors team at `https://github.com/rjournal` and to the `rjournal.slack.com` organisation.
+
+The EIC may take on outstanding handling editor duties of the outgoing member.
+
+## Associate editors
+
+The EIC is responsible for recruiting and setting up the GitHub repos for AEs. Ideally, keywords of submissions over the past year are summarised, and compared with keywords of current AEs. New AEs should be recruited for topics where there is the most need.
+
+
+
+
