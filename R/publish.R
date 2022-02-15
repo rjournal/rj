@@ -163,7 +163,7 @@ make_landing <- function(article_metadata, issue) {
 
 get_refs_from_tex <- function(article_path, final = FALSE) {
   RJw <- readLines(paste0(article_path, "/RJwrapper.tex"))
-  str_search_inp <- "((\\\\input\\{)([-a-zA-Z0-9_\\+\\.]*)(\\}))"
+  str_search_inp <- "^\\s*((\\\\input\\{)([-a-zA-Z0-9_\\+\\.]*)(\\}))"
   inp_str <- c(na.omit(str_trim(str_extract(RJw, str_search_inp))))
   inps <- c(str_locate(inp_str, "((\\{)([-a-zA-Z0-9_\\+\\.]*)(\\}))"))
   inp_tex <- str_sub(inp_str, inps[1] + 1, inps[2] - 1)
@@ -341,7 +341,7 @@ online_metadata_for_article <- function(x, final = FALSE) {
     if (file.exists(zipfrom)) {
       sz <- format(structure(file.size(zipfrom),
         class = "object_size"
-      ), "auto")
+      ), standard = "IEC", units = "auto")
     }
     res <- c(res, list(suppl = sz))
   }
