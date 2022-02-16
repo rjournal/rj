@@ -1,0 +1,29 @@
+---
+title: "Guide to Building an Issue"
+author: "Di Cook"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Guide to Building an Issue}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE, 
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
+# Articles to include
+
+All articles accepted up to the publication dates: Mar 31, Jun 30, Oct 31, Dec 31, should be included. (Traditionally these articles would first be made available online, but with the increased frequency of publication this might not be necessary.)
+
+# Building an issue
+
+
