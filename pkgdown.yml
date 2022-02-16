@@ -5,7 +5,8 @@ articles:
   associate_editors_guide: associate_editors_guide.html
   editor_in_chief_guide: editor_in_chief_guide.html
   editors_guide: editors_guide.html
-last_built: 2022-02-15T13:49Z
+  issue_build_guide: issue_build_guide.html
+last_built: 2022-02-16T21:40Z
 urls:
   reference: https://rjournal.github.io/rj/reference
   article: https://rjournal.github.io/rj/articles
