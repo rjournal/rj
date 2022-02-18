@@ -56,7 +56,7 @@ previous_id <- function(id) {
 }
 
 issue_dir <- function(id) {
-  file.path("Proofs", id)
+  file.path(get_articles_path(), "Proofs", id)
 }
 
 issue_file <- function(id) {
