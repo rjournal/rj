@@ -1,3 +1,9 @@
+# rj 0.2.23
+
+Changed the `ae_workload()` to 
+  - have a default period of 365 days
+  - return all AEs where those without assignments as 0
+
 # rj 0.2.22
 
 2022-01-31

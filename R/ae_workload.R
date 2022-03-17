@@ -43,18 +43,6 @@ reviewer_summary <- function(articles, push = FALSE){
   res
 }
 
-#' @rdname ae_workload
-#' @param x a single article, i.e. as.article("Submissions/2020-114")
-#' @examples
-#' \dontrun{
-#' art <- as.article("Submissions/2020-114")
-#' get_AE(art)
-#' }
-#' @export
-get_AE <- function(x){
-  list(id = format(x$id), ae = x$ae)
-}
-
 #' Check the number of articles an AE is currently working on
 #'
 #' This will examine the DESCRIPTION files for articles in
@@ -67,15 +55,15 @@ get_AE <- function(x){
 #'   workload. Retains any article where any status entry for an article is
 #'   newer than `day_back` days ago.
 #'
-#' @importFrom dplyr select count left_join filter distinct rename bind_rows
-#' @importFrom tidyr unnest
+#' @importFrom dplyr select count left_join right_join filter distinct rename bind_rows
+#' @importFrom tidyr unnest replace_na
 #' @importFrom tibble as_tibble
 #' @examples
 #' \dontrun{
 #' ae_workload()
 #' }
 #' @export
-ae_workload <- function(articles = NULL, day_back = NULL) {
+ae_workload <- function(articles = NULL, day_back = 365) {
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
     select(name, initials, email) %>%
     as_tibble()
@@ -92,11 +80,8 @@ ae_workload <- function(articles = NULL, day_back = NULL) {
 
   # filter articles if day back is provided
   # allow this to be NULL but check if is a numeric if supplied
-  if (!is.null(day_back)) {
-    stopifnot(is.numeric(day_back))
-    articles <- articles %>%
-      filter(date >= Sys.Date() - day_back)
-  }
+  articles <- articles %>%
+    filter(date >= Sys.Date() - day_back)
 
   # take only those with "with_AE" status & return rows
   # after this we don't need comments or status
@@ -118,8 +103,22 @@ ae_workload <- function(articles = NULL, day_back = NULL) {
     filter(str_length(ae) >= 4) %>%
     bind_rows(tmp) %>% #... bind on those that had initials
     count(ae, sort = TRUE) %>% # count the assignments by AE
-    left_join(ae_rj, by = c("ae" = "name")) # add some some useful info
+    right_join(ae_rj, by = c("ae" = "name")) %>% # add some some useful info
+    replace_na(list(n=0))
 }
+
+#' @rdname ae_workload
+#' @param x a single article, i.e. as.article("Submissions/2020-114")
+#' @examples
+#' \dontrun{
+#' art <- as.article("Submissions/2020-114")
+#' get_AE(art)
+#' }
+#' @export
+get_AE <- function(x){
+  list(id = format(x$id), ae = x$ae)
+}
+
 
 #' Add AE to the DESCRIPTION
 #'
