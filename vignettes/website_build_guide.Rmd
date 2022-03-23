@@ -32,7 +32,7 @@ It is a distill web site. Content is in the `.Rmd` files:
 
 which are rendered using `rmarkdown`. The page styling can be modified by changing items in `theme.css`.
 
-# Local build
+# Build
 
 This is a static web site, so that each time you make a change to the content you should build the site locally, which will populate the `_web` folder. This folder contains the completed `html` and supporting files that deliver the final site.
 
