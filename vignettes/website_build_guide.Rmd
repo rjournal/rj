@@ -1,0 +1,51 @@
+---
+title: "Guide to Building the New Distill Web Site"
+author: "Di Cook"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Guide to Building an Issue}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE, 
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
+# About the structure of the files
+
+During development the files for the web site are in the `dev` branch of the `github.com/rjournal/rjournal.github.io` repo. 
+
+It is a distill web site. Content is in the `.Rmd` files:
+
+- `index.Rmd` contains the content linked to the HOME button
+- `submissions.Rmd` contains the content linked to the SUBMIT button
+- The `articles.Rmd` and `issues.Rmd` files contain R code to automatically generate the list of papers as available in the `_articles` and `_issues` folders. 
+
+which are rendered using `rmarkdown`. The page styling can be modified by changing items in `theme.css`.
+
+# Local build
+
+This is a static web site, so that each time you make a change to the content you should build the site locally, which will populate the `_web` folder. This folder contains the completed `html` and supporting files that deliver the final site.
+
+Within the RStudio IDE, "Build Website" can be used to render the site. It can also be scripted using:
+
+```
+rmarkdown::render_site()
+```
+
+The site can be viewed locally by opening `index.html` in your web browser. 
+
+# Resources
+
+- [Building the site](https://rstudio.github.io/distill/website.html#building-the-site)
+- [Ways of publishing](https://rstudio.github.io/distill/publish_website.html)
+- [The Distillery](https://distillery.rbind.io/posts/2021-03-18-use-github-actions-with-r-markdown-and-distill/)
