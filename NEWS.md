@@ -1,8 +1,10 @@
 # rj 0.2.23
 
-Changed the `ae_workload()` to 
+- Changed the `ae_workload()` to 
   - have a default period of 365 days
   - return all AEs where those without assignments as 0
+- `summarise_articles()` now first prints out article(s) not assigned to any editor
+
 
 # rj 0.2.22
 

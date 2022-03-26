@@ -94,10 +94,16 @@ print_other <- function(latest) {
   }
 }
 
-#' @export
-#' @importFrom cli cli_h1 cli_li cli_ul cli_end
-#' @title Summarise intray
+print_unassigned <- function(unassigned){
+  print_sum(unassigned, "submitted", description = "Submitted but not assigned")
+}
+
+
 #' Summarise editors current in-tray
+#'
+#' This function summarises and prints the articles an editor currently have in hand.
+#' It also prints out the articles that has not been assigned to any editor on the top, if any.
+#'
 #' @param editor Editors initials. If \code{NULL}, looks for the
 #' environment variable \code{RJ_EDITOR}.
 #' @param rejected Default \code{FALSE}. If \code{TRUE}, show
@@ -105,6 +111,8 @@ print_other <- function(latest) {
 #' @param other Default \code{FALSE}. If \code{TRUE}, list all
 #' articles not covered by any of the other options (typically
 #' accepted and online)
+#' @importFrom cli cli_h1 cli_li cli_ul cli_end
+#' @export
 summarise_articles <- function(editor = NULL,
                                rejected = FALSE, other = FALSE) {
   if (is.null(editor)) {
@@ -112,11 +120,13 @@ summarise_articles <- function(editor = NULL,
   }
   all_articles <- get_assignments(editor)
   latest <- get_latest_assignments(all_articles)
+  unassigned <- get_unassigned()
   if (isTRUE(rejected)) print_rejected(latest)
   # get only most recent status
   latest <- latest %>%
     group_by(id) %>%
     dplyr::slice_tail(n = 1)
+  if (!is.null(unassigned)) print_unassigned(unassigned)
   print_acknowledged(latest)
   print_with_ae(latest)
   print_submitted(latest)
@@ -190,17 +200,8 @@ globalVariables("status_date")
 #' @rdname summarise_articles
 #' @export
 get_assignments <- function(editor) {
-  suppressWarnings(
-    grep_str <- system2("find",
-                        args = c(
-                          ".", "-name", "DESCRIPTION", "-print",
-                          "| xargs grep Editor",
-                          "| grep", editor
-                        ),
-                        stdout = TRUE
-    )
-  )
 
+  grep_str <- find_articles(editor)
   path <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor: .*")
   id <- stringr::str_remove(path, "^./(Rejected|Submissions)/")
 
@@ -208,11 +209,39 @@ get_assignments <- function(editor) {
     cli::cli_abort("Editor not detected. Please enter the correct editor initial.")
   }
 
+  unpack_articles(id)
+}
+
+#' @rdname summarise_articles
+#' @export
+get_unassigned <- function(){
+  grep_str <- find_articles("'\\s$'")
+  path <- grep("Submissions", grep_str, value = TRUE)
+  id <- sub("./Submissions/(\\d+-\\d+)/.*", "\\1", path)
+  if (length(id) != 0) unpack_articles(id)
+}
+
+find_articles <- function(editor){
+  suppressWarnings(
+    system2("find",
+            args = c(
+              ".", "-name", "DESCRIPTION", "-print",
+              "| xargs grep Editor",
+              "| grep", editor),
+            stdout = TRUE
+    )
+  )
+}
+
+unpack_articles <- function(id){
   map(id, as.article) %>%
     map(~ unpack_status(.x)) %>%
     map_df(rbind) %>%
     dplyr::arrange(id, status_date)
 }
+
+
+
 
 #' @importFrom purrr map_df map
 #' @importFrom dplyr group_by filter ungroup mutate

@@ -3,12 +3,14 @@
 \name{summarise_articles}
 \alias{summarise_articles}
 \alias{get_assignments}
-\title{Summarise intray
-Summarise editors current in-tray}
+\alias{get_unassigned}
+\title{Summarise editors current in-tray}
 \usage{
 summarise_articles(editor = NULL, rejected = FALSE, other = FALSE)
 
 get_assignments(editor)
+
+get_unassigned()
 }
 \arguments{
 \item{editor}{Editors initials. If \code{NULL}, looks for the
@@ -22,6 +24,6 @@ articles not covered by any of the other options (typically
 accepted and online)}
 }
 \description{
-Summarise intray
-Summarise editors current in-tray
+This function summarises and prints the articles an editor currently have in hand.
+It also prints out the articles that has not been assigned to any editor on the top, if any.
 }
