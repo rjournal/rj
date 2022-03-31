@@ -24,6 +24,21 @@ knitr::opts_chunk$set(
 
 All articles accepted up to the publication dates: Mar 31, Jun 30, Oct 31, Dec 31, should be included. (Traditionally these articles would first be made available online, but with the increased frequency of publication this might not be necessary.)
 
+# Preparation
+
+- Copy editing
+- Collect news items
+
 # Building an issue
 
+## Steps
+
+1. Copy from Accepted into Proofs (`make_proof()`)
+2. Copy news, News_items
+3. Build issue, 
+    - update meta data (`RJ-XXXX-XX.tex`)
+    - make the pdfs/html
+    - make single pdf
+4. Copy across to web site
+5. Register DOIs with crossref
 
