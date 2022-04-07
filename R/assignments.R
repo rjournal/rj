@@ -18,7 +18,7 @@ smart.cap <- function(x) {
 print_sum <- function(arts, status, detail = NULL,
                       glue = "{art$id} ({art$days_since_submission}): {art$title}",
                       description = smart.cap(status), pre.width = 20) {
-    arts <- arts[if (is.logical(status)) status else arts$status_status == status, ]
+    arts <- arts[if (is.logical(status)) status else arts$status == status, ]
     if (nrow(arts) == 0)
         return(invisible(NULL))
 
@@ -69,7 +69,7 @@ print_out_for_review <- function(latest) {
 ## this covers both minor and major revision status as well as AE: variants
 print_in_revision <- function(latest) {
   print_sum(
-    latest, .in_revision(latest$status_status),
+    latest, .in_revision(latest$status),
     list_reviewers, , "In Revision"
   )
 }
@@ -82,20 +82,20 @@ print_revision_received <- function(latest) {
 ## entries. Note that if you add cases above, you must also modify this
 ## function, it is not maintained automatically.
 print_other <- function(latest) {
-  cond <- grepl("revision", latest$status_status) |
-    (latest$status_status %in% c(
+  cond <- grepl("revision", latest$status) |
+    (latest$status %in% c(
       "rejected", "submitted", "acknowledged",
       "with AE", "out for review"
     ))
   if (any(!cond)) {
-    print_sum(latest, !cond, , "{art$id} {art$status_status} ({art$days_since_submission}): {art$title}",
+    print_sum(latest, !cond, , "{art$id} {art$status} ({art$days_since_submission}): {art$title}",
       description = "Other"
     )
   }
 }
 
 print_unassigned <- function(unassigned){
-  print_sum(unassigned, "submitted", description = "Submitted but not assigned")
+  print_sum(unassigned, "acknowledged", description = "Submitted but not assigned")
 }
 
 
@@ -103,6 +103,9 @@ print_unassigned <- function(unassigned){
 #'
 #' This function summarises and prints the articles an editor currently have in hand.
 #' It also prints out the articles that has not been assigned to any editor on the top, if any.
+#' If assigned to an object, the unassigned articles will appear on the top of the data frame.
+#'
+#' @details
 #'
 #' @param editor Editors initials. If \code{NULL}, looks for the
 #' environment variable \code{RJ_EDITOR}.
@@ -112,21 +115,21 @@ print_unassigned <- function(unassigned){
 #' articles not covered by any of the other options (typically
 #' accepted and online)
 #' @importFrom cli cli_h1 cli_li cli_ul cli_end
+#' @importFrom dplyr group_by filter ungroup mutate
+#' @importFrom purrr map_dfr
 #' @export
 summarise_articles <- function(editor = NULL,
                                rejected = FALSE, other = FALSE) {
   if (is.null(editor)) {
     editor <- Sys.getenv("RJ_EDITOR")
   }
-  all_articles <- get_assignments(editor)
-  latest <- get_latest_assignments(all_articles)
+  if (rejected) folder <- c("Submissions", "Rejected") else folder <- c("Submissions")
+  all_articles <- get_assignments(folder, editor)
+  latest <- get_latest(all_articles)
   unassigned <- get_unassigned()
+  lastest_unassigned <- get_latest(unassigned)
+  if (!is.null(unassigned)) print_unassigned(lastest_unassigned)
   if (isTRUE(rejected)) print_rejected(latest)
-  # get only most recent status
-  latest <- latest %>%
-    group_by(id) %>%
-    dplyr::slice_tail(n = 1)
-  if (!is.null(unassigned)) print_unassigned(unassigned)
   print_acknowledged(latest)
   print_with_ae(latest)
   print_submitted(latest)
@@ -134,7 +137,8 @@ summarise_articles <- function(editor = NULL,
   print_in_revision(latest)
   print_revision_received(latest)
   if (isTRUE(other)) print_other(latest)
-  return(invisible(all_articles))
+  res <- rbind(unassigned, all_articles %>% dplyr::arrange(path))
+  return(invisible(res))
 }
 
 #' @export
@@ -148,9 +152,9 @@ actionable_articles <- function(editor, invite = 7, review = 30, verbose = FALSE
     editor <- Sys.getenv("RJ_EDITOR")
   }
   all_articles <- get_assignments(editor)
-  latest <- get_latest_assignments(all_articles)
-  work <- latest$status_status %in% c("acknowledged", "submitted")
-  rev <- latest$status_status == "out for review"
+  latest <- get_latest(all_articles)
+  work <- latest$status %in% c("acknowledged", "submitted")
+  rev <- latest$status == "out for review"
   cli::cli_h1(paste("Actionable articles"))
   cli_ul()
   for (id in unique(latest$id[rev | work])) {
@@ -196,12 +200,11 @@ actionable_articles <- function(editor, invite = 7, review = 30, verbose = FALSE
   cli_end()
 }
 
-globalVariables("status_date")
 #' @rdname summarise_articles
 #' @export
-get_assignments <- function(editor) {
+get_assignments <- function(editor, folder = "Submissions") {
 
-  grep_str <- find_articles(editor)
+  grep_str <- find_articles(editor, folder)
   path <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor: .*")
   id <- stringr::str_remove(path, "^./(Rejected|Submissions)/")
 
@@ -209,23 +212,23 @@ get_assignments <- function(editor) {
     cli::cli_abort("Editor not detected. Please enter the correct editor initial.")
   }
 
-  unpack_articles(id)
+  purrr::map_dfr(id, tabulate_single)
 }
 
 #' @rdname summarise_articles
 #' @export
 get_unassigned <- function(){
-  grep_str <- find_articles("'\\s$'")
-  path <- grep("Submissions", grep_str, value = TRUE)
-  id <- sub("./Submissions/(\\d+-\\d+)/.*", "\\1", path)
-  if (length(id) != 0) unpack_articles(id)
+  grep_str <- find_articles("Submissions", "'\\s$'")
+  id <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor:.")
+  if (length(id) != 0) purrr::map_dfr(id, tabulate_single)
 }
 
-find_articles <- function(editor){
+#' @rdname summarise_articles
+find_articles <- function(editor, folder){
   suppressWarnings(
     system2("find",
             args = c(
-              ".", "-name", "DESCRIPTION", "-print",
+              folder, "-name", "DESCRIPTION", "-print",
               "| xargs grep Editor",
               "| grep", editor),
             stdout = TRUE
@@ -233,44 +236,12 @@ find_articles <- function(editor){
   )
 }
 
-unpack_articles <- function(id){
-  map(id, as.article) %>%
-    map(~ unpack_status(.x)) %>%
-    map_df(rbind) %>%
-    dplyr::arrange(id, status_date)
-}
-
-
-
-
-#' @importFrom purrr map_df map
-#' @importFrom dplyr group_by filter ungroup mutate
-get_latest_assignments <- function(assignments) {
+#' @rdname summarise_articles
+get_latest <- function(assignments) {
   assignments %>%
+    tidyr::unnest(status) %>%
     dplyr::group_by(id) %>%
-    dplyr::filter(status_date == max(status_date)) %>%
-    dplyr::ungroup()
-}
-
-unpack_status <- function(x) {
-  id <- x$id
-  status <- x$status
-  purrr::map(
-    status,
-    ~ tibble::tibble(
-      id_year = id$year,
-      id_seq = id$seq,
-      id = format(id),
-      path = x$path,
-      ae = format(x$ae),
-      title = x$title,
-      "status_date" = .x[[1]],
-      "status_status" = .x[[2]],
-      "status_comments" = .x[[3]]
-    )
-  ) %>%
-    purrr::map_df(rbind) %>%
-    dplyr::group_by(id) %>%
-    dplyr::mutate(days_since_submission = as.numeric(Sys.Date() - min(status_date))) %>%
-    dplyr::ungroup()
+    dplyr::slice_tail(n = 1) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(days_since_submission = as.numeric(Sys.Date() - min(date)))
 }

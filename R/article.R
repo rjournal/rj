@@ -232,22 +232,25 @@ tabulate_articles <- function(dirs = c("Accepted", "Submissions")) {
   ids <- article_ids(dirs)
 
   # Read DESCRIPTION from ids and arrange in data frame.
-  purrr::map_dfr(ids, function(art){
-    art <- tryCatch(as.article(art), error = function(e) {
-      stop(stringr::str_glue("Failed to parse the DESCRIPTION file of {art}: {e$message}"))
-    })
-    lst_to_tbl <- function(x) {
-      x <- lapply(x, function(z) if(rlang::is_empty(z)) NA else z)
-      tibble::as_tibble(x)
-    }
-    field_tbl <- function(field) {
-      list(purrr::map_dfr(field, lst_to_tbl))
-    }
-    art$id <- format(art$id)
-    art$suppl <- list(art$suppl)
-    art$authors <- field_tbl(art$authors)
-    art$reviewers <- field_tbl(art$reviewers)
-    art$status <- field_tbl(art$status)
-    tibble::new_tibble(art, nrow = 1)
+  purrr::map_dfr(ids, tabulate_single)
+}
+
+
+tabulate_single <- function(id){
+  art <- tryCatch(as.article(id), error = function(e) {
+    stop(stringr::str_glue("Failed to parse the DESCRIPTION file of {art}: {e$message}"))
   })
+  lst_to_tbl <- function(x) {
+    x <- lapply(x, function(z) if(rlang::is_empty(z)) NA else z)
+    tibble::as_tibble(x)
+  }
+  field_tbl <- function(field) {
+    list(purrr::map_dfr(field, lst_to_tbl))
+  }
+  art$id <- format(art$id)
+  art$suppl <- list(art$suppl)
+  art$authors <- field_tbl(art$authors)
+  art$reviewers <- field_tbl(art$reviewers)
+  art$status <- field_tbl(art$status)
+  tibble::new_tibble(art, nrow = 1)
 }
