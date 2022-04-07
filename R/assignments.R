@@ -124,7 +124,7 @@ summarise_articles <- function(editor = NULL,
     editor <- Sys.getenv("RJ_EDITOR")
   }
   if (rejected) folder <- c("Submissions", "Rejected") else folder <- c("Submissions")
-  all_articles <- get_assignments(folder, editor)
+  all_articles <- get_assignments(editor, folder)
   latest <- get_latest(all_articles)
   unassigned <- get_unassigned()
   lastest_unassigned <- get_latest(unassigned)
@@ -218,7 +218,7 @@ get_assignments <- function(editor, folder = "Submissions") {
 #' @rdname summarise_articles
 #' @export
 get_unassigned <- function(){
-  grep_str <- find_articles("Submissions", "'\\s$'")
+  grep_str <- find_articles("'\\s$'", "Submissions")
   id <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor:.")
   if (length(id) != 0) purrr::map_dfr(id, tabulate_single)
 }
