@@ -200,6 +200,7 @@ actionable_articles <- function(editor, invite = 7, review = 30, verbose = FALSE
   cli_end()
 }
 
+#' @param folder the folder to search for assignments, one of Submissions, Rejected, Accepted, or Proofs
 #' @rdname summarise_articles
 #' @export
 get_assignments <- function(editor, folder = "Submissions") {
@@ -236,6 +237,7 @@ find_articles <- function(editor, folder){
   )
 }
 
+#' @param assignments an output object from \code{get_assignments()} or \code{get_unassigned()}
 #' @rdname summarise_articles
 get_latest <- function(assignments) {
   assignments %>%

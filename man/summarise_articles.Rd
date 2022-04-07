@@ -28,6 +28,10 @@ rejected articles.}
 \item{other}{Default \code{FALSE}. If \code{TRUE}, list all
 articles not covered by any of the other options (typically
 accepted and online)}
+
+\item{folder}{the folder to search for assignments, one of Submissions, Rejected, Accepted, or Proofs}
+
+\item{assignments}{an output object from \code{get_assignments()} or \code{get_unassigned()}}
 }
 \description{
 This function summarises and prints the articles an editor currently have in hand.
