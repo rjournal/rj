@@ -127,8 +127,10 @@ summarise_articles <- function(editor = NULL,
   all_articles <- get_assignments(editor, folder)
   latest <- get_latest(all_articles)
   unassigned <- get_unassigned()
-  lastest_unassigned <- get_latest(unassigned)
-  if (!is.null(unassigned)) print_unassigned(lastest_unassigned)
+  if (!is.null(unassigned)) {
+    lastest_unassigned <- get_latest(unassigned)
+    print_unassigned(lastest_unassigned)
+  }
   if (isTRUE(rejected)) print_rejected(latest)
   print_acknowledged(latest)
   print_with_ae(latest)
