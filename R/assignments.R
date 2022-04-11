@@ -126,9 +126,11 @@ summarise_articles <- function(editor = NULL,
   if (rejected) folder <- c("Submissions", "Rejected") else folder <- c("Submissions")
   all_articles <- get_assignments(editor, folder)
   latest <- get_latest(all_articles)
+  all_articles$days_since_submission <- latest$days_since_submission
   unassigned <- get_unassigned()
   if (!is.null(unassigned)) {
     lastest_unassigned <- get_latest(unassigned)
+    unassigned$days_since_submission <- lastest_unassigned$days_since_submission
     print_unassigned(lastest_unassigned)
   }
   if (isTRUE(rejected)) print_rejected(latest)
@@ -246,6 +248,6 @@ get_latest <- function(assignments) {
     tidyr::unnest(status) %>%
     dplyr::group_by(id) %>%
     dplyr::slice_tail(n = 1) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(days_since_submission = as.numeric(Sys.Date() - min(date)))
+    dplyr::mutate(days_since_submission = as.numeric(Sys.Date() - min(date))) %>%
+    dplyr::ungroup()
 }
