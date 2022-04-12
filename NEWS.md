@@ -1,3 +1,9 @@
+# rj 0.2.24
+
+- Changes to `summarise_articles()`: 
+   - include the unassigned articles in the beginning, if any
+   - now use `tabulate_article()` to produce the output
+
 # rj 0.2.23
 
 - Changed the `ae_workload()` to 
