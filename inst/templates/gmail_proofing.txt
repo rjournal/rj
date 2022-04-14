@@ -3,7 +3,7 @@ Subject: Please proof your R Journal article {{id}}
 ---
 Dear {{name}},
 
-We are pleased to publish your article "{{title}}" to the next issue of the R Journal.
+We are pleased to publish your article "{{title}}" in the next issue of the R Journal.
 
 The journal runs with volunteer efforts, and we hope that you can assist us by carefully proofing the final version of your article. We have included the final versions of the pdf and tex files, and a list of corrections that need to be made as specified by our editorial assistant. Any "x" in the list indicates something that needs fixing. It might also helpful to have a colleague read through it fully.
 
