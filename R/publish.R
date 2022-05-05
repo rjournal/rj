@@ -42,53 +42,44 @@ publish <- function(article, home = get_articles_path(), legacy = FALSE) {
     }
     to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
   } else {
-    # stage new YYYY/RJ-YYYY-XXX landing directory and slug
+    # Create slug and stage new YYYY/RJ-YYYY-XXX landing directory
     yr_id <- format(Sys.Date(), "%Y")
-    if (!dir.exists(file.path(web_path, "archive", yr_id))) {
-      dir.create(file.path(web_path, "archive", yr_id))
-    }
-    current_dirs <- list.files(file.path(web_path, "archive", yr_id))
-    i <- 0L
-    if (length(current_dirs) > 0) {
-      if (any(nchar(current_dirs) != 11L)) stop("landing dir-name length error")
-    } else {
-      i <- 1L
-    }
+    slug_pattern <- "^RJ-(\\d{4})-(\\d{3})$"
 
+    # Remove slug if existing slug has wrong format or year
     if (!empty(article$slug)) {
-      if (str_sub(article$slug, 1L, 5L) == "RJ-20") {
-        if (str_sub(article$slug, 4L, 7L) < yr_id) {
-          article$slug <- ""
-        }
-      } else {
+      slug_year <- sub(slug_pattern, "\\1", article$slug)
+      if(!grepl(slug_pattern, article$slug) || slug_year != yr_id) {
         article$slug <- ""
       }
     }
-    if (!empty(article$slug) &&
-      str_sub(article$slug, 1L, 8L) == paste0("RJ-", yr_id, "-")) {
-      this_dir <- str_sub(article$slug, 9L, 11L)
-      if (this_dir %in% str_sub(current_dirs, 9L, 11L)) {
-        if (!dir.exists(file.path(
-          web_path, "archive",
-          yr_id, article$slug
-        ))) {
-          article$slug <- ""
-        }
-      } else {
-        slug <- article$slug
+    # Validate existing slug exists and is used
+    if (!empty(article$slug)) {
+      if(!dir.exists(file.path(web_path, "_articles", article$slug))) {
+        article$slug <- ""
       }
     }
+    # If the slug doesn't exist, create it.
+    all_slugs <- dir(
+      file.path(web_path, "_articles"),
+      pattern = paste0("^RJ-", yr_id, "-\\d{3}$")
+    )
     if (empty(article$slug)) {
-      if (i == 0L) {
-        i <- as.integer(max(as.integer(str_sub(current_dirs, 9L, 11L)))) + 1L
+      next_id <- if(length(all_slugs) > 0) {
+        max(as.integer(sub(slug_pattern, "\\2", all_slugs))) + 1L
+      } else {
+        1L
       }
-      next_dir <- formatC(i, format = "d", flag = "0", width = 3L)
-      slug <- paste0("RJ-", yr_id, "-", next_dir)
-      dir.create(file.path(web_path, "archive", yr_id, slug))
-    } else {
-      slug <- article$slug
+      article$slug <- paste0("RJ-", yr_id, "-", formatC(next_id, format = "d", flag = "0", width = 3L))
+      dir.create(file.path(web_path, "_articles", article$slug))
     }
-    landing_path <- file.path(web_path, "archive", yr_id, slug)
+    slug <- article$slug
+
+    if (!dir.exists(file.path(web_path, "_articles", slug))) {
+      dir.create(file.path(web_path, "_articles", slug))
+    }
+
+    landing_path <- file.path(web_path, "_articles", slug)
     to <- file.path(landing_path, paste0(slug, ".pdf"))
   }
 
@@ -110,44 +101,79 @@ publish <- function(article, home = get_articles_path(), legacy = FALSE) {
     message("Creating ", basename(zipto))
   }
 
-  article$slug <- slug
   article <- update_status(article, "online")
 
   # collect metadata
   article_metadata <- online_metadata_for_article(article)
-  # if not legacy, create and post landing index.html
-  if (!legacy) {
-    issue <- "accepted"
-    article_landing <- make_landing(article_metadata, issue)
-    writeLines(article_landing, file.path(
-      web_path, "archive", yr_id,
-      slug, "index.html"
-    ))
-  }
 
-  ## Make yaml
-  yaml_path <- file.path(web_path, "_config.yml")
-  message("Updating ", yaml_path)
-  config <- yaml.load_file(yaml_path)
-  conf_articles <- config$issues[[1L]]$articles
-  has_slug <- sapply(conf_articles, function(x) !is.null(x$slug))
-  if (length(has_slug) > 0L) {
-    has_slug_ptr <- character(length(has_slug))
-    has_slug_ptr[has_slug] <- sapply(
-      conf_articles[has_slug],
-      function(x) x$slug
+  # Make yaml front matter
+  front_matter <- list(
+    title = article_metadata$title,
+    abstract = article_metadata$abstract,
+    author = article_metadata$author,
+    date = article_metadata$online,
+    date_received = article_metadata$acknowledged[1],
+    journal = list(
+      firstpage = article_metadata$pages[1],
+      lastpage = article_metadata$pages[2]
+    ),
+    # volume = volume,
+    # issue = num,
+    slug = slug,
+    packages = list(
+      cran = article_metadata$CRANpkgs,
+      bioc = article_metadata$BIOpkgs
+    ),
+    CTV = article_metadata$CTV_rev,
+    output = list(
+      `rjtools::rjournal_web_article` = list(
+        self_contained = FALSE,
+        toc = FALSE,
+        legacy_pdf = TRUE
+      )
     )
-    this_slug <- which(slug == has_slug_ptr)
-    if (length(this_slug) == 0L) {
-      conf_articles <- c(conf_articles, list(article_metadata))
-    } else {
-      conf_articles[[this_slug]] <- article_metadata
-    }
-  } else {
-    conf_articles <- c(conf_articles, list(article_metadata))
-  }
-  config$issues[[1L]]$articles <- conf_articles
-  writeLines(as.yaml(config), yaml_path)
+  )
+
+  xfun::write_utf8(
+    c("---", yaml::as.yaml(front_matter), "---"),
+    rmd_path <- file.path(web_path, "_articles", slug, xfun::with_ext(slug, ".Rmd"))
+  )
+
+  rmarkdown::render(rmd_path, envir = new.env())
+
+  # if not legacy, create and post landing index.html
+  # if (!legacy) {
+  #   issue <- "accepted"
+  #   article_landing <- make_landing(article_metadata, issue)
+  #   writeLines(article_landing, file.path(
+  #     web_path, "archive", yr_id,
+  #     slug, "index.html"
+  #   ))
+  # }
+  #
+  # ## Make yaml
+  # yaml_path <- file.path(web_path, "_config.yml")
+  # message("Updating ", yaml_path)
+  # config <- yaml.load_file(yaml_path)
+  # conf_articles <- config$issues[[1L]]$articles
+  # has_slug <- sapply(conf_articles, function(x) !is.null(x$slug))
+  # if (length(has_slug) > 0L) {
+  #   has_slug_ptr <- character(length(has_slug))
+  #   has_slug_ptr[has_slug] <- sapply(
+  #     conf_articles[has_slug],
+  #     function(x) x$slug
+  #   )
+  #   this_slug <- which(slug == has_slug_ptr)
+  #   if (length(this_slug) == 0L) {
+  #     conf_articles <- c(conf_articles, list(article_metadata))
+  #   } else {
+  #     conf_articles[[this_slug]] <- article_metadata
+  #   }
+  # } else {
+  #   conf_articles <- c(conf_articles, list(article_metadata))
+  # }
+  # config$issues[[1L]]$articles <- conf_articles
+  # writeLines(as.yaml(config), yaml_path)
 
   message("Remember to check changes into git")
   invisible(TRUE)
