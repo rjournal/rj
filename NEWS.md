@@ -1,3 +1,7 @@
+# rj 0.2.25
+
+- Updated the template for "accept" to reflect new format, check list, and four issues per year.
+
 # rj 0.2.24
 
 - Changes to `summarise_articles()`: 

@@ -1,7 +1,7 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.24
+Version: 0.2.25
 Author: Editor-in-Chief <R-journal@r-project.org>
 Maintainer: Editor-in-Chief <R-journal@r-project.org>
 Description: This package provides useful functions for the
