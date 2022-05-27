@@ -1,0 +1,26 @@
+Invitation to become an Associate Editor for the R Journal
+
+Dear {invitee},
+
+On behalf of the R Journal Editorial board, I am writing to invite you to be an Associate Editor for our journal. These are new positions that have recently been approved by the R Foundation to help the journal grow to meet the increasing number of submissions as we continue to see greater impact in research in statistical computing and data science infrastructure.
+
+As an Associate Editor, you will receive manuscripts from an Editor for review. You will be responsible for
+
+1. Soliciting 1-3 reviewers - In general we prefer at least two reviewers. However, one is acceptable when reviewers are sufficiently difficult to find, and the subject area is esoteric. To make this process easier we have compiled a list of potential reviewers and their subject expertise. You are also welcome to invite other reviewers
+2. Receiving those reviews - Reviewers are given approximately 1 - 3 month to review a paper. 
+3. Deciding if the paper should be rejected, accepted with major revisions, accepted with minor revisions, or accepted as is. 
+
+So that this responsibility is not overwhelming, we aim to have AE's handle at most 1-2 paper per month. 
+
+All of these operations are conducted using the rj package, available from the rjournal Github site. You will be provided with a private Github repository that will hold submissions in the R Journal's current structure. We will provide instruction and examples as to how steps 1 - 3 should be recorded. 
+
+In addition, we have a slack organisation for regular communication, and we hold monthly meetings to facilitate communication among all editors and address issues and concerns.
+
+We hope you will accept the invitation and we look forward to working with you.
+
+Sincerely,
+
+Di Cook
+Editor-in-Chief,  R Journal
+dicook.rj@gmail.com
+
