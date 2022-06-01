@@ -1,6 +1,6 @@
 name,initials,github_handle,email,start_year,keywords,github,affiliation,comment
 Nicholas Tierney,NT,njtierney,nicholas.tierney@gmail.com,2021,"Bayesian, Graphics, Missing Data, Reproducible Research, Teaching Statistics",ae-articles-nt,Telethon Kids,
-Earo Wang,EW,earowang,earo.wang@gmail.com ,2020,"Graphics, Reproducible Research, Time Series, Web Technologies",ae-articles-ew,U. Auckland,
+Earo Wang,EW,earowang,earo.wang@gmail.com√ä,2020,"Graphics, Reproducible Research, Time Series, Web Technologies",ae-articles-ew,U. Auckland,
 Xiaoyue Cheng,XC,chxy,xycheng@unomaha.edu,2020,"Graphics, Machine Learning",ae-articles-xcz,U.Nebraska - Omaha,
 Emily Zabor,EZ,zabore,zabore2@ccf.org,2020,"Clinical Trials, Reproducible Research, Survival",ae-articles-ez,Taussig Cancer Institute,
 Taylor Arnold,TA,statsmaths,tarnold2@richmond.edu,2020,"Machine Learning, Natural Language Processing, Social Sciences, Spatio Temporal",ae-articles-ta,U. Richmond,resigned
@@ -10,7 +10,7 @@ Isabella Gollini,IG,igollini,isabella.gollini@ucd.ie,2021,"Bayesian, Cluster, Ma
 Beth Atkinson,BA,bethatkinson,atkinson@mayo.edu,2020,"Genetics, Graphics, Machine Learning, Reproducible Research, Survival",ae-articles-ba,Mayo Clinic,
 Rasmus Baath,RB,rasmusab,rasmus.baath@gmail.com,2021,"Bayesian,Databases,Distributions,Machine Learning,Meta Analysis,Missing Data,Psychometrics,Reproducible Research,Social Sciences,Teaching Statistics,Time Series,Web Technologies",ae-articles-rb,Lund U.,
 Mark van der Loo,MV,markvanderloo,mark.vanderloo@gmail.com,2021,"Chem Phys,Differential Equations,Missing Data,Natural Language Processing,Numerical Mathematics,Official Statistics,Optimization,Teaching Statistics",ae-articles-mv,"Statistics Netherlands, the Netherlands",
-Elizabeth Sweeney,ES,emsweene,ems4003@med.cornell.edu,2021,"Medical Imaging, Teaching Statistics",ae-articles-es,Cornell U.,
+Elizabeth Sweeney,ES,emsweene,elizabeth.sweeney@pennmedicine.upenn.edu,2021,"Medical Imaging, Teaching Statistics",ae-articles-es,Cornell U.,
 Louis Aslett,LA,louisaslett,louis.aslett@durham.ac.uk,2021,"Bayesian, Distributions, High Performance Computing, Machine Learning, Multivariate, Numerical Mathematics, Survival, Teaching Statistics, Web Technologies, Privacy, Reliability Theory, Computational Stats (MCMC/ABC/etc)",ae-articles-la,Durham University,
 Katarina Domijan,KD,domijan,katarina.domijan@mu.ie,2021,"Bayesian, Cluster, Graphics, Machine Learning, Multivariate, Teaching Statistics",ae-articles-kd,Maynooth University,
 Adam Loy,AL,aloy,aloy@carleton.edu,2021,"Bayesian, Distributions, Graphics, Reproducible Research, Social Sciences, Teaching Statistics",ae-articles-al,Carleton University,
@@ -21,3 +21,4 @@ Mine Cetinkaya-Rundel,MC,mine-cetinkaya-rundel,mc301@duke.edu,2022,"Graphics, Re
 Emi Tanaka,ET,emitanaka,emi.tanaka@monash.edu,2022,"Experimental Design, Graphics, Reproducible Research, Web Technologies, Bioconductor, Bioinformatics",ae-articles-et,Monash University,
 Chris Brunsdon,CB,chrisbrunsdon,Christopher.Brunsdon@mu.ie,2022,"Cluster, Graphics, Multivariate, Official Statistics, Reproducible Research, Spatial, Spatio Temporal",ae-articles-cb,Maynooth University,
 Simone Blomberg,SB,simone66b,s.blomberg1@uq.edu.au,2022,"Bayesian, Environmetrics, Missing Data, Phylogenetics, Teaching Statistics, stochastic differential equations",ae-articles-sb,University of Queensland,
+Kevin Burke,KB,,kevin.burke@ul.ie,2022,"Bayesian, Multivariate, Survival",,,
