@@ -9,7 +9,7 @@
 #' @param article article id
 #' @param home Location of the articles directory
 #' @param legacy (Very) old way of referening the R journal
-publish <- function(article, home = get_articles_path(), legacy = FALSE) {
+publish_article <- function(article, volume, issue, home = get_articles_path(), legacy = FALSE) {
   article <- as.article(article)
 
   # Make sure we're in the right place
@@ -45,6 +45,7 @@ publish <- function(article, home = get_articles_path(), legacy = FALSE) {
     # Create slug and stage new YYYY/RJ-YYYY-XXX landing directory
     yr_id <- format(Sys.Date(), "%Y")
     slug_pattern <- "^RJ-(\\d{4})-(\\d{3})$"
+    current_dirs <- list.files(file.path(web_path, "_articles"), pattern = paste0("^RJ-", yr_id, "-", "\\d{3}"))
 
     # Remove slug if existing slug has wrong format or year
     if (!empty(article$slug)) {
@@ -93,7 +94,7 @@ publish <- function(article, home = get_articles_path(), legacy = FALSE) {
     }
     zipfrom <- file.path(article$path, "supplementaries.zip")
     ret <- zip(zipfrom, file.path(article$path, unlist(article$suppl)),
-      flags = "-j"
+               flags = "-j"
     )
     if (ret != 0L) stop("zipfile creation error")
     zipto <- file.path(landing_path, paste0(slug, ".zip"))
@@ -106,74 +107,135 @@ publish <- function(article, home = get_articles_path(), legacy = FALSE) {
   # collect metadata
   article_metadata <- online_metadata_for_article(article)
 
+  # obtain metadata from wrapper
+  wrapper_metadata <- readLines(file.path(article$path, "RJwrapper.tex"))
+  ## construct preamble.tex for additional tex packages and macros
+
+  ## obtain metadata
+  pandoc_markdown <- function(article_dir) {
+    # Copy modified style file for extracting metadata
+    file.copy(
+      system.file("pandoc-metadata/RJournal.sty", package = "rj"),
+      file.path(article_dir, "RJournal.sty")
+    )
+    on.exit(
+      file.remove(file.path(article_dir, "RJournal.sty"))
+    )
+    rmarkdown::pandoc_convert(
+      "RJwrapper.tex", "markdown+raw_tex", output = metadata <- tempfile(fileext = ".md"),
+      options = c("--standalone"), wd = paste0(article_dir,"/")
+    )
+    metadata
+  }
+  pandoc_metadata <- function(markdown){
+    metadata <- rmarkdown::yaml_front_matter(markdown)
+
+    # Separate address into fields
+    metadata$author <- lapply(
+      strsplit(metadata$address, "\\\n", fixed = TRUE),
+      function(person) {
+        author <- list(
+          name = person[1],
+          affiliation = person[2]
+        )
+        if(any(orcid <- grepl("^ORCiD:", person))) {
+          author$orcid <- sub("^ORCiD: ", "", person[orcid])
+        }
+        if(any(email <- grepl("^email:", person))) {
+          author$email <- sub("^email:", "", person[email])
+        }
+        fields <- logical(length(person))
+        fields[1:2] <- TRUE
+        if(any(address <- !(fields | orcid | email))) {
+          author$address <- person[address]
+        }
+        author
+      }
+    )
+    metadata$address <- NULL
+    metadata
+  }
+  pandoc_markdown <- pandoc_markdown(article$path)
+  pandoc_metadata <- pandoc_metadata(pandoc_markdown)
+  # Find extra dependencies
+  wrapper <- readLines(file.path(article$path, "RJwrapper.tex"))
+  doc_start <- which(grepl("^\\s*\\\\begin\\{document\\}", wrapper))
+  common_deps <- c(
+    "\\documentclass[a4paper]{report}", "\\usepackage[utf8]{inputenc}",
+    "\\usepackage[T1]{fontenc}", "\\usepackage{RJournal}", "\\usepackage{amsmath,amssymb,array}",
+    "\\usepackage{booktabs}", "", "%% load any required packages FOLLOWING this line"
+  )
+  extra_deps <- setdiff(wrapper[seq_len(doc_start)-1], common_deps)
+  pdf_args <- list()
+  if(length(extra_deps) > 0) {
+    writeLines(extra_deps, file.path(landing_path, "preamble.tex"))
+    pdf_args$includes <- list(in_header = "preamble.tex")
+  }
+
   # Make yaml front matter
   front_matter <- list(
-    title = article_metadata$title,
-    abstract = article_metadata$abstract,
-    author = article_metadata$author,
+    title = pandoc_metadata$title,
+    abstract = pandoc_metadata$subject,
+    author = pandoc_metadata$author,
     date = article_metadata$online,
     date_received = article_metadata$acknowledged[1],
     journal = list(
       firstpage = article_metadata$pages[1],
       lastpage = article_metadata$pages[2]
     ),
-    # volume = volume,
-    # issue = num,
+    volume = as.integer(volume),
+    issue = as.integer(issue),
     slug = slug,
     packages = list(
       cran = article_metadata$CRANpkgs,
       bioc = article_metadata$BIOpkgs
     ),
+    preview = 'preview.png',
+    bibliography = pandoc_metadata$bibliography,
     CTV = article_metadata$CTV_rev,
     output = list(
       `rjtools::rjournal_web_article` = list(
         self_contained = FALSE,
         toc = FALSE,
         legacy_pdf = TRUE
-      )
+      ),
+      `rjtools::rjournal_pdf_article` = pdf_args
     )
   )
 
+
+  # input_pattern <- "^\\s*\\\\input\\{(.+?)\\}"
+  # tex_file <- sub(input_pattern, "\\1", wrapper[grepl(input_pattern, wrapper)])
+  # tex <- readLines(file.path(article$path, xfun::with_ext(tex_file, ".tex")))
+  # sec_loc <- which(grepl("^\\\\section", tex))[1]
+  # bib_loc <- which(grepl("^\\\\bibliography", tex))[1]
+
+  # Get article body
+  pandoc_md_contents <- readLines(pandoc_markdown)
+  delimiters <- grep("^(---|\\.\\.\\.)\\s*$", pandoc_md_contents)
+  article_body <- c()
+  if (delimiters[1] > 1)
+    article_body <- c(article_body, pandoc_md_contents[1:delimiters[1] - 1])
+  if (delimiters[2] < length(pandoc_md_contents))
+    article_body <- c(article_body, pandoc_md_contents[-(1:delimiters[2])])
+
+  # Copy files
+  article_files <- setdiff(
+    list.files(article$path),
+    c("correspondence", "history", "RJournal.sty", "DESCRIPTION",
+      "RJwrapper.pdf", "supplementaries.zip")
+  )
+  file.copy(
+    file.path(article$path, article_files),
+    landing_path
+  )
+
   xfun::write_utf8(
-    c("---", yaml::as.yaml(front_matter), "---"),
+    c("---", yaml::as.yaml(front_matter), "---", article_body),
     rmd_path <- file.path(web_path, "_articles", slug, xfun::with_ext(slug, ".Rmd"))
   )
 
   rmarkdown::render(rmd_path, envir = new.env())
-
-  # if not legacy, create and post landing index.html
-  # if (!legacy) {
-  #   issue <- "accepted"
-  #   article_landing <- make_landing(article_metadata, issue)
-  #   writeLines(article_landing, file.path(
-  #     web_path, "archive", yr_id,
-  #     slug, "index.html"
-  #   ))
-  # }
-  #
-  # ## Make yaml
-  # yaml_path <- file.path(web_path, "_config.yml")
-  # message("Updating ", yaml_path)
-  # config <- yaml.load_file(yaml_path)
-  # conf_articles <- config$issues[[1L]]$articles
-  # has_slug <- sapply(conf_articles, function(x) !is.null(x$slug))
-  # if (length(has_slug) > 0L) {
-  #   has_slug_ptr <- character(length(has_slug))
-  #   has_slug_ptr[has_slug] <- sapply(
-  #     conf_articles[has_slug],
-  #     function(x) x$slug
-  #   )
-  #   this_slug <- which(slug == has_slug_ptr)
-  #   if (length(this_slug) == 0L) {
-  #     conf_articles <- c(conf_articles, list(article_metadata))
-  #   } else {
-  #     conf_articles[[this_slug]] <- article_metadata
-  #   }
-  # } else {
-  #   conf_articles <- c(conf_articles, list(article_metadata))
-  # }
-  # config$issues[[1L]]$articles <- conf_articles
-  # writeLines(as.yaml(config), yaml_path)
 
   message("Remember to check changes into git")
   invisible(TRUE)
@@ -366,7 +428,7 @@ online_metadata_for_article <- function(x, final = FALSE) {
     sz <- "unknown"
     if (file.exists(zipfrom)) {
       sz <- format(structure(file.size(zipfrom),
-        class = "object_size"
+                             class = "object_size"
       ), standard = "IEC", units = "auto")
     }
     res <- c(res, list(suppl = sz))
