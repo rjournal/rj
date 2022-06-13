@@ -242,8 +242,9 @@
 \DeclareRobustCommand\code{\bgroup\@noligs\@codex}
 \newcommand{\kbd}[1]{{\normalfont\texttt{#1}}}
 \newcommand{\key}[1]{{\normalfont\texttt{\uppercase{#1}}}}
-\DeclareRobustCommand\samp{`\bgroup\@noligs\@sampx}
-\def\@sampx#1{{\normalfont\texttt{#1}}\egroup'}
+
+\newcommand{\samp}[1]{\normalfont\texttt{#1}}
+
 \newcommand{\var}[1]{{\normalfont\textsl{#1}}}
 \let\env=\code
 \newcommand{\file}[1]{{`\normalfont\textsf{#1}'}}

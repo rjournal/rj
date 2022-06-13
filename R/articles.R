@@ -20,6 +20,10 @@ accepted_articles <- function() {
   lapply(paths, as.article)
 }
 
+news_articles <- function(issue) {
+  dir(file.path("News_items", issue))
+}
+
 #' Generate a new id value.
 #'
 #' Inspects submissions/, accepted/ and rejected to figure out which
