@@ -10,6 +10,7 @@
 #' @param home Location of the articles directory
 #' @param legacy (Very) old way of referening the R journal
 publish_article <- function(article, volume, issue, home = get_articles_path(), legacy = FALSE) {
+  cli::cli_alert_info("Publishing article {article}")
   article <- as.article(article)
 
   # Make sure we're in the right place
@@ -26,11 +27,11 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
   #  stop("not yet style checked")
 
   message("Publishing ", format(article$id))
-  # Build latex
-  if (!file.exists(file.path(article$path, "RJwrapper.pdf"))) {
-    build_latex(article, share_path)
-  }
-  from <- file.path(article$path, "RJwrapper.pdf")
+  # # Build latex
+  # if (!file.exists(file.path(article$path, "RJwrapper.pdf"))) {
+  #   build_latex(article, share_path)
+  # }
+  # from <- file.path(article$path, "RJwrapper.pdf")
 
   if (legacy) {
     # create slug if needed and path to new home
@@ -40,7 +41,7 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
     } else {
       slug <- article$slug
     }
-    to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
+    # to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
   } else {
     # Create slug and stage new YYYY/RJ-YYYY-XXX landing directory
     yr_id <- format(Sys.Date(), "%Y")
@@ -81,16 +82,28 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
     }
 
     landing_path <- file.path(web_path, "_articles", slug)
-    to <- file.path(landing_path, paste0(slug, ".pdf"))
+    # to <- file.path(landing_path, paste0(slug, ".pdf"))
   }
 
-  # copy PDF to target
-  file.copy(from, to, overwrite = TRUE)
-  message("Creating ", basename(to))
+  # Remove dir if publish fails
+  on.exit({
+    if(!file.exists(file.path(landing_path, xfun::with_ext(slug, ".Rmd")))) {
+      unlink(landing_path, recursive = TRUE)
+    }
+  })
+
+  # # copy PDF to target
+  # file.copy(from, to, overwrite = TRUE)
+  message("Creating ", slug)
 
   if (!empty(article$suppl)) {
-    if (any(!file.exists(file.path(article$path, unlist(article$suppl))))) {
-      stop("supplementary file not found")
+    if (any(missing_suppl <- !file.exists(file.path(article$path, unlist(article$suppl))))) {
+      cli::cli_abort(
+        c(
+          "Supplementary file(s) not found for article {basename(article$path)}",
+          setNames(unlist(article$suppl)[missing_suppl], "*")
+        )
+      )
     }
     zipfrom <- file.path(article$path, "supplementaries.zip")
     ret <- zip(zipfrom, file.path(article$path, unlist(article$suppl)),
@@ -102,49 +115,68 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
     message("Creating ", basename(zipto))
   }
 
+  rmd_path <- move_article_web(article$path, landing_path, volume, issue)
   article <- update_status(article, "online")
-  move_article_web(article$path, landing_path, volume, issue)
-  rmarkdown::render(rmd_path, envir = new.env())
+  rmarkdown::render(rmd_path, envir = new.env(), quiet = TRUE)
 
-  message("Remember to check changes into git")
+  # message("Remember to check changes into git")
   invisible(TRUE)
+}
+
+publish_news <- function(news, volume, issue, home = get_articles_path()) {
+  cli::cli_alert_info("Publishing news article {basename(news)}")
+  web_news_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_news"))
+  news_slug <- paste0("RJ-", 2008+volume, "-", issue, "-", basename(news))
+  rmd_path <- move_article_web(news, file.path(web_news_dir, news_slug), volume, issue)
+  rmarkdown::render(rmd_path, envir = new.env(), quiet = TRUE)
 }
 
 publish_issue <- function(issue, home = get_articles_path()) {
   issue_dir <- file.path(home, "Proofs", issue)
   issue_regex <- "^(\\d{4})-(\\d{1})"
   issue_year <- as.integer(sub(issue_regex, "\\1", issue))
-  issue_vol <- issue_year - 2008
+  issue_vol <- issue_year - 2008L
   issue_num <- as.integer(sub(issue_regex, "\\2", issue))
   issue_month <- issue_month(issue)
 
   ## Handle articles
   issue_arts <- dir(issue_dir, pattern = "^\\d{4}-\\d{2,3}$", full.names = TRUE)
   arts <- lapply(file.path(issue_arts, "DESCRIPTION"), as.article)
-  art_slugs <- lapply(arts, function(x) x$slug)
-  if (any(art_noslug <- vapply(art_slugs, identical, logical(1L), ""))) {
+  art_slugs <- vapply(arts, function(x) x$slug, character(1L))
+  web_art_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_articles"))
+  art_online <- vapply(arts, has_status, logical(1L), "online")
+  art_pub <- vapply(
+    art_slugs,
+    function(x) {
+      if(identical(x, ""))
+        FALSE
+      else
+        file.exists(file.path(web_art_dir, x, xfun::with_ext(x, "html")))
+    }, logical(1L)
+  )
+  if (any(!art_pub)) {
     cli::cli_alert_warning("Some proofed articles have not yet been published, would you like to publish them now?")
-    cli::cli_li(basename(issue_arts[art_noslug]))
+    cli::cli_li(basename(issue_arts[!art_pub]))
     if (utils::menu(c("yes", "no")) == 1L) {
       lapply(
-        issue_arts[art_noslug], publish_article,
+        issue_arts[!art_pub], publish_article,
         volume = issue_vol, issue = issue_num, home = home
       )
     }
   }
 
   ## Handle news
-  issue_news <- dir(file.path(issue_dir, "news"), full.names = FALSE)
-  news_slugs <- paste0("RJ-", issue, "-", basename(issue_news))
+  issue_news <- dir(file.path(issue_dir, "news"), full.names = TRUE)
   web_news_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_news"))
-  if (any(news_nopub <- file.exists(file.path(web_news_dir, news_slugs)))) {
+  news_slugs <- paste0("RJ-", issue, "-", basename(issue_news))
+  news_pub <- file.exists(file.path(web_news_dir, news_slugs, xfun::with_ext(news_slugs, ".html")))
+  if (any(!news_pub)) {
     cli::cli_alert_warning("Some news articles have not yet been published, would you like to publish them now?")
-    cli::cli_li(basename(news_slugs[news_nopub]))
+    cli::cli_li(basename(news_slugs[!news_pub]))
     if (utils::menu(c("yes", "no")) == 1L) {
-      mapply(
-        move_article_web,
-        from = issue_news[news_nopub],
-        to = file.path(web_news_dir, news_slugs[news_nopub]),
+      lapply(
+        issue_news[!news_pub],
+        publish_news,
         volume = issue_vol, issue = issue_num
       )
     }
@@ -152,9 +184,9 @@ publish_issue <- function(issue, home = get_articles_path()) {
 
   ## Handle issue
   web_issue_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_issues"))
+  latest_web_issue <- max(dir(web_issue_dir, pattern = "^\\d{4}-\\d$"))
   xfun::dir_create(file.path(web_issue_dir, issue))
   issue_rmd <- file.path(web_issue_dir, issue, c(xfun::with_ext(issue, ".Rmd")))
-  latest_web_issue <- max(dir(web_issue_dir, pattern = "^\\d{4}-\\d$"))
   file.copy(
     file.path(web_issue_dir, latest_web_issue, c(xfun::with_ext(latest_web_issue, ".Rmd"), "Rlogo-5.png", "RJournal.sty")),
     file.path(web_issue_dir, issue, c(xfun::with_ext(issue, ".Rmd"), "Rlogo-5.png", "RJournal.sty"))
@@ -162,9 +194,11 @@ publish_issue <- function(issue, home = get_articles_path()) {
   issue_yml <- partition_rmd(issue_rmd)$front_matter
   issue_yml$title <- paste0("Volume ", issue_vol, "/", issue_num)
   issue_yml$description <- paste("Articles published in the", issue_month, issue_year, "issue")
-  issue_yml$date <- as.Date(paste(issue_year, issue_month, "01"), format = "%Y %B %d")
+  issue_yml$date <- format(as.Date(paste(issue_year, issue_month, "01"), format = "%Y %B %d"))
   issue_yml$articles <- list(before = NULL, after = NULL)
-  issue_yml$news <- c(setdiff(basename(issue_news, "editorial")))
+  issue_yml$volume <- issue_vol
+  issue_yml$issue <- issue_num
+  issue_yml$news <- c(setdiff(basename(issue_news), "editorial"))
   update_front_matter(issue_yml, issue_rmd)
 
   edit_file <- utils::file.edit
@@ -178,8 +212,25 @@ publish_issue <- function(issue, home = get_articles_path()) {
 
 move_article_web <- function(from, to, volume, issue) {
   xfun::dir_create(to)
+  slug <- basename(to)
+
+  # Copy supporting files
+  article_files <- setdiff(
+    list.files(from),
+    c("correspondence", "history", "RJournal.sty", "DESCRIPTION",
+      "RJwrapper.pdf", "supplementaries.zip")
+  )
+  file.copy(
+    file.path(from, article_files),
+    to,
+    overwrite = TRUE,
+    recursive = TRUE
+  )
 
   # obtain metadata from wrapper
+  if(!file.exists(file.path(from, "RJwrapper.tex"))) {
+    cli::cli_abort("Could not find RJwrapper.tex for {basename(from)}.")
+  }
   wrapper_metadata <- readLines(file.path(from, "RJwrapper.tex"))
   ## construct preamble.tex for additional tex packages and macros
 
@@ -188,7 +239,8 @@ move_article_web <- function(from, to, volume, issue) {
     # Copy modified style file for extracting metadata
     file.copy(
       system.file("pandoc-metadata/RJournal.sty", package = "rj"),
-      file.path(article_dir, "RJournal.sty")
+      file.path(article_dir, "RJournal.sty"),
+      overwrite = TRUE
     )
     on.exit(
       file.remove(file.path(article_dir, "RJournal.sty"))
@@ -228,20 +280,69 @@ move_article_web <- function(from, to, volume, issue) {
     metadata
   }
   # collect metadata
-  pandoc_markdown <- pandoc_markdown(from)
-  pandoc_metadata <- pandoc_metadata(pandoc_markdown)
 
   article_metadata <- if(file.exists(file.path(from, "DESCRIPTION"))) {
-    online_metadata_for_article(load_article(from))
+    art <- load_article(file.path(from, "DESCRIPTION"))
+    online_date <- Filter(function(x) x$status == "online", art$status)
+    online_date <- if (length(online_date) == 0) {
+      Sys.Date()
+    } else {
+      online_date[[1]]$date
+    }
+
+    list(
+      slug = slug,
+      acknowledged = Filter(function(x) x$status == "acknowledged", art$status)[[1]]$date,
+      online = online_date
+    )
+
   } else {
     # Produce minimal article metadata for news
     issue_year <- volume + 2008
     issue_month <- if(issue_year < 2022) issue * 6 else issue * 3
     list(
-      date = as.Date(paste(volume + 2008, issue_month, "01"), format = "%Y %m %d"),
-      slug = basename(to)
+      slug = basename(to),
+      online = as.Date(paste(volume + 2008, issue_month, "01"), format = "%Y %m %d")
     )
   }
+
+  # Handle Rmd source files directly
+  rmd_file <- list.files(from, pattern = "\\.(R|r)md$", full.names = TRUE)
+  rmd_file <- Filter(
+    function(x) {
+      rmd_output <- partition_rmd(x)$front_matter$output
+      if(is.list(rmd_output)) rmd_output <- names(rmd_output)
+      "rjtools::rjournal_web_article" %in% rmd_output
+    },
+    rmd_file
+  )
+  if(length(rmd_file) == 1L) {
+    rmd_yml <- partition_rmd(rmd_file)$front_matter
+    if(is.null(rmd_yml$abstract)) cli::cli_abort("The abstract for {article_metadata$slug} is missing!")
+    rmd_yml$date <- format_non_null(article_metadata$online)
+    rmd_yml$date_received <- format_non_null(article_metadata$acknowledged)
+    rmd_yml$slug <- article_metadata$slug
+    file.copy(
+      rmd_file,
+      rmd_path <- file.path(to, xfun::with_ext(basename(to), ".Rmd")),
+      overwrite = TRUE
+    )
+    update_front_matter(rmd_yml, rmd_path)
+    if(requireNamespace("renv", quietly = TRUE)) {
+      needed_packages <- setdiff(renv::dependencies(rmd_path)$Package, rownames(installed.packages()))
+      if(length(needed_packages) > 0) {
+        cli::cli_alert_warning("Article {article_metadata$slug} requires additional packages, would you like to install:")
+        cli::cli_li(needed_packages)
+        if (utils::menu(c("yes", "no")) == 1L) {
+          install.packages(needed_packages)
+        }
+      }
+    }
+    return(rmd_path)
+  }
+
+  pandoc_markdown <- pandoc_markdown(from)
+  pandoc_metadata <- pandoc_metadata(pandoc_markdown)
   # Find extra dependencies
   wrapper <- readLines(file.path(from, "RJwrapper.tex"))
   doc_start <- which(grepl("^\\s*\\\\begin\\{document\\}", wrapper))
@@ -253,17 +354,17 @@ move_article_web <- function(from, to, volume, issue) {
   extra_deps <- setdiff(wrapper[seq_len(doc_start)-1], common_deps)
   pdf_args <- list()
   if(length(extra_deps) > 0) {
-    writeLines(extra_deps, file.path(landing_path, "preamble.tex"))
+    writeLines(extra_deps, file.path(to, "preamble.tex"))
     pdf_args$includes <- list(in_header = "preamble.tex")
   }
 
   # Make yaml front matter
   front_matter <- list(
     title = pandoc_metadata$title,
-    abstract = pandoc_metadata$subject,
+    abstract = pandoc_metadata$subject %||% paste0('The "', pandoc_metadata$title, '" article from the ', issue_year, '-', issue, ' issue.'),
     author = pandoc_metadata$author,
-    date = article_metadata$online,
-    date_received = article_metadata$acknowledged[1],
+    date = format_non_null(article_metadata$online),
+    date_received = format_non_null(article_metadata$acknowledged),
     journal = list(
       firstpage = article_metadata$pages[1],
       lastpage = article_metadata$pages[2]
@@ -297,22 +398,13 @@ move_article_web <- function(from, to, volume, issue) {
   if (delimiters[2] < length(pandoc_md_contents))
     article_body <- c(article_body, pandoc_md_contents[-(1:delimiters[2])])
 
-  # Copy files
-  article_files <- setdiff(
-    list.files(from),
-    c("correspondence", "history", "RJournal.sty", "DESCRIPTION",
-      "RJwrapper.pdf", "supplementaries.zip")
-  )
-  file.copy(
-    file.path(from, article_files),
-    file.path(to, article_files),
-    overwrite = TRUE
-  )
-
+  # Write Rmd
   xfun::write_utf8(
     c("---", yaml::as.yaml(front_matter), "---", article_body),
     rmd_path <- file.path(to, xfun::with_ext(article_metadata$slug, ".Rmd"))
   )
+
+  rmd_path
 }
 
 make_landing <- function(article_metadata, issue) {
@@ -443,10 +535,16 @@ build_latex <- function(article,
   #  stop("Article contains RJournal style file", call. = FALSE)
   # }
 
+  if(!file.exists(file.path(article$path, "RJwrapper.tex"))) {
+    stop(sprintf(
+      "Could not find RJwrapper.tex for %s", article$path
+    ))
+  }
+
   # Build latex
   in_dir(
     article$path,
-    texi2pdf("RJwrapper.tex", texinputs = share_path, clean = clean)
+    tinytex::pdflatex("RJwrapper.tex", texinputs = share_path, clean = clean)
   )
 }
 

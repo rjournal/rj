@@ -239,7 +239,9 @@
 % URLs, commands which only treat the escape and grouping characters
 % specially have gained acceptance
 
-\DeclareRobustCommand\code{\bgroup\@noligs\@codex}
+\newcommand{\code}[1]{\texorpdfstring%
+{{\normalfont\ttfamily\hyphenchar\font=-1 #1}}%
+{#1}}
 \newcommand{\kbd}[1]{{\normalfont\texttt{#1}}}
 \newcommand{\key}[1]{{\normalfont\texttt{\uppercase{#1}}}}
 

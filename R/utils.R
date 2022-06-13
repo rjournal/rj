@@ -66,3 +66,5 @@ update_front_matter <- function(yml, file) {
     file
   )
 }
+
+format_non_null <- function(x) if(is.null(x)) NULL else format(x)

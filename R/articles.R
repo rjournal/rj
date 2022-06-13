@@ -16,12 +16,12 @@ active_articles <- function() {
 #' @rdname active_articles
 #' @export
 accepted_articles <- function() {
-  paths <- dir("Accepted", full.names = TRUE)
+  paths <- dir(file.path(get_articles_path(), "Accepted"), full.names = TRUE)
   lapply(paths, as.article)
 }
 
 news_articles <- function(issue) {
-  dir(file.path("News_items", issue))
+  dir(file.path(get_articles_path(), "News_items", issue), full.names = TRUE)
 }
 
 #' Generate a new id value.

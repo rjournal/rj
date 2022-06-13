@@ -68,9 +68,9 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   old <- setwd(get_articles_path())
   on.exit(setwd(old))
   dir <- issue_dir(id)
-  if (!file.exists(dir)) {
+  if (!file.exists(file.path(dir, "news"))) {
     #        stop("Proof ", id, " already exists")
-    dir.create(dir)
+    xfun::dir_create(file.path(dir, "news"))
   }
 
   prev_id <- previous_id(id)
@@ -79,20 +79,8 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   # file.copy(file.path(prev_dir, inherited_files), dir)
   # file.copy(file.path(share_path, "RJournal.sty"), dir)
 
-  issue_file <- issue_file(id)
-  # file.copy(file.path(share_path, "RJournal_template.tex"), issue_file)
-  issue <- read_tex(issue_file)
-
-  number <- issue_number(id)
-  if (number == 1L) {
-    issue$volume <- issue$volume + 1L
-  }
-  issue$volnum <- number
-  issue$year <- issue_year(id)
-  issue$month <- issue_month(id)
-
   arts <- accepted_articles()
-  ready <- filter_status(arts, "online")
+  ready <- filter_status(arts, "proofed")
   for (art in ready) {
     if (exec) {
       system(paste(
@@ -108,11 +96,11 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   news <- news_articles(id)
   for (art in news) {
     if (exec) {
-      system(paste(
-        "git mv",
-        shQuote(art),
-        shQuote(file.path(dir, "news", basename(art)))
-      ))
+      file.copy(
+        art,
+        file.path(dir, "news"),
+        recursive = TRUE
+      )
     } else {
       cat(art, file.path(dir, "news", basename(art)), "\n")
     }
