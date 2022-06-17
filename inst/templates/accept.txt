@@ -10,15 +10,7 @@ Congratulations, your submission to the R journal is now accepted. Next, please:
 
 Once you've done that, please respond to this email with a full copy of the files for your article as a zip archive. Your paper will appear in the next issue of the journal. Prior to publication, the paper will be proofed by a copy-editor and requested changes will be sent to you to make, with a short turn around time.
 
-<<<<<<< HEAD
-Once you've done that, please respond to this email with any changes. Your article will appear in the next issue of the journal. Prior to publication, the paper will be proofed by a copy-editor and requested changes will be sent to you to make.
-
-As an R Journal author, we would be delighted to have your expertise as a reviewer for future submissions;
-please fill in your details here: https://journal.r-project.org/reviewer.html
-=======
 As an R Journal author, if you are not already, we would be delighted to have your expertise as a reviewer for future submissions; please fill in your details here: https://journal.r-project.org/reviewer.html
->>>>>>> 0d3f0d2 (template for accept updated)
-
 
 Regards,
 
