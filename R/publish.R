@@ -51,7 +51,7 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
     # Remove slug if existing slug has wrong format or year
     if (!empty(article$slug)) {
       slug_year <- sub(slug_pattern, "\\1", article$slug)
-      if(!grepl(slug_pattern, article$slug) || slug_year != yr_id) {
+      if(!grepl(slug_pattern, article$slug)) {
         article$slug <- ""
       }
     }
