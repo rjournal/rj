@@ -290,9 +290,12 @@ move_article_web <- function(from, to, volume, issue) {
       online_date[[1]]$date
     }
 
+    first_acknowledged <- Filter(function(x) x$status == "acknowledged", art$status)
+    if(length(first_acknowledged) == 0) first_acknowledged <- list(art$status[[1]])
+
     list(
       slug = slug,
-      acknowledged = Filter(function(x) x$status == "acknowledged", art$status)[[1]]$date,
+      acknowledged = first_acknowledged[[1]]$date,
       online = online_date
     )
 
