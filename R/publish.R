@@ -321,7 +321,7 @@ move_article_web <- function(from, to, volume, issue) {
   )
   if(length(rmd_file) == 1L) {
     rmd_yml <- partition_rmd(rmd_file)$front_matter
-    if(is.null(rmd_yml$abstract)) cli::cli_abort("The abstract for {article_metadata$slug} is missing!")
+    # if(is.null(rmd_yml$abstract)) cli::cli_abort("The abstract for {article_metadata$slug} is missing!")
     rmd_yml$date <- format_non_null(article_metadata$online)
     rmd_yml$date_received <- format_non_null(article_metadata$acknowledged)
     rmd_yml$volume <- volume
