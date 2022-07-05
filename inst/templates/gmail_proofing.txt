@@ -7,7 +7,7 @@ We are pleased to publish your article "{{title}}" in the next issue of the R Jo
 
 The journal runs with volunteer efforts, and we hope that you can assist us by carefully proofing the final version of your article. We have included the final versions of the pdf and tex files, and a list of corrections that need to be made as specified by our editorial assistant. Any "x" in the list indicates something that needs fixing. It might also helpful to have a colleague read through it fully.
 
-Please send the final tex and pdf files to me by {{date}}.
+Please send the final tex and pdf files to me by {{date}}. If you would like to select one of your paper figures as a graphical abstract, please also let me know the name of the image file.
 
 Regards,
 
