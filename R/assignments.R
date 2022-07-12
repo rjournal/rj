@@ -105,8 +105,6 @@ print_unassigned <- function(unassigned){
 #' It also prints out the articles that has not been assigned to any editor on the top, if any.
 #' If assigned to an object, the unassigned articles will appear on the top of the data frame.
 #'
-#' @details
-#'
 #' @param editor Editors initials. If \code{NULL}, looks for the
 #' environment variable \code{RJ_EDITOR}.
 #' @param rejected Default \code{FALSE}. If \code{TRUE}, show
@@ -147,7 +145,7 @@ summarise_articles <- function(editor = NULL,
 
 #' @export
 #' @title Show articles that require attention with the corresponding action
-#' @param editor string, editor, defaults to \code{RJ_EDITOR} env var
+#' @param editor string, initial of an editor or an associate editor, defaults to \code{RJ_EDITOR} env var
 #' @param invite integer, number of days after which an invite is considered overdue
 #' @param review integer, number of days after which a review is considered overdue. Note that you can extend this by specifying a due date in the comment, e.g.: "2021-03-01 Agreed (until 2021-05-01)" would allow for two months.
 #' @param verbose logical, if \code{TRUE} it will always list the full reviewer report for each entry
@@ -157,7 +155,7 @@ actionable_articles <- function(editor, invite = 7, review = 30, verbose = FALSE
   }
   all_articles <- get_assignments(editor)
   latest <- get_latest(all_articles)
-  work <- latest$status %in% c("acknowledged", "submitted")
+  work <- latest$status %in% c("acknowledged", "submitted", "with AE")
   rev <- latest$status == "out for review"
   cli::cli_h1(paste("Actionable articles"))
   cli_ul()
@@ -209,12 +207,26 @@ actionable_articles <- function(editor, invite = 7, review = 30, verbose = FALSE
 #' @export
 get_assignments <- function(editor, folder = "Submissions") {
 
-  grep_str <- find_articles(editor, folder)
-  path <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor: .*")
+  ae_initials <- read.csv(system.file("associate-editors.csv", package = "rj"))$initials
+  editors_all <- read.csv(system.file("editors.csv", package = "rj"))$name
+  # include only "DC" "MK" "CH" "CG" "SU" "GS"
+  editor_initials <- editors_all[11:16]
+
+  if (editor %in% ae_initials){
+    role <- "AE"
+  } else if (editor %in% editor_initials){
+    role <- "Editor"
+  } else {
+    cli::cli_abort("{.field {editor}} is neither an editor or an associated editor (ae). ")
+  }
+
+
+  grep_str <- find_articles(editor, folder, role)
+  path <- stringr::str_remove(grep_str, glue::glue("/DESCRIPTION:{role}: .*"))
   id <- stringr::str_remove(path, "^./(Rejected|Submissions)/")
 
   if (length(id) == 0) {
-    cli::cli_abort("Editor not detected. Please enter the correct editor initial.")
+    cli::cli_abort("No article found under this (associate) editor.")
   }
 
   purrr::map_dfr(id, tabulate_single)
@@ -229,12 +241,15 @@ get_unassigned <- function(){
 }
 
 #' @rdname summarise_articles
-find_articles <- function(editor, folder){
+find_articles <- function(editor, folder, role){
+
+  grep_ae_or_editor <- glue::glue("| xargs grep {role}")
+
   suppressWarnings(
     system2("find",
             args = c(
               folder, "-name", "DESCRIPTION", "-print",
-              "| xargs grep Editor",
+              grep_ae_or_editor,
               "| grep", editor),
             stdout = TRUE
     )

@@ -1,3 +1,9 @@
+# rj 0.2.26
+
+- Expand `get_assignments()` and `actionable_articles()` to search on AEs and 
+  print out articles in status "with AE". 
+
+
 # rj 0.2.25
 
 - Updated the template for "accept" to reflect new format, check list, and four issues per year.

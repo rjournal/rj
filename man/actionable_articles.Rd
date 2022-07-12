@@ -7,7 +7,7 @@
 actionable_articles(editor, invite = 7, review = 30, verbose = FALSE)
 }
 \arguments{
-\item{editor}{string, editor, defaults to \code{RJ_EDITOR} env var}
+\item{editor}{string, initial of an editor or an associate editor, defaults to \code{RJ_EDITOR} env var}
 
 \item{invite}{integer, number of days after which an invite is considered overdue}
 

@@ -1,7 +1,7 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.25
+Version: 0.2.26
 Author: Editor-in-Chief <R-journal@r-project.org>
 Maintainer: Editor-in-Chief <R-journal@r-project.org>
 Description: This package provides useful functions for the
@@ -35,5 +35,5 @@ Suggests:
     testthat,
     rmarkdown
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr

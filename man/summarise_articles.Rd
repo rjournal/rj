@@ -14,7 +14,7 @@ get_assignments(editor, folder = "Submissions")
 
 get_unassigned()
 
-find_articles(editor, folder)
+find_articles(editor, folder, role)
 
 get_latest(assignments)
 }
@@ -37,7 +37,4 @@ accepted and online)}
 This function summarises and prints the articles an editor currently have in hand.
 It also prints out the articles that has not been assigned to any editor on the top, if any.
 If assigned to an object, the unassigned articles will appear on the top of the data frame.
-}
-\details{
-
 }
