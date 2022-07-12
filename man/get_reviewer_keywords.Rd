@@ -6,9 +6,6 @@
 \usage{
 get_reviewer_keywords()
 }
-\value{
-
-}
 \description{
 Extract keywords from reviewer list
 }

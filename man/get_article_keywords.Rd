@@ -10,7 +10,7 @@ get_article_keywords(id)
 \item{id}{the article id}
 }
 \value{
-
+a list with keywords and authors of the article
 }
 \description{
 Extract keywords from a submitted article

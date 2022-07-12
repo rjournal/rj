@@ -31,8 +31,6 @@ the AE is considered an error}
   \item{\code{is_AE}: \code{TRUE} if the user if an AE or
   the repository is an AE repository, \code{FALSE} otherwise}
 }
-
-
 }
 \description{
 Functions to determine if the user is an AE and retrieve relevant AE information

@@ -49,7 +49,6 @@ AEs <- function() {
   d[valid, ]
 }
 
-#' @return
 #' @rdname AEs
 detect_AE <- function(path = ".", require = FALSE) {
   ae <- AEs()

@@ -135,7 +135,7 @@ match_single <- function(df, keywords, n, already){
 #' Extract keywords from a submitted article
 #' @param id the article id
 #'
-#' @return
+#' @return a list with keywords and authors of the article
 get_article_keywords <- function(id) {
   article <- as.article(id)
   keywords_raw <- article$keywords
@@ -162,7 +162,6 @@ get_article_keywords <- function(id) {
 }
 
 #' Extract keywords from reviewer list
-#' @return
 get_reviewer_keywords <- function() {
   cli::cli_alert_info("Select the email adress having access to the reviewer googlesheet (if applicable):  ")
   reviewer_info <- read_reviewer_sheet()
