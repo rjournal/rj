@@ -12,7 +12,7 @@ reference:
   - add_reviewer
   - agree_reviewer
   - decline_reviewer
-  - abandon_reviwer
+  - abandon_reviewer
   - add_review
   - reviewer_status
   - update_status

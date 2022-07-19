@@ -12,10 +12,10 @@
 #' }
 author_emails <- function(issue){
 
-  id <- dir(rj:::issue_dir(issue), pattern = "\\d{4}-\\d{2}", full.names = TRUE)
+  id <- dir(issue_dir(issue), pattern = "\\d{4}-\\d{2}", full.names = TRUE)
 
   dt <- purrr::map(id, function(x){
-    desc <- rj:::load_article(file.path(x, "DESCRIPTION"))
+    desc <- load_article(file.path(x, "DESCRIPTION"))
     Filter(function(x)!is.null(x$email), desc$authors)[[1]]
     })
 

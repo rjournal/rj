@@ -18,24 +18,24 @@
 #' @export
 reviewer_summary <- function(articles, push = FALSE){
   res <- articles %>%
-    dplyr::select(id, reviewers) %>%
-    tidyr::unnest(reviewers) %>%
+    dplyr::select(.data$id, .data$reviewers) %>%
+    tidyr::unnest(.data$reviewers) %>%
     tidyr::separate_rows(comment, sep = "; ") %>%
     dplyr::filter(stringr::str_detect(comment, "Agreed|Declined")) %>%
     dplyr::mutate(comment = tolower(stringr::word(comment))) %>%
-    dplyr::group_by(name, comment) %>%
+    dplyr::group_by(.data$name, comment) %>%
     dplyr::count() %>%
     dplyr::ungroup() %>%
-    tidyr::pivot_wider(names_from = comment, values_from = n, values_fill = 0) %>%
-    dplyr::relocate(name, agreed, declined) %>%
-    dplyr::mutate(ratio = agreed / (agreed + declined),
-                  ratio = scales::label_percent()(ratio))
+    tidyr::pivot_wider(names_from = comment, values_from = .data$n, values_fill = 0) %>%
+    dplyr::relocate(.data$name, .data$agreed, .data$declined) %>%
+    dplyr::mutate(ratio = .data$agreed / (.data$agreed + .data$declined),
+                  ratio = scales::label_percent()(.data$ratio))
 
   if (push){
     sheet_raw <- read_reviewer_sheet()
     out <- sheet_raw %>%
-      dplyr::left_join(res %>% dplyr::select(name, agreed), by = c("fname" = "name")) %>%
-      dplyr::select(agreed)
+      dplyr::left_join(res %>% dplyr::select(.data$name, .data$agreed), by = c("fname" = "name")) %>%
+      dplyr::select(.data$agreed)
     range <- paste0("I1:I", nrow(sheet_raw))
     googlesheets4::range_write(reviewer_sheet_url, out, range = range)
   }
@@ -65,7 +65,7 @@ reviewer_summary <- function(articles, push = FALSE){
 #' @export
 ae_workload <- function(articles = NULL, day_back = 365) {
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    select(name, initials, email) %>%
+    select(.data$name, .data$initials, .data$email) %>%
     as_tibble()
 
   # if don't supply articles, use documented(!) source
@@ -75,7 +75,7 @@ ae_workload <- function(articles = NULL, day_back = 365) {
 
   # throw away most of the columns & then unnest status
   articles <- articles %>%
-    select(id, ae, status) %>%
+    select(.data$id, .data$ae, .data$status) %>%
     unnest(status)
 
   # filter articles if day back is provided
@@ -86,23 +86,23 @@ ae_workload <- function(articles = NULL, day_back = 365) {
   # take only those with "with_AE" status & return rows
   # after this we don't need comments or status
   assignments <- articles %>%
-    filter(status == "with AE", ae != "") %>%
-    select(-c(comments, status)) %>%
+    filter(.data$status == "with AE", .data$ae != "") %>%
+    select(-c(.data$comments, status)) %>%
     distinct(id, .keep_all = TRUE)
 
   # some people use names, other initials for AEs
   # this finds those with only initials and replace the ae with the full name
   tmp <- assignments %>%
-    filter(str_length(ae) < 4) %>%
+    filter(str_length(.data$ae) < 4) %>%
     left_join(ae_rj, by = c("ae" = "initials")) %>%
-    select(id, name, date) %>%
-    rename(ae = name)
+    select(.data$id, .data$name, .data$date) %>%
+    rename(ae = .data$name)
 
   # ... which allows us to take all those with full names...
   assignments %>%
-    filter(str_length(ae) >= 4) %>%
+    filter(str_length(.data$ae) >= 4) %>%
     bind_rows(tmp) %>% #... bind on those that had initials
-    count(ae, sort = TRUE) %>% # count the assignments by AE
+    count(.data$ae, sort = TRUE) %>% # count the assignments by AE
     right_join(ae_rj, by = c("ae" = "name")) %>% # add some some useful info
     replace_na(list(n=0))
 }

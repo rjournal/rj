@@ -46,14 +46,14 @@ match_keywords <- function(id, n = 5) {
     dplyr::filter(!.data$fname %in% article$author,!.data$email %in% ae$email)
 
   potential <- reviewer %>%
-    dplyr::filter(keywords %in% c(ctv_keywords, other_keywords))
+    dplyr::filter(.data$keywords %in% c(ctv_keywords, other_keywords))
 
   total <- n # since n conflicts with the n column from count
   meta <- potential %>%
-    dplyr::count(keywords) %>%
+    dplyr::count(.data$keywords) %>%
     dplyr::mutate(msg = glue::glue("{keywords} ({n})")) %>%
     dplyr::mutate(weight = allocate_reviewer(n, n = total)) %>%
-    dplyr::arrange(weight)
+    dplyr::arrange(.data$weight)
 
   cli::cli_alert_info("Reviewer found for each standardised keyword: [keywords (n_selected/ total): selected]")
   out <- vector(); i <- 1
@@ -73,8 +73,8 @@ match_keywords <- function(id, n = 5) {
     reviewer %>%
       dplyr::filter(.data$fname %in% out) %>%
       dplyr::arrange(factor(.data$fname, levels = out)) %>%
-      dplyr::group_by(gname, fname, email) %>%
-      dplyr::summarise(keywords = list(keywords)) %>%
+      dplyr::group_by(.data$gname, .data$fname, .data$email) %>%
+      dplyr::summarise(keywords = list(.data$keywords)) %>%
       dplyr::ungroup()
 
 
@@ -97,10 +97,10 @@ allocate_reviewer <- function(vec, n){
 
 match_single <- function(df, keywords, n, already){
 
-  selected <- df %>% dplyr::filter(keywords == keywords) %>% dplyr::pull(email)
+  selected <- df %>% dplyr::filter(keywords == keywords) %>% dplyr::pull(.data$email)
 
   match_list <- df %>%
-    dplyr::filter(email %in% selected, !fname %in% already) %>%
+    dplyr::filter(.data$email %in% selected, !.data$fname %in% already) %>%
     dplyr::group_by(.data$fname) %>%
     dplyr::tally(sort = TRUE)
 
@@ -167,16 +167,16 @@ get_reviewer_keywords <- function() {
   reviewer_info <- read_reviewer_sheet()
 
   dup <- reviewer_info %>%
-    dplyr::mutate(dup = duplicated(email)) %>%
+    dplyr::mutate(dup = duplicated(.data$email)) %>%
     filter(dup) %>%
-    dplyr::pull(email)
+    dplyr::pull(.data$email)
 
   fix_dup <- reviewer_info %>%
-    dplyr::filter(email %in% dup) %>%
-    dplyr::group_by(email) %>%
+    dplyr::filter(.data$email %in% dup) %>%
+    dplyr::group_by(.data$email) %>%
     dplyr::filter(dplyr::row_number() == max(dplyr::row_number()))
 
-  dplyr::bind_rows(reviewer_info %>% filter(!email %in% dup), fix_dup) %>%
+  dplyr::bind_rows(reviewer_info %>% filter(!.data$email %in% dup), fix_dup) %>%
     tidyr::separate_rows(.data$keywords, sep = ", ") %>%
     mutate(keywords = stringr::str_to_title(.data$keywords))
 }

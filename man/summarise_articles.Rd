@@ -31,6 +31,8 @@ accepted and online)}
 
 \item{folder}{the folder to search for assignments, one of Submissions, Rejected, Accepted, or Proofs}
 
+\item{role}{string, take value of either "Editor" or "AE"}
+
 \item{assignments}{an output object from \code{get_assignments()} or \code{get_unassigned()}}
 }
 \description{

@@ -240,6 +240,7 @@ get_unassigned <- function(){
   if (length(id) != 0) purrr::map_dfr(id, tabulate_single)
 }
 
+#' @param role string, take value of either "Editor" or "AE"
 #' @rdname summarise_articles
 find_articles <- function(editor, folder, role){
 
