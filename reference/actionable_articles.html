@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.26</span>
       </span>
     </div>
 
@@ -69,19 +69,26 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">actionable_articles</span><span class="op">(</span><span class="va">editor</span>, invite <span class="op">=</span> <span class="fl">7</span>, review <span class="op">=</span> <span class="fl">30</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">actionable_articles</span><span class="op">(</span><span class="va">editor</span>, invite <span class="op">=</span> <span class="fl">7</span>, review <span class="op">=</span> <span class="fl">30</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>editor</dt>
-<dd><p>string, editor, defaults to <code>RJ_EDITOR</code> env var</p></dd>
+<dd><p>string, initial of an editor or an associate editor, defaults to <code>RJ_EDITOR</code> env var</p></dd>
+
+
 <dt>invite</dt>
 <dd><p>integer, number of days after which an invite is considered overdue</p></dd>
+
+
 <dt>review</dt>
 <dd><p>integer, number of days after which a review is considered overdue. Note that you can extend this by specifying a due date in the comment, e.g.: "2021-03-01 Agreed (until 2021-05-01)" would allow for two months.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>logical, if <code>TRUE</code> it will always list the full reviewer report for each entry</p></dd>
+
 </dl></div>
 
   </div>
@@ -96,7 +103,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

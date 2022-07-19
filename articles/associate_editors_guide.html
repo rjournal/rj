@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.26</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <h1 data-toc-skip>Associate Editors’ Guide</h1>
                         <h4 data-toc-skip class="author">First draft written by Di Cook</h4>
             
-            <h4 data-toc-skip class="date">2022-06-02</h4>
+            <h4 data-toc-skip class="date">2022-07-19</h4>
       
       
       <div class="hidden name"><code>associate_editors_guide.Rmd</code></div>
@@ -125,7 +125,7 @@
 </h3>
 <p>Install the <code>rj</code> package with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rjournal/rj"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rjournal/rj"</span><span class="op">)</span></span></code></pre></div>
 <p>The package is being updated and revised regularly, so you may want to re-install occasionally.</p>
 </div>
 <div class="section level3">
@@ -149,8 +149,8 @@
 </ul>
 </li>
 </ul>
-<div id="htmlwidget-376801088462fcfa3467" style="width:768px;height:1152px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-376801088462fcfa3467">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Send for review?\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"2\" [label = \"Select reviewer (ideally two), rj::match_keywords() or use your own experts\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"3\" [label = \"Update reviewer in DESCRIPTION, rj::add_reviewer() \n This also generates the correspondence folder, containing the email template\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"4\" [label = \"Send email to reviewers, which includes motivating letter, pdf and R files \n rj::update_status() to out for review\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"Check all file changes into GitHub, \n including correspondence folder\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"Reviews received\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"8\" [label = \"Save reviews into correspondence folder, rj::add_review()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"9\" [label = \"Make recommendation (AE: major revision, AE: minor revision, AE: accept or AE: reject),\n update DESCRIPTION using rj::update_status(), notify editor, check all into GitHub\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#76EEC6\"] \n  \"10\" [label = \"Send reminder email\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \".\", color = \"grey50\"] \n\"3\"->\"4\" [label = \".\", color = \"grey50\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"7\"->\"8\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"9\" [label = \".\", color = \"grey50\"] \n\"6\"->\"2\" [label = \"N\", color = \"red\"] \n\"7\"->\"10\" [label = \"N\", color = \"red\"] \n\"10\"->\"7\" [label = \"done\", color = \"grey50\"] \n\"1\"->\"9\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-54ae012a7c0c18ae5094" style="width:768px;height:1152px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-54ae012a7c0c18ae5094">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Send for review?\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"2\" [label = \"Select reviewer (ideally two), rj::match_keywords() or use your own experts\", shape = \"rectangle\", width = \"5\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"3\" [label = \"Update reviewer in DESCRIPTION, rj::add_reviewer() \n This also generates the correspondence folder, containing the email template\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"4\" [label = \"Send email to reviewers, which includes motivating letter, pdf and R files \n rj::update_status() to out for review\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"5\" [label = \"Check all file changes into GitHub, \n including correspondence folder\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"6\" [label = \"Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"7\" [label = \"Reviews received\", shape = \"rectangle\", width = \"3\", fontcolor = \"black\", fillcolor = \"#FFA500\"] \n  \"8\" [label = \"Save reviews into correspondence folder, rj::add_review()\", shape = \"rectangle\", width = \"4\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n  \"9\" [label = \"Make recommendation (AE: major revision, AE: minor revision, AE: accept or AE: reject),\n update DESCRIPTION using rj::update_status(), notify editor, check all into GitHub\", shape = \"rectangle\", width = \"6\", fontcolor = \"black\", fillcolor = \"#76EEC6\"] \n  \"10\" [label = \"Send reminder email\", shape = \"rectangle\", width = \"2\", fontcolor = \"black\", fillcolor = \"#E5E5E5\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \".\", color = \"grey50\"] \n\"3\"->\"4\" [label = \".\", color = \"grey50\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"7\"->\"8\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"9\" [label = \".\", color = \"grey50\"] \n\"6\"->\"2\" [label = \"N\", color = \"red\"] \n\"7\"->\"10\" [label = \"N\", color = \"red\"] \n\"10\"->\"7\" [label = \"done\", color = \"grey50\"] \n\"1\"->\"9\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
 <h3 id="package-usage">Package usage<a class="anchor" aria-label="anchor" href="#package-usage"></a>
@@ -196,7 +196,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

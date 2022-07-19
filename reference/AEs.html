@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.26</span>
       </span>
     </div>
 
@@ -69,13 +69,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">AEs</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">detect_AE</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, require <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">AE</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-
-<span class="fu">is_AE</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">AEs</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">detect_AE</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, require <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">AE</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is_AE</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,13 +83,18 @@
     <dl><dt>path</dt>
 <dd><p>string, path to the git repository to use
 for detection.</p></dd>
+
+
 <dt>require</dt>
 <dd><p>logical, if <code>TRUE</code> then failing to detect
 the AE is considered an error</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <ul><li><p><code>AEs()</code>: a data frame with all associate editors</p></li>
+    
+
+<ul><li><p><code>AEs()</code>: a data frame with all associate editors</p></li>
 <li><p><code>detect_AE()</code>:  <code>NULL</code> if not found or the
        row from <code>AEs()</code> corresponding to the AE</p></li>
 <li><p><code>AE</code>: <code>NULL</code> if not an AE or a row from <code>AEs()</code></p></li>
@@ -123,7 +128,7 @@ git repository pointed to by <code>path</code> (see
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

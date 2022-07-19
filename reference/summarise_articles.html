@@ -19,7 +19,7 @@ If assigned to an object, the unassigned articles will appear on the top of the 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.26</span>
       </span>
     </div>
 
@@ -73,15 +73,15 @@ If assigned to an object, the unassigned articles will appear on the top of the 
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">summarise_articles</span><span class="op">(</span>editor <span class="op">=</span> <span class="cn">NULL</span>, rejected <span class="op">=</span> <span class="cn">FALSE</span>, other <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">get_assignments</span><span class="op">(</span><span class="va">editor</span>, folder <span class="op">=</span> <span class="st">"Submissions"</span><span class="op">)</span>
-
-<span class="fu">get_unassigned</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">find_articles</span><span class="op">(</span><span class="va">editor</span>, <span class="va">folder</span><span class="op">)</span>
-
-<span class="fu">get_latest</span><span class="op">(</span><span class="va">assignments</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarise_articles</span><span class="op">(</span>editor <span class="op">=</span> <span class="cn">NULL</span>, rejected <span class="op">=</span> <span class="cn">FALSE</span>, other <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_assignments</span><span class="op">(</span><span class="va">editor</span>, folder <span class="op">=</span> <span class="st">"Submissions"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_unassigned</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">find_articles</span><span class="op">(</span><span class="va">editor</span>, <span class="va">folder</span>, <span class="va">role</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_latest</span><span class="op">(</span><span class="va">assignments</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -89,24 +89,31 @@ If assigned to an object, the unassigned articles will appear on the top of the 
     <dl><dt>editor</dt>
 <dd><p>Editors initials. If <code>NULL</code>, looks for the
 environment variable <code>RJ_EDITOR</code>.</p></dd>
+
+
 <dt>rejected</dt>
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, show
 rejected articles.</p></dd>
+
+
 <dt>other</dt>
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, list all
 articles not covered by any of the other options (typically
 accepted and online)</p></dd>
+
+
 <dt>folder</dt>
 <dd><p>the folder to search for assignments, one of Submissions, Rejected, Accepted, or Proofs</p></dd>
+
+
+<dt>role</dt>
+<dd><p>string, take value of either "Editor" or "AE"</p></dd>
+
+
 <dt>assignments</dt>
 <dd><p>an output object from <code>get_assignments()</code> or <code>get_unassigned()</code></p></dd>
+
 </dl></div>
-    <div id="details">
-    <h2>Details</h2>
-    
-
-
-    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -120,7 +127,7 @@ accepted and online)</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
