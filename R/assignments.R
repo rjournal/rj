@@ -235,7 +235,7 @@ get_assignments <- function(editor, folder = "Submissions") {
 #' @rdname summarise_articles
 #' @export
 get_unassigned <- function(){
-  grep_str <- find_articles("'\\s$'", "Submissions")
+  grep_str <- find_articles("'\\s$'", "Submissions", "Editor")
   id <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor:.")
   if (length(id) != 0) purrr::map_dfr(id, tabulate_single)
 }
