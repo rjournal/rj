@@ -3,7 +3,7 @@ Subject: [RJournal {{id}}] journal submission
 ---
 Dear {{name}},
 
-Thank you for submitting your article "{{title}} to the R Journal. The
+Thank you for submitting your article "{{title}}" to the R Journal. The
 work is very interesting (SAY SOMETHING NICE) but it falls short on
 (REASON FOR REJECTION). For these reasons, we have decided to reject
 the paper. Please see the reviews provided for more details.
