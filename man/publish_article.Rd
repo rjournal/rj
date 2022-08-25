@@ -2,7 +2,7 @@
 % Please edit documentation in R/publish.R
 \name{publish_article}
 \alias{publish_article}
-\title{Publish an article to online first.}
+\title{Publish an individual article}
 \usage{
 publish_article(
   article,
@@ -15,11 +15,31 @@ publish_article(
 \arguments{
 \item{article}{article id}
 
+\item{volume}{The volume of the article's issue}
+
+\item{issue}{The issue number of the article's issue}
+
 \item{home}{Location of the articles directory}
 
 \item{legacy}{(Very) old way of referening the R journal}
 }
 \description{
-After running this, you'll need to update both the article and
-the web repository.
+This function will publish an individual article to the `rjournal.github.io`
+website repo.
+}
+\details{
+The function will complete the following tasks:
+1. Assign an appropriate slug if one is not set in the article DESCRIPTION
+2. Produce a zip containing supplementary files described in the DESCRIPTION
+3. If legacy PDF article, the articles will be converted into HTML format
+   suitable for the distill HTML website. If an Rmd file with the output
+   format `"rjtools::rjournal_web_article"` is found, it will be directly
+   copied across as-is.
+4. Set the issue metadata for these articles in the produced/copied Rmd front
+   matter.
+5. Update the status of the article's DESCRIPTION to 'online'
+6. Render the document to update the article's HTML and PDF output.
+}
+\seealso{
+`publish_issue()`, `publish_news()`
 }

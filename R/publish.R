@@ -1,12 +1,26 @@
-#' Publish an article to online first.
+#' Publish an individual article
 #'
-#' After running this, you'll need to update both the article and
-#' the web repository.
+#' This function will publish an individual article to the `rjournal.github.io`
+#' website repo.
+#'
+#' The function will complete the following tasks:
+#' 1. Assign an appropriate slug if one is not set in the article DESCRIPTION
+#' 2. Produce a zip containing supplementary files described in the DESCRIPTION
+#' 3. If legacy PDF article, the articles will be converted into HTML format
+#'    suitable for the distill HTML website. If an Rmd file with the output
+#'    format `"rjtools::rjournal_web_article"` is found, it will be directly
+#'    copied across as-is.
+#' 4. Set the issue metadata for these articles in the produced/copied Rmd front
+#'    matter.
+#' 5. Update the status of the article's DESCRIPTION to 'online'
+#' 6. Render the document to update the article's HTML and PDF output.
+#'
+#' @seealso `publish_issue()`, `publish_news()`
 #'
 #' @export
-#' @importFrom tools texi2pdf
-#' @importFrom yaml yaml.load_file
 #' @param article article id
+#' @param volume The volume of the article's issue
+#' @param issue The issue number of the article's issue
 #' @param home Location of the articles directory
 #' @param legacy (Very) old way of referening the R journal
 publish_article <- function(article, volume, issue, home = get_articles_path(), legacy = FALSE) {
@@ -123,6 +137,17 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
   invisible(TRUE)
 }
 
+#' Publish a news article
+#'
+#' This function will publish a news article to the `rjournal.github.io`
+#' repository.
+#'
+#' @seealso `publish_article`, `publish_issue()`
+#'
+#' @param news File path to the directory containing the news article to publish
+#' @inheritParams publish_article
+#'
+#' @export
 publish_news <- function(news, volume, issue, home = get_articles_path()) {
   cli::cli_alert_info("Publishing news article {basename(news)}")
   web_news_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_news"))
@@ -131,6 +156,26 @@ publish_news <- function(news, volume, issue, home = get_articles_path()) {
   rmarkdown::render(rmd_path, envir = new.env(), quiet = TRUE)
 }
 
+#' Publish an issue
+#'
+#' This function will publish an issue in the `rjournal.github.io` repository
+#' from the Proofs folder. If any articles or news from this issue are not yet
+#' published, it will prompt you to also publish these articles and news.
+#'
+#' This is the main function to be used for publishing an issue and its contents
+#' to the R Journal website. It completes these steps:
+#'
+#' 1. Publish any unpublished articles from this issue.
+#' 2. Publish any unpublished news from this issue.
+#' 3. Generate a templated R Markdown file for the issue, with some metadata
+#'    completed in the document's front matter.
+#' 4. Open the generated issue R Markdown file for you to update the metadata,
+#'    for example to update the editors of the issue.
+#'
+#' @param issue The name of the issue, for example "2022-1".
+#' @inheritParams publish_article
+#'
+#' @export
 publish_issue <- function(issue, home = get_articles_path()) {
   issue_dir <- file.path(home, "Proofs", issue)
   issue_regex <- "^(\\d{4})-(\\d{1})"
@@ -334,12 +379,12 @@ move_article_web <- function(from, to, volume, issue) {
     )
     update_front_matter(rmd_yml, rmd_path)
     if(requireNamespace("renv", quietly = TRUE)) {
-      needed_packages <- setdiff(renv::dependencies(rmd_path)$Package, rownames(installed.packages()))
+      needed_packages <- setdiff(renv::dependencies(rmd_path)$Package, rownames(utils::installed.packages()))
       if(length(needed_packages) > 0) {
         cli::cli_alert_warning("Article {article_metadata$slug} requires additional packages, would you like to install:")
         cli::cli_li(needed_packages)
         if (utils::menu(c("yes", "no")) == 1L) {
-          install.packages(needed_packages)
+          utils::install.packages(needed_packages)
         }
       }
     }
@@ -524,7 +569,7 @@ get_md_from_pdf <- function(from, final = FALSE) {
 }
 
 #' Build article from LaTeX
-#' @inheritParams publish
+#' @param article The article to build
 #' @param share_path ???
 #' @param clean Remove generated files
 #' @export

@@ -27,13 +27,16 @@ Imports:
     yaml,
     ctv,
     tidyr,
-    gh,
-    scales
+    scales,
+    tinytex,
+    xfun
 Suggests:
     DiagrammeR,
     knitr,
     testthat,
-    rmarkdown
+    rmarkdown,
+    renv,
+    rstudioapi
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 VignetteBuilder: knitr

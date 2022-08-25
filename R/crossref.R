@@ -327,7 +327,7 @@ find_volume_num <- function(issues, volume, num) {
     out[[1]]
   } else {
     warning("Not uniquely identified")
-    return
+    return()
   }
 }
 
@@ -395,7 +395,7 @@ upload_dois_from_issue <- function(issue,
 create_doi_from_issue <- function(issue, outdir = "/tmp/DOI_XML/") {
   if (is.null(issue$volume)) {
     warning("No volume for this issue")
-    return
+    return()
   }
   out <- paste0(outdir, "DOI-", issue$volume, "-", issue$num, ".xml")
   issue <- process_config_yml_component(issue)
