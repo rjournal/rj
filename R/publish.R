@@ -22,7 +22,7 @@
 #' @param volume The volume of the article's issue
 #' @param issue The issue number of the article's issue
 #' @param home Location of the articles directory
-#' @param legacy (Very) old way of referening the R journal
+#' @param legacy (Very) old way of referencing the R journal
 publish_article <- function(article, volume, issue, home = get_articles_path(), legacy = FALSE) {
   cli::cli_alert_info("Publishing article {article}")
   article <- as.article(article)
