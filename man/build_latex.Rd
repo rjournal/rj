@@ -11,8 +11,6 @@ build_latex(
 )
 }
 \arguments{
-\item{article}{article id}
-
 \item{share_path}{???}
 
 \item{clean}{Remove generated files}

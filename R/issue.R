@@ -68,34 +68,19 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
   old <- setwd(get_articles_path())
   on.exit(setwd(old))
   dir <- issue_dir(id)
-  if (!file.exists(dir)) {
+  if (!file.exists(file.path(dir, "news"))) {
     #        stop("Proof ", id, " already exists")
-    dir.create(dir)
+    xfun::dir_create(file.path(dir, "news"))
   }
 
   prev_id <- previous_id(id)
   prev_dir <- file.path("Proofs", prev_id)
-  inherited_files <- c("Rdsub.tex", "Rlogo-5.png")
-  file.copy(file.path(prev_dir, inherited_files), dir)
-  file.copy(file.path(share_path, "RJournal.sty"), dir)
-
-  issue_file <- issue_file(id)
-  file.copy(file.path(share_path, "RJournal_template.tex"), issue_file)
-  issue <- read_tex(issue_file)
-
-  number <- issue_number(id)
-  if (number == 1L) {
-    issue$volume <- issue$volume + 1L
-  }
-  issue$volnum <- number
-  issue$year <- issue_year(id)
-  issue$month <- switch(number,
-    "1" = "June",
-    "2" = "December"
-  )
+  # inherited_files <- c("Rdsub.tex", "Rlogo-5.png")
+  # file.copy(file.path(prev_dir, inherited_files), dir)
+  # file.copy(file.path(share_path, "RJournal.sty"), dir)
 
   arts <- accepted_articles()
-  ready <- filter_status(arts, "online")
+  ready <- filter_status(arts, "proofed")
   for (art in ready) {
     if (exec) {
       system(paste(
@@ -107,7 +92,19 @@ make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
       cat(art$path, file.path(dir, format(art$id)), "\n")
     }
   }
-  message("Do not forget to update the editorial board in ", issue_file)
+
+  news <- news_articles(id)
+  for (art in news) {
+    if (exec) {
+      file.copy(
+        art,
+        file.path(dir, "news"),
+        recursive = TRUE
+      )
+    } else {
+      cat(art, file.path(dir, "news", basename(art)), "\n")
+    }
+  }
 
   if (!exec) {
     cli_alert_info("If these articles look correct, re-run the function with `exec = TRUE` to execute the move.")
@@ -568,34 +565,34 @@ update_layout <- function(id, web_path) {
   writeLines(lines, path)
 }
 
-#' Publish an issue
-#'
-#' Generates per-article PDFs and copies them to the website, located
-#' at \code{web_path}. Removes the published articles from the
-#' accepted directory. Generates the necessary metadata and updates
-#' the website configuration.
-#'
-#' This depends on the pdftools CRAN package, which in turn depends on
-#' the poppler system library. It also requires the command line
-#' program pdftk (distributed as PDFtk Server).
-#'
-#' @param id the id of the issue
-#' @param web_path path to the rjournal.github.io checkout
-#' @param post_file XXX
-#' @export
-publish_issue <- function(id,
-                          web_path = file.path("..", "rjournal.github.io"),
-                          post_file = c("foundation" = 1, "cran" = 1, "bioc" = 1, "ch" = 1)) {
-  if (!file.exists(web_path)) {
-    stop("web_path '", web_path, "' does not exist, please specify")
-  }
-  md <- issue_lp_metadata(id, post_file = post_file)
-  archive_path <- init_archive_path(id, web_path)
-  write_article_pdfs(id, archive_path, md$articles)
-  cleanup_accepted(id, web_path)
-  write_issue_metadata(web_path, md)
-  update_layout(id, web_path)
-}
+#' #' Publish an issue
+#' #'
+#' #' Generates per-article PDFs and copies them to the website, located
+#' #' at \code{web_path}. Removes the published articles from the
+#' #' accepted directory. Generates the necessary metadata and updates
+#' #' the website configuration.
+#' #'
+#' #' This depends on the pdftools CRAN package, which in turn depends on
+#' #' the poppler system library. It also requires the command line
+#' #' program pdftk (distributed as PDFtk Server).
+#' #'
+#' #' @param id the id of the issue
+#' #' @param web_path path to the rjournal.github.io checkout
+#' #' @param post_file XXX
+#' #' @export
+#' publish_issue <- function(id,
+#'                           web_path = file.path("..", "rjournal.github.io"),
+#'                           post_file = c("foundation" = 1, "cran" = 1, "bioc" = 1, "ch" = 1)) {
+#'   if (!file.exists(web_path)) {
+#'     stop("web_path '", web_path, "' does not exist, please specify")
+#'   }
+#'   md <- issue_lp_metadata(id, post_file = post_file)
+#'   archive_path <- init_archive_path(id, web_path)
+#'   write_article_pdfs(id, archive_path, md$articles)
+#'   cleanup_accepted(id, web_path)
+#'   write_issue_metadata(web_path, md)
+#'   update_layout(id, web_path)
+#' }
 
 
 get_startpg_from_nonart_tex <- function(dir, file) {
