@@ -128,7 +128,7 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   apath <- get_articles_path()
   git("mv", article$path,
             file.path(apath, "Rejected", basename(article$path)))
-  email_template(article, "widthdraw")
+  email_template(article, "withdraw")
 
   return(invisible(NULL))
 }
