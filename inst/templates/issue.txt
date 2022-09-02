@@ -1,0 +1,15 @@
+To: {{email}}
+CC: {{editor}}
+Subject: RJ {{id}}: Issue published
+---
+TODO: change from address
+
+Dear {{name}},
+
+The latest issue of the R Journal including your paper has now been published on our website.
+You will find the new issue at https://journal.r-project.org under "CURRENT".
+
+Regards,
+
+{{me}}
+
