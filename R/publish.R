@@ -151,7 +151,8 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
 publish_news <- function(news, volume, issue, home = get_articles_path()) {
   cli::cli_alert_info("Publishing news article {basename(news)}")
   web_news_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_news"))
-  news_slug <- paste0("RJ-", 2008+volume, "-", issue, "-", basename(news))
+  news_slug <- gsub("[^A-Za-z0-9 ]+", "", tolower(basename(news)))
+  news_slug <- paste0("RJ-", 2008+volume, "-", issue, "-", news_slug)
   rmd_path <- move_article_web(news, file.path(web_news_dir, news_slug), volume, issue)
   rmarkdown::render(rmd_path, envir = new.env(), quiet = TRUE)
 }
@@ -212,8 +213,10 @@ publish_issue <- function(issue, home = get_articles_path()) {
 
   ## Handle news
   issue_news <- dir(file.path(issue_dir, "news"), full.names = TRUE)
+
+
   web_news_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_news"))
-  news_slugs <- paste0("RJ-", issue, "-", basename(issue_news))
+  news_slugs <- paste0("RJ-", issue, "-", gsub("[^A-Za-z0-9 ]+", "", tolower(basename(issue_news))))
   news_pub <- file.exists(file.path(web_news_dir, news_slugs, xfun::with_ext(news_slugs, ".html")))
   if (any(!news_pub)) {
     cli::cli_alert_warning("Some news articles have not yet been published, would you like to publish them now?")
