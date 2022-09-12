@@ -57,7 +57,7 @@ as.article <- function(id) {
     # Otherwise we use the articles root
     base <- c(
       "Rejected", "Accepted", "Submissions",
-      file.path("Proofs", dir("Proofs"))
+      file.path("Proofs", dir(file.path(get_articles_path(), "Proofs")))
     )
     pos <- file.exists(file.path(get_articles_path(), base, id, "DESCRIPTION"))
 
