@@ -70,11 +70,11 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
       }
     }
     # Validate existing slug exists and is used
-    if (!empty(article$slug)) {
-      if(!dir.exists(file.path(web_path, "_articles", article$slug))) {
-        article$slug <- ""
-      }
-    }
+    # if (!empty(article$slug)) {
+    #   if(!dir.exists(file.path(web_path, "_articles", article$slug))) {
+    #     article$slug <- ""
+    #   }
+    # }
     # If the slug doesn't exist, create it.
     all_slugs <- dir(
       file.path(web_path, "_articles"),
@@ -268,19 +268,105 @@ move_article_web <- function(from, to, volume, issue) {
     c("correspondence", "history", "RJournal.sty", "DESCRIPTION",
       "RJwrapper.pdf", "supplementaries.zip")
   )
+
+  # collect metadata
+
+  article_metadata <- if(file.exists(file.path(from, "DESCRIPTION"))) {
+    art <- load_article(file.path(from, "DESCRIPTION"))
+    online_date <- Filter(function(x) x$status == "online", art$status)
+    online_date <- if (length(online_date) == 0) {
+      Sys.Date()
+    } else {
+      online_date[[1]]$date
+    }
+
+    first_acknowledged <- Filter(function(x) x$status == "acknowledged", art$status)
+    if(length(first_acknowledged) == 0) first_acknowledged <- list(art$status[[1]])
+
+    list(
+      slug = slug,
+      acknowledged = first_acknowledged[[1]]$date,
+      online = online_date
+    )
+
+  } else {
+    # Produce minimal article metadata for news
+    issue_year <- volume + 2008
+    issue_month <- if(issue_year < 2022) issue * 6 else issue * 3
+    list(
+      slug = basename(to),
+      online = as.Date(paste(volume + 2008, issue_month, "01"), format = "%Y %m %d")
+    )
+  }
+
+  # Handle Rmd source files directly
+  rmd_file <- list.files(from, pattern = "\\.(R|r)md$", full.names = TRUE)
+  rmd_file <- Filter(
+    function(x) {
+      rmd_output <- partition_rmd(x)$front_matter$output
+      if(is.list(rmd_output)) rmd_output <- names(rmd_output)
+      "rjtools::rjournal_web_article" %in% rmd_output
+    },
+    rmd_file
+  )
+
+  if(length(rmd_file) == 1L) {
+    rmd_yml <- partition_rmd(rmd_file)$front_matter
+    # if(is.null(rmd_yml$abstract)) cli::cli_abort("The abstract for {article_metadata$slug} is missing!")
+    rmd_yml$date <- format_non_null(article_metadata$online)
+    rmd_yml$date_received <- format_non_null(article_metadata$acknowledged)
+    rmd_yml$volume <- volume
+    rmd_yml$issue <- issue
+    rmd_yml$slug <- article_metadata$slug
+    if(requireNamespace("renv", quietly = TRUE)) {
+      needed_packages <- setdiff(renv::dependencies(rmd_file)$Package, rownames(utils::installed.packages()))
+      if(length(needed_packages) > 0) {
+        cli::cli_alert_warning("Article {article_metadata$slug} requires additional packages, would you like to install:")
+        cli::cli_li(needed_packages)
+        if (utils::menu(c("yes", "no")) == 1L) {
+          utils::install.packages(needed_packages)
+        }
+      }
+    }
+
+    article_dest_files <- article_files
+    is_art_ext <- tolower(xfun::file_ext(article_files)) %in% c("rmd", "pdf")
+    is_art_name <- xfun::sans_ext(article_files) == xfun::sans_ext(basename(rmd_file))
+    article_dest_files[is_art_name & is_art_ext] <- xfun::with_ext(basename(to), xfun::file_ext(article_files)[is_art_name & is_art_ext])
+    file.copy(
+      file.path(from, article_files),
+      file.path(to, article_dest_files),
+      overwrite = TRUE
+    )
+    rmd_path <- file.path(to, xfun::with_ext(basename(to), ".Rmd"))
+    update_front_matter(rmd_yml, rmd_path)
+
+    return(rmd_path)
+  }
+
+  if(!file.exists(file.path(from, "RJwrapper.tex"))) {
+    cli::cli_alert_warning("Could not find RJwrapper.tex for {basename(from)}, would you like to create a default one?")
+    if(utils::menu(c("Yes", "No")) != 1) {
+      cli::cli_abort("RJwrapper.tex not found for a legacy article, so article could not be migrated.")
+    }
+    wrapper_input <- xfun::sans_ext(article_files[xfun::file_ext(article_files)=="tex"])
+    if(length(wrapper_input) != 1) {
+      cli::cli_abort("Could not automatically identify appropriate article tex file. Check that exactly 1 input tex file exists for the wrapper.")
+    }
+    rjwrapper <- whisker::whisker.render(
+      xfun::read_utf8(system.file("RJwrapper_template.tex", package="rj")),
+      data = list(article_input = sprintf("\\input{%s}", wrapper_input))
+    )
+    xfun::write_utf8(rjwrapper, file.path(from, "RJwrapper.tex"))
+    article_files <- c(article_files, "RJwrapper.tex")
+  }
+
   file.copy(
     file.path(from, article_files),
     to,
     overwrite = TRUE,
     recursive = TRUE
   )
-
-  # obtain metadata from wrapper
-  if(!file.exists(file.path(from, "RJwrapper.tex"))) {
-    cli::cli_abort("Could not find RJwrapper.tex for {basename(from)}.")
-  }
-  wrapper_metadata <- readLines(file.path(from, "RJwrapper.tex"))
-  ## construct preamble.tex for additional tex packages and macros
 
   ## obtain metadata
   pandoc_markdown <- function(article_dir) {
@@ -327,76 +413,11 @@ move_article_web <- function(from, to, volume, issue) {
     metadata$address <- NULL
     metadata
   }
-  # collect metadata
-
-  article_metadata <- if(file.exists(file.path(from, "DESCRIPTION"))) {
-    art <- load_article(file.path(from, "DESCRIPTION"))
-    online_date <- Filter(function(x) x$status == "online", art$status)
-    online_date <- if (length(online_date) == 0) {
-      Sys.Date()
-    } else {
-      online_date[[1]]$date
-    }
-
-    first_acknowledged <- Filter(function(x) x$status == "acknowledged", art$status)
-    if(length(first_acknowledged) == 0) first_acknowledged <- list(art$status[[1]])
-
-    list(
-      slug = slug,
-      acknowledged = first_acknowledged[[1]]$date,
-      online = online_date
-    )
-
-  } else {
-    # Produce minimal article metadata for news
-    issue_year <- volume + 2008
-    issue_month <- if(issue_year < 2022) issue * 6 else issue * 3
-    list(
-      slug = basename(to),
-      online = as.Date(paste(volume + 2008, issue_month, "01"), format = "%Y %m %d")
-    )
-  }
-
-  # Handle Rmd source files directly
-  rmd_file <- list.files(from, pattern = "\\.(R|r)md$", full.names = TRUE)
-  rmd_file <- Filter(
-    function(x) {
-      rmd_output <- partition_rmd(x)$front_matter$output
-      if(is.list(rmd_output)) rmd_output <- names(rmd_output)
-      "rjtools::rjournal_web_article" %in% rmd_output
-    },
-    rmd_file
-  )
-  if(length(rmd_file) == 1L) {
-    rmd_yml <- partition_rmd(rmd_file)$front_matter
-    # if(is.null(rmd_yml$abstract)) cli::cli_abort("The abstract for {article_metadata$slug} is missing!")
-    rmd_yml$date <- format_non_null(article_metadata$online)
-    rmd_yml$date_received <- format_non_null(article_metadata$acknowledged)
-    rmd_yml$volume <- volume
-    rmd_yml$issue <- issue
-    rmd_yml$slug <- article_metadata$slug
-    file.copy(
-      rmd_file,
-      rmd_path <- file.path(to, xfun::with_ext(basename(to), ".Rmd")),
-      overwrite = TRUE
-    )
-    update_front_matter(rmd_yml, rmd_path)
-    if(requireNamespace("renv", quietly = TRUE)) {
-      needed_packages <- setdiff(renv::dependencies(rmd_path)$Package, rownames(utils::installed.packages()))
-      if(length(needed_packages) > 0) {
-        cli::cli_alert_warning("Article {article_metadata$slug} requires additional packages, would you like to install:")
-        cli::cli_li(needed_packages)
-        if (utils::menu(c("yes", "no")) == 1L) {
-          utils::install.packages(needed_packages)
-        }
-      }
-    }
-    return(rmd_path)
-  }
 
   pandoc_markdown <- pandoc_markdown(from)
   pandoc_metadata <- pandoc_metadata(pandoc_markdown)
-  # Find extra dependencies
+
+  # construct preamble.tex for additional tex packages and macros
   wrapper <- readLines(file.path(from, "RJwrapper.tex"))
   doc_start <- which(grepl("^\\s*\\\\begin\\{document\\}", wrapper))
   common_deps <- c(
