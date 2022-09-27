@@ -65,8 +65,9 @@ reviewer_summary <- function(articles, push = FALSE){
 #' @export
 ae_workload <- function(articles = NULL, day_back = 365) {
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
-    select(.data$name, .data$initials, .data$email) %>%
-    as_tibble()
+    select(.data$name, .data$initials, .data$email, .data$comment) %>%
+    as_tibble() %>%
+    rename(status = .data$comment)
 
   # if don't supply articles, use documented(!) source
   if (is.null(articles)) {
@@ -95,7 +96,7 @@ ae_workload <- function(articles = NULL, day_back = 365) {
   tmp <- assignments %>%
     filter(str_length(.data$ae) < 4) %>%
     left_join(ae_rj, by = c("ae" = "initials")) %>%
-    select(.data$id, .data$name, .data$date) %>%
+    select(.data$id, .data$name, .data$date, .data$status) %>%
     rename(ae = .data$name)
 
   # ... which allows us to take all those with full names...
