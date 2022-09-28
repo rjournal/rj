@@ -263,11 +263,16 @@ move_article_web <- function(from, to, volume, issue) {
   slug <- basename(to)
 
   # Copy supporting files
-  article_files <- setdiff(
-    list.files(from),
-    c("correspondence", "history", "RJournal.sty", "DESCRIPTION",
-      "RJwrapper.pdf", "supplementaries.zip")
-  )
+  article_files <- list.files(from, recursive = TRUE)
+  ignore_files <- basename(article_files) %in% c("RJournal.sty", "DESCRIPTION", "RJwrapper.pdf", "supplementaries.zip")
+  top_dir <- function(x) {
+    is_top <- dirname(x) == "."
+    if(all(is_top)) return(x)
+    x[!is_top] <- top_dir(dirname(x[!is_top]))
+    x
+  }
+  ignore_dirs <- top_dir(article_files) %in% c("correspondence", "history")
+  article_files <- article_files[!(ignore_files | ignore_dirs)]
 
   # collect metadata
 
@@ -333,6 +338,7 @@ move_article_web <- function(from, to, volume, issue) {
     is_art_ext <- tolower(xfun::file_ext(article_files)) %in% c("rmd", "pdf")
     is_art_name <- xfun::sans_ext(article_files) == xfun::sans_ext(basename(rmd_file))
     article_dest_files[is_art_name & is_art_ext] <- xfun::with_ext(basename(to), xfun::file_ext(article_files)[is_art_name & is_art_ext])
+    lapply(unique(dirname(file.path(to, article_dest_files))), xfun::dir_create)
     file.copy(
       file.path(from, article_files),
       file.path(to, article_dest_files),
