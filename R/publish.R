@@ -259,6 +259,8 @@ publish_issue <- function(issue, home = get_articles_path()) {
 }
 
 move_article_web <- function(from, to, volume, issue) {
+  volume <- as.integer(volume)
+  issue <- as.integer(issue)
   xfun::dir_create(to)
   slug <- basename(to)
 
