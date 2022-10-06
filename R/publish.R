@@ -246,7 +246,7 @@ publish_issue <- function(issue, home = get_articles_path()) {
   issue_yml$articles <- list(before = NULL, after = NULL)
   issue_yml$volume <- issue_vol
   issue_yml$issue <- issue_num
-  issue_yml$news <- c(setdiff(basename(issue_news), "editorial"))
+  issue_yml$news <- paste0("RJ-", issue, "-", setdiff(basename(issue_news), "editorial"))
   update_front_matter(issue_yml, issue_rmd)
 
   edit_file <- utils::file.edit
@@ -369,11 +369,11 @@ move_article_web <- function(from, to, volume, issue) {
     article_files <- c(article_files, "RJwrapper.tex")
   }
 
+  lapply(unique(dirname(file.path(to, article_files))), xfun::dir_create)
   file.copy(
     file.path(from, article_files),
-    to,
-    overwrite = TRUE,
-    recursive = TRUE
+    file.path(to, article_files),
+    overwrite = TRUE
   )
 
   ## obtain metadata
