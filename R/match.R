@@ -163,7 +163,9 @@ get_article_keywords <- function(id) {
 
 #' Extract keywords from reviewer list
 get_reviewer_keywords <- function() {
-  cli::cli_alert_info("Select the email adress having access to the reviewer googlesheet (if applicable):  ")
+  cli::cli_alert_info(
+  "In the popup authentication, please first select the email address with access to the reviewer googlesheet. On the next page, please tick the item:
+  {.field See, edit, create, and delete all your Google Sheets spreadsheets}")
   reviewer_info <- read_reviewer_sheet()
 
   dup <- reviewer_info %>%
@@ -182,11 +184,12 @@ get_reviewer_keywords <- function() {
 }
 
 read_reviewer_sheet <- function(){
+  googlesheets4::gs4_auth(cache = FALSE)
   sheet_raw <- suppressMessages(googlesheets4::read_sheet(reviewer_sheet_url))
   colnames(sheet_raw) <- c("timestamp", "email","gname","fname",
                            "website","github","twitter","keywords",
                            "blank1", "blank2", "review_completed", "comments")
-  sheet_raw
+  sheet_raw %>% tibble::as_tibble()
 }
 
 reviewer_sheet_url <- "https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit?ts=606a86e4#gid=1594007907"

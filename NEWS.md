@@ -2,6 +2,7 @@
 
 - Expand `get_assignments()` and `actionable_articles()` to search on AEs and 
   print out articles in status "with AE". 
+- `match_keywords()` now requires authentication everytime to avoid false positive PERMISSION_DENIED
 
 
 # rj 0.2.25
