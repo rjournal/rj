@@ -1,0 +1,32 @@
+## Referee report of "{{title}}".
+
+- **Id**: {{id}}
+
+## General
+
+A short summary of the article's main contributions and shortcomings. Is the
+article important to the R the community? Is the approach sensible? Are technology
+and methods up-to-date?
+
+
+## Detailed comments
+
+Point-wise comments (if applicable) and things to improve.
+
+## Code
+
+In the case of an R package, review the code with 'the eye of the expert'.
+That is, not a line-by-line analyses for correctness, but look for obvious
+pitfalls. In particular, you could look at the following.
+
+Usability:
+
+- Does the package have a clear and user-friendly workflow?
+- Is the documentation well-written and user-focused?
+
+Code:
+
+- Are there obvious edge cases that are missed?
+- Could the functions presented be improved? 
+- Is the code well-organized and understandable?
+
