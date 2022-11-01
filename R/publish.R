@@ -325,6 +325,7 @@ move_article_web <- function(from, to, volume, issue) {
     rmd_yml$volume <- volume
     rmd_yml$issue <- issue
     rmd_yml$slug <- article_metadata$slug
+    rmd_yml$draft <- FALSE
     if(requireNamespace("renv", quietly = TRUE)) {
       needed_packages <- setdiff(renv::dependencies(rmd_file)$Package, rownames(utils::installed.packages()))
       if(length(needed_packages) > 0) {
@@ -458,6 +459,7 @@ move_article_web <- function(from, to, volume, issue) {
       cran = article_metadata$CRANpkgs,
       bioc = article_metadata$BIOpkgs
     ),
+    draft = FALSE,
     preview = 'preview.png',
     bibliography = pandoc_metadata$bibliography,
     CTV = article_metadata$CTV_rev,
