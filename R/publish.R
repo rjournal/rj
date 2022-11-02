@@ -267,6 +267,8 @@ move_article_web <- function(from, to, volume, issue) {
   # Copy supporting files
   article_files <- list.files(from, recursive = TRUE)
   ignore_files <- basename(article_files) %in% c("RJournal.sty", "DESCRIPTION", "RJwrapper.pdf", "supplementaries.zip")
+  html_files <- xfun::file_ext(article_files) == "html"
+  ignore_files[html_files] <- vapply(file.path(from, article_files[html_files]), is_distill_html, logical(1L))
   top_dir <- function(x) {
     is_top <- dirname(x) == "."
     if(all(is_top)) return(x)
@@ -692,6 +694,28 @@ online_metadata_for_article <- function(x, final = FALSE) {
   if (landing) res <- c(res, list(landing = str_sub(x$slug, 4L, 7L)))
   if (final) res <- c(res, list(pages = pages))
   res
+}
+
+is_distill_html <- function(file) {
+  # open connection to file
+  con <- file(file, open = "r", encoding = "UTF-8")
+  on.exit(close(con), add = TRUE)
+
+  # loop through the lines in the file
+  radix_md <- '<script type="text/json" id="radix-rmarkdown-metadata">'
+  while (TRUE) {
+    # read next 100 lines
+    lines <- readLines(con, n = 100, encoding = "UTF-8")
+    lines <- iconv(lines, from = "", to = "UTF-8")
+
+    # if end of file, radix metadata was not found
+    if (length(lines) == 0)
+      return(FALSE)
+
+    # look for radix metadata json
+    if (any(grepl(radix_md, lines)))
+      return(TRUE)
+  }
 }
 
 #' @method print catout
