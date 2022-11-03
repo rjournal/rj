@@ -131,7 +131,9 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
 
   rmd_path <- move_article_web(article$path, landing_path, volume, issue)
   article <- update_status(article, "online")
-  rmarkdown::render(rmd_path, envir = new.env(), quiet = TRUE)
+  rlang::check_installed("callr")
+  cli::cli_alert_info(paste("Rendering", rmd_path))
+  callr::r(function(input) {rmarkdown::render(input)}, args = list(input = rmd_path))
 
   # message("Remember to check changes into git")
   invisible(TRUE)
