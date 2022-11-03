@@ -21,7 +21,7 @@ publish_article(
 
 \item{home}{Location of the articles directory}
 
-\item{legacy}{(Very) old way of referening the R journal}
+\item{legacy}{(Very) old way of referencing the R journal}
 }
 \description{
 This function will publish an individual article to the `rjournal.github.io`

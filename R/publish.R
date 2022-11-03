@@ -176,10 +176,12 @@ publish_news <- function(news, volume, issue, home = get_articles_path()) {
 #'    for example to update the editors of the issue.
 #'
 #' @param issue The name of the issue, for example "2022-1".
+#' @param republish_all If TRUE, then all articles and news will be published
+#' again in rjournal.github.io.
 #' @inheritParams publish_article
 #'
 #' @export
-publish_issue <- function(issue, home = get_articles_path()) {
+publish_issue <- function(issue, home = get_articles_path(), republish_all = FALSE) {
   issue_dir <- file.path(home, "Proofs", issue)
   issue_regex <- "^(\\d{4})-(\\d{1})"
   issue_year <- as.integer(sub(issue_regex, "\\1", issue))
@@ -193,17 +195,26 @@ publish_issue <- function(issue, home = get_articles_path()) {
   art_slugs <- vapply(arts, function(x) x$slug, character(1L))
   web_art_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_articles"))
   art_online <- vapply(arts, has_status, logical(1L), "online")
-  art_pub <- vapply(
-    art_slugs,
-    function(x) {
-      if(identical(x, ""))
-        FALSE
-      else
-        file.exists(file.path(web_art_dir, x, xfun::with_ext(x, "html")))
-    }, logical(1L)
-  )
+  art_pub <- if(republish_all) {
+    rep_along(art_slugs, FALSE)
+  } else {
+    vapply(
+      art_slugs,
+      function(x) {
+        if(identical(x, ""))
+          FALSE
+        else
+          file.exists(file.path(web_art_dir, x, xfun::with_ext(x, "html")))
+      }, logical(1L)
+    )
+  }
   if (any(!art_pub)) {
-    cli::cli_alert_warning("Some proofed articles have not yet been published, would you like to publish them now?")
+    cli::cli_alert_warning(
+      if(republish_all)
+        "Would you like to re-publish these articles now?"
+      else
+        "Some proofed articles have not yet been published, would you like to publish them now?"
+    )
     cli::cli_li(basename(issue_arts[!art_pub]))
     if (utils::menu(c("yes", "no")) == 1L) {
       lapply(
@@ -219,9 +230,19 @@ publish_issue <- function(issue, home = get_articles_path()) {
 
   web_news_dir <- normalizePath(file.path(home, "..", "rjournal.github.io", "_news"))
   news_slugs <- paste0("RJ-", issue, "-", gsub("[^A-Za-z0-9 ]+", "", tolower(basename(issue_news))))
-  news_pub <- file.exists(file.path(web_news_dir, news_slugs, xfun::with_ext(news_slugs, ".html")))
+  news_pub <- if(republish_all) {
+    rep_along(news_slugs, FALSE)
+  } else {
+    file.exists(file.path(web_news_dir, news_slugs, xfun::with_ext(news_slugs, ".html")))
+  }
   if (any(!news_pub)) {
-    cli::cli_alert_warning("Some news articles have not yet been published, would you like to publish them now?")
+
+    cli::cli_alert_warning(
+      if(republish_all)
+        "Would you like to re-publish these news articles now?"
+      else
+        "Some news articles have not yet been published, would you like to publish them now?"
+    )
     cli::cli_li(basename(news_slugs[!news_pub]))
     if (utils::menu(c("yes", "no")) == 1L) {
       lapply(

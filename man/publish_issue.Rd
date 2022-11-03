@@ -4,12 +4,15 @@
 \alias{publish_issue}
 \title{Publish an issue}
 \usage{
-publish_issue(issue, home = get_articles_path())
+publish_issue(issue, home = get_articles_path(), republish_all = FALSE)
 }
 \arguments{
 \item{issue}{The name of the issue, for example "2022-1".}
 
 \item{home}{Location of the articles directory}
+
+\item{republish_all}{If TRUE, then all articles and news will be published
+again in rjournal.github.io.}
 }
 \description{
 This function will publish an issue in the `rjournal.github.io` repository
