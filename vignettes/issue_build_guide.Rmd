@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 # Articles to include
 
-All articles accepted up to the publication dates: Mar 31, Jun 30, Oct 31, Dec 31, should be included. (Traditionally these articles would first be made available online, but with the increased frequency of publication this might not be necessary.)
+All articles accepted up to the publication dates: Mar 31, Jun 30, Oct 31, Dec 31, should be included. (Traditionally these articles would first be made available online, but with the increased frequency of publication we are not at the moment performing this step.)
 
 # Preparation
 
@@ -38,7 +38,7 @@ All articles accepted up to the publication dates: Mar 31, Jun 30, Oct 31, Dec 3
   - You need to provide the issue number, eg "2022-2". 
   - This will also create the zip file of supplementary material from the list of files in the DESCRIPTION
 2. Copy news, News_items, into Proofs which is done manually.
-3. Copy files across to `rjournal.github.io`, using `rj:::publish_issue()` or `rj:::publish_article()`. 
+3. Copy files across to `rjournal.github.io`, using `rj:::publish_issue()` or `rj:::publish_article()`. Publish news with `rj:::publish_news()`
   - This will also assign a "slug" the id of the published article, which is added to the DESCRIPTION file in the Proofs folder. 
   - This slug will be used for the folder name in the `rjournal.github.io` "_articles" folder.
   - Also builds file `volume_issue.Rmd` in the "_issues".
