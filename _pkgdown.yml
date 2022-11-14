@@ -52,7 +52,6 @@ reference:
   - actionable_articles
   - address
   - article
-  - build_issue
   - build_latex
   - corr_author
   - draft_acknowledge_submissions
@@ -75,4 +74,3 @@ reference:
   - report
   - rj
   - set_articles_path
-  - suffix_labels

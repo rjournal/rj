@@ -22,3 +22,7 @@ author_emails <- function(issue){
   out <- purrr::map_dfr(dt, ~tibble(name = .x$name, email = .x$email))
   out
 }
+
+issue_dir <- function(id) {
+  file.path(get_articles_path(), "Proofs", id)
+}
