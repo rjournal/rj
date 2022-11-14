@@ -1,22 +1,17 @@
-
-# NM, Sept. 4:
-
-# The function make_proof() creates Proofs/year-ed, creates the RJ-*.tex
-# file etc. that serve as the basis of the issue, and moves the article
-# files (the ones online) to Proofs/year-ed.  This then makes the latter
-# directory a "staging area," for articles waiting to be proofed and
-# eventually put into an issue.
-
-# Accordingly, build_issue () excludes articles not yet proofed.
-
-# NM, Sept. 17:
-
-# The code tacitly assumes that any article put online will necessarily
-# appear in the next issue.  Our postponement of some of the articles
-# originally slated for Vol. 11, No. 1 means adjustments will need to be
-# made, on a one-time basis.
-
-make_proof <- function(id, share_path = file.path("..", "share"), exec=FALSE) {
+#' Make a proof of an issue
+#'
+#' The `make_proof()` function is the first step to creating an issue. It moves
+#' the 'proofed' articles from the `Accepted` folder and news articles from
+#' `News_items/{id}` into `Proofs/{id}`.
+#'
+#' After the proof is made with this function, `publish_issue()` can be used to
+#' publish these articles into the `rjournal.github.io` repository.
+#'
+#' @param id The id of the issue to proof
+#' @param exec Set to TRUE to make the proof, the default (FALSE) allows a preview of which articles will be moved where.
+#'
+#' @export
+make_proof <- function(id, exec = FALSE) {
   old <- setwd(get_articles_path())
   on.exit(setwd(old))
   dir <- issue_dir(id)
