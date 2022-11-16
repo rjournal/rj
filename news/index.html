@@ -65,18 +65,25 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.26" id="rj-0226">rj 0.2.26<a class="anchor" aria-label="anchor" href="#rj-0226"></a></h2>
-<ul><li>Expand <code><a href="../reference/summarise_articles.html">get_assignments()</a></code> and <code><a href="../reference/actionable_articles.html">actionable_articles()</a></code> to search on AEs and print out articles in status “with AE”.</li></ul></div>
+<ul><li>Expand <code><a href="../reference/summarise_articles.html">get_assignments()</a></code> and <code><a href="../reference/actionable_articles.html">actionable_articles()</a></code> to search on AEs and print out articles in status “with AE”.</li>
+<li>
+<code><a href="../reference/match_keywords.html">match_keywords()</a></code> now requires authentication everytime to avoid false positive PERMISSION_DENIED</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.25" id="rj-0225">rj 0.2.25<a class="anchor" aria-label="anchor" href="#rj-0225"></a></h2>
-<ul><li>Updated the template for “accept” to reflect new format, check list, and four issues per year.</li></ul></div>
+<ul><li>Updated the template for “accept” to reflect new format, check list, and four issues per year.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.24" id="rj-0224">rj 0.2.24<a class="anchor" aria-label="anchor" href="#rj-0224"></a></h2>
-<ul><li>Changes to <code><a href="../reference/summarise_articles.html">summarise_articles()</a></code>:<ul><li>include the unassigned articles in the beginning, if any</li>
+<ul><li>Changes to <code><a href="../reference/summarise_articles.html">summarise_articles()</a></code>:
+<ul><li>include the unassigned articles in the beginning, if any</li>
 <li>now use <code>tabulate_article()</code> to produce the output</li>
-</ul></li></ul></div>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.23" id="rj-0223">rj 0.2.23<a class="anchor" aria-label="anchor" href="#rj-0223"></a></h2>
-<ul><li>Changed the <code><a href="../reference/ae_workload.html">ae_workload()</a></code> to<ul><li>have a default period of 365 days</li>
+<ul><li>Changed the <code><a href="../reference/ae_workload.html">ae_workload()</a></code> to
+<ul><li>have a default period of 365 days</li>
 <li>return all AEs where those without assignments as 0</li>
 </ul></li>
 <li>
@@ -84,7 +91,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.22" id="rj-0222">rj 0.2.22<a class="anchor" aria-label="anchor" href="#rj-0222"></a></h2>
-<p>2022-01-31 - fixes to <code><a href="../reference/ae_workload.html">ae_workload()</a></code>; now handles "" empty AE field without failing, and will show the AE initials, name, and email address alongside the assignment count. Now works as previously documented, and <code>day_back</code> argument works again (but note the meaning of this is not what users might expect.)</p>
+<p>2022-01-31 - fixes to <code><a href="../reference/ae_workload.html">ae_workload()</a></code>; now handles “” empty AE field without failing, and will show the AE initials, name, and email address alongside the assignment count. Now works as previously documented, and <code>day_back</code> argument works again (but note the meaning of this is not what users might expect.)</p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.21" id="rj-0221">rj 0.2.21<a class="anchor" aria-label="anchor" href="#rj-0221"></a></h2>
@@ -114,7 +121,8 @@
 <li>Minor, Major, Reject (final)</li>
 </ul></li>
 </ul><p>2021-03-22 - <code>RJ_EMAIL_TOOL</code> environment variable can be set to change the tool used to handle generated e-mails. It can have one of the following values: - “mailto” or “browser” opens the system browser with <em>mailto:</em> URL, on most systems this will open the e-mail client as defined in the system (default) - “show” uses <code><a href="https://rdrr.io/r/base/file.show.html" class="external-link">file.show()</a></code> function on the generated text file - “edit” uses <code><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit()</a></code> function on the generated text file - “open” calls <code>open</code> system command on the generated text file (on macOS this opens your system text editor) - “clip” copies the text of the e-mail into the system clipboard. Note that on systems other that macOS or Windows this requires you to have either <code>xsel</code> or <code>xclip</code> helper tool installed.</p>
-<ul><li>Warn about the “browser” option (typically adulterated by RStudio which tends to prevent <em>mailto:</em> URLs from working) only if it is a function.</li></ul><p>2021-03-15 - modified the <code><a href="../reference/email_template.html">email_template()</a></code> function to use the same text as <code><a href="../reference/valid_status.html">valid_status()</a></code> for major and minor revision</p>
+<ul><li>Warn about the “browser” option (typically adulterated by RStudio which tends to prevent <em>mailto:</em> URLs from working) only if it is a function.</li>
+</ul><p>2021-03-15 - modified the <code><a href="../reference/email_template.html">email_template()</a></code> function to use the same text as <code><a href="../reference/valid_status.html">valid_status()</a></code> for major and minor revision</p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.18" id="rj-0218">rj 0.2.18<a class="anchor" aria-label="anchor" href="#rj-0218"></a></h2>

@@ -76,9 +76,6 @@
     <loc>https://rjournal.github.io/rj/reference/author_emails.html</loc>
   </url>
   <url>
-    <loc>https://rjournal.github.io/rj/reference/build_issue.html</loc>
-  </url>
-  <url>
     <loc>https://rjournal.github.io/rj/reference/build_latex.html</loc>
   </url>
   <url>
@@ -130,6 +127,9 @@
     <loc>https://rjournal.github.io/rj/reference/invite_reviewers.html</loc>
   </url>
   <url>
+    <loc>https://rjournal.github.io/rj/reference/make_proof.html</loc>
+  </url>
+  <url>
     <loc>https://rjournal.github.io/rj/reference/match_keywords.html</loc>
   </url>
   <url>
@@ -148,10 +148,13 @@
     <loc>https://rjournal.github.io/rj/reference/proofing.html</loc>
   </url>
   <url>
-    <loc>https://rjournal.github.io/rj/reference/publish.html</loc>
+    <loc>https://rjournal.github.io/rj/reference/publish_article.html</loc>
   </url>
   <url>
     <loc>https://rjournal.github.io/rj/reference/publish_issue.html</loc>
+  </url>
+  <url>
+    <loc>https://rjournal.github.io/rj/reference/publish_news.html</loc>
   </url>
   <url>
     <loc>https://rjournal.github.io/rj/reference/report.html</loc>
@@ -170,9 +173,6 @@
   </url>
   <url>
     <loc>https://rjournal.github.io/rj/reference/status.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/suffix_labels.html</loc>
   </url>
   <url>
     <loc>https://rjournal.github.io/rj/reference/summarise_articles.html</loc>

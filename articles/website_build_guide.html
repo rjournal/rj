@@ -80,13 +80,13 @@
 
       
 
-      </header><script src="website_build_guide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Guide to Building the New Distill Web Site</h1>
                         <h4 data-toc-skip class="author">Di Cook</h4>
             
-            <h4 data-toc-skip class="date">2022-08-23</h4>
+            <h4 data-toc-skip class="date">2022-11-16</h4>
       
       
       <div class="hidden name"><code>website_build_guide.Rmd</code></div>
@@ -98,32 +98,48 @@
 <div class="section level2">
 <h2 id="about-the-structure-of-the-files">About the structure of the files<a class="anchor" aria-label="anchor" href="#about-the-structure-of-the-files"></a>
 </h2>
-<p>During development the files for the web site are in the <code>dev</code> branch of the <code>github.com/rjournal/rjournal.github.io</code> repo.</p>
-<p>It is a distill web site. Content is in the <code>.Rmd</code> files:</p>
+<p>During development the files for the web site are in the
+<code>dev</code> branch of the
+<code>github.com/rjournal/rjournal.github.io</code> repo.</p>
+<p>It is a distill web site. Content is in the <code>.Rmd</code>
+files:</p>
 <ul>
 <li>
-<code>index.Rmd</code> contains the content linked to the HOME button</li>
+<code>index.Rmd</code> contains the content linked to the HOME
+button</li>
 <li>
-<code>submissions.Rmd</code> contains the content linked to the SUBMIT button</li>
-<li>The <code>articles.Rmd</code> and <code>issues.Rmd</code> files contain R code to automatically generate the list of papers as available in the <code>_articles</code> and <code>_issues</code> folders.</li>
+<code>submissions.Rmd</code> contains the content linked to the
+SUBMIT button</li>
+<li>The <code>articles.Rmd</code> and <code>issues.Rmd</code> files
+contain R code to automatically generate the list of papers as available
+in the <code>_articles</code> and <code>_issues</code> folders.</li>
 </ul>
-<p>which are rendered using <code>rmarkdown</code>. The page styling can be modified by changing items in <code>theme.css</code>.</p>
+<p>which are rendered using <code>rmarkdown</code>. The page styling can
+be modified by changing items in <code>theme.css</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="build">Build<a class="anchor" aria-label="anchor" href="#build"></a>
 </h2>
-<p>This is a static web site, so that each time you make a change to the content you should build the site locally, which will populate the <code>_web</code> folder. This folder contains the completed <code>html</code> and supporting files that deliver the final site.</p>
-<p>Within the RStudio IDE, “Build Website” can be used to render the site. It can also be scripted using:</p>
+<p>This is a static web site, so that each time you make a change to the
+content you should build the site locally, which will populate the
+<code>_web</code> folder. This folder contains the completed
+<code>html</code> and supporting files that deliver the final site.</p>
+<p>Within the RStudio IDE, “Build Website” can be used to render the
+site. It can also be scripted using:</p>
 <pre><code><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render_site.html" class="external-link">render_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
-<p>The site can be viewed locally by opening <code>index.html</code> in your web browser.</p>
+<p>The site can be viewed locally by opening <code>index.html</code> in
+your web browser.</p>
 </div>
 <div class="section level2">
 <h2 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
 <ul>
-<li><a href="https://rstudio.github.io/distill/website.html#building-the-site" class="external-link">Building the site</a></li>
-<li><a href="https://rstudio.github.io/distill/publish_website.html" class="external-link">Ways of publishing</a></li>
-<li><a href="https://distillery.rbind.io/posts/2021-03-18-use-github-actions-with-r-markdown-and-distill/" class="external-link">The Distillery</a></li>
+<li><a href="https://rstudio.github.io/distill/website.html#building-the-site" class="external-link">Building
+the site</a></li>
+<li><a href="https://rstudio.github.io/distill/publish_website.html" class="external-link">Ways of
+publishing</a></li>
+<li><a href="https://distillery.rbind.io/posts/2021-03-18-use-github-actions-with-r-markdown-and-distill/" class="external-link">The
+Distillery</a></li>
 </ul>
 </div>
   </div>
