@@ -46,6 +46,12 @@ reference:
   contents:
   - valid_status
   - valid_reviewer_status
+- title: Build an issue
+  contents:
+  - make_proof
+  - publish_article
+  - publish_issue
+  - publish_news
 - title: Misc
   contents:
   - AEs
@@ -69,9 +75,6 @@ reference:
   - online_metadata_for_article
   - parse_address_list
   - get_accepted_articles
-  - publish_article
-  - publish_issue
-  - publish_news
   - report
   - rj
   - set_articles_path
