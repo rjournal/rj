@@ -124,6 +124,7 @@ get_AE <- function(x){
 #' Add AE to the DESCRIPTION
 #'
 #' Fuzzy match to find the initial of the AE to fill in the article DESCRIPTION.
+#' Checks that AE term has not ended.
 #' The status field is also updated with a new line of add AE.
 #'
 #' @param article article id
@@ -133,7 +134,8 @@ get_AE <- function(x){
 add_ae <- function(article, name, date = Sys.Date()){
   article <- as.article(article)
 
-  ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) #%>%
+  ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) |>
+    filter(end_year <= as.numeric(substr(Sys.Date(), 1,4)))
     #mutate(concat = paste0(!!sym("name"), !!sym("github_handle"), !!sym("email")))
 
   found <- NA
