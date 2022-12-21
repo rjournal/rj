@@ -135,7 +135,7 @@ add_ae <- function(article, name, date = Sys.Date()){
   article <- as.article(article)
 
   ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) |>
-    filter(end_year <= as.numeric(substr(Sys.Date(), 1,4)))
+    filter(end_year > as.numeric(substr(Sys.Date(), 1,4)))
     #mutate(concat = paste0(!!sym("name"), !!sym("github_handle"), !!sym("email")))
 
   found <- NA
