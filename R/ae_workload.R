@@ -131,39 +131,29 @@ get_AE <- function(x){
 #' @param name a name used to match AE, can be AE initials, name, github handle, or email
 #' @param date the date for updating status
 #' @export
-add_ae <- function(article, name, date = Sys.Date()){
+
+
+add_ae <-function (article, name, date = Sys.Date()) {
   article <- as.article(article)
-
-  ae_list <- read.csv(system.file("associate-editors.csv", package = "rj")) |>
-    filter(end_year > as.numeric(substr(Sys.Date(), 1,4)))
-    #mutate(concat = paste0(!!sym("name"), !!sym("github_handle"), !!sym("email")))
-
+  ae_list <- filter(read.csv(system.file("associate-editors.csv",
+                                         package = "rj")), end_year > as.numeric(substr(Sys.Date(),
+                                                                                         1, 4)))
   found <- NA
-  # Check if matches initials
   found <- which(str_detect(ae_list$initials, name))
-  # If not initials, check name
   if (is.na(found))
     found <- which(str_detect(ae_list$name, name))
-  # If not initials, check github
   if (is.na(found))
     found <- which(str_detect(ae_list$github, name))
-  # If not initials, check email
   if (is.na(found))
     found <- which(str_detect(ae_list$email, name))
-
-  #person <- ae_list$github[str_detect(ae_list$concat, name)]
-  #person_name <- as.character(ae_list$name[str_detect(ae_list$concat, name)])
-
-  if (!is.na(found)){
-    # github start with "ae-articles-xxx"
-    #ae_abbr <- str_sub(person, 13, -1)
+  if (!is.na(found)) {
     article$ae <- ae_list$initials[found]
-    update_status(article, "with AE", comments = ae_list$name[found], date = date)
-
-  } else {
+    update_status(article, "with AE", comments = ae_list$name[found],
+                  date = date)
+  }
+  else {
     cli::cli_alert_warning("No AE found. Input the name as the whole or part of the AE name, github handle, or email")
   }
-
   return(invisible(article))
 }
 
