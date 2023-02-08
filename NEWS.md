@@ -1,3 +1,9 @@
+
+# rj 0.2.27
+
+- Added two new functions to create summary plots `article_status_plot()` and `time_to_accept_plot()`
+
+
 # rj 0.2.26
 
 - Expand `get_assignments()` and `actionable_articles()` to search on AEs and 

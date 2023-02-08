@@ -1,7 +1,7 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.26
+Version: 0.2.27
 Author: Editor-in-Chief <R-journal@r-project.org>
 Maintainer: Editor-in-Chief <R-journal@r-project.org>
 Description: This package provides useful functions for the
@@ -37,7 +37,8 @@ Suggests:
     rmarkdown,
     renv,
     rstudioapi,
-    callr
+    callr,
+    ggplot2
 Encoding: UTF-8
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
