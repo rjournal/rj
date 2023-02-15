@@ -136,7 +136,7 @@ get_AE <- function(x){
 add_ae <-function (article, name, date = Sys.Date()) {
   article <- as.article(article)
   ae_list <- filter(read.csv(system.file("associate-editors.csv",
-                                         package = "rj")), .data$end_year > as.numeric(substr(Sys.Date(),
+                                         package = "rj")), .data$end_year >= as.numeric(substr(Sys.Date(),
                                                                                          1, 4)))
   found <- NA
   found <- which(str_detect(ae_list$initials, name))
