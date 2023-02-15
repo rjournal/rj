@@ -209,8 +209,8 @@ get_assignments <- function(editor, folder = "Submissions") {
 
   ae_initials <- read.csv(system.file("associate-editors.csv", package = "rj"))$initials
   editors_all <- read.csv(system.file("editors.csv", package = "rj"))$name
-  # include only "DC" "MK" "CH" "CG" "SU" "GS" "MV"
-  editor_initials <- editors_all[-(1:10)]
+  # include only "DC"  "CH"  "SU"  "MV" "RH"
+  editor_initials <- editors_all[-(1:13)]
 
   if (editor %in% ae_initials){
     role <- "AE"
