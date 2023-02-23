@@ -212,7 +212,7 @@ article_ids <- function(dirs = TRUE) {
     # Articles in proofs
     dir(
       # In all proofs...
-      dir(file.path(get_articles_path(), intersect(dirs, "Proofs")), pattern = "\\d{4}-[1-2]", full.names = TRUE),
+      dir(file.path(get_articles_path(), intersect(dirs, "Proofs")), pattern = "\\d{4}-[1-4]", full.names = TRUE),
       # Search for articles
       pattern = "\\d{4}-\\d{2,}"
     )
