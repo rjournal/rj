@@ -1,7 +1,7 @@
 
 
 
-article_status_data <- function(years=NULL){
+article_status_data <- function(years=NULL, save=TRUE){
   if (is.null(years)){
     this_year <- as.numeric(format(Sys.Date(), "%Y"))
     years <- this_year - (1:4)
@@ -39,9 +39,16 @@ article_status_data <- function(years=NULL){
     dplyr::slice_tail() |>
     mutate(current="accepted/published")
 
-  allart <- bind_rows(acc, subs, rej) |>
+  article_status_data <- bind_rows(acc, subs, rej) |>
     mutate(year = substr(id,1,4)) |> ungroup()
-  allart
+
+  if (save) {
+    fn <- file.path(normalizePath("../rjournal.github.io/resources", mustWork = TRUE), "article_status_data.Rdata")
+    save(article_status_data,file=fn)
+    print(paste("Saving article status data to", fn))
+  }
+
+  article_status_data
 }
 
 
@@ -76,7 +83,7 @@ article_status_plot <- function(years=NULL, save=TRUE){
 }
 
 
-time_to_accept_data <- function(years=NULL){
+time_to_accept_data <- function(years=NULL, save=TRUE){
   if (is.null(years)){
     this_year <- as.numeric(format(Sys.Date(), "%Y"))
     years <- this_year - (1:4)
@@ -116,7 +123,7 @@ time_to_accept_data <- function(years=NULL){
     group_by(id)  |>
     dplyr::slice_max(date, with_ties=FALSE)
 
-  accepted_all <-
+  time_to_accept_data <-
     dplyr::full_join(submitted_info, accepted_info, by="id") |>
     mutate(pub_year = max(.data$pub_year.x, .data$pub_year.y, na.rm=T),
            days = dplyr::case_when(
@@ -124,7 +131,13 @@ time_to_accept_data <- function(years=NULL){
              date.y >= date.x ~ as.numeric(date.y- date.x),
              TRUE ~ NA
            ))
-  accepted_all
+  if (save) {
+    fn <- file.path(normalizePath("../rjournal.github.io/resources", mustWork = TRUE), "time_to_accept_data.Rdata")
+    save(time_to_accept_data,file=fn)
+    print(paste("Saving time to accept data to", fn))
+  }
+
+  time_to_accept_data
 }
 
 
