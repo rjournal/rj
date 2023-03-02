@@ -4,10 +4,10 @@
 \alias{article_status_plot}
 \title{Generates a status plot for articles submitted in the last few years.}
 \usage{
-article_status_plot(nyears = 4, save = TRUE)
+article_status_plot(years = NULL, save = TRUE)
 }
 \arguments{
-\item{nyears}{The number of years considered. Excludes current year.}
+\item{years}{years considered. A vector of years, or defaults to last four years.}
 
 \item{save}{Defaults to TRUE. The plot is saved in the rjournal.github.io/resources folder.}
 }

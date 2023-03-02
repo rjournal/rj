@@ -55,7 +55,7 @@ article_status_data <- function(years=NULL, save=TRUE){
 
 #' Generates a status plot for articles submitted in the last few years.
 #'
-#' @param The years considered. A vector of years, or defaults to last four years.
+#' @param years years considered. A vector of years, or defaults to last four years.
 #' @param save Defaults to TRUE. The plot is saved in the rjournal.github.io/resources folder.
 #'
 #' @return a ggplot, one bar per year (taken from article id)

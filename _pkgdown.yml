@@ -25,6 +25,7 @@ reference:
   - accept
   - reject
   - withdraw
+  - check_in_submission_folder
   - reviewer_status
   - summarise_articles
   - tabulate_articles
@@ -78,3 +79,5 @@ reference:
   - report
   - rj
   - set_articles_path
+  - article_status_plot
+  - time_to_accept_plot
