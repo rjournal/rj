@@ -7,9 +7,9 @@
 time_to_accept_plot(years = NULL, save = TRUE)
 }
 \arguments{
-\item{save}{Defaults to TRUE. The plot is saved in the rjournal.github.io/resources folder.}
+\item{years}{years considered. A vector of years, or defaults to last four years.}
 
-\item{The}{years considered. A vector of years, or defaults to last four years.}
+\item{save}{Defaults to TRUE. The plot is saved in the rjournal.github.io/resources folder.}
 }
 \value{
 a ggplot, one boxplot per publication year
