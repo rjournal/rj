@@ -24,6 +24,7 @@
 #' @export
 update_status <- function(article, status, comments = "", date = Sys.Date(), AE = is_AE()) {
   article <- as.article(article)
+
   if (is.character(date)) date <- as.Date(date)
 
   if (AE && status %in% c("major revision", "minor revision", "accept", "rejected")) {
@@ -49,14 +50,16 @@ update_status <- function(article, status, comments = "", date = Sys.Date(), AE 
 #'
 #' This set of functions wraps around \code{update_status()} and \code{email_template}
 #' to first update the status field in the DESCRIPTION file and
-#' then draft an email from the template.
+#' then draft an email from the template. Articles are verified to be under the
+#' Submission folder before carrying out the actions to avoid mistake
+#' input of article ID.
 #'
 #' @inheritParams update_status
 #' @rdname action
 #' @export
 reject <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
-
+  check_in_submission_folder(article)
   cli::cli_h1(paste("Rejecting paper", format(article$id)))
   cli::cli_alert_info("Updating DESCRIPTION file")
   update_status(article, "rejected", comments = comments, date = date)
@@ -107,6 +110,7 @@ reject_format <- function(article, comments = "", date = Sys.Date()) {
 #' @export
 accept <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
+  check_in_submission_folder(article)
   message("Accepting ", format(article$id))
   update_status(article, "accepted", comments = comments, date = date)
 
@@ -122,6 +126,7 @@ accept <- function(article, comments = "", date = Sys.Date()) {
 #' @export
 withdraw <- function(article, comments = "", date = Sys.Date()) {
   article <- as.article(article)
+  check_in_submission_folder(article)
   message("Withdrawing ", format(article$id))
   update_status(article, "withdrawn", comments = comments, date = date)
 
@@ -137,6 +142,7 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
 #' @export
 major_revision <- function(article, comments = "", date = Sys.Date()){
   article <- as.article(article)
+  check_in_submission_folder(article)
   cli::cli_inform("Major revision: {.field {article$id}}")
   update_status(article, "major revision", comments = comments, date = date)
 
@@ -148,12 +154,26 @@ major_revision <- function(article, comments = "", date = Sys.Date()){
 #' @export
 minor_revision <- function(article, comments = "", date = Sys.Date()){
   article <- as.article(article)
+  check_in_submission_folder(article)
   cli::cli_inform("Minor revision: {.field {article$id}}")
   update_status(article, "minor revision", comments = comments, date = date)
 
   email_template(article, "revision-minor")
   return(invisible(NULL))
 }
+
+#' @rdname action
+#' @export
+check_in_submission_folder <- function(article){
+
+  if (!inherits(article, "article")) cli::cli_abort("Not an article object.")
+
+  if (!stringr::str_detect(article$path, "Submission")){
+    cli::cli_abort("The article is not currently in the {.file Submissions} folder.
+                   Do you input the article ID wrong?")
+  }
+}
+
 
 #' Functions for proofing articles
 #'

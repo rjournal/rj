@@ -2,6 +2,7 @@
 # rj 0.2.27
 
 - Added two new functions to create summary plots `article_status_plot()` and `time_to_accept_plot()`
+- Add `check_in_submission_folder()` to verify the article is currently active for actions (major_revision, minor_revision, accept, reject). 
 
 
 # rj 0.2.26

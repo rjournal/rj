@@ -7,6 +7,7 @@
 \alias{withdraw}
 \alias{major_revision}
 \alias{minor_revision}
+\alias{check_in_submission_folder}
 \title{Accept, reject, or withdraw an article}
 \usage{
 reject(article, comments = "", date = Sys.Date())
@@ -20,6 +21,8 @@ withdraw(article, comments = "", date = Sys.Date())
 major_revision(article, comments = "", date = Sys.Date())
 
 minor_revision(article, comments = "", date = Sys.Date())
+
+check_in_submission_folder(article)
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
@@ -31,5 +34,7 @@ minor_revision(article, comments = "", date = Sys.Date())
 \description{
 This set of functions wraps around \code{update_status()} and \code{email_template}
 to first update the status field in the DESCRIPTION file and
-then draft an email from the template.
+then draft an email from the template. Articles are verified to be under the
+Submission folder before carrying out the actions to avoid mistake
+input of article ID.
 }
