@@ -1,14 +1,14 @@
 Type: Package
 Package: rj
 Title: Tools for managing the R journal
-Version: 0.2.27
+Version: 0.2.28
 Author: Editor-in-Chief <R-journal@r-project.org>
 Maintainer: Editor-in-Chief <R-journal@r-project.org>
 Description: This package provides useful functions for the
     editors of the R journal.
 License: MIT + file LICENSE
 Depends:
-    R (>= 3.2.0)
+    R (>= 4.2.0)
 Imports:
     cli,
     dplyr,
