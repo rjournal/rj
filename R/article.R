@@ -238,7 +238,7 @@ tabulate_articles <- function(dirs = c("Accepted", "Submissions")) {
 
 tabulate_single <- function(id){
   art <- tryCatch(as.article(id), error = function(e) {
-    stop(stringr::str_glue("Failed to parse the DESCRIPTION file of {art}: {e$message}"))
+    stop(stringr::str_glue("Failed to parse the DESCRIPTION file of {id}: {e$message}"))
   })
   lst_to_tbl <- function(x) {
     x <- lapply(x, function(z) if(rlang::is_empty(z)) NA else z)
