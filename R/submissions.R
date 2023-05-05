@@ -111,6 +111,9 @@ download_submissions <- function(dry_run) {
   articles <- lapply(
     split(new_articles, new_articles[["Submission ID"]]),
     function(form) {
+        ## use only the last entry if multiple are submitted
+        if (nrow(form) > 1)
+            form <- form[nrow(form),]
       id <- form[["Submission ID"]]
       if (!identical(id, form[[resub_field]])) {
         path <- create_submission_directory(id)
