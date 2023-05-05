@@ -1,3 +1,20 @@
+# Parse articles in subdirectories of base.
+# On error raises articleListError conditon which has
+# all individual errors as a list in the `errors` element.
+.parse.articles <- function(subpaths, base=get_articles_path()) {
+    bases <- file.path(base, subpaths)
+    paths <- grep("2\\d{3}-\\d{1,3}$", dir(bases, full.names=TRUE), value=TRUE)
+    l <- lapply(paths, function(id) tryCatch(as.article(id),
+                                             error=function(e) e))
+    names(l) <- paths
+    err <- sapply(l, inherits, "error")
+    if (any(err))
+        stop(errorCondition(
+            paste0("The following directories had errors:\n", paste(names(l)[err], collapse="\n")),
+            errors=l[err], class="articleErrorList"))
+    l
+}
+
 #' List articles.
 #'
 #' List all articles in common directories.
@@ -7,22 +24,16 @@
 #'  \item \code{accepted_articles}: \file{Accepted/}
 #' }
 #' @export
-active_articles <- function() {
-  base <- c("Submissions", "Accepted")
-  paths <- dir(base, full.names = TRUE)
-  lapply(paths, as.article)
-}
+active_articles <- function()
+    .parse.articles(c("Submissions", "Accepted"))
 
 #' @rdname active_articles
 #' @export
-accepted_articles <- function() {
-  paths <- dir(file.path(get_articles_path(), "Accepted"), full.names = TRUE)
-  lapply(paths, as.article)
-}
+accepted_articles <- function()
+    .parse.articles("Accepted")
 
-news_articles <- function(issue) {
-  dir(file.path(get_articles_path(), "News_items", issue), full.names = TRUE)
-}
+news_articles <- function(issue)
+    .parse.articles("News_items")
 
 #' Generate a new id value.
 #'
