@@ -1,3 +1,7 @@
+# rj 0.2.29
+
+- added a line for AE: decisions for summarise_articles()
+
 # rj 0.2.28
 
 - Add `check_in_submission_folder()` to verify the article is currently active for actions (major_revision, minor_revision, accept, reject). 

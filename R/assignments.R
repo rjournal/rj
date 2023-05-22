@@ -57,6 +57,18 @@ print_with_ae <- function(latest) {
   )
 } ## extra space for AE name
 
+.ae_decision <- function(status) {
+  grepl("AE:", status)
+}
+
+print_ae_decision <- function(latest) {
+
+  print_sum(latest, .ae_decision(latest$status),
+            "{art$id} ({art$days_since_submission}, {art$ae}): {art$title}",
+            pre.width = 45
+  )
+} ## extra space for AE name
+
 print_out_for_review <- function(latest) {
   print_sum(latest, "out for review", list_reviewers)
 }
@@ -85,7 +97,9 @@ print_other <- function(latest) {
   cond <- grepl("revision", latest$status) |
     (latest$status %in% c(
       "rejected", "submitted", "acknowledged",
-      "with AE", "out for review"
+      "with AE", "out for review", "AE: accept",
+      "AE: major revision", "AE: minor revision",
+      "AE: accept", "AE: reject"
     ))
   if (any(!cond)) {
     print_sum(latest, !cond, , "{art$id} {art$status} ({art$days_since_submission}): {art$title}",
@@ -134,6 +148,7 @@ summarise_articles <- function(editor = NULL,
   if (isTRUE(rejected)) print_rejected(latest)
   print_acknowledged(latest)
   print_with_ae(latest)
+  print_ae_decision(latest)
   print_submitted(latest)
   print_out_for_review(latest)
   print_in_revision(latest)
