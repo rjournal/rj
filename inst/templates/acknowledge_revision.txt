@@ -1,6 +1,6 @@
 To: {{email}}
 Subject: [RJournal {{id}}] submission acknowledged
-Cc: HANDLING_EDITOR
+Cc: {{editor}}
 ---
 Dear {{name}},
 
