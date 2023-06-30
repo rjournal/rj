@@ -137,19 +137,24 @@ as.data <- function(x) {
   data <- lapply(x, format)
   data$name <- x$authors[[1]]$name
   data$email <- x$authors[[1]]$email
-  if (!empty(x$editor)) data$editor <- editors()[x$editor]
+  if (!empty(x$editor)) data$editor <- editors(TRUE)[x$editor]
   data$me <- guess_real_name()
 
   data
 }
 
 #' @importFrom utils read.csv
-editors <- function() {
+#' @param by.name logical, if \code{TRUE} then names are names and
+#'     values e-mails, otherwise names are e-mails and values names
+editors <- function(by.name=FALSE) {
   cli::cli_alert_info("Reading inst/editor.csv")
   fname <- system.file("editors.csv", package = "rj")
   out <- read.csv(fname, stringsAsFactors = FALSE)
   #  out <- read.csv("editors.csv", stringsAsFactors = FALSE)
-  `names<-`(out[["name"]], out[["email"]])
+  if (by.name)
+      `names<-`(out[["email"]], out[["name"]])
+  else
+      `names<-`(out[["name"]], out[["email"]])
 }
 
 #' @importFrom whisker whisker.render
