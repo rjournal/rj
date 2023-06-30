@@ -120,7 +120,10 @@ download_submissions <- function(dry_run) {
 
         # If the article is a new submission
         files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
-        extract_files(files, path)
+        tryCatch(extract_files(files, path),
+                 error=function(e) {
+                     cli::cli_alert_danger("Error while extracting contents: {e}")
+                 })
 
         # Combine author fields
         authors <- str_glue_data(form, "{`Your name:`} <{`Email address`}>")
