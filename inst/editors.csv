@@ -1,19 +1,19 @@
-name,email,github
-Hadley Wickham,h.wickham@gmail.com,
-Heather Turner,ht@heatherturner.net,
-Martyn Plummer,Martyn.Plummer@r-project.org,
-Deepayan Sarkar,deepayan.sarkar@r-project.org,
-Bettina Grün,Bettina.Gruen@jku.at,
-Michael Lawrence,lawrence.michael@gene.com,
-Roger Bivand,Roger.Bivand@nhh.no,
-John Verzani,verzani@math.csi.cuny.edu,
-Olivia Lau,olivia.lau@post.harvard.edu,
-NM,nsmatloff@ucdavis.edu,
-CG,csgillespie@gmail.com,csgillespie
-GS,ucfagls@gmail.com,gavinsimpson
-MK,micheal.kane@yale.edu,kaneplusplus
-DC,dicook.rj@gmail.com,dicook
-CH,Catherine.Hurley@mu.ie,cbhurley
-SU,s.urbanek@auckland.ac.nz,s-u
-MV,mark.vanderloo@gmail.com,markvanderloo
-RH,rob.hyndman@monash.edu,robjhyndman
+name,email,github,real
+Hadley Wickham,h.wickham@gmail.com,,Hadley Wickham
+Heather Turner,ht@heatherturner.net,,Heather Turner
+Martyn Plummer,Martyn.Plummer@r-project.org,,Martyn Plummer
+Deepayan Sarkar,deepayan.sarkar@r-project.org,,Deepayan Sarkar
+Bettina Grün,Bettina.Gruen@jku.at,,Bettina Grün
+Michael Lawrence,lawrence.michael@gene.com,,Michael Lawrence
+Roger Bivand,Roger.Bivand@nhh.no,,Roger Bivand
+John Verzani,verzani@math.csi.cuny.edu,,John Verzani
+Olivia Lau,olivia.lau@post.harvard.edu,,Olivia Lau
+NM,nsmatloff@ucdavis.edu,,Norm Matloff
+CG,csgillespie@gmail.com,csgillespie,Colin Gillespie
+GS,ucfagls@gmail.com,gavinsimpson,Gavin Simpson
+MK,michael.kane@yale.edu,kaneplusplus,Michael Kane
+DC,dicook.rj@gmail.com,dicook,Di Cook
+CH,Catherine.Hurley@mu.ie,cbhurley,Catherine Hurley
+SU,s.urbanek@auckland.ac.nz,s-u,Simon Urbanek
+MV,mark.vanderloo@gmail.com,markvanderloo,Mark var der Loo
+RH,rob.hyndman@monash.edu,robjhyndman,Rob Hyndman
