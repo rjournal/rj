@@ -1,9 +1,10 @@
 To: {{email}}
+CC: {{edmail}}
 Subject: [RJournal {{id}}] submission acknowledged
 ---
 Dear {{name}},
 
-We are pleased to receive your submission "{{title}}" to the R Journal. It has been given id {{id}}; please use that in future correspondence.
+We are pleased to receive your submission "{{title}}" to the R Journal. It has been given id {{id}}; please use that in future correspondence. Your handling editor will be {{edname}} (CCd).
 
 The submission process proceeds as follows:
 
@@ -11,9 +12,8 @@ The submission process proceeds as follows:
 * reviewers solicited (~2-4 weeks)
 * reviews received (~2-3 months)
 
-We are currently experiencing a large number of submissions, and these times are ambitious. The editorial team is juggling many tasks and processing articles quickly is very difficult. The reviewing process can take anywhere from a few weeks to a number of months, but feel free to inquire on the progress of your submission.
+We are currently experiencing a large number of submissions, and these times are ambitious. The reviewing process can take anywhere from a few weeks to a number of months, but feel free to inquire on the progress of your submission.
 
 Regards,
-
 {{me}}
 

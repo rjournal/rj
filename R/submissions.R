@@ -274,10 +274,17 @@ draft_acknowledgements <- function(subs) {
 #' @param article this is the article id
 #'
 #' @export
-acknowledge_submission <- function(article) {
-  data <- as.data(as.article(article))
+acknowledge_submission <- function(article, editor) {
+  data <- as.data(a <- as.article(article))
   data$name <- stringr::str_split(data$name, " ")[[1]][1]
   data$date <- format(Sys.Date() + 5, "%d %b %Y")
+  if (!missing(editor)) {
+      a$editor <- editor
+      save_article(a)
+      ed <- read.csv(system.file("editors.csv", package = "rj"), stringsAsFactors = FALSE)
+      data$edname <- ed$real[match(editor, ed[[1]])]
+      data$edmail <- ed$email[match(editor, ed[[1]])]
+  }
 
   template <- find_template("acknowledge")
   email <- whisker.render(readLines(template), data)
