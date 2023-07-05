@@ -4,7 +4,7 @@
 \alias{acknowledge_submission}
 \title{Send submission acknowledgements}
 \usage{
-acknowledge_submission(article)
+acknowledge_submission(article, editor)
 }
 \arguments{
 \item{article}{this is the article id}

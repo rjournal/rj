@@ -9,7 +9,7 @@
 \usage{
 get_accepted_articles()
 
-draft_proofing(article)
+draft_proofing(article, update = TRUE)
 
 proofing_article(drafts)
 
@@ -17,6 +17,8 @@ proofing_article_text(article)
 }
 \arguments{
 \item{article}{article id}
+
+\item{update}{logical, if \code{TRUE} then the status is updated to "out for proofing"}
 
 \item{drafts}{list of \code{gmail_draft} objects}
 }
