@@ -71,7 +71,7 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_accepted_articles</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">draft_proofing</span><span class="op">(</span><span class="va">article</span><span class="op">)</span></span>
+<span><span class="fu">draft_proofing</span><span class="op">(</span><span class="va">article</span>, update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">proofing_article</span><span class="op">(</span><span class="va">drafts</span><span class="op">)</span></span>
 <span></span>
@@ -82,6 +82,10 @@
     <h2>Arguments</h2>
     <dl><dt>article</dt>
 <dd><p>article id</p></dd>
+
+
+<dt>update</dt>
+<dd><p>logical, if <code>TRUE</code> then the status is updated to "out for proofing"</p></dd>
 
 
 <dt>drafts</dt>
