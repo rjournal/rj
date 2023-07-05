@@ -121,7 +121,7 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
     }
     zipfrom <- file.path(article$path, "supplementaries.zip")
     ret <- zip(zipfrom, file.path(article$path, unlist(article$suppl)),
-               flags = "-j"
+               flags = "-r9jX"
     )
     if (ret != 0L) stop("zipfile creation error")
     zipto <- file.path(landing_path, paste0(slug, ".zip"))
