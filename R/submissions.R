@@ -272,6 +272,7 @@ draft_acknowledgements <- function(subs) {
 #' Send submission acknowledgements
 #'
 #' @param article this is the article id
+#' @param editor optional string, if specified, also sets the \code{Editor:} field to that value and the handling editor will be CCd on the e-mail.
 #'
 #' @export
 acknowledge_submission <- function(article, editor) {
