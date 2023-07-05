@@ -8,6 +8,8 @@ acknowledge_submission(article, editor)
 }
 \arguments{
 \item{article}{this is the article id}
+
+\item{editor}{optional string, if specified, also sets the \code{Editor:} field to that value and the handling editor will be CCd on the e-mail.}
 }
 \description{
 Send submission acknowledgements
