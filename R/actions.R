@@ -199,15 +199,17 @@ get_accepted_articles <- function() {
 }
 
 #' @param article this is the article id
+#' @param update logical, if \code{TRUE} then the status is updated to "out for proofing"
 #' @export
 #' @rdname proofing
-draft_proofing <- function(article) {
+draft_proofing <- function(article, update=TRUE) {
   data <- as.data(as.article(article))
   data$name <- stringr::str_split(data$name, " ")[[1]][1]
   data$date <- format(Sys.Date() + 5, "%d %b %Y")
 
   template <- find_template("gmail_proofing")
   email <- whisker.render(readLines(template), data)
+  if (update) update_status(data$id, "out for proofing")
 
   email_text(email)
 }
