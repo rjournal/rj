@@ -87,10 +87,16 @@ as.article.gmail_message <- function(msg, ...) {
 
 #' @importFrom googlesheets4 read_sheet range_write
 download_submissions <- function(dry_run) {
-  submissions <- googlesheets4::read_sheet(sheet_id)
+    submissions <- googlesheets4::read_sheet(sheet_id)
+    ## the sheet is a nightmare, because the "names" are labels, so
+    ## if anyone makes a small change it breaks the whole process.
+    ## So please NOT change the labels!
+    ## We try to remove some comments and long labels to make it
+    ## at least a little more robust.
+    names(submissions) <- gsub("(.{10}[^ ]+) .*","\\1",gsub(" ?\\(.*", "", names(submissions)))
   ids <- submissions[["Submission ID"]]
   new_submission <- is.na(ids)
-  resub_field <- "If this is a revision or resubmission or was previously rejected, enter the original submission ID (eg 2020-131)"
+  resub_field <- "If this is a"
   resub_ids <- submissions[[resub_field]][new_submission]
   is_resub <- !is.na(resub_ids)
 
@@ -108,6 +114,28 @@ download_submissions <- function(dry_run) {
 
   new_articles <- submissions[new_submission, ]
   new_articles[["Submission ID"]] <- vapply(new_ids, format, character(1L))
+  # sanity check before we fetch things
+  bad <- FALSE
+  for (form in split(new_articles, new_articles[["Submission ID"]])) {
+      id <- form[["Submission ID"]]
+      resub <- identical(id, form[[resub_field]])
+      cat("ID=",id[1],", n=", length(id), ", ", if(resub) "(resubmission)" else "(new)", "\n", sep='')
+      if (length(id) > 1) {
+          cat("  multiple submissions: ", as.character(form$Timestamp), "\n")
+          form <- form[nrow(form),]
+          id <- form[["Submission ID"]]
+      }
+      if (resub) {
+          art <- tryCatch(as.article(id), error=function(e) NULL)
+          if (is.null(art)) {
+              message(" ** invalid ID **\n");
+              bad <- TRUE
+          }
+      }
+  }
+  if (bad)
+      return(FALSE)
+  
   articles <- lapply(
     split(new_articles, new_articles[["Submission ID"]]),
     function(form) {
@@ -119,18 +147,18 @@ download_submissions <- function(dry_run) {
         path <- create_submission_directory(id)
 
         # If the article is a new submission
-        files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
+        files <- download_submission_file(form[["Upload submission"]], path = path)
         tryCatch(extract_files(files, path),
                  error=function(e) {
                      cli::cli_alert_danger("Error while extracting contents: {e}")
                  })
 
         # Combine author fields
-        authors <- str_glue_data(form, "{`Your name:`} <{`Email address`}>")
-        other_authors <- form[["Names of other authors, comma separated"]]
+        authors <- str_glue_data(form, "{`Your name`} <{`Email address`}>")
+        other_authors <- form[["Names of other"]]
         if (!is.na(other_authors)) {
           other_authors <- str_trim(str_split(other_authors, ",")[[1]])
-          other_authors <- setdiff(other_authors, form[["Your name:"]])
+          other_authors <- setdiff(other_authors, form[["Your name"]])
           authors <- str_c(c(authors, other_authors), collapse = ", ")
         }
 
@@ -140,7 +168,7 @@ download_submissions <- function(dry_run) {
           title = form[["Article title"]],
           path = path,
           type = form[["Article type"]],
-          suppl = form[["Please list the paths to any other supplementary files inside the zip (R scripts, data, etc.). Each file path should be separated by commas. This list will be used to construct the supplementary zip file for your article if it is accepted for publication."]] %NA% "",
+          suppl = form[["Please list"]] %NA% "",
           keywords = form[["Article tags"]] %NA% "",
           otherids = form[[resub_field]] %NA% ""
         )
@@ -183,7 +211,7 @@ download_submissions <- function(dry_run) {
         setwd(curwd)
 
         # 4. Obtain new submission
-        files <- download_submission_file(form[["Upload submission (zip file)"]], path = path)
+        files <- download_submission_file(form[["Upload submission"]], path = path)
         extract_files(files, path)
 
         # 5. Update article DESCRIPTION
