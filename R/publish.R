@@ -189,6 +189,10 @@ publish_issue <- function(issue, home = get_articles_path(), republish_all = FAL
   issue_num <- as.integer(sub(issue_regex, "\\2", issue))
   issue_month <- issue_month(issue)
 
+  if(!dir.exists(issue_dir)) {
+    abort("The proofed issue could not be found, have you set the appropriate articles path with set_articles_path()?")
+  }
+
   ## Handle articles
   issue_arts <- dir(issue_dir, pattern = "^\\d{4}-\\d{2,3}$", full.names = TRUE)
   arts <- lapply(file.path(issue_arts, "DESCRIPTION"), as.article)
