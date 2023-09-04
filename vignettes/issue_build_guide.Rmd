@@ -26,24 +26,25 @@ All articles accepted up to the publication dates: Mar 31, Jun 30, Oct 31, Dec 3
 
 # Preparation
 
-- Copy editing
-- Collect news items
+- Copy editing of the accepted articles.
+- Collect news items into the "News_items" directory under the matching issue number.
 
 # Building an issue
 
 ## Steps
 
-1. Copy from Accepted into Proofs (`rj:::make_proof()`): 
-  - It will filter accepted articles that have the current status "proofed".
-  - You need to provide the issue number, eg "2022-2". 
-  - This will also create the zip file of supplementary material from the list of files in the DESCRIPTION
-2. Copy news, News_items, into Proofs which is done manually.
-3. Copy files across to `rjournal.github.io`, using `rj:::publish_issue()` or `rj:::publish_article()`. Publish news with `rj:::publish_news()`
-  - This will also assign a "slug" the id of the published article, which is added to the DESCRIPTION file in the Proofs folder. 
+1. Copy articles from Accepted into Proofs (using `rj:::make_proof()`): 
+  - You need to provide the issue number, eg "2022-2".
+  - It will move accepted articles that have the current status "proofed".
+  - It will copy news articles with the matching issue number from "News_items"
+2. Copy files across to `rjournal.github.io`, using `rj:::publish_issue()`. This function will publish all articles and news for this issue, and create an issue file. The issue file is used to enter information about the editors and issue, and rendering it will create the HTML listing of articles and combined PDF issue. Articles can be individually published and updated with `rj:::publish_article()`, news can also be individually published and updated with `rj:::publish_news()`.
+  - This article publishing process will create the zip file of supplementary material from the list of files in the DESCRIPTION
+  - The will also assign a "slug" the id of the published article, which is added to the DESCRIPTION file in the Proofs folder. 
   - This slug will be used for the folder name in the `rjournal.github.io` "_articles" folder.
-  - Also builds file `volume_issue.Rmd` in the "_issues".
-4. Build the issue, using the file `volume_issue.Rmd` in the "_issues" folder. Make the pdfs/html for each article (using `rjtools::rjournal_web_issue()` and `rjtools::rjournal_pdf_issue()`)
+  - Also creates an issue containing `volume-issue.Rmd` (eg `2022-2.Rmd`) in the "_issues" folder.
+  - Renders each article (this can cause errors if the article isn't reproducible).
+3. Update and render the issue, using the file `volume-issue.Rmd` in the "_issues" folder.
   - It generates a folder within "_issues" with the information on organising the articles in the issue
-  - This will also generate the `doi.xml` used to 
-5. Register DOIs with `crossref.org`
-
+  - This will also generate the `doi.xml` used to register DOIs with <crossref.org>.
+4. Push the changes to GitHub. A preview of the deploy is available at <rjournal.github.io> when changes are pushed to the master branch. A deploy to <journal.r-project.org> occurs when a change is pushed to the published branch (do a pull request from master to published).
+4. Register the DOIs with `crossref.org`.
