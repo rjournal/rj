@@ -310,6 +310,9 @@ acknowledge_submission <- function(article, editor) {
   if (!missing(editor)) {
       a$editor <- editor
       save_article(a)
+  } else if (length(data$editor))
+      editor <- names(data$editor)
+  if (!missing(editor)) {
       ed <- read.csv(system.file("editors.csv", package = "rj"), stringsAsFactors = FALSE)
       data$edname <- ed$real[match(editor, ed[[1]])]
       data$edmail <- ed$email[match(editor, ed[[1]])]
