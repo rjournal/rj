@@ -24,6 +24,7 @@
 #' @param home Location of the articles directory
 #' @param web_path Location of the web source root of the journal, i.e., where \code{_article} lives. The default assumes all repos are checked out by their name in the same top-level directory.
 #' @param legacy (Very) old way of referencing the R journal
+#' @param slug optional, explicitly set the slug name (for expert use only, useful to skip problematic articles by advancing the slug names manually)
 publish_article <- function(article, volume, issue, home = get_articles_path(),
   web_path = file.path(home, "..", "rjournal.github.io"), legacy = FALSE, slug) {
   cli::cli_alert_info("Publishing article {article}")
