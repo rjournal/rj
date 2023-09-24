@@ -76,7 +76,9 @@ website repo.</p>
 <span>  <span class="va">volume</span>,</span>
 <span>  <span class="va">issue</span>,</span>
 <span>  home <span class="op">=</span> <span class="fu"><a href="get_articles_path.html">get_articles_path</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  legacy <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  web_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">home</span>, <span class="st">".."</span>, <span class="st">"rjournal.github.io"</span><span class="op">)</span>,</span>
+<span>  legacy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">slug</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -87,7 +89,7 @@ website repo.</p>
 
 
 <dt>volume</dt>
-<dd><p>The volume of the article's issue</p></dd>
+<dd><p>The volume of the article's issue (typically, year - 2008)</p></dd>
 
 
 <dt>issue</dt>
@@ -98,8 +100,16 @@ website repo.</p>
 <dd><p>Location of the articles directory</p></dd>
 
 
+<dt>web_path</dt>
+<dd><p>Location of the web source root of the journal, i.e., where <code>_article</code> lives. The default assumes all repos are checked out by their name in the same top-level directory.</p></dd>
+
+
 <dt>legacy</dt>
 <dd><p>(Very) old way of referencing the R journal</p></dd>
+
+
+<dt>slug</dt>
+<dd><p>optional, explicitly set the slug name (for expert use only, useful to skip problematic articles by advancing the slug names manually)</p></dd>
 
 </dl></div>
     <div id="details">
