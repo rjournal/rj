@@ -9,19 +9,25 @@ publish_article(
   volume,
   issue,
   home = get_articles_path(),
-  legacy = FALSE
+  web_path = file.path(home, "..", "rjournal.github.io"),
+  legacy = FALSE,
+  slug
 )
 }
 \arguments{
 \item{article}{article id}
 
-\item{volume}{The volume of the article's issue}
+\item{volume}{The volume of the article's issue (typically, year - 2008)}
 
 \item{issue}{The issue number of the article's issue}
 
 \item{home}{Location of the articles directory}
 
+\item{web_path}{Location of the web source root of the journal, i.e., where \code{_article} lives. The default assumes all repos are checked out by their name in the same top-level directory.}
+
 \item{legacy}{(Very) old way of referencing the R journal}
+
+\item{slug}{optional, explicitly set the slug name (for expert use only, useful to skip problematic articles by advancing the slug names manually)}
 }
 \description{
 This function will publish an individual article to the `rjournal.github.io`

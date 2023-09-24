@@ -9,7 +9,7 @@ publish_news(news, volume, issue, home = get_articles_path())
 \arguments{
 \item{news}{File path to the directory containing the news article to publish}
 
-\item{volume}{The volume of the article's issue}
+\item{volume}{The volume of the article's issue (typically, year - 2008)}
 
 \item{issue}{The issue number of the article's issue}
 
