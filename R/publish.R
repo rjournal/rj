@@ -19,24 +19,28 @@
 #'
 #' @export
 #' @param article article id
-#' @param volume The volume of the article's issue
+#' @param volume The volume of the article's issue (typically, year - 2008)
 #' @param issue The issue number of the article's issue
 #' @param home Location of the articles directory
+#' @param web_path Location of the web source root of the journal, i.e., where \code{_article} lives. The default assumes all repos are checked out by their name in the same top-level directory.
 #' @param legacy (Very) old way of referencing the R journal
-publish_article <- function(article, volume, issue, home = get_articles_path(), legacy = FALSE) {
+publish_article <- function(article, volume, issue, home = get_articles_path(),
+  web_path = file.path(home, "..", "rjournal.github.io"), legacy = FALSE, slug) {
   cli::cli_alert_info("Publishing article {article}")
   article <- as.article(article)
 
   # Make sure we're in the right place
-  if (basename(home) != "articles") {
+  if (basename(home) != "articles")
     stop("Publish should be run from articles directory", call. = FALSE)
-  }
-  web_path <- normalizePath("../rjournal.github.io", mustWork = TRUE)
-  share_path <- normalizePath("../share", mustWork = TRUE)
 
-  if (!any(as.data.frame(article$status)$status == "accepted")) {
+  web_path <- normalizePath(web_path, mustWork = TRUE)
+
+  # no longer used - had to do with TeX builds somehow...
+  # share_path <- normalizePath("../share", mustWork = TRUE)
+
+  if (!any(as.data.frame(article$status)$status == "accepted"))
     stop("not yet accepted")
-  }
+
   # if (!any(as.data.frame(article$status)$status == "style checked"))
   #  stop("not yet style checked")
 
@@ -58,7 +62,7 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
     # to <- file.path(web_path, "archive", "accepted", paste0(slug, ".pdf"))
   } else {
     # Create slug and stage new YYYY/RJ-YYYY-XXX landing directory
-    yr_id <- format(Sys.Date(), "%Y")
+    yr_id <- 2008 + volume ## we want to use the volume, NOT the current year
     slug_pattern <- "^RJ-(\\d{4})-(\\d{3})$"
     current_dirs <- list.files(file.path(web_path, "_articles"), pattern = paste0("^RJ-", yr_id, "-", "\\d{3}"))
 
@@ -69,6 +73,8 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
         article$slug <- ""
       }
     }
+    # FIXME: why is this commnted out? We should check that the slug is correct,
+    # currently we will happily overwrite an existing, different article!! [SU]
     # Validate existing slug exists and is used
     # if (!empty(article$slug)) {
     #   if(!dir.exists(file.path(web_path, "_articles", article$slug))) {
@@ -80,7 +86,7 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
       file.path(web_path, "_articles"),
       pattern = paste0("^RJ-", yr_id, "-\\d{3}$")
     )
-    if (empty(article$slug)) {
+    if (empty(article$slug) && missing(slug)) {
       next_id <- if(length(all_slugs) > 0) {
         max(as.integer(sub(slug_pattern, "\\2", all_slugs))) + 1L
       } else {
@@ -89,7 +95,7 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
       article$slug <- paste0("RJ-", yr_id, "-", formatC(next_id, format = "d", flag = "0", width = 3L))
       dir.create(file.path(web_path, "_articles", article$slug))
     }
-    slug <- article$slug
+    if (missing(slug)) slug <- article$slug
 
     if (!dir.exists(file.path(web_path, "_articles", slug))) {
       dir.create(file.path(web_path, "_articles", slug))
@@ -110,19 +116,30 @@ publish_article <- function(article, volume, issue, home = get_articles_path(), 
   # file.copy(from, to, overwrite = TRUE)
   message("Creating ", slug)
 
-  if (!empty(article$suppl)) {
-    if (any(missing_suppl <- !file.exists(file.path(article$path, unlist(article$suppl))))) {
+  if (length(article$suppl)) {
+    wd <- getwd()
+    setwd(article$path)
+    on.exit(setwd(wd), TRUE)
+    suppl <- unlist(strsplit(unlist(article$suppl), ", *"))
+    ## replace globs
+    if (length(gl <- grep("[*?]", suppl))) {
+       suppl <- unique(c(suppl[-gl], Sys.glob(suppl[gl])))
+       if (!length(suppl))
+         cli::cli_alert_warning("Supplementaries specified as globs come up empty for article {basename(article$path)}")
+    }
+    article$suppl <- suppl
+  }
+  if (length(article$suppl)) {
+    if (any(missing_suppl <- !file.exists(suppl))) {
       cli::cli_abort(
         c(
           "Supplementary file(s) not found for article {basename(article$path)}",
-          setNames(unlist(article$suppl)[missing_suppl], "*")
+          setNames(suppl[missing_suppl], "*")
         )
       )
     }
-    zipfrom <- file.path(article$path, "supplementaries.zip")
-    ret <- zip(zipfrom, file.path(article$path, unlist(article$suppl)),
-               flags = "-r9jX"
-    )
+    zipfrom <- "supplementaries.zip"
+    ret <- zip(zipfrom, suppl, flags = "-r9X")
     if (ret != 0L) stop("zipfile creation error")
     zipto <- file.path(landing_path, paste0(slug, ".zip"))
     file.copy(zipfrom, zipto, overwrite = TRUE)
@@ -707,7 +724,7 @@ online_metadata_for_article <- function(x, final = FALSE) {
     online = format(sl$date[min(which(sl$status == "online"))])
   ), refs_list[!sapply(refs_list, is.null)])
 
-  if (!empty(x$suppl)) {
+  if (length(x$suppl)) {
     zipfrom <- file.path(x$path, "supplementaries.zip")
     sz <- "unknown"
     if (file.exists(zipfrom)) {

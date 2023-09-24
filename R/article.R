@@ -151,14 +151,13 @@ format.article <- function(x, ...) {
   authors <- format(x$authors)
   reviewers <- format(x$reviewers)
   status <- format(x$status)
-  if (!empty(x$suppl)) suppl <- format(x$suppl)
 
   paste(
     "ID: ", format(x$id), "\n",
     if (!empty(x$other_id)) paste0("OtherIDs: ", x$other_id, "\n"),
     "Title: ", x$title, "\n",
     if (!empty(x$slug)) paste0("Slug: ", x$slug, "\n"),
-    if (!empty(x$suppl)) paste0("Suppl:\n  ", suppl, "\n"),
+    if (length(x$suppl)) paste0("Suppl:\n  ", paste(unlist(x$suppl), collapse=', '), "\n"),
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     if (!empty(x$keywords)) paste0("Keywords: ", x$keywords, "\n"),
     "Editor: ", x$editor, "\n",
