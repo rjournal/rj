@@ -75,7 +75,7 @@ email_text <- function(text, means = getOption("RJ_EMAIL_TOOL", "mailto")) {
     }
     return(browseURL(url))
   }
-  tmp <- tempfile("mail", ".txt") # DC:took out an extra comma
+  tmp <- tempfile("mail", fileext = ".txt")
   writeLines(text, tmp)
   switch(means,
          show = file.show(tmp),
