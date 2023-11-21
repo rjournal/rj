@@ -173,7 +173,7 @@ download_submissions <- function(dry_run) {
           otherids = form[[resub_field]] %NA% ""
         )
 
-        update_status(art, status = "submitted", date = as.Date(form$Timestamp))
+        update_status(art, status = "submitted", date = as.Date(form$Timestamp), replace=FALSE)
         cli::cli_alert_success("New submission with ID {id} successfully processed.")
         return(TRUE)
       } else {
@@ -215,7 +215,7 @@ download_submissions <- function(dry_run) {
         extract_files(files, path)
 
         # 5. Update article DESCRIPTION
-        update_status(art, status = "revision received", date = as.Date(form$Timestamp))
+        update_status(art, status = "revision received", date = as.Date(form$Timestamp), replace=FALSE)
 
         cli::cli_alert_success("Re-submission for ID {id} successfully processed.")
         return(TRUE)
@@ -321,7 +321,7 @@ acknowledge_submission <- function(article, editor) {
   template <- find_template("acknowledge")
   email <- whisker.render(readLines(template), data)
 
-  update_status(data$id, "acknowledged")
+  update_status(data$id, "acknowledged", replace=FALSE)
 
   email_text(email)
 }
@@ -339,7 +339,7 @@ acknowledge_revision <- function(article) {
   template <- find_template("acknowledge_revision")
   email <- whisker.render(readLines(template), data)
 
-  #update_status(data$id, "acknowledged")
+  update_status(data$id, "revision received", replace=FALSE)
 
   email_text(email)
 }
@@ -354,7 +354,7 @@ draft_acknowledge_submissions <- function(drafts) {
     gmailr::send_draft(draft)
   }
   for (id in names(drafts)) {
-    update_status(id, "acknowledged")
+    update_status(id, "acknowledged", replace=FALSE)
   }
   invisible(TRUE)
 }
@@ -381,6 +381,6 @@ acknowledge_submission_text <- function(article) {
 
   writeLines(email, path)
 
-  update_status(data$id, "acknowledged")
+  update_status(data$id, "acknowledged", replace=FALSE)
   invisible(TRUE)
 }
