@@ -4,7 +4,8 @@
 \alias{update_status}
 \title{Update the article status}
 \usage{
-update_status(article, status, comments = "", date = Sys.Date(), AE = is_AE())
+update_status(article, status, comments = "", date = Sys.Date(), AE = is_AE(),
+              replace = TRUE)
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
@@ -16,6 +17,9 @@ update_status(article, status, comments = "", date = Sys.Date(), AE = is_AE())
 \item{date}{Date of status update. If omitted defaults to today.}
 
 \item{AE}{Logical, if \code{TRUE}, \code{"AE: "} is prefixed to the status}
+
+\item{replace}{logical, if the last status already matches \code{status}
+then the status is only updated if this flag is set to \code{TRUE}.}
 }
 \description{
 This is a general function for updating the status field in the DESCRIPTION.
