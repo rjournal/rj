@@ -8,7 +8,9 @@
 #' @param comments Any additional comments
 #' @param date Date of status update. If omitted defaults to today.
 #' @param AE Logical, if \code{TRUE}, \code{"AE: "} is prefixed to the status
-#'
+#' @param replace logical, if the last status already matches \code{status}
+#'        then the status is only updated if this flag is set to \code{TRUE}.
+#' 
 #' @details
 #' For AEs, status is prefixed with "AE: " and valid status includes
 #' "AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject".
@@ -22,7 +24,7 @@
 #' update_status("2020-114", status = "AE: major revision")
 #'}
 #' @export
-update_status <- function(article, status, comments = "", date = Sys.Date(), AE = is_AE()) {
+update_status <- function(article, status, comments = "", date = Sys.Date(), AE = is_AE(), replace=TRUE) {
   article <- as.article(article)
 
   if (is.character(date)) date <- as.Date(date)
@@ -35,11 +37,12 @@ update_status <- function(article, status, comments = "", date = Sys.Date(), AE 
   }
 
   if (length(article$status)) {
-     last <- article$status[[length(article$status)]]
-     if (last$status == status) {
-       warning("Article ", article$id, " already has last entry ", status, ", replacing it")
-       article$status <- status_list(article$status[-length(article$status)])
-     }
+      last <- article$status[[length(article$status)]]
+      if (last$status == status) {
+          if (!isTRUE(replace)) return(invisible(article))
+          warning("Article ", article$id, " already has last entry ", status, ", replacing it")
+          article$status <- status_list(article$status[-length(article$status)])
+      }
   }
 
   article$status <- c(article$status, status(status, date, comments))
