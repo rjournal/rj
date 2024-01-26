@@ -73,7 +73,7 @@ the Submissions folder, check articles that have status
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ae_workload</span><span class="op">(</span>articles <span class="op">=</span> <span class="cn">NULL</span>, day_back <span class="op">=</span> <span class="fl">365</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ae_workload</span><span class="op">(</span>articles <span class="op">=</span> <span class="cn">NULL</span>, day_back <span class="op">=</span> <span class="fl">365</span>, active_only <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">get_AE</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -89,6 +89,10 @@ folder. Output of <code><a href="tabulate_articles.html">tabulate_articles()</a>
 <dd><p>numeric; positive number of day to go back for calculating AE
 workload. Retains any article where any status entry for an article is
 newer than `day_back` days ago.</p></dd>
+
+
+<dt>active_only</dt>
+<dd><p>Toggle to show only active AEs (filtered by end year and comment field).</p></dd>
 
 
 <dt>x</dt>
