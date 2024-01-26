@@ -4,8 +4,14 @@
 \alias{update_status}
 \title{Update the article status}
 \usage{
-update_status(article, status, comments = "", date = Sys.Date(), AE = is_AE(),
-              replace = TRUE)
+update_status(
+  article,
+  status,
+  comments = "",
+  date = Sys.Date(),
+  AE = is_AE(),
+  replace = TRUE
+)
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
