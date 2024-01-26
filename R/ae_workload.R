@@ -47,13 +47,14 @@ reviewer_summary <- function(articles, push = FALSE){
 #'
 #' This will examine the DESCRIPTION files for articles in
 #' the Submissions folder, check articles that have status
-#' "with AE".
+#' "with AE". 
 #'
 #' @param articles a tibble summary of articles in the accepted and submissions
 #'   folder. Output of \code{tabulate_articles()}
 #' @param day_back numeric; positive number of day to go back for calculating AE
 #'   workload. Retains any article where any status entry for an article is
 #'   newer than `day_back` days ago.
+#' @param active_only Toggle to show only active AEs (filtered by end year and comment field).
 #'
 #' @importFrom dplyr select count left_join right_join filter distinct rename bind_rows
 #' @importFrom tidyr unnest replace_na
@@ -63,11 +64,21 @@ reviewer_summary <- function(articles, push = FALSE){
 #' ae_workload()
 #' }
 #' @export
-ae_workload <- function(articles = NULL, day_back = 365) {
-  ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) %>%
+ae_workload <- function(articles = NULL, day_back = 365, active_only=FALSE) {
+  # select only active AEs 
+  ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) 
+
+  if ( isTRUE(active_only) ){
+    inactive <- ae_rj$end_year <= as.integer(substr(Sys.Date(),1,4)) |
+                grepl("Finished", ae_rj$comment, ignore.case=TRUE)
+    ae_rj <- ae_rj[!inactive, ]
+  }
+
+  ae_rj <- ae_rj %>%  
     select(.data$name, .data$initials, .data$email, .data$comment) %>%
     as_tibble() %>%
     rename(status = .data$comment)
+
 
   # if don't supply articles, use documented(!) source
   if (is.null(articles)) {
