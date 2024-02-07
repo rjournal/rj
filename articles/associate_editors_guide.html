@@ -4,95 +4,79 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="rj">
 <title>Associate Editors' Guide • rj</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.8/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Associate Editors' Guide">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Associate Editors' Guide">
 <meta property="og:description" content="rj">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">rj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.30</span>
-      </span>
-    </div>
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">rj</a>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../reference/index.html">Reference</a>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.30</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/associate_editors_guide.html">Associate Editors' Guide</a>
-    </li>
-    <li>
-      <a href="../articles/editor_in_chief_guide.html">Editor-in-Chief's Guide</a>
-    </li>
-    <li>
-      <a href="../articles/editors_guide.html">Editors' Guide</a>
-    </li>
-    <li>
-      <a href="../articles/issue_build_guide.html">Guide to Building an Issue</a>
-    </li>
-    <li>
-      <a href="../articles/website_build_guide.html">Guide to Building the New Distill Web Site</a>
-    </li>
-  </ul>
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/associate_editors_guide.html">Associate Editors' Guide</a>
+    <a class="dropdown-item" href="../articles/editor_in_chief_guide.html">Editor-in-Chief's Guide</a>
+    <a class="dropdown-item" href="../articles/editors_guide.html">Editors' Guide</a>
+    <a class="dropdown-item" href="../articles/issue_build_guide.html">Guide to Building an Issue</a>
+    <a class="dropdown-item" href="../articles/website_build_guide.html">Guide to Building the New Distill Web Site</a>
+  </div>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav"></ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><script src="associate_editors_guide_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="associate_editors_guide_files/viz-1.8.2/viz.js"></script><link href="associate_editors_guide_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+
+<script src="associate_editors_guide_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="associate_editors_guide_files/viz-1.8.2/viz.js"></script><link href="associate_editors_guide_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
 <script src="associate_editors_guide_files/grViz-binding-1.0.11/grViz.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Associate Editors’ Guide</h1>
-                        <h4 data-toc-skip class="author">First draft
-written by Di Cook</h4>
+  <main id="main" class="col-md-9"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>Associate Editors' Guide</h1>
+                        <h4 data-toc-skip class="author">Di Cook and Rob
+J Hyndman</h4>
             
-            <h4 data-toc-skip class="date">2024-02-06</h4>
+            <h4 data-toc-skip class="date">7 February 2024</h4>
       
       
-      <div class="hidden name"><code>associate_editors_guide.Rmd</code></div>
-
+      <div class="d-none name"><code>associate_editors_guide.Rmd</code></div>
     </div>
 
     
@@ -101,44 +85,51 @@ written by Di Cook</h4>
 <h2 id="mission">Mission<a class="anchor" aria-label="anchor" href="#mission"></a>
 </h2>
 <p>As an Associate Editor, you will receive manuscripts from one of the
-four current Editors. You will be responsible for:</p>
+four current Editors. You will be responsible for the following
+steps.</p>
 <ol style="list-style-type: decimal">
-<li>Soliciting 1-3 reviewers: In general we prefer at least two
-reviewers. However, one is acceptable when reviewers are sufficiently
-difficult to find, and the subject area is esoteric. If you feel that
-the article is not sufficient quality for the R Journal, you can provide
-a review and recommend rejection, or even further refinement before you
-send it to reviewers.</li>
-<li>Receiving those reviews: Reviewers are given approximately 1 - 3
-month to review a paper.</li>
-<li>Recommending if the paper should be rejected, accepted with major
-revisions, accepted with minor revisions, or accepted as is.</li>
+<li>Read the paper and decide if it needs reviews. If you feel that the
+article is not sufficient quality for the R Journal, you can provide a
+review yourself and recommend rejection, without obtaining any other
+reviews. You can also request (via the Editor) further refinement of the
+paper before you send it to reviewers.</li>
+<li>Find reviewers. If you feel that the paper needs expert reviews, you
+will need to find at least two reviewers with expertise in the subject
+area of the submission. (See below for some tips on finding reviewers.)
+Reviewers are given approximately 1–3 months to review a paper.</li>
+<li>Make a recommendation. You should recommend one of the following
+options: reject, accept with major revisions, accept with minor
+revisions, or accept as is.</li>
 <li>Write a short summary explaining the reason for the recommendation.
 Ultimately it is the handling editor who makes the final decision on a
-paper. The handling editor manages all communication with authors.</li>
+paper, and manages all communication with authors.</li>
 </ol>
-<p>The expected workload is 1-2 paper per month.</p>
+<p>The expected workload is 1–2 papers per month.</p>
 <p>Terms are for three years, with an opportunity to renew.</p>
 </div>
 <div class="section level2">
 <h2 id="communication">Communication<a class="anchor" aria-label="anchor" href="#communication"></a>
 </h2>
 <p>Each AE is provided a Github repo for handling papers, with the name
-in the form of <code>ae-articles-XX</code>. It mirrors the full articles
-repo that only Editors have access to.</p>
-<p>Slack is used for communication, and general information about
-operations. The channel for AEs is <code>associate-editors</code> and
-there are numerous other channels focusing on different aspects of
-operations, including <code>rj-software</code>, <code>general</code>,
+in the form of <code>ae-articles-XX</code>. When you receive an article
+from an editor, you will find it in the <code>Submissions</code> folder
+of your repo.</p>
+<p>Slack is used for communication between editors and associate
+editors, and general information about operations. The channel for AEs
+is <code>associate-editors</code> and there are numerous other channels
+focusing on different aspects of operations, including
+<code>rj-software</code>, <code>general</code>,
 <code>journal-website</code>, that you are welcome to join. This is the
 best place to receive messages from an editor that a paper is assigned
 to you, and for you to notify that editor when you have received
 reviews, made your summary and are ready to hand it back.</p>
-<p>Meetings with the Editors and Associate Editors will be held monthly,
-typically the first Tuesday of each month, which may be a Monday or a
-Tuesday depending on your location around the globe. The meeting time is
-set by the Editor-in-Chief.</p>
+<p>Meetings with the Editors and Associate Editors will usually be held
+monthly. The meeting time is set by the Editor-in-Chief.</p>
 <p>Email is usually the best way to communicate with reviewers.</p>
+<p>Please do not communicate directly with authors. The Editor is
+responsible for all communication with authors. You should only be
+communicating with reviewers and with the handling editor who allocated
+you the paper.</p>
 </div>
 <div class="section level2">
 <h2 id="workflow-and-operations">Workflow and operations<a class="anchor" aria-label="anchor" href="#workflow-and-operations"></a>
@@ -153,44 +144,78 @@ set by the Editor-in-Chief.</p>
 to re-install occasionally.</p>
 </div>
 <div class="section level3">
+<h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h3>
+<p>All submissions you are handling will be in your Github repository,
+in the <code>Submissions</code> folder. Each submission is in a separate
+folder named with the ID of the article; e.g., <code>2024-12</code>.
+This folder will contain a number of files:</p>
+<ul>
+<li>article files: <code>RJwrapper.tex</code>, <code>.tex</code>,
+<code>.bib</code>, and possibly <code>.R</code>, <code>.Rmd</code>, data
+and figure files.</li>
+<li>our operation files:
+<ul>
+<li>
+<code>DESCRIPTION</code>: contains up to date information about the
+state of the article. It is plain text but you should use the
+<code>rj</code> function to modify it, if possible.</li>
+<li>
+<code>correspondence</code> folder, usually containing
+<code>motivating-letter.pdf</code>. This is also where the invitations
+to each reviewer will be added, and the reviews will be stored once they
+have been returned by reviewers.</li>
+</ul>
+</li>
+</ul>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-d2e8ba86338c44d191bb" style="width:768px;height:1152px;"></div>
+<script type="application/json" data-for="htmlwidget-d2e8ba86338c44d191bb">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Send for review?\", shape = \"rectangle\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"2\" [label = \"Select reviewer (ideally two), rj::match_keywords() or use your own experts\", shape = \"rectangle\", width = \"5\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"3\" [label = \"Update reviewer in DESCRIPTION, rj::add_reviewer() \n This also generates the email template saved in the correspondence folder\", shape = \"rectangle\", width = \"6\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"4\" [label = \"Send email to reviewers, which includes motivating letter, pdf and R files \n rj::update_status() to out for review\", shape = \"rectangle\", width = \"6\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"5\" [label = \"Check all file changes into GitHub, \n including correspondence folder\", shape = \"rectangle\", width = \"3\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"6\" [label = \"Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()\", shape = \"rectangle\", width = \"4\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"7\" [label = \"Reviews received\", shape = \"rectangle\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"8\" [label = \"Save reviews into correspondence folder, rj::add_review()\", shape = \"rectangle\", width = \"4\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"9\" [label = \"Make recommendation (AE: major revision, AE: minor revision, AE: accept or AE: reject),\n update DESCRIPTION using rj::update_status(), notify editor, check all into GitHub\", shape = \"rectangle\", width = \"6\", fillcolor = \"#76EEC6\", fontcolor = \"black\"] \n  \"10\" [label = \"Send reminder email\", shape = \"rectangle\", width = \"2\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \".\", color = \"grey50\"] \n\"3\"->\"4\" [label = \".\", color = \"grey50\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"7\"->\"8\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"9\" [label = \".\", color = \"grey50\"] \n\"6\"->\"2\" [label = \"N\", color = \"red\"] \n\"7\"->\"10\" [label = \"N\", color = \"red\"] \n\"10\"->\"7\" [label = \"done\", color = \"grey50\"] \n\"1\"->\"9\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
 <h3 id="potential-reviewers">Potential reviewers<a class="anchor" aria-label="anchor" href="#potential-reviewers"></a>
 </h3>
-<p>There is a <a href="https://docs.google.com/forms/d/e/1FAIpQLSf8EmpF85ASWqPHXqV0vdQd-GHhNBaAZZEYf4qxO3gTl-eGyA/viewform" class="external-link">form
+<p>There are several ways to find reviewers for a paper.</p>
+<ol style="list-style-type: decimal">
+<li>
+<p>Match keywords against the reviewer database.</p>
+<p>We have a list of potential reviewers that has been collected using
+this <a href="https://docs.google.com/forms/d/e/1FAIpQLSf8EmpF85ASWqPHXqV0vdQd-GHhNBaAZZEYf4qxO3gTl-eGyA/viewform" class="external-link">form
 for people to volunteer to review for the R Journal</a>. Please complete
 this form yourself.</p>
 <p>This form populates a <a href="https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit#gid=1594007907" class="external-link">spreadsheet</a>
 that is used to match keywords between articles and reviewers. Once you
 are set up as an AE, you need access to this sheet in order to use the
-<code><a href="../reference/match_keywords.html">match_keywords()</a></code> function. You can request access from the
-assigning editor if it isn’t visible to you.</p>
-</div>
-<div class="section level3">
-<h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
-</h3>
-<p>When you received an article from an editor, you will find it n the
-<code>Submissions</code> folder of your repo, in a folder with the
-number ID of the article, eg <code>2021-12</code>. This folder will
-contain a number of files:</p>
-<ul>
-<li>article files: RJwrapper.tex, <code>.tex</code>, <code>.bib</code>,
-<code>motivating-letter.pdf</code> and possibly <code>.R</code>,
-<code>.Rmd</code>, data and figure files.</li>
-<li>our operation files:
-<ul>
-<li>
-<code>DESCRIPTION</code>: contains up to date information about the
-state of the article. It is plan text but you should use the
-<code>rj</code> function to modify it, if possible.</li>
-<li>
-<code>correspondence</code> folder: will be created when you assign
-your first referee. This will contain text invitations to each reviewer
-added, and will also store the reviews once they have been returned by
-reviewers.</li>
-</ul>
+<code><a href="../reference/match_keywords.html">rj::match_keywords()</a></code> function. You can request access from
+the assigning editor if it isn’t visible to you.</p>
 </li>
-</ul>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-58fb392f712e9493064a" style="width:768px;height:1152px;"></div>
-<script type="application/json" data-for="htmlwidget-58fb392f712e9493064a">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Send for review?\", shape = \"rectangle\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"2\" [label = \"Select reviewer (ideally two), rj::match_keywords() or use your own experts\", shape = \"rectangle\", width = \"5\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"3\" [label = \"Update reviewer in DESCRIPTION, rj::add_reviewer() \n This also generates the correspondence folder, containing the email template\", shape = \"rectangle\", width = \"6\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"4\" [label = \"Send email to reviewers, which includes motivating letter, pdf and R files \n rj::update_status() to out for review\", shape = \"rectangle\", width = \"6\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"5\" [label = \"Check all file changes into GitHub, \n including correspondence folder\", shape = \"rectangle\", width = \"3\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"6\" [label = \"Reviewer agreed (1 week)? \n Use agree_reviewer() or\n decline_reviewer()\", shape = \"rectangle\", width = \"4\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"7\" [label = \"Reviews received\", shape = \"rectangle\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"8\" [label = \"Save reviews into correspondence folder, rj::add_review()\", shape = \"rectangle\", width = \"4\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"9\" [label = \"Make recommendation (AE: major revision, AE: minor revision, AE: accept or AE: reject),\n update DESCRIPTION using rj::update_status(), notify editor, check all into GitHub\", shape = \"rectangle\", width = \"6\", fillcolor = \"#76EEC6\", fontcolor = \"black\"] \n  \"10\" [label = \"Send reminder email\", shape = \"rectangle\", width = \"2\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \".\", color = \"grey50\"] \n\"3\"->\"4\" [label = \".\", color = \"grey50\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"7\"->\"8\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"9\" [label = \".\", color = \"grey50\"] \n\"6\"->\"2\" [label = \"N\", color = \"red\"] \n\"7\"->\"10\" [label = \"N\", color = \"red\"] \n\"10\"->\"7\" [label = \"done\", color = \"grey50\"] \n\"1\"->\"9\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<li><p>Look for authors of related R packages. The submission may cite
+some similar packages, or you may find similar packages on a <a href="https://cran.r-project.org/web/views/" class="external-link">CRAN Task View</a>. Authors
+of similar packages are often the best reviewers, and are usually
+motivated to review a paper that is related to their own work.</p></li>
+<li><p>Look for authors of recent related papers. These may be papers
+cited in the submission, or papers that you find via a Google Scholar
+search. Restrict your search to papers that are published in the last
+few years.</p></li>
+<li><p>Once you have a list of a few potential reviewers, check their
+websites to determine (a) how active they are in the area; (b) how
+senior they are; and (c) whether they appear to be R users. The ideal
+reviewer is someone who is actively working in the area, uses R, and
+does not have substantial management responsibilities. Post-docs or
+junior faculty are often the best reviewers, as they have more time than
+senior academics, and more experience than PhD students. Someone with
+substantial expertise in the topic, but who is not an R user, may still
+be able to provide helpful comments on the paper, but they are less
+likely to be able to provide useful comments on the code.</p></li>
+<li><p>Rank your reviewers in preference order. You will need to invite
+at least two reviewers, and it is best to have some in reserve in case
+one of the first two declines. Think about who is most likely to agree;
+e.g., someone is more likely to agree if they know you.</p></li>
+<li><p>Where possible, try to find reviewers with different expertise.
+For example, one may have stronger expertise in the statistical methods,
+with the other having greater expertise in writing R packages.</p></li>
+<li><p>If you only manage to get one review, you may need to provide a
+review yourself.</p></li>
+</ol>
 </div>
 <div class="section level3">
 <h3 id="package-usage">Package usage<a class="anchor" aria-label="anchor" href="#package-usage"></a>
@@ -219,33 +244,26 @@ reviewers.</li>
 <p>This document is provided as a vignette to the <code>rj</code>
 package.</p>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
+    <footer><div class="pkgdown-footer-left">
   <p></p>
 <p>Developed by Editor-in-Chief.</p>
 </div>
 
-<div class="pkgdown">
+<div class="pkgdown-footer-right">
   <p></p>
 <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
-
 
   
 
