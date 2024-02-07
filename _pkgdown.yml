@@ -1,8 +1,14 @@
 url: https://rjournal.github.io/rj/
 
 template:
-  params:
-    bootswatch: cosmo
+  bootstrap: 5
+  theme: tango
+  bootswatch: cosmo
+  bslib:
+    base_font: {google: "Fira Sans"}
+    heading_font: {google: "Fira Sans"}
+    primary: "#234460"
+    link-color: "#234460"
 
 reference:
 - title: Primarily AE article management functions
