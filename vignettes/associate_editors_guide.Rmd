@@ -149,6 +149,8 @@ There are several ways to find reviewers for a paper.
 
 6. Where possible, try to find reviewers with different expertise. For example, one may have stronger expertise in the statistical methods, with the other having greater expertise in writing R packages.
 
+7. Before sending them, edit the review-request emails to explain why you're asking them to review the submission. For example, "As the author of package X, I'd be interested in your thoughts on this submission." Or "I'm aware of your JRSSB paper on XXX, so I'm keen to get your thoughts on this submission which takes a different approach to the same problem." Or "The authors compare their package against the method you developed in XXX, so I'd like to know your views on this submission." If they know why you asked them, they are more likely to respond positively.
+
 7. If you only manage to get one review, you may need to provide a review yourself.
 
 ## Package usage
