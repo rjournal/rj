@@ -35,7 +35,8 @@ The editorial board consists of four editors, including an Editor-in-Chief (EIC)
 
 In the third calendar year of their term the EE acts as EIC. The EIC takes primary responsibility for:
 
-- Production of two journal issues per year, in June and December. The issue typically appears a month or two after the publication date, because articles accepted up to June 30, and mid-Dec, respectively will likely be included. 
+- Production of four journal issues per year, in March, June, September, and December. 
+  The issue typically appears a month or two after the publication date, because articles accepted up to June 30, and mid-Dec, respectively will likely be included. 
 - Managing the flow of submissions, ensuring that these are handled in a timely manner.
 - Maintaining the R Journal web site http://journal.r-project.org. 
 - Maintaining the formatting and tools used to manage the journal.
