@@ -1,3 +1,6 @@
+# rj 0.2.31
+- added vignettes on conflict of interest and roles and responsibilities
+
 # rj 0.2.29
 
 - added a line for AE: decisions for summarise_articles()
