@@ -61,7 +61,8 @@ the EIC ensures that the quarterly issues are produced and published.
 An EE is responsible for
 
 - Proper and timely handling of papers under their responsibility.
-- Take and communicate the editorial decision (Accept/Minor/Major/Reject) for papers under their responsibility.
+- Take the editorial decision (Accept/Minor/Major/Reject) for papers under their responsibility and
+  communicate with the authors.
 - Supporting the EIC in recruiting AEs and EEs.
 
 In particular, the EE communicates with AE and with the authors of submissions.

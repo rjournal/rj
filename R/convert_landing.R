@@ -8,7 +8,7 @@ convert_proofs <- function(issue, action = "report_only", clean = TRUE) {
   share_path <- normalizePath("../../share", mustWork = TRUE)
   web_path <- normalizePath("../../rjournal.github.io", mustWork = TRUE)
 
-  config <- yaml.load_file(file.path(web_path, "_config.yml"))
+  config <- yaml::yaml.load_file(file.path(web_path, "_config.yml"))
   issues <- sapply(config$issues, function(x) x$issue)
   this_issue <- which(issues == issue)
   if (length(this_issue) == 0L) stop("issue not in _config.yml")
@@ -112,7 +112,7 @@ convert_proofs <- function(issue, action = "report_only", clean = TRUE) {
       file.copy(localfrom, file.path(issue, art, "oRJwrapper.pdf"))
       t0 <- try(in_dir(
         file.path(issue, art),
-        texi2pdf("RJwrapper.tex", texinputs = share_path, clean = clean)
+        tools::texi2pdf("RJwrapper.tex", texinputs = share_path, clean = clean)
       ))
       pdf_list <- get_md_from_pdf(localfrom)
       file.copy(file.path(issue, art, "oRJwrapper.pdf"), localfrom)

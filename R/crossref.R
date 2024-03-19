@@ -279,7 +279,7 @@ newDeposit <- function(x, out = "") {
 
 ## we need to get into format for crossref
 ## require(yaml)
-## cfg = yaml.load_file("path/to/_config.yml")
+## cfg = yaml::yaml.load_file("path/to/_config.yml")
 ## i = cfg[[ind]]
 ##
 process_config_yml_component <- function(i) {
@@ -313,7 +313,7 @@ load_issues <- function() {
     warning("Not in proper directory: start in RJournal/articles")
     return()
   }
-  cfg <- yaml.load_file("../rjournal.github.io/_config.yml")
+  cfg <- yaml::yaml.load_file("../rjournal.github.io/_config.yml")
   cfg$issues
 }
 
@@ -379,7 +379,7 @@ upload_dois_from_issue <- function(issue,
 ## create a DOI from the an issue component of the config$issues
 ##
 ## require(yaml)
-## cfg = yaml.load_file("../rjournal.github.io/_config.yml")
+## cfg = yaml::yaml.load_file("../rjournal.github.io/_config.yml")
 ## issue = cfg$issue[[length(cfg$issue)]] # last one
 ##
 ## or
@@ -404,7 +404,7 @@ create_doi_from_issue <- function(issue, outdir = "/tmp/DOI_XML/") {
 
 ## create all DOI entries for initial upload
 create_doi_xmls <- function(outdir = "/tmp/DOI_XML/", config = "../rjournal.github.io/_config.yml") {
-  cfg <- yaml.load_file(config)
+  cfg <- yaml::yaml.load_file(config)
   ## identify volume, volnum
   dir.create(outdir)
   sapply(cfg$issues, create_doi_from_issue, outdir = outdir)
