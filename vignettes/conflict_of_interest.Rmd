@@ -1,5 +1,5 @@
 ---
-title: "Draft: Conclict of Interest"
+title: "Draft: Conflict of Interest"
 author: "Mark van der Loo"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -36,7 +36,7 @@ interest, always consult the handling executive editor. The EE will decide
 whether someone else needs to handle the submission. Regardless of the
 decision, the notification and decision will be archived by the EE.
 
-### For editors
+### For Editors
 
 If you are asked to handle a paper, and you feel there may be a conflict of
 interest, consult the Editor-in-Chief. The EE will decide whether someone else
@@ -48,7 +48,6 @@ and decision will be archived by the EE.
 If a submission comes in and you feel there may be a conflict of interest,
 never handle the paper yourself. Hand it over to an EE and explain and archive
 the conflict of interest.
-
 
 ## How to archive a conflict of interest
 
