@@ -1,204 +1,70 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://rjournal.github.io/rj/404.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/associate_editors_guide.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/conflict_of_interest.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/editor_in_chief_guide.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/editors_guide.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/issue_build_guide.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/roles_and_responsibilities.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/articles/website_build_guide.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/AEs.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/acknowledge_revision.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/acknowledge_submission.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/acknowledge_submission_text.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/action.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/actionable_articles.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/active_articles.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/add_ae.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/add_review.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/add_reviewer.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/address.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/ae_workload.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/article.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/article_status_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/author_emails.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/build_latex.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/corr_author.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/decline_reviewer.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/draft_acknowledge_submissions.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/email_template.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/email_text.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/filter_status.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/future_ids.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/get_accepted_but_not_online.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/get_article_keywords.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/get_articles_path.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/get_md_from_pdf.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/get_reviewer_keywords.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/get_submissions.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/git_user.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/invite_reviewers.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/make_proof.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/match_keywords.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/new_id.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/online_metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/online_metadata_for_article.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/parse_address_list.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/proofing.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/publish_article.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/publish_issue.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/publish_news.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/report.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/reviewer_status.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/reviewer_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/rj.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/set_articles_path.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/status.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/summarise_articles.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/tabulate_articles.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/time_to_accept_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/update_status.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/valid_reviewer_status.html</loc>
-  </url>
-  <url>
-    <loc>https://rjournal.github.io/rj/reference/valid_status.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://rjournal.github.io/rj/404.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/LICENSE-text.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/associate_editors_guide.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/conflict_of_interest.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/editor_in_chief_guide.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/editors_guide.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/index.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/issue_build_guide.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/roles_and_responsibilities.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/articles/website_build_guide.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/authors.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/index.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/news/index.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/AEs.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/acknowledge_revision.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/acknowledge_submission.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/acknowledge_submission_text.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/action.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/actionable_articles.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/active_articles.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/add_ae.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/add_review.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/add_reviewer.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/address.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/ae_workload.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/article.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/article_status_plot.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/author_emails.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/build_latex.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/corr_author.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/decline_reviewer.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/draft_acknowledge_submissions.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/email_template.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/email_text.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/filter_status.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/future_ids.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/get_accepted_but_not_online.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/get_article_keywords.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/get_articles_path.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/get_md_from_pdf.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/get_reviewer_keywords.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/get_submissions.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/git_user.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/index.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/invite_reviewers.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/make_proof.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/match_keywords.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/new_id.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/online_metadata.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/online_metadata_for_article.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/parse_address_list.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/proofing.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/publish_article.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/publish_issue.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/publish_news.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/report.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/reviewer_status.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/reviewer_summary.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/rj.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/set_articles_path.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/status.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/summarise_articles.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/tabulate_articles.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/time_to_accept_plot.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/update_status.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/valid_reviewer_status.html</loc></url>
+<url><loc>https://rjournal.github.io/rj/reference/valid_status.html</loc></url>
 </urlset>
+
