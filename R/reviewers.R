@@ -29,7 +29,7 @@ list_reviewers <- function(article) {
 #' agree_reviewer("2020-114", reviewer_id = 2)
 #'
 #' # third reviewer doesn't reply and deemed abandon
-#' abandon_reviewer("2020-114", reviwer_id = 3)
+#' abandon_reviewer("2020-114", reviewer_id = 3)
 #' }
 #' @export
 decline_reviewer <- function(article, reviewer_id) {
@@ -76,7 +76,7 @@ add_out_for_review <- function(article) {
 #' Invite an reviewer
 #'
 #' This function adds the reviewer information(name and email) to the reviewers
-#' field in the DESCRIPTION as well as draft an email to invite teh reviewer.
+#' field in the DESCRIPTION as well as draft an email to invite the reviewer.
 #' @param name Full name of the reviewer
 #' @param invite Logical, whether to automatically construct an email to invite the reviewer
 #' @inheritParams address
