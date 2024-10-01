@@ -1,15 +1,26 @@
 To: {{email}}
-Subject: Please proof your R Journal article {{id}}
+Subject: [RJournal {{id}}] Please proof your article
 ---
 Dear {{name}},
 
 We are pleased to publish your article "{{title}}" in the next issue of the R Journal.
 
-The journal runs with volunteer efforts, and we hope that you can assist us by carefully proofing the final version of your article. We have included the final versions of the pdf and tex files, and a list of corrections that need to be made as specified by our editorial assistant. Any "x" in the list indicates something that needs fixing. It might also helpful to have a colleague read through it fully.
+The journal runs with volunteer efforts, and we hope that you can assist us by carefully proofing the final version of your article. We have included a version of the pdf annotated with corrections that need to be made as specified by our editorial assistant. Annotations ending with "?" are optional, but should be considered. It might also helpful to have a colleague read through it fully.
 
-For an article prepared with rjtools, please send me the final Rmd, pdf and html files by {{date}}. For a latex article, send the final tex and pdf files. If you would like to select one of your paper figures as a graphical abstract, please also let me know the name of the image file.
+Please don't use \section*{} except for special sections such as Acknowledgements or Appendix. All regular sections shold use \section{}.
+
+Only the first line of the affilliation in \address{} is used for the article header. If you have multiple parts of the address that you want to show, you have to make sure you put them on the first line, e.g., "Department of Bar, University of Foo \\" instead of "Department of Bar\\" which would not show the university.
+
+In addition, your R code uses following packages that are not mentioned in the article - please add a mention and cite them:
+
+and the manuscript mentions following packages without citing them - please add the corresponding citations (see citation() in R): 
+
+Please submit the full, final version of your submission as a ZIP file to:
+
+https://journal-submission.r-project.org/proofs.html
+
+by {{date}}. If you would like to select one of your paper figures as a graphical abstract, please also let me know the name of the image file.
 
 Regards,
-
 {{me}}
 

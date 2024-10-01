@@ -1,3 +1,6 @@
+# rj 0.2.4
+- Changed proofing template email to Simon's
+
 # rj 0.2.31
 - added vignettes on conflict of interest and roles and responsibilities
 
