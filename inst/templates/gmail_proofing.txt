@@ -7,7 +7,7 @@ We are pleased to publish your article "{{title}}" in the next issue of the R Jo
 
 The journal runs with volunteer efforts, and we hope that you can assist us by carefully proofing the final version of your article. We have included a version of the pdf annotated with corrections that need to be made as specified by our editorial assistant. Annotations ending with "?" are optional, but should be considered. It might also helpful to have a colleague read through it fully.
 
-Please don't use \section*{} except for special sections such as Acknowledgements or Appendix. All regular sections shold use \section{}.
+Please don't use \section*{} except for special sections such as Acknowledgements or Appendix. All regular sections should use \section{}.
 
 Only the first line of the affilliation in \address{} is used for the article header. If you have multiple parts of the address that you want to show, you have to make sure you put them on the first line, e.g., "Department of Bar, University of Foo \\" instead of "Department of Bar\\" which would not show the university.
 
