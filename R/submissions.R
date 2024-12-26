@@ -384,3 +384,67 @@ acknowledge_submission_text <- function(article) {
   update_status(data$id, "acknowledged", replace=FALSE)
   invisible(TRUE)
 }
+
+#' Find next avaiable submission id by scanning
+#' Accepted, Rejected, Submissions and Proofs.
+#'
+#' @param year in which the submission should be created
+next_submission_id <- function(year=substr(Sys.Date(),1,4)) {
+  glob <- paste0(year, '-*')
+  base <- c(
+      "Rejected", "Accepted", "Submissions",
+      file.path("Proofs", dir(file.path(get_articles_path(), "Proofs")))
+  )
+  used <- unlist(lapply(base,
+                 function(dir) Sys.glob(file.path(get_articles_path(), dir, glob))))
+  last <- if (length(used)) max(as.integer(gsub('.*-', '', used))) else 0L
+  as.character(id(as.integer(year), last + 1L))
+}
+
+## submission system API
+api_new_submission <- function(archive, mainFile, authors, ...) {
+  a <- list(...)
+  if (!file.exists(archive))
+    stop("missing contents specification (archive file)")
+  tmp <- tempfile('sub')
+  dir.create(tmp)
+  on.exit(unlink(tmp, TRUE))
+  extractor <- switch(tools::file_ext(archive),
+      zip = utils::unzip,
+      gz = utils::untar
+    )
+  extractor(archive, exdir = tmp)
+  root <- file.path(tmp, dirname(mainFile))
+  if (!dir.exists(root))
+    stop("Archive does not contain the article directory")
+  authors <- if (!is.null(authors)) {
+    al <- if (!is.null(authors$name)) list(authors) else authors
+    paste(sapply(al, function(o)
+        paste0(o$name, if (!is.null(o$email)) paste0(' <', o$email, '>') else '')),
+      collapse=', ')
+  } else ''
+  id <- next_submission_id()
+  path <- create_submission_directory(id)
+  file.copy(Sys.glob(file.path(root, "*")), path, recursive=TRUE, copy.mode=FALSE)
+  ## FIXME: we should get article to understand the keyword IDs instead of
+  ##        expanding to the submission version text
+  ctv <- read.csv(system.file("keywords-list.csv", package = "rj"),
+                  stringsAsFactors = FALSE)
+  keywords <- if (length(a$tags)) {
+    tid <- strsplit(a$tags, ':', TRUE)[[1]]
+    as.character(na.omit(ctv$submission[match(tid, ctv$id)]))
+  }
+  if (!length(keywords)) keywords <- ''
+  art <- make_article(
+    id = id,
+    authors = authors,
+    title = a$title,
+    path = path,
+    type = a$subType,
+    keywords = keywords,
+    suppl = '',        # FIXME: not supported yet in the UI
+    otherids = ''      # FIXME: not supported yet in the UI
+  )
+  update_status(art, status = "submitted", date = as.Date(.POSIXct(a$created)))
+  list(success=TRUE, id=id, path=path, article=api_article_info(as.article(id), public=TRUE))
+}

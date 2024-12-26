@@ -78,7 +78,7 @@ as.article <- function(id) {
 }
 
 load_article <- function(path, quiet = FALSE) {
-  fields <- c("ID", "Slug", "Authors", "Keywords", "OtherIDs", "Title", "Editor", "AE", "Reviewers", "Status", "Suppl")
+  fields <- c("ID", "Slug", "Authors", "Keywords", "OtherIDs", "Title", "Editor", "AE", "Reviewers", "Status", "Suppl", "Type")
   dcf <- read.dcf(path, fields = fields, keep.white = fields)
   if (nrow(dcf) != 1) stop("DCF parsing error: ", path, call. = FALSE)
 
@@ -101,6 +101,9 @@ load_article <- function(path, quiet = FALSE) {
 
 is.article <- function(x) inherits(x, "article")
 
+## NOTE: if any components are added the must also be added to format.article
+##       and the list in load_article. The components must have the same name
+##       in the DCF file as well.
 make_article <- function(id, slug = "", authors = "", title = "", editor = "", ae = "",
                          reviewers = "", status = "", path = "",type = "", suppl = "",
                          keywords = "", otherids = "") {
@@ -121,6 +124,27 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "", a
   ), class = "article")
 }
 
+.z2null <- function(x) if(is.null(x) || !length(x) || !nzchar(x)) NULL else as.character(x)
+
+## information to expose to the web API, must not use any classed objects (or else
+## they have to implement toJSON, but let's not go there). Information that
+## should not be public should not be included if public=TRUE
+api_article_info <- function(x, public=FALSE) {
+  c(list(
+    id = as.character(x$id), other_id = .z2null(x$otherids), slug = .z2null(x$slug),
+    suppl = if(length(x$suppl)) as.character(unlist(unclass(x$suppl))) else NULL,
+    path = x$path, type = .z2null(x$type),
+    authors = if (length(x$authors)) lapply(x$authors, unclass) else NULL,
+    keywords = .z2null(x$keywords), title = .z2null(x$title),
+    timeline = if (length(x$status)) lapply(x$status, function(x) {
+      x=unclass(x); if (public) x$comments <- NULL; x }) else NULL,
+    status = if (length(x$status)) x$status[[length(x$status)]]$status else NULL
+    ), if (public) list() else list(
+      editor = .z2null(x$editor), ae = .z2null(x$ae),
+      reviewers = if (length(x$reviewers)) lapply(x$reviewers, unclass) else NULL
+    )
+  )
+}
 
 parse_supplementaries <- function(suppl) {
   x <- str_trim(str_split(suppl, ",\\s*\n?")[[1]])
@@ -158,6 +182,7 @@ format.article <- function(x, ...) {
     "Title: ", x$title, "\n",
     if (!empty(x$slug)) paste0("Slug: ", x$slug, "\n"),
     if (length(x$suppl)) paste0("Suppl:\n  ", paste(unlist(x$suppl), collapse=', '), "\n"),
+    if (!empty(x$type)) paste0("Type: ", x$type, "\n"),
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
     if (!empty(x$keywords)) paste0("Keywords: ", x$keywords, "\n"),
     "Editor: ", x$editor, "\n",
