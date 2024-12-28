@@ -445,6 +445,7 @@ api_new_submission <- function(archive, mainFile, authors, ...) {
     suppl = '',        # FIXME: not supported yet in the UI
     otherids = ''      # FIXME: not supported yet in the UI
   )
-  update_status(art, status = "submitted", date = as.Date(.POSIXct(a$created)))
+  update_status(art, status = "submitted",
+                date = if (is.null(a$created)) Sys.Date() else as.Date(.POSIXct(a$created)))
   list(success=TRUE, id=id, path=path, article=api_article_info(as.article(id), public=TRUE))
 }
