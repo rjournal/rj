@@ -130,6 +130,7 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "", a
 ## they have to implement toJSON, but let's not go there). Information that
 ## should not be public should not be included if public=TRUE
 api_article_info <- function(x, public=FALSE) {
+  ed <- read.csv(system.file("editors.csv", package = "rj"), stringsAsFactors = FALSE)
   c(list(
     id = as.character(x$id), other_id = .z2null(x$otherids), slug = .z2null(x$slug),
     suppl = if(length(x$suppl)) as.character(unlist(unclass(x$suppl))) else NULL,
@@ -138,6 +139,9 @@ api_article_info <- function(x, public=FALSE) {
     keywords = .z2null(x$keywords), title = .z2null(x$title),
     timeline = if (length(x$status)) lapply(x$status, function(x) {
       x=unclass(x); if (public) x$comments <- NULL; x }) else NULL,
+    editor = if (length(x$editor) && x$editor %in% ed$name)
+      unclass(ed[match(x$editor, ed$name), c("real", "email", "name"), drop=FALSE])
+      else NULL,
     status = if (length(x$status)) x$status[[length(x$status)]]$status else NULL
     ), if (public) list() else list(
       editor = .z2null(x$editor), ae = .z2null(x$ae),
@@ -184,7 +188,7 @@ format.article <- function(x, ...) {
     if (length(x$suppl)) paste0("Suppl:\n  ", paste(unlist(x$suppl), collapse=', '), "\n"),
     if (!empty(x$type)) paste0("Type: ", x$type, "\n"),
     "Authors:", if (!empty(authors)) "\n  ", authors, "\n",
-    if (!empty(x$keywords)) paste0("Keywords: ", x$keywords, "\n"),
+    if (length(x$keywords)) paste0("Keywords: ", paste(x$keywords, collapse=', '), "\n"),
     "Editor: ", x$editor, "\n",
     "AE: ", x$ae, "\n",
     "Reviewers:", if (!empty(reviewers)) "\n  ", reviewers, "\n",
