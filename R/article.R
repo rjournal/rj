@@ -129,8 +129,9 @@ make_article <- function(id, slug = "", authors = "", title = "", editor = "", a
 ## information to expose to the web API, must not use any classed objects (or else
 ## they have to implement toJSON, but let's not go there). Information that
 ## should not be public should not be included if public=TRUE
-api_article_info <- function(x, public=FALSE) {
+api_article_info <- function(x, public=TRUE) {
   ed <- read.csv(system.file("editors.csv", package = "rj"), stringsAsFactors = FALSE)
+  ae <- read.csv(system.file("associate-editors.csv", package = "rj"), stringsAsFactors = FALSE)
   c(list(
     id = as.character(x$id), other_id = .z2null(x$otherids), slug = .z2null(x$slug),
     suppl = if(length(x$suppl)) as.character(unlist(unclass(x$suppl))) else NULL,
@@ -144,7 +145,9 @@ api_article_info <- function(x, public=FALSE) {
       else NULL,
     status = if (length(x$status)) x$status[[length(x$status)]]$status else NULL
     ), if (public) list() else list(
-      editor = .z2null(x$editor), ae = .z2null(x$ae),
+      ae = if (length(x$ae) && x$ae %in% ae$initials)
+           unclass(`names<-`(ae[match(x$ae, ae$initials), c("name", "email", "initials"), drop=FALSE], c("real", "email", "name")))
+	 else NULL,
       reviewers = if (length(x$reviewers)) lapply(x$reviewers, unclass) else NULL
     )
   )
