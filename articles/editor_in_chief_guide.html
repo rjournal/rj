@@ -9,8 +9,8 @@
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Editor-in-Chief's Guide">
 </head>
 <body>
@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rj</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@
       <h1>Editor-in-Chief's Guide</h1>
                         <h4 data-toc-skip class="author">Di Cook</h4>
             
-            <h4 data-toc-skip class="date">2024-10-01</h4>
+            <h4 data-toc-skip class="date">2025-01-06</h4>
       
 
       <div class="d-none name"><code>editor_in_chief_guide.Rmd</code></div>
@@ -112,6 +112,8 @@ email handler pops up with the message to send.)</p>
 <div class="section level3">
 <h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h3>
+<pre><code><span><span class="co">#&gt; Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
+<span><span class="co">#&gt;   object 'type_sum.accel' not found</span></span></code></pre>
 <div id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:400px;height:400px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fillcolor = \"#FA8072\", fontcolor = \"black\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fillcolor = \"#40E0D0\", fontcolor = \"black\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
