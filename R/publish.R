@@ -491,7 +491,7 @@ move_article_web <- function(from, to, volume, issue) {
   # Make yaml front matter
   front_matter <- list(
     title = pandoc_metadata$title,
-    abstract = pandoc_metadata$subject %||% paste0('The "', pandoc_metadata$title, '" article from the ', issue_year, '-', issue, ' issue.'),
+    abstract = pandoc_metadata$subtitle %||% paste0('The "', pandoc_metadata$title, '" article from the ', issue_year, '-', issue, ' issue.'),
     author = pandoc_metadata$author,
     date = format_non_null(article_metadata$online),
     date_received = format_non_null(article_metadata$acknowledged),

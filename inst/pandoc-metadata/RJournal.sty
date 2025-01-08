@@ -9,10 +9,10 @@
 % Overall page layout, fonts etc -----------------------------------------------
 
 % Issues of of \emph{The R Journal} are created from the standard \LaTeX{}
-% document class \pkg{report}. 
+% document class \pkg{report}.
 
 \RequirePackage{geometry}
-\geometry{a4paper, 
+\geometry{a4paper,
    textwidth=14cm, top=1cm, bottom=1cm,
    includehead,includefoot,centering,
    footskip=1.5cm}
@@ -20,7 +20,7 @@
 
 \RequirePackage{fancyhdr}
 \fancyhead{}
-\fancyheadoffset{2cm} 
+\fancyheadoffset{2cm}
 \fancyhead[L]{\textsc{\RJ@sectionhead}}
 \fancyhead[R]{\thepage}
 \fancyfoot{}
@@ -29,7 +29,7 @@
 \pagestyle{fancy}
 
 % We use the following fonts (all with T1 encoding):
-% 
+%
 %   rm   & palatino
 %   tt   & inconsolata
 %   sf   & helvetica
@@ -82,13 +82,13 @@
 % the obvious commands for specifying these. Articles will be put in certain
 % journal sections, named by \sectionhead.
 
-% Control appearance of titles: make slightly smaller than usual, and 
+% Control appearance of titles: make slightly smaller than usual, and
 % suppress section numbering. See http://tex.stackexchange.com/questions/69749
-% for why we don't use \setcounter{secnumdepth}{-1} 
+% for why we don't use \setcounter{secnumdepth}{-1}
 
 % Article layout ---------------------------------------------------------------
 
-% Environment |article| clears the article header information at its beginning. 
+% Environment |article| clears the article header information at its beginning.
 % We use |\FloatBarrier| from the placeins package to keep floats within
 % the article.
 \RequirePackage{placeins}
@@ -97,7 +97,7 @@
 % Refereed articles should have an abstract, so we redefine |\abstract| to
 % give the desired style
 
-\renewcommand{\abstract}[1]{\subject{#1}}
+\renewcommand{\abstract}[1]{\subtitle{#1}}
 % \renewcommand{\abstract}[1]{%
 %   \begin{abstract}
 %   #1
@@ -133,15 +133,15 @@
 % The name@of@eq is a hack to get hyperlinks to equations to work
 % within each article, even though there may be multiple eq.(1)
 %    \begin{macrocode}
-\renewcommand\chapter{\secdef\RJ@chapter\@schapter}
-\providecommand{\nohyphens}{%
-  \hyphenpenalty=10000\exhyphenpenalty=10000\relax}
-\newcommand{\RJ@chapter}{%
-  \edef\name@of@eq{equation.\@arabic{\c@chapter}}%
-  \renewcommand{\@seccntformat}[1]{}%
-  \@startsection{chapter}{0}{0mm}{%
-    -2\baselineskip \@plus -\baselineskip \@minus -.2ex}{\p@}{%
-    \phantomsection\normalfont\huge\bfseries\raggedright}}
+% \renewcommand\chapter{\secdef\RJ@chapter\@schapter}
+% \providecommand{\nohyphens}{%
+%   \hyphenpenalty=10000\exhyphenpenalty=10000\relax}
+% \newcommand{\RJ@chapter}{%
+%   \edef\name@of@eq{equation.\@arabic{\c@chapter}}%
+%   \renewcommand{\@seccntformat}[1]{}%
+%   \@startsection{chapter}{0}{0mm}{%
+%     -2\baselineskip \@plus -\baselineskip \@minus -.2ex}{\p@}{%
+%     \phantomsection\normalfont\huge\bfseries\raggedright}}
 
 % Book reviews should appear as sections in the text and in the pdf bookmarks,
 % however we wish them to appear as chapters in the TOC. Thus we define an
@@ -153,13 +153,13 @@
 }
 
 % We want bibliographies as starred sections within articles.
-% 
+%
 \RequirePackage[sectionbib,round]{natbib}
 \bibliographystyle{abbrvnat}
 
 % Equations, figures and tables are counted within articles, but we do
 % not show the article number. For equations it becomes a bit messy to avoid
-% having hyperref getting it wrong. 
+% having hyperref getting it wrong.
 
 % \numberwithin{equation}{chapter}
 \renewcommand{\theequation}{\@arabic\c@equation}
@@ -189,7 +189,7 @@
     \fontsize{50pt}{50pt}\selectfont
     The \raisebox{-8pt}{\includegraphics[height=77pt]{Rlogo-5}}\hspace{10pt}
     Journal
-  
+
   \end{center}
   {\large \hfill Volume \RJ@volume/\RJ@number, \RJ@month{} \RJ@year \quad}
 
