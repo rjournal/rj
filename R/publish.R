@@ -514,7 +514,8 @@ move_article_web <- function(from, to, volume, issue) {
       `rjtools::rjournal_web_article` = list(
         self_contained = FALSE,
         toc = FALSE,
-        legacy_pdf = TRUE
+        legacy_pdf = TRUE,
+        legacy_converted = FALSE
       )
       # `rjtools::rjournal_pdf_article` = pdf_args
     )
