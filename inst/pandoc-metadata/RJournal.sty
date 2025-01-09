@@ -111,19 +111,19 @@
 % labelling.
 
 \renewcommand{\maketitle}{%
-\noindent
-  \chapter{\RJ@title}\refstepcounter{chapter}
-  \ifx\empty\RJ@subtitle
-  \else
-    \noindent\textbf{\RJ@subtitle}
-    \par\nobreak\addvspace{\baselineskip}
-  \fi
-  \ifx\empty\RJ@author
-  \else
-    \noindent\textit{\RJ@author}
-    \par\nobreak\addvspace{\baselineskip}
-  \fi
-  \@afterindentfalse\@nobreaktrue\@afterheading
+% \noindent
+%   \chapter{\RJ@title}\refstepcounter{chapter}
+%   \ifx\empty\RJ@subtitle
+%   \else
+%     \noindent\textbf{\RJ@subtitle}
+%     \par\nobreak\addvspace{\baselineskip}
+%   \fi
+%   \ifx\empty\RJ@author
+%   \else
+%     \noindent\textit{\RJ@author}
+%     \par\nobreak\addvspace{\baselineskip}
+%   \fi
+%   \@afterindentfalse\@nobreaktrue\@afterheading
 }
 
 % Now for some ugly redefinitions.  We do not want articles to start a
