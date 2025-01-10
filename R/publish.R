@@ -315,18 +315,20 @@ move_article_web <- function(from, to, volume, issue) {
   slug <- basename(to)
 
   # Copy supporting files
-  article_files <- list.files(from, recursive = TRUE)
-  ignore_files <- basename(article_files) %in% c("RJournal.sty", "DESCRIPTION", "RJwrapper.pdf", "supplementaries.zip")
-  html_files <- xfun::file_ext(article_files) == "html"
-  ignore_files[html_files] <- vapply(file.path(from, article_files[html_files]), is_distill_html, logical(1L))
-  top_dir <- function(x) {
-    is_top <- dirname(x) == "."
-    if(all(is_top)) return(x)
-    x[!is_top] <- top_dir(dirname(x[!is_top]))
-    x
+  get_article_files <- function(from) {
+    article_files <- list.files(from, recursive = TRUE)
+    ignore_files <- basename(article_files) %in% c("RJournal.sty", "DESCRIPTION", "RJwrapper.pdf", "supplementaries.zip")
+    html_files <- xfun::file_ext(article_files) == "html"
+    ignore_files[html_files] <- vapply(file.path(from, article_files[html_files]), is_distill_html, logical(1L))
+    top_dir <- function(x) {
+      is_top <- dirname(x) == "."
+      if(all(is_top)) return(x)
+      x[!is_top] <- top_dir(dirname(x[!is_top]))
+      x
+    }
+    ignore_dirs <- top_dir(article_files) %in% c("correspondence", "history")
+    article_files[!(ignore_files | ignore_dirs)]
   }
-  ignore_dirs <- top_dir(article_files) %in% c("correspondence", "history")
-  article_files <- article_files[!(ignore_files | ignore_dirs)]
 
   # collect metadata
 
@@ -389,6 +391,7 @@ move_article_web <- function(from, to, volume, issue) {
       }
     }
 
+    article_files <- get_article_files(from)
     article_dest_files <- article_files
     is_art_ext <- tolower(xfun::file_ext(article_files)) %in% c("rmd", "pdf")
     is_art_name <- xfun::sans_ext(article_files) == xfun::sans_ext(basename(rmd_file))
@@ -405,6 +408,7 @@ move_article_web <- function(from, to, volume, issue) {
     return(rmd_path)
   }
 
+  # Legacy .tex format
   if(!file.exists(file.path(from, "RJwrapper.tex"))) {
     cli::cli_alert_warning("Could not find RJwrapper.tex for {basename(from)}, would you like to create a default one?")
     if(utils::menu(c("Yes", "No")) != 1) {
@@ -422,6 +426,38 @@ move_article_web <- function(from, to, volume, issue) {
     article_files <- c(article_files, "RJwrapper.tex")
   }
 
+  cli::cli_alert_warning("{basename(from)} is a PDF-only legacy tex article, would you like to create the Rmd/HTML with texor?")
+  if(utils::menu(c("Yes", "No")) == 1) {
+    texor::latex_to_web(from)
+
+    rmd_yml <- partition_rmd("RJwrapper.Rmd")$front_matter
+
+    article_files <- get_article_files(from)
+
+    rmd_yml$date <- format_non_null(article_metadata$online)
+    rmd_yml$date_received <- format_non_null(article_metadata$acknowledged)
+    rmd_yml$volume <- volume
+    rmd_yml$issue <- issue
+    rmd_yml$slug <- article_metadata$slug
+    rmd_yml$draft <- FALSE
+
+    article_dest_files <- article_files
+    is_art_ext <- tolower(xfun::file_ext(article_files)) %in% c("rmd", "pdf")
+    is_art_name <- xfun::sans_ext(article_files) == xfun::sans_ext(basename(rmd_file))
+    article_dest_files[is_art_name & is_art_ext] <- xfun::with_ext(basename(to), xfun::file_ext(article_files)[is_art_name & is_art_ext])
+    lapply(unique(dirname(file.path(to, article_dest_files))), xfun::dir_create)
+    file.copy(
+      file.path(from, article_files),
+      file.path(to, article_dest_files),
+      overwrite = TRUE
+    )
+    rmd_path <- file.path(to, xfun::with_ext(basename(to), ".Rmd"))
+    update_front_matter(rmd_yml, rmd_path)
+
+    return(rmd_path)
+  }
+
+  article_files <- get_article_files(from)
   lapply(unique(dirname(file.path(to, article_files))), xfun::dir_create)
   file.copy(
     file.path(from, article_files),
@@ -444,6 +480,14 @@ move_article_web <- function(from, to, volume, issue) {
       "RJwrapper.tex", "markdown+raw_tex", output = metadata <- tempfile(fileext = ".md"),
       options = c("--standalone"), wd = paste0(article_dir,"/")
     )
+    # tryCatch(
+    #   rmarkdown::pandoc_convert(
+    #     "RJwrapper.tex", "markdown+raw_tex", output = metadata <- tempfile(fileext = ".md"),
+    #     options = c("--standalone"), wd = paste0(article_dir,"/")
+    #   ),
+    #   error = function(e) browser()
+    # )
+    readLines(metadata)
     metadata
   }
   pandoc_metadata <- function(markdown){
