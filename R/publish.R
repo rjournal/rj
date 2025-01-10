@@ -151,7 +151,12 @@ publish_article <- function(article, volume, issue, home = get_articles_path(),
   article <- update_status(article, "online")
   rlang::check_installed("callr")
   cli::cli_alert_info(paste("Rendering", rmd_path))
-  callr::r(function(input) {rmarkdown::render(input)}, args = list(input = rmd_path))
+  callr::r(
+    function(input) {
+      rmarkdown::render(input, output_format = "rjtools::rjournal_article")
+    },
+    args = list(input = rmd_path)
+  )
 
   # message("Remember to check changes into git")
   invisible(TRUE)
@@ -359,7 +364,7 @@ move_article_web <- function(from, to, volume, issue) {
     function(x) {
       rmd_output <- partition_rmd(x)$front_matter$output
       if(is.list(rmd_output)) rmd_output <- names(rmd_output)
-      "rjtools::rjournal_web_article" %in% rmd_output
+      any(c("rjtools::rjournal_web_article", "rjtools::rjournal_article") %in% rmd_output)
     },
     rmd_file
   )
