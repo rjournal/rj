@@ -510,12 +510,12 @@ move_article_web <- function(from, to, volume, issue) {
     preview = 'preview.png',
     bibliography = pandoc_metadata$bibliography,
     CTV = article_metadata$CTV_rev,
+    legacy_pdf = TRUE,
+    legacy_converted = FALSE,
     output = list(
       `rjtools::rjournal_web_article` = list(
         self_contained = FALSE,
-        toc = FALSE,
-        legacy_pdf = TRUE,
-        legacy_converted = FALSE
+        toc = FALSE
       )
       # `rjtools::rjournal_pdf_article` = pdf_args
     )
