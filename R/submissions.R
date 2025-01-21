@@ -43,10 +43,10 @@ get_submissions <- function(dry_run = FALSE) {
   invisible(NULL)
 }
 
-#' @importFrom gmailr gmail_auth
+#' @importFrom gmailr gm_auth_configure
 authorize <- function(scope) {
   secret_file <- system.file("auth", "client_id.json", package = "rj")
-  gmailr::gmail_auth(scope, secret_file = secret_file)
+  gmailr::gm_auth_configure(path = secret_file)
 }
 
 extract_files <- function(files, dest) {
@@ -135,7 +135,7 @@ download_submissions <- function(dry_run) {
   }
   if (bad)
       return(FALSE)
-  
+
   articles <- lapply(
     split(new_articles, new_articles[["Submission ID"]]),
     function(form) {
