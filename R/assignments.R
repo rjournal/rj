@@ -257,6 +257,7 @@ get_unassigned <- function(){
 
 #' @param role string, take value of either "Editor" or "AE"
 #' @rdname summarise_articles
+#' @export
 find_articles <- function(editor, folder, role){
 
   grep_ae_or_editor <- glue::glue("| xargs grep {role}")
@@ -274,6 +275,7 @@ find_articles <- function(editor, folder, role){
 
 #' @param assignments an output object from \code{get_assignments()} or \code{get_unassigned()}
 #' @rdname summarise_articles
+#' @export
 get_latest <- function(assignments) {
   assignments %>%
     tidyr::unnest(status) %>%
