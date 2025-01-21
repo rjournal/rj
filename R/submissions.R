@@ -222,7 +222,7 @@ download_submissions <- function(dry_run) {
       }
     }
   )
-  if (!dry_run) {
+  if (!dry_run & NROW(new_articles) > 0L) {
     cli::cli_alert_info("Writing new article IDs to Google Sheets.")
     googlesheets4::range_write(sheet_id, new_articles["Submission ID"],
       sheet = "Form responses 1", col_names = FALSE,
