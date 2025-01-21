@@ -156,6 +156,7 @@ todo <- function(x) {
       "proofed" = "ready for publication (editor-in-chief)",
       "acknowledged" = "needs reviewers (editor)",
       "submitted" = "needs acknowledgement (editor-in-chief)",
+      "with AE" = "waiting (editor)",
       stop("Unknown status: ", status)
     )
   }
