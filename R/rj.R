@@ -1,9 +1,13 @@
 #' R Journal Package
 #'
-#' @description A package to make it easier to work with the R-journal dcf files.
-#' @docType package
+#' @keywords package
 #' @name rj
+"_PACKAGE"
+
 #' @import stringr
 #' @import rlang
 #' @import fs
-NULL
+#' @importFrom utils read.csv
+
+#' @export
+dplyr::`%>%`

@@ -81,6 +81,7 @@ status <- function(status, date = Sys.Date(), comments = "") {
 is.status <- function(x) inherits(x, "status")
 
 
+#' @export
 c.status <- c.status_list <- function(..., recursive = FALSE) {
   pieces <- list(...)
   statuses <- lapply(pieces, function(x) {
@@ -187,11 +188,13 @@ status_list <- function(x = list()) {
   structure(x, class = "status_list")
 }
 
+#' @export
 format.status_list <- function(x, ...) {
   statuses <- lapply(x, format)
   paste(statuses, collapse = ",\n  ")
 }
 
+#' @export
 print.status_list <- function(x, ...) {
   statuses <- lapply(x, format)
   cat(paste(statuses, collapse = "\n"))
@@ -237,9 +240,10 @@ parse_status <- function(x) {
   status(status = status, date = date, comments = comments)
 }
 
-as.data.frame.status_list <- function(status_list) {
+#' @export
+as.data.frame.status_list <- function(x, ...) {
   message("DF")
-  ml <- vector(mode = "list", length = length(status_list))
-  for (i in seq(along = ml)) ml[[i]] <- as.data.frame(unclass(status_list[[i]]))
+  ml <- vector(mode = "list", length = length(x))
+  for (i in seq(along = ml)) ml[[i]] <- as.data.frame(unclass(x[[i]]))
   do.call("rbind", ml)
 }

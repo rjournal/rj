@@ -143,9 +143,9 @@ as.data <- function(x) {
   data
 }
 
-#' @importFrom utils read.csv
-#' @param by.name logical, if \code{TRUE} then names are names and
-#'     values e-mails, otherwise names are e-mails and values names
+# @importFrom utils read.csv
+# @param by.name logical, if \code{TRUE} then names are names and
+#     values e-mails, otherwise names are e-mails and values names
 editors <- function(by.name=FALSE) {
   cli::cli_alert_info("Reading inst/editor.csv")
   fname <- system.file("editors.csv", package = "rj")

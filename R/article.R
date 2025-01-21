@@ -133,11 +133,13 @@ parse_supplementaries <- function(suppl) {
   xs
 }
 
+#' @export
 format.supplfile_list <- function(x, ...) {
   suppls <- lapply(x, format)
   paste(suppls, collapse = ",\n  ")
 }
 
+#' @export
 format.supplfile <- function(x, ...) {
   paste0(x)
 }

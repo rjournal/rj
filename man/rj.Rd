@@ -2,8 +2,10 @@
 % Please edit documentation in R/rj.R
 \docType{package}
 \name{rj}
+\alias{rj-package}
 \alias{rj}
 \title{R Journal Package}
 \description{
-A package to make it easier to work with the R-journal dcf files.
+This package provides useful functions for the editors of the R journal.
 }
+\keyword{package}

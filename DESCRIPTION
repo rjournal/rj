@@ -28,6 +28,7 @@ Imports:
     ctv,
     tidyr,
     scales,
+    texor,
     tinytex,
     xfun
 Suggests:
@@ -40,5 +41,5 @@ Suggests:
     callr,
     ggplot2
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr

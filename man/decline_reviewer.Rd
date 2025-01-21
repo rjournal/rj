@@ -31,6 +31,6 @@ decline_reviewer("2020-114", reviewer_id = 1)
 agree_reviewer("2020-114", reviewer_id = 2)
 
 # third reviewer doesn't reply and deemed abandon
-abandon_reviewer("2020-114", reviwer_id = 3)
+abandon_reviewer("2020-114", reviewer_id = 3)
 }
 }

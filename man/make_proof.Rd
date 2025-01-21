@@ -14,7 +14,7 @@ make_proof(id, exec = FALSE)
 \description{
 The `make_proof()` function is the first step to creating an issue. It moves
 the 'proofed' articles from the `Accepted` folder and news articles from
-`News_items/{id}` into `Proofs/{id}`.
+`News_items/\{id\}` into `Proofs/\{id\}`.
 }
 \details{
 After the proof is made with this function, `publish_issue()` can be used to

@@ -17,7 +17,7 @@ add_reviewer(article, name, email, invite = TRUE)
 }
 \description{
 This function adds the reviewer information(name and email) to the reviewers
-field in the DESCRIPTION as well as draft an email to invite teh reviewer.
+field in the DESCRIPTION as well as draft an email to invite the reviewer.
 }
 \examples{
 \dontrun{
