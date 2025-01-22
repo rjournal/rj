@@ -94,5 +94,5 @@ editor_abbr <- function(x) {
   if (empty(x)) {
     return("")
   }
-  toupper(str_c(str_sub(str_split(x, " ")[[1]], 1, 1), collapse = ""))
+  toupper(str_c(str_sub(str_split(x, " ")[[1]], 1, 2), collapse = ""))
 }
