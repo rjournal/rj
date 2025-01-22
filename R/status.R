@@ -130,8 +130,13 @@ todo <- function(x) {
   stopifnot(is.article(x))
 
   status <- last_status(x)$status
-  if (empty(x$editor)) {
+  if(status == "major revision" & empty(x$editor)) {
+    # Sent back to author to fix before allocating an editor
+    "waiting (author)"
+  } else if (empty(x$editor)) {
     "needs editor (editor-in-chief)"
+  } else if(status == "with AE") {
+    "waiting (AE)"
   } else if (empty(x$reviewers)) {
     "needs reviewers (editor)"
   } else {
@@ -156,7 +161,6 @@ todo <- function(x) {
       "proofed" = "ready for publication (editor-in-chief)",
       "acknowledged" = "needs reviewers (editor)",
       "submitted" = "needs acknowledgement (editor-in-chief)",
-      "with AE" = "waiting (editor)",
       stop("Unknown status: ", status)
     )
   }

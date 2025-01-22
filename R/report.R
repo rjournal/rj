@@ -9,6 +9,8 @@ report <- function(articles = active_articles()) {
   rpt <- do.call("rbind", lapply(articles, report_line))
   rpt <- rpt[order(rpt$date, rpt$ed), ]
   rpt$status <- factor(rpt$status, order_status(rpt$status))
+  # Sort by editor, then status, then date
+  rpt <- rpt[order(rpt$ed, rpt$status, rpt$date), ]
   structure(rpt, class = c("report", "data.frame"))
 }
 
@@ -83,8 +85,9 @@ order_status <- function(x) {
   x <- unique(x)
   eic <- x[grepl("editor-in-chief", x)]
   editors <- setdiff(x[grepl("editor", x)], eic)
-  others <- setdiff(x, c(eic, editors))
-  c(eic, editors, others)
+  author <- x[grepl("author", x)]
+  others <- setdiff(x, c(eic, editors, author))
+  c(eic, editors, others, author)
 }
 
 editor_abbr <- function(x) {
