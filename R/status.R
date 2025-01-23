@@ -173,18 +173,18 @@ deadlines <- function(sstatus) {
     return(c(Inf, Inf))
   }
 
-  # > 1st = *; > 2nd = **
+  # > 1st = *; > 2nd = **; > 3rd = ***
   special <- list(
-    "needs editor" = c(7L, 14L),
-    "needs reviewers" = c(7L, 14L),
-    "submitted" = c(3L, 7L),
-    "proofed" = c(7L, 14L),
-    "major revision" = c(60L, 90L)
+    "needs editor" = c(7L, 14L, 28L),
+    "needs reviewers" = c(7L, 14L, 28L),
+    "submitted" = c(3L, 7L, 28L),
+    "proofed" = c(7L, 14L, 28L),
+    "major revision" = c(60L, 90L, 180L)
   )
   if (sstatus %in% names(special)) {
     special[[sstatus]]
   } else {
-    c(4L, 6L) * 7L
+    c(4L, 6L, 26) * 7L
   }
 }
 
