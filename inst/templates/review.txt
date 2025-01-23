@@ -7,31 +7,15 @@ TODO: attach review template, find at rj:::find_template("review-template")
 
 Dear {{firstname}},
 
-Would you be willing to review the attached article, "{{title}}" for the R Journal? I think the topic is a good fit with your interests and expertise.
+Would you be willing to review the attached submission to the R Journal titled "{{title}}"? I think the topic is a good fit with your interests and expertise.
 
-The R Journal is an indexed, Open Access Scientific Journal published by the R
-foundation. The editorial board consists of volunteers from academia, industry
-and government.
+The R Journal is an indexed, open-access scientific journal published by the R foundation. The editorial board consists of volunteers from academia, industry and government.
 
-If you agree to review this work, we kindly ask you to use the attached
-template for your review report. You will also find further instructions in the attached
-template.
+Please let me know if you are willing to take on this review. If you have a conflict of interest, we request that you decline the invitation. In the case you decline, suggestions for alternative reviewers are welcome.
 
-Please let me know if you are willing to take on this review. If you have a
-conflict of interest, we request that you decline the invitation. In the
-case you decline, suggestions for alternative reviewers are welcome.
+If you agree to review this work, we kindly ask you to use the attached template for your review report, to be returned by email. Your email should also give your overall recommendation (this part is for the editor only): Accept with minor revisions (you won't see it again), accept with major revisions (you'll re-review the revisions), or reject.
 
-
-Reviews should be returned by email. Our preferred format for the review is a text file attachment This will be sent on to the
-authors.
-
-Your email should also give your overall recommendation (this part is for the
-editor only): Accept with minor revisions (you won't see it again), accept with
-major revisions (you'll re-review the revisions), or reject.
-
-Please let me know if you are willing to take on this review.
-I would like to receive the review, if possible, by {{date}}.
-
+Please let me know if you are willing to take on this review. I would like to receive the review, if possible, by {{date}}.
 
 With kind regards,
 {{me}}
