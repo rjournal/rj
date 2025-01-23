@@ -34,12 +34,12 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/associate_editors_guide.html">Associate Editors' Guide</a></li>
+<li><a class="dropdown-item" href="../articles/roles_and_responsibilities.html">Roles and Responsibilities</a></li>
     <li><a class="dropdown-item" href="../articles/conflict_of_interest.html">Conflict of Interest</a></li>
     <li><a class="dropdown-item" href="../articles/editor_in_chief_guide.html">Editor-in-Chief's Guide</a></li>
     <li><a class="dropdown-item" href="../articles/editors_guide.html">Editors' Guide</a></li>
+    <li><a class="dropdown-item" href="../articles/associate_editors_guide.html">Associate Editors' Guide</a></li>
     <li><a class="dropdown-item" href="../articles/issue_build_guide.html">Guide to Building an Issue</a></li>
-    <li><a class="dropdown-item" href="../articles/roles_and_responsibilities.html">Roles and Responsibilities</a></li>
     <li><a class="dropdown-item" href="../articles/website_build_guide.html">Guide to Building the New Distill Web Site</a></li>
   </ul>
 </li>
@@ -58,12 +58,13 @@
 
 
 
-<script src="editor_in_chief_guide_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="editor_in_chief_guide_files/viz-1.8.2/viz.js"></script><link href="editor_in_chief_guide_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="editor_in_chief_guide_files/grViz-binding-1.0.11/grViz.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Editor-in-Chief's Guide</h1>
-                        <h4 data-toc-skip class="author">Di Cook</h4>
+                        <h4 data-toc-skip class="author">Di Cook and Rob
+J Hyndman</h4>
             
             <h4 data-toc-skip class="date">2025-01-23</h4>
       
@@ -80,8 +81,7 @@
 populates a <a href="https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370" class="external-link">Google
 sheet</a>, and a <a href="https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g" class="external-link">Google
 drive</a>. This sheet contains details of the submission, and also a zip
-file with the necessary files. You will need to have permission to see
-the sheet and the drive, and <code><a href="../reference/get_submissions.html">get_submissions()</a></code> will
+file with the necessary files; <code><a href="../reference/get_submissions.html">get_submissions()</a></code> will
 authenticate against both.</p>
 <p>On a regular basis, download newly submitted items:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -95,111 +95,36 @@ missing items are the <code>Suppl:</code> line which should list the
 <code>.R</code> files and any data needed to reproduce the paper.</p>
 </div>
 <div class="section level2">
+<h2 id="check-relevance-and-reproducibility">Check relevance and reproducibility<a class="anchor" aria-label="anchor" href="#check-relevance-and-reproducibility"></a>
+</h2>
+<p>First check that the paper fits the <a href="https://journal.r-project.org/#article-types" class="external-link">scope of the
+journal</a>). If not, <code><a href="../reference/action.html">reject()</a></code> the paper.</p>
+<p>Then check that the paper is reproducible by either: (a) compiling
+the <code>Rmd</code> file; or (b) compiling both the LaTeX file and all
+<code>.R</code> files. If there are any problems, request a
+<code><a href="../reference/action.html">resubmission()</a></code> from the authors.</p>
+</div>
+<div class="section level2">
 <h2 id="assigning-articles-to-an-ee">Assigning articles to an EE<a class="anchor" aria-label="anchor" href="#assigning-articles-to-an-ee"></a>
 </h2>
-<p>New articles should be assigned to one of the three EE’s. This is
-good to do at the time of acknowledging the submission, so that the EE
-can be cc’d on the email. The function
-<code><a href="../reference/acknowledge_submission.html">acknowledge_submission()</a></code> is used to generate an automatic
-email.</p>
+<p>New articles should be assigned to one of the four EE’s. This is good
+to do at the time of acknowledging the submission, so that the EE can be
+cc’d on the email. The function <code><a href="../reference/acknowledge_submission.html">acknowledge_submission()</a></code> is
+used to generate an automatic email.</p>
 <p>(It helps to have
 <code>options(browser=Sys.getenv('R_BROWSER'))</code> set so that your
 email handler pops up with the message to send.)</p>
-</div>
-<div class="section level2">
-<h2 id="workflow-and-operations">Workflow and operations<a class="anchor" aria-label="anchor" href="#workflow-and-operations"></a>
-</h2>
 <div class="section level3">
-<h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+<h3 id="check-progress-of-all-papers">Check progress of all papers<a class="anchor" aria-label="anchor" href="#check-progress-of-all-papers"></a>
 </h3>
-<div id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:400px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"check for new submissions or revisions get_submissions()\", shape = \"rectangle\", width = \"4\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"2\" [label = \"is this?\", shape = \"ellipse\", width = \"1\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"3\" [label = \"examine article: should \n the paper progress \n to review?\", shape = \"rectangle\", width = \"2\", fillcolor = \"#FA8072\", fontcolor = \"black\"] \n  \"4\" [label = \"assign to an EE or to self\", shape = \"rectangle\", width = \"3\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"5\" [label = \"acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()\", shape = \"rectangle\", width = \"3\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"6\" [label = \"acknowledge revision received, \n Cc handling EE\", shape = \"rectangle\", width = \"3\", fillcolor = \"#40E0D0\", fontcolor = \"black\"] \n\"1\"->\"2\" [label = \".\"] \n\"2\"->\"3\" [label = \"new submission\"] \n\"3\"->\"4\" [label = \".\"] \n\"4\"->\"5\" [label = \".\"] \n\"2\"->\"6\" [label = \"revision\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>The function <code><a href="../reference/report.html">report()</a></code> shows the status of all current
+papers being handled, by author and by status. Anything with 3 stars
+needs urgent attention.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="making-articles-available-online">Making articles available online<a class="anchor" aria-label="anchor" href="#making-articles-available-online"></a>
+<h2 id="new-executive-editor">New executive editor<a class="anchor" aria-label="anchor" href="#new-executive-editor"></a>
 </h2>
-<p>TO BE UPDATED WITH NEW WEB SITE DESIGN - new articles likely can get
-uploaded to articles tab once accepted, before being bundled into an
-issue.</p>
-</div>
-<div class="section level2">
-<h2 id="web-site">Web site<a class="anchor" aria-label="anchor" href="#web-site"></a>
-</h2>
-<p>The web site is a static html page, build from
-<code>rjournal.github.io</code> (currently <code>dev</code> branch). The
-site is built locally, using RStudio Build Website. Preview locally and
-if ok, push files to GitHub.</p>
-<p>The procedure for getting the web site public has multiple steps:</p>
-<ol style="list-style-type: decimal">
-<li>
-<code>master</code> branch is the sandbox to stage changes.</li>
-<li>Generate a pull request and accept it from <code>master</code> to
-<code>published</code>.</li>
-<li>The <code>deploy</code> branch is automatically built using GitHub
-actions to populate the web site.</li>
-</ol>
-</div>
-<div class="section level2">
-<h2 id="obtaining-dois-for-articles-in-new-issue">Obtaining DOIs for articles in new issue<a class="anchor" aria-label="anchor" href="#obtaining-dois-for-articles-in-new-issue"></a>
-</h2>
-<p>A file <code>doi.xml</code> is generated by the issue build process,
-in the folder issue number within <code>_issues</code>.</p>
-<p><strong>Note:</strong> It is easier if the December issue gets their
-slug BEFORE the end of the year, because the DOI links assume the issue
-date, which is the December the year before it actually gets published.
-If the slugs are in the new year, you need to update links in a tricky
-way.</p>
-<p>You need to generate the <code>xml</code> for the DOI links by:</p>
-<!-- ```{r DOI, eval = FALSE, echo=TRUE} -->
-<!-- # From the articles directory -->
-<!-- library(rj) -->
-<!-- library(yaml) -->
-<!-- # Assuming the rjournal.github.io is a parallel directory -->
-<!-- cfg = yaml.load_file("../rjournal.github.io/_config.yml") -->
-<!-- issue = cfg$issue[[length(cfg$issue)]] # last one is typically desired -->
-<!-- print(list(volume=issue$volume, num=issue$num))  # double check -->
-<!-- rj:::create_doi_from_issue(issue, outdir="./")  # Change outdir to your preference -->
-<!-- ``` -->
-<!-- This will generate the file `DOI-yr-num.xml` where `yr` is the year of the issue and `num` is the number (1 or 2).  -->
-<p>Then you need to login into <a href="https://doi.crossref.org/" class="external-link uri">https://doi.crossref.org/</a> using username
-<code>rfou</code> and password provided by previous editor.</p>
-<p>Click on “Upload submissions”, then “Metadata” and upload the
-file.</p>
-<div class="section level3">
-<h3 id="check-for-orphaned-papers">Check for orphaned papers<a class="anchor" aria-label="anchor" href="#check-for-orphaned-papers"></a>
-</h3>
-<p>The function <code><a href="../reference/active_articles.html">active_articles()</a></code> gives a long list of
-current papers being handled. And also <code><a href="../reference/tabulate_articles.html">tabulate_articles()</a></code>
-can be helpful to find papers that are lagging in the system.</p>
-</div>
-<div class="section level3">
-<h3 id="archives-of-submissions">Archives of submissions<a class="anchor" aria-label="anchor" href="#archives-of-submissions"></a>
-</h3>
-<p>In the <code>articles</code> repo, the <code>Proofs</code> folder
-contains all the supporting files of Accepted articles. The
-<code>Rejected</code> folder contains all of the supporting files for
-rejected submisisons.</p>
-<p>From time to time, papers with dates older than two years should be
-moved to the <code>archive</code> repo, to make the
-<code>articles</code> repo smaller. Recommend that this is done at the
-hand-over of the EiC role at the end of each year.</p>
-</div>
-<div class="section level3">
-<h3 id="building-an-issue">Building an issue<a class="anchor" aria-label="anchor" href="#building-an-issue"></a>
-</h3>
-</div>
-<div class="section level3">
-<h3 id="revising-wikipedia-page">Revising wikipedia page<a class="anchor" aria-label="anchor" href="#revising-wikipedia-page"></a>
-</h3>
-</div>
-</div>
-<div class="section level2">
-<h2 id="search-for-new-editorial-board-members">Search for new editorial board members<a class="anchor" aria-label="anchor" href="#search-for-new-editorial-board-members"></a>
-</h2>
-<div class="section level3">
-<h3 id="executive-editors">Executive editors<a class="anchor" aria-label="anchor" href="#executive-editors"></a>
-</h3>
 <p>The EIC is responsible to navigating the search for a new EE. The
 search for a new editorial board member should begin in September,
 giving enough time to find a replacement before the outgoing member
@@ -223,21 +148,56 @@ and <a href="https://stat.ethz.ch/mailman/listinfo/r-journal-advisory" class="ex
 <li>The outgoing member unsubscribes from r-journal-editors by visiting
 the web page above, but should remain subscribed to
 r-journal-advisory</li>
-<li>New EE is added to the Editors team at
+<li>The new EE is added to the Editors team at
 <code>https://github.com/rjournal</code> and to the
 <code>rjournal.slack.com</code> organisation.</li>
+<li>The new EE is added to the <code>editors.csv</code> file in the
+<code>inst</code> folder of the <code>rj</code> package.</li>
 </ul>
 <p>The EIC may take on outstanding handling editor duties of the
 outgoing member.</p>
 </div>
-<div class="section level3">
-<h3 id="associate-editors">Associate editors<a class="anchor" aria-label="anchor" href="#associate-editors"></a>
-</h3>
-<p>The EIC is responsible for recruiting and setting up the GitHub repos
-for AEs. Ideally, keywords of submissions over the past year are
+<div class="section level2">
+<h2 id="new-associate-editors">New associate editors<a class="anchor" aria-label="anchor" href="#new-associate-editors"></a>
+</h2>
+<p>The EIC is responsible for recruiting new AEs, after discussion with
+all editors. Ideally, keywords of submissions over the past year are
 summarised, and compared with keywords of current AEs. New AEs should be
 recruited for topics where there is the most need.</p>
+<p>Once a new AE is appointed, the following steps take place:</p>
+<ul>
+<li>The EIC informs the other EEs.</li>
+<li>The EIC sets up a GitHub repo of the form ae-articles-xx where xx is
+the initials of the AE</li>
+<li>The new AE is added to the <code>associate_editors.csv</code> file
+in the <code>inst</code> folder of the <code>rj</code> package.</li>
+</ul>
 </div>
+<div class="section level2">
+<h2 id="handover-to-new-editor-in-chief">Handover to new Editor-in-Chief<a class="anchor" aria-label="anchor" href="#handover-to-new-editor-in-chief"></a>
+</h2>
+<ul>
+<li>Update the <a href="https://en.wikipedia.org/wiki/The_R_Journal" class="external-link">R
+Journal Wikipedia page</a> with the change of editors.</li>
+<li>Ask Martin Maechler to forward <a href="mailto:r-journal@r-project.org" class="email">r-journal@r-project.org</a> to the new EIC’s preferred
+email address.</li>
+<li>Grant permission to the new EIC to access the <a href="https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370" class="external-link">Google
+sheet</a>, and <a href="https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g" class="external-link">Google
+drive</a> used for submissions.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="archives">Archives<a class="anchor" aria-label="anchor" href="#archives"></a>
+</h2>
+<p>[Not done since 2019. Is it needed?]</p>
+<p>In the <code>articles</code> repo, the <code>Proofs</code> folder
+contains all the supporting files of Accepted articles. The
+<code>Rejected</code> folder contains all of the supporting files for
+rejected submisisons.</p>
+<p>From time to time, papers with dates older than two years should be
+moved to the <code>archive</code> repo, to make the
+<code>articles</code> repo smaller. Recommend that this is done at the
+hand-over of the EiC role at the end of each year.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
