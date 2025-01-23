@@ -30,10 +30,10 @@ get_submissions <- function(dry_run = FALSE) {
   cli::cat_line("Performing automatic checks on submissions")
   # consume_submissions(subs)
 
-  if (!dry_run) {
-    cli::cat_line("Drafting acknowledgements")
-    draft_acknowledgements(subs)
-  }
+  #if (!dry_run) {
+  #  cli::cat_line("Drafting acknowledgements")
+  #  draft_acknowledgements(subs)
+  #}
 
   if (dry_run) {
     cli::cli_alert_danger("Dry run complete. Check that the submissions have been loaded correctly, and then reset the changes.")
@@ -280,7 +280,7 @@ draft_acknowledgements <- function(subs) {
   acknowledge_sub <- function(sub) {
     body <- render_template(sub, "gmail_acknowledge")
     email <- gmailr::mime(
-      From = "rjournal.submission@@gmail.com",
+      From = "rjournal.submission@gmail.com",
       To = sub$authors[[1L]]$email,
       Subject = paste(
         "R Journal submission",
