@@ -1,5 +1,5 @@
 ---
-title: "Draft: Conflict of Interest"
+title: "Conflict of Interest"
 author: "Mark van der Loo"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -8,8 +8,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-_This document is a proposal, and does not (yet) reflect current policy of the R Journal_
 
 ## What is a conflict of interest?
 

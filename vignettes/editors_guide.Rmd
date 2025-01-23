@@ -1,6 +1,6 @@
 ---
 title: "Editors' Guide"
-author: "First draft by Di Cook"
+author: "Di Cook"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
