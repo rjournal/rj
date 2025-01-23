@@ -6,11 +6,14 @@ TODO: change from address
 
 Dear {{name}},
 
-We are pleased to tentatively accept your paper "{{title}}" subject to the minor revisions described below.
+We are pleased to tentatively accept your paper titled "{{title}}" subject to the minor revisions described below.
 
-We would appreciate a revised version and point-by-point response to the reviewers comments within 1 month. Remember, that when responding to the reviewer's comments, your job is to persuade me, the editor, that either you've dealt with the issue, or that it's not relevant. To this end, please produce a single document that includes all the reviewers comments mingled with your responses. I particularly recommend the strategy described at http://matt.might.net/articles/peer-review-rebuttals/.
+We would appreciate a revised version and point-by-point response to the reviewers comments within 1 month. Remember, that when responding to the reviewer's comments, your job is to persuade me, the editor, that either you've dealt with the issue, or that it's not relevant. To this end, please produce a single document that includes all the reviewers comments mingled with your responses.
 
 When you have your revised article ready, please submit a zip containing all relevant files through the article submission at https://journal.r-project.org/submissions.html. You will need to include the article id listed in the Subject line into the form.
+
+I look forward to seeing the next iteration.
+
 Regards,
 
 {{me}}
