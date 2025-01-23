@@ -41,5 +41,6 @@ Suggests:
     callr,
     ggplot2
 Encoding: UTF-8
+URL: https://rjournal.github.io/rj
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr

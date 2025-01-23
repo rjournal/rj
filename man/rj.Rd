@@ -8,4 +8,11 @@
 \description{
 This package provides useful functions for the editors of the R journal.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://rjournal.github.io/rj}
+}
+
+}
 \keyword{package}
