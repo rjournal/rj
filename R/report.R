@@ -10,7 +10,7 @@ report <- function(articles = active_articles()) {
   rpt <- rpt[order(rpt$date, rpt$ed), ]
   rpt$status <- factor(rpt$status, order_status(rpt$status))
   # Sort by editor, then status, then date
-  rpt <- rpt[order(rpt$ed, rpt$status, rpt$date), ]
+  rpt <- rpt[order(-nchar(rpt$stars), rpt$ed, rpt$status, rpt$date), ]
   structure(rpt, class = c("report", "data.frame"))
 }
 
@@ -23,7 +23,11 @@ report_line <- function(x) {
   last_date <- last_status(x)$date
 
   days_taken <- difftime(Sys.Date(), last_date, "days")
-  stars <- sum(days_taken > deadlines(todo))
+  if(todo == "waiting (author)") {
+    stars <- 0
+  } else {
+    stars <- sum(days_taken > deadlines(todo))
+  }
 
   data.frame(
     status = todo,
