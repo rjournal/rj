@@ -1,6 +1,6 @@
 ---
 title: "Editor-in-Chief's Guide"
-author: "Di Cook"
+author: "Di Cook and Rob J Hyndman"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  echo = FALSE, 
+  echo = FALSE,
   warning = FALSE,
   message = FALSE
 )
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 # Downloading new submissions and revisions
 
-Articles are submitted through a [Google form](https://forms.gle/ykj6QcoGQD5ctnA5A) which populates a [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and a [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g). This sheet contains details of the submission, and also a zip file with the necessary files. You will need to have permission to see the sheet and the drive, and `get_submissions()` will authenticate against both.
+Articles are submitted through a [Google form](https://forms.gle/ykj6QcoGQD5ctnA5A) which populates a [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and a [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g). This sheet contains details of the submission, and also a zip file with the necessary files; `get_submissions()` will authenticate against both.
 
 On a regular basis, download newly submitted items:
 
@@ -31,102 +31,25 @@ get_submissions()
 
 This will create a new folder in the `Submissions` directory of the `articles` repo, and a `DESCRIPTION` file with the meta data.
 
-You should check that this file has been constructed correctly, and that the zip file has unpacked into the top level of the folder. Common missing items are the `Suppl:` line which should list the `.R` files and any data needed to reproduce the paper. 
+You should check that this file has been constructed correctly, and that the zip file has unpacked into the top level of the folder. Common missing items are the `Suppl:` line which should list the `.R` files and any data needed to reproduce the paper.
+
+# Check relevance and reproducibility
+
+First check that the paper fits the [scope of the journal](https://journal.r-project.org/#article-types)). If not, `reject()` the paper.
+
+Then check that the paper is reproducible by either: (a) compiling the `Rmd` file; or (b) compiling both the LaTeX file and all `.R` files. If there are any problems, request a `resubmission()` from the authors.
 
 # Assigning articles to an EE
 
-New articles should be assigned to one of the three EE's. This is good to do at the time of acknowledging the submission, so that the EE can be cc'd on the email. The function `acknowledge_submission()` is used to generate an automatic email. 
+New articles should be assigned to one of the four EE's. This is good to do at the time of acknowledging the submission, so that the EE can be cc'd on the email. The function `acknowledge_submission()` is used to generate an automatic email.
 
 (It helps to have `options(browser=Sys.getenv('R_BROWSER'))` set so that your email handler pops up with the message to send.)
 
-# Workflow and operations
+## Check progress of all papers
 
-## Workflow
+The function `report()` shows the status of all current papers being handled, by author and by status. Anything with 3 stars needs urgent attention.
 
-```{r wfgraph, out.width="100%", fig.width=6, fig.height=6, fig.align='center', fig.align='center'}
-library(DiagrammeR)
-eic_df <- create_node_df(n=6,  
-    label=c("check for new submissions or revisions get_submissions()", # 1
-            "is this?", # a new submission?", # 2
-            "examine article: should \n the paper progress \n to review?", # 3
-            "assign to an EE or to self", # 4
-            "acknowledge paper, Cc handling EE \n acknowledge_submission() \n acknowledge_revision()", # 5
-            "acknowledge revision received, \n Cc handling EE"), # 6
-   shape = c("rectangle", "ellipse", "rectangle", 
-             "rectangle", "rectangle", "rectangle"),
-   width = c(4, 1, 2, 3, 3, 3),
-   fillcolor = c("grey90", "orange", "salmon",  
-                 "grey90", "grey90", "turquoise"),
-   fontcolor = "black",
-   type = c("a", "a", "a", "a", "a", "a"))
-
-eic_edge_df <- create_edge_df(
-  from = c(1,2,3,4,2), 
-  to = c(2,3,4,5,6), 
-  rel = "a",
-  label = c(".", "new submission", ".", ".","revision"))
-
-eic <- create_graph(eic_df, 
-                       eic_edge_df, 
-                       directed = TRUE, attr_theme = "tb")
-render_graph(eic, width=400, height=400)
-```
-
-# Making articles available online
-
-TO BE UPDATED WITH NEW WEB SITE DESIGN - new articles likely can get uploaded to articles tab once accepted, before being bundled into an issue.
-
-# Web site
-
-The web site is a static html page, build from `rjournal.github.io` (currently `dev` branch). The site is built locally, using RStudio Build Website. Preview locally and if ok, push files to GitHub.
-
-The procedure for getting the web site public has multiple steps:
-
-1. `master` branch is the sandbox to stage changes.
-2. Generate a pull request and accept it from `master` to `published`.
-3. The `deploy` branch is automatically built using GitHub actions to populate the web site.
-
-# Obtaining DOIs for articles in new issue
-
-A file `doi.xml` is generated by the issue build process, in the folder issue number within `_issues`.
-
-**Note:** It is easier if the December issue gets their slug BEFORE the end of the year, because the DOI links assume the issue date, which is the December the year before it actually gets published. If the slugs are in the new year, you need to update links in a tricky way.
-
-You need to generate the `xml` for the DOI links by:
-
-<!-- ```{r DOI, eval = FALSE, echo=TRUE} -->
-<!-- # From the articles directory -->
-<!-- library(rj) -->
-<!-- library(yaml) -->
-<!-- # Assuming the rjournal.github.io is a parallel directory -->
-<!-- cfg = yaml.load_file("../rjournal.github.io/_config.yml") -->
-<!-- issue = cfg$issue[[length(cfg$issue)]] # last one is typically desired -->
-<!-- print(list(volume=issue$volume, num=issue$num))  # double check -->
-<!-- rj:::create_doi_from_issue(issue, outdir="./")  # Change outdir to your preference -->
-<!-- ``` -->
-
-<!-- This will generate the file `DOI-yr-num.xml` where `yr` is the year of the issue and `num` is the number (1 or 2).  -->
-Then you need to login into https://doi.crossref.org/ using username `rfou` and password provided by previous editor. 
-
-Click on "Upload submissions", then "Metadata" and upload the file. 
-
-## Check for orphaned papers
-
-The function `active_articles()` gives a long list of current papers being handled. And also `tabulate_articles()` can be helpful to find papers that are lagging in the system.
-
-## Archives of submissions
-
-In the `articles` repo, the `Proofs` folder contains all the supporting files of Accepted articles. The `Rejected` folder contains all of the supporting files for rejected submisisons.
-
-From time to time, papers with dates older than two years should be moved to the `archive` repo, to make the `articles` repo smaller. Recommend that this is done at the hand-over of the EiC role at the end of each year.
-
-## Building an issue
-
-## Revising wikipedia page
-
-# Search for new editorial board members
-
-## Executive editors
+# New executive editor
 
 The EIC is responsible to navigating the search for a new EE. The search for a new editorial board member should begin in September, giving enough time to find a replacement before the outgoing member leaves at the end of December. Nominations for the new member are discussed by the editorial board first, and then preferably also with the advisory committee so that they can provide historical perspective.
 
@@ -137,14 +60,32 @@ Once a new member is found, the following steps take place:
 - The EIC informs Martin Maechler of the new board member
 - The incoming board member requests access to the mailing lists by visiting https://stat.ethz.ch/mailman/listinfo/r-journal-editors and https://stat.ethz.ch/mailman/listinfo/r-journal-advisory.
 - The outgoing member unsubscribes from r-journal-editors by visiting the web page above, but should remain subscribed to r-journal-advisory
-- New EE is added to the Editors team at `https://github.com/rjournal` and to the `rjournal.slack.com` organisation.
+- The new EE is added to the Editors team at `https://github.com/rjournal` and to the `rjournal.slack.com` organisation.
+- The new EE is added to the `editors.csv` file in the `inst` folder of the `rj` package.
 
 The EIC may take on outstanding handling editor duties of the outgoing member.
 
-## Associate editors
+# New associate editors
 
-The EIC is responsible for recruiting and setting up the GitHub repos for AEs. Ideally, keywords of submissions over the past year are summarised, and compared with keywords of current AEs. New AEs should be recruited for topics where there is the most need.
+The EIC is responsible for recruiting new AEs, after discussion with all editors. Ideally, keywords of submissions over the past year are summarised, and compared with keywords of current AEs. New AEs should be recruited for topics where there is the most need.
+
+Once a new AE is appointed, the following steps take place:
+
+- The EIC informs the other EEs.
+- The EIC sets up a GitHub repo of the form ae-articles-xx where xx is the initials of the AE
+- The new AE is added to the `associate_editors.csv` file in the `inst` folder of the `rj` package.
+
+# Handover to new Editor-in-Chief
+
+* Update the [R Journal Wikipedia page](https://en.wikipedia.org/wiki/The_R_Journal) with the change of editors.
+* Ask Martin Maechler to forward r-journal@r-project.org to the new EIC's preferred email address.
+* Grant permission to the new EIC to access the [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g) used for submissions.
 
 
+# Archives
 
+[Not done since 2019. Is it needed?]
 
+In the `articles` repo, the `Proofs` folder contains all the supporting files of Accepted articles. The `Rejected` folder contains all of the supporting files for rejected submisisons.
+
+From time to time, papers with dates older than two years should be moved to the `archive` repo, to make the `articles` repo smaller. Recommend that this is done at the hand-over of the EiC role at the end of each year.

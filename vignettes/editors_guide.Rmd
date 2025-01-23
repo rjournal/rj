@@ -1,6 +1,6 @@
 ---
 title: "Editors' Guide"
-author: "Di Cook"
+author: "Di Cook and Rob J Hyndman"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  echo = FALSE, 
+  echo = FALSE,
   warning = FALSE,
   message = FALSE
 )
@@ -21,34 +21,13 @@ knitr::opts_chunk$set(
 
 # Mission
 
-Executive Editor (EE) of the R Journal are the primary article handler for about a quarter of submissions per year, responsible for:
+Each Executive Editor (EE) of the R Journal is the primary article handler for about a quarter of submissions per year, responsible for:
 
 - matching the article with an appropriate Associate Editor (AE) or handling obtaining reviews without an AE.
 - communicating with AEs on submitted articles, and if necessary providing guidance to an AE about use of how GitHub is used, and relevant `rj` functionality.
 - communicating progress and reviews with the corresponding author.
-- making a final decision if an article should be accepted, or rejected, or on an appropriate revision status, usually based on reviewer and AE feedback. 
+- making a final decision if an article should be accepted, or rejected, or on an appropriate revision status, usually based on reviewer and AE feedback.
 - maintaining and enhancing the `rj` and `rjtools` software, in collaboration with other EEs and AEs.
-
-# Overview of editorial board
-
-The editorial board consists of four editors, including an Editor-in-Chief (EIC), and a non-fixed number of associate editors. Each editor serves a roughly four year term. Associate editors serve a three year term, generally beginning in the calendar year of their invitation, and ending at the end of their third year.
-
-In the third calendar year of their term the EE acts as EIC. The EIC takes primary responsibility for:
-
-- Production of four journal issues per year, in March, June, September, and December. 
-  The issue typically appears a month or two after the publication date, because articles accepted up to June 30, and mid-Dec, respectively will likely be included. 
-- Managing the flow of submissions, ensuring that these are handled in a timely manner.
-- Maintaining the R Journal web site http://journal.r-project.org. 
-- Maintaining the formatting and tools used to manage the journal.
-- Ensuring smooth communication between editors and associate editors and authors.
-
-EE's have the primary responsibility for handling any particular submission.
-
-AE's have the primary responsibility for obtaining reviews and making recommendations for their assigned articles. 
-
-# New editors and associate editors
-
-New editors and associate editors should be added to the `editors.csv` and `associate_editors.csv` files in `inst` folder. 
 
 # Article assignment to AE
 
@@ -58,19 +37,19 @@ The AE should be notified of any new assignment.
 
 # Communications
 
-A newly assigned article for an AE needs to have the directory need to be copied from the `articles` repo to the relevant `ae-articles-XX`. The `articles` repo is the master copy, and once a paper is retrieved from an AE, the `DESCRIPTION` file is updated, and the `correspondence` folder is populated. 
+A newly assigned article for an AE needs to have the directory copied from the `articles` repo to the relevant `ae-articles-XX`. The `articles` repo is the master copy, and once a paper is retrieved from an AE, the `DESCRIPTION` file is updated, and the `correspondence` folder is populated.
 
-Slack is used for communication, between EIC, EEs and AEs, and general information about operations. The channel `editors_private` can be used for protected conversations between EEs. 
+Slack is used for communication, between EIC, EEs and AEs, and general information about operations. The channel `editors_private` can be used for protected conversations between EEs.
 
-Weekly virtual meetings are held to keep communication between editors current.
+Monthly virtual meetings are held to keep communication between editors current.
 
-Email is the primary manner for communicating with authors. The EE, not AEs, should communicate with authors. 
+Email is the primary manner for communicating with authors. The EE, not AEs, should communicate with authors.
 
 # Workflow and operations
 
 ## Getting started
 
-Install the `rj` package with 
+Install the `rj` package with
 
 ```{r eval=FALSE, echo=TRUE}
 remotes::install_github("rjournal/rj")
@@ -99,7 +78,7 @@ The submission process proceeds as follows:
 
 ```{r wfgraph, fig.width=8, fig.height=12, fig.align='center'}
 library(DiagrammeR)
-editor_df <- create_node_df(n=11,  
+editor_df <- create_node_df(n=11,
     label=c("is this a new submission?", # 1
             "examine article: should the paper progress to review?", # 2
             "is there a suitable AE?", # 3
@@ -111,33 +90,35 @@ editor_df <- create_node_df(n=11,
             "should it go back to AE?", # 9
             "reject(), contact authors", # 10
             "act as AE, find reviewers, update status, follow AE flow chart"), # 11
-   shape = c("ellipse", "ellipse", "ellipse", 
-             "rectangle", "rectangle", 
-             "ellipse", "rectangle", "ellipse", 
+   shape = c("ellipse", "ellipse", "ellipse",
+             "rectangle", "rectangle",
+             "ellipse", "rectangle", "ellipse",
              "ellipse", "rectangle", "rectangle"),
    width = c(3, 5, 3, 5, 2, 3, 4, 3, 3, 3, 4),
-   fillcolor = c("orange", "orange", "orange", 
+   fillcolor = c("orange", "orange", "orange",
                  "grey90", "grey90",
-                 "orange", "salmon", "orange", 
+                 "orange", "salmon", "orange",
                  "orange", "salmon", "turquoise"),
    fontcolor = "black")
 
 editor_edge_df <- create_edge_df(
-  from = c(1,2,3,4,5,6,1,8, 8,9,9, 2, 3, 6), 
-  to =   c(2,3,4,5,6,7,8,9,10,7,4,10, 11, 5), 
+  from = c(1,2,3,4,5,6,1,8, 8,9,9, 2, 3, 6),
+  to =   c(2,3,4,5,6,7,8,9,10,7,4,10, 11, 5),
   label = c("Y", "Y", "Y", ".", ".", "Y",
             "N","Y","N", "N", "Y", "N", "N", "N"),
-  color = c("dodgerblue2", "dodgerblue2", "dodgerblue2", 
+  color = c("dodgerblue2", "dodgerblue2", "dodgerblue2",
             "grey50", "grey50", "dodgerblue2",
-            "red", "dodgerblue2", "red", "red", 
+            "red", "dodgerblue2", "red", "red",
             "dodgerblue2", "red", "red", "red"))
 
-editor <- create_graph(editor_df, 
-                       editor_edge_df, 
+editor <- create_graph(editor_df,
+                       editor_edge_df,
                        directed = TRUE, attr_theme = "tb")
 render_graph(editor)
 ```
 
 ## Dealing with problematic authors
 
-`vexing_authors.csv`
+A few problematic authors are listed in `vexing_authors.csv`
+
+Please advise the EIC if you think anyone needs to be added to this list.

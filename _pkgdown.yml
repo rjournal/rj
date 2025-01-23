@@ -87,3 +87,15 @@ reference:
   - set_articles_path
   - article_status_plot
   - time_to_accept_plot
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - roles_and_responsibilities
+  - conflict_of_interest
+  - editor_in_chief_guide
+  - editors_guide
+  - associate_editors_guide
+  - issue_build_guide
+  - website_build_guide

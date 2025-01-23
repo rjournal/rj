@@ -1,6 +1,6 @@
 ---
 title: "Roles and Responsibilities"
-author: "Mark van der Loo"
+author: "Mark van der Loo and Rob J Hyndman"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,20 +9,18 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-_This document is a proposal, and does not (yet) reflect current policy of the R Journal_
-
 This vignette gives an overview of the roles in the R Journal editorial team,
 the responsibilities that come with each role, and an overview of the editorial
 process. There are separate guides that detail the operational and technical
 details, in particular:
 
-- [Associate Editor Guide](associate_editors_guide.html)
+- [Editor-in-Chief Guide](editor_in_chief_guide.html)
 - [Executive Editor Guide](executive_editors_guide.html)
-- [Editor in Chief Guide](editor_in_chief_guide.html)
+- [Associate Editor Guide](associate_editors_guide.html)
 
 ## Roles and responsibilities in the editorial team
 
-The editorial team consists of four Executive Editors (EE), of which one is the
+The editorial team consists of four Executive Editors (EE), one of which is the
 Editor-in-Chief (EIC). The EEs are supported by a team of Associate Editors.
 
 The team of EEs follow a rotating schedule. A new member will act as EE for 2
@@ -37,16 +35,15 @@ All members of the editorial team are expected to take appropriate action in the
 
 The EIC is responsible for:
 
-- quality and publication of the Journal;
+- production of four journal issues per year, one per quarter;
 - timely and proper handling of submitted papers;
-- ensuring staffing of the EE and AE teams;
-- resolving conflicts between authors and the Journal, where necessary in collaboration with the advisory board.
-
-In particular, the EIC distributes the article workload amongst the EEs. The
-EIC organizes biweekly meetings for the EE team, monthly meetings for the AE
-team, and an annual meeting with the advisory board. The EIC also ensures that
-there are always four EEs and sufficient AEs to handle the workload. Finally,
-the EIC ensures that the quarterly issues are produced and published.
+- distributing the article workload amongst the EEs;
+- ensuring there are always four EEs and sufficient AEs to handle the workload;
+- resolving conflicts between authors and the Journal, where necessary in collaboration with the advisory board;
+- maintaining the [R Journal website](http://journal.r-project.org);
+- maintaining the [`rj` package](https://rjournal.github.io/rj/) used by the editorial team to conduct operations for the R Journal;
+- organizing monthly meetings for the EE team, bimonthly meetings for the AE
+team, and an annual meeting with the advisory board.
 
 ### Executive Editors
 
@@ -54,13 +51,9 @@ An EE is responsible for:
 
 - proper and timely handling of papers under their responsibility;
 - making the editorial decision (Accept/Minor/Major/Reject) for papers under their responsibility;
-- communicating with the authors;
+- ensuring that both the reviews and the decision on submissions are properly argued, and that this argumentation is both archived and communicated to the authors;
+- communicating with the AE and the authors of submissions;
 - supporting the EIC in recruiting AEs and EEs.
-
-In particular, the EE communicates with AE and with the authors of submissions.
-They ensure that both the reviews and the decision on submissions are properly
-argued, and that this argumentation is both archived and communicated to the
-authors.
 
 EEs may choose to hand over a paper to an AE but they will typically also
 handle some papers themselves. For those papers, the EE also takes on the
@@ -73,7 +66,7 @@ An AE is responsible for:
 - finding and recruiting appropriate reviewers, such that there are preferably at least two reviews of sufficient quality for each submission;
 - ensuring that both the article contents and the code are sufficiently reviewed;
 - ensuring timely handling of papers under their responsibility;
-- advising the EE on the editorial decision (Accept/Minor/Major/Reject).
+- advising the EE on the recommended editorial decision (Accept/Minor/Major/Reject).
 
 ----
 
