@@ -36,7 +36,7 @@ email_template <- function(article, template) {
 #' Generate an email template.
 #'
 #' @param text character vector, text of the e-mail (including headers)
-#' @param means string, one of "mailto", "browser" (boht uopen mailto: URL),
+#' @param means string, one of "mailto", "browser" (both open mailto: URL),
 #'              "show" (file.show), "edit" (file.edit), "open" (shell open) or
 #'              "clip" (system clipboard). Defaults to RJ_EMAIL_TOOL environment
 #'              variable.
@@ -94,9 +94,12 @@ email_text <- function(text, means = getOption("RJ_EMAIL_TOOL", "mailto")) {
                  utils::writeClipboard(text, format = 1)
              } else {
                  on.exit(unlink(tmp))
-                 if (system("xsel -i -c <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0 &&
-                     system("xclip -selection clipboard <", shQuote(tmp), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0)
-                     stop("Neither xclip not xsel works - please install either tool")
+                 if (
+                   suppressWarnings(
+                     system(paste("xsel -i -c <", shQuote(tmp)), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0 &&
+                     system(paste("xclip -selection clipboard <", shQuote(tmp)), ignore.stdout=TRUE, ignore.stderr=TRUE) != 0
+                  ))
+                   stop("Neither xclip not xsel works - please install either tool")
                  message("E-mail has been written to the X11 clipboard")
              }
          },
