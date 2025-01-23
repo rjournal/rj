@@ -14,6 +14,7 @@ valid_status <- c(
   "submitted",
   "acknowledged",
   "passed initial checks",
+  "resubmission",
   "needs reviewers",
   "needs editor",
   "updated",

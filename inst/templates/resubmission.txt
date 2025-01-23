@@ -1,0 +1,14 @@
+To: {{email}}
+Subject: [RJournal {{id}}] journal submission
+---
+Dear {{name}},
+
+Thank you for submitting your submission to the R Journal, titled "{{title}}". A requirement of the journal before we consider a submission is that it is fully reproducible. I'm getting the following errors:
+
+<ADD DETAILS>
+
+Please fix these problems and submit a zip containing all relevant files through the article submission at https://journal.r-project.org/submissions.html. You will need to include the article id listed in the Subject line into the form.
+
+Regards,
+
+{{me}}

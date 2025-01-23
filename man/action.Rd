@@ -5,6 +5,7 @@
 \alias{reject_format}
 \alias{accept}
 \alias{withdraw}
+\alias{resubmission}
 \alias{major_revision}
 \alias{minor_revision}
 \alias{check_in_submission_folder}
@@ -17,6 +18,8 @@ reject_format(article, comments = "", date = Sys.Date())
 accept(article, comments = "", date = Sys.Date())
 
 withdraw(article, comments = "", date = Sys.Date())
+
+resubmission(article, comments = "", date = Sys.Date())
 
 major_revision(article, comments = "", date = Sys.Date())
 

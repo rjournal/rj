@@ -10,7 +10,7 @@
 #' @param AE Logical, if \code{TRUE}, \code{"AE: "} is prefixed to the status
 #' @param replace logical, if the last status already matches \code{status}
 #'        then the status is only updated if this flag is set to \code{TRUE}.
-#' 
+#'
 #' @details
 #' For AEs, status is prefixed with "AE: " and valid status includes
 #' "AE: major revision", "AE: minor revision", "AE: accept", and "AE: reject".
@@ -138,6 +138,18 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
             file.path(apath, "Rejected", basename(article$path)))
   email_template(article, "withdraw")
 
+  return(invisible(NULL))
+}
+
+#' @rdname action
+#' @export
+resubmission <- function(article, comments = "", date = Sys.Date()){
+  article <- as.article(article)
+  check_in_submission_folder(article)
+  cli::cli_inform("Request resubmission: {.field {article$id}}")
+  update_status(article, "resubmission", comments = comments, date = date)
+
+  email_template(article, "resubmission")
   return(invisible(NULL))
 }
 
