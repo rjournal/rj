@@ -9,7 +9,7 @@ email_text(text, means = getOption("RJ_EMAIL_TOOL", "mailto"))
 \arguments{
 \item{text}{character vector, text of the e-mail (including headers)}
 
-\item{means}{string, one of "mailto", "browser" (boht uopen mailto: URL),
+\item{means}{string, one of "mailto", "browser" (both open mailto: URL),
 "show" (file.show), "edit" (file.edit), "open" (shell open) or
 "clip" (system clipboard). Defaults to RJ_EMAIL_TOOL environment
 variable.}
