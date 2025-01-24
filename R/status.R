@@ -131,7 +131,7 @@ todo <- function(x) {
   stopifnot(is.article(x))
 
   status <- last_status(x)$status
-  if(status == "major revision" & empty(x$editor)) {
+  if(status == "resubmission") {
     # Sent back to author to fix before allocating an editor
     "waiting (author)"
   } else if (empty(x$editor)) {
