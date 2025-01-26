@@ -30,7 +30,19 @@
 email_template <- function(article, template) {
   article <- as.article(article)
   text <- render_template(article, template)
+  save_email(article, text)
   email_text(text)
+}
+
+# Save email to correspondence folder
+
+save_email <- function(article, text) {
+  # Create correspondence folder if necessary
+  dir <- file.path(article$path, "correspondence")
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  # Create filename using date and time in UTC
+  file <- file.path(dir, paste0(format(Sys.time(), "%Y-%m-%d-%H-%m", tz="UTC"), "_email.txt"))
+  writeLines(text, file)
 }
 
 #' Generate an email template.

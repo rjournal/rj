@@ -104,6 +104,7 @@ reject_format <- function(article, comments = "", date = Sys.Date()) {
 
   template <- find_template("reject_format")
   email <- whisker.render(readLines(template), data)
+  save_email(data, email)
   email_text(email)
 
   return(invisible(NULL))
@@ -226,6 +227,7 @@ draft_proofing <- function(article, update=TRUE) {
   email <- whisker.render(readLines(template), data)
   if (update) update_status(data$id, "out for proofing")
 
+  save_email(data, email)
   email_text(email)
 }
 

@@ -323,6 +323,7 @@ acknowledge_submission <- function(article, editor) {
 
   update_status(data$id, "acknowledged", replace=FALSE)
 
+  save_email(data, email)
   email_text(email)
 }
 
@@ -341,6 +342,7 @@ acknowledge_revision <- function(article) {
 
   update_status(data$id, "revision received", replace=FALSE)
 
+  save_email(data, email)
   email_text(email)
 }
 
