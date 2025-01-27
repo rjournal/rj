@@ -73,6 +73,7 @@ reject <- function(article, comments = "", date = Sys.Date()) {
   msg <- paste("Moving", from, "to", to)
   cli::cli_alert_info(msg)
   git("mv", from, to)
+  article$path <- to
 
   cli::cli_alert_info("Creating Email")
   email_template(article, "reject")
@@ -97,6 +98,7 @@ reject_format <- function(article, comments = "", date = Sys.Date()) {
   msg <- paste("Moving", from, "to", to)
   cli::cli_alert_info(msg)
   git("mv", from, to)
+  data$path <- to
 
   # cli::cli_alert_info("Creating Email")
   # email_template(article, "reject_format")
@@ -119,8 +121,9 @@ accept <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "accepted", comments = comments, date = date)
 
   apath <- get_articles_path()
-  git("mv", article$path,
-            file.path(apath, "Accepted", basename(article$path)))
+  to <- file.path(apath, "Accepted", basename(article$path))
+  git("mv", article$path, to)
+  article$path <- to
   email_template(article, "accept")
 
   return(invisible(NULL))
@@ -135,8 +138,9 @@ withdraw <- function(article, comments = "", date = Sys.Date()) {
   update_status(article, "withdrawn", comments = comments, date = date)
 
   apath <- get_articles_path()
-  git("mv", article$path,
-            file.path(apath, "Rejected", basename(article$path)))
+  to <- file.path(apath, "Rejected", basename(article$path))
+  git("mv", article$path, to)
+  article$path <- to
   email_template(article, "withdraw")
 
   return(invisible(NULL))
