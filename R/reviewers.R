@@ -88,6 +88,16 @@ add_out_for_review <- function(article) {
 #' @export
 add_reviewer <- function(article, name, email, invite = TRUE) {
   article <- as.article(article)
+  # Add review template to correspondence folder
+  dir <- file.path(article$path, "correspondence")
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  file <- file.path(dir, "review-template.txt")
+  if (!file.exists(file)) {
+    review_template <- find_template("review-template")
+    text <- whisker.render(readLines(review_template), article)
+    writeLines(text, file)
+  }
+  # Add reviewer
   reviewers <- article$reviewers
   new_reviewer <- address(email = email, name = name)
   any_dups <- sapply(reviewers, identical, new_reviewer)
