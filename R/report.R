@@ -4,16 +4,16 @@
 #'
 #' @param articles list of articles to generate report for. Defaults to
 #'   all active reports in \file{Submissions/}.
-#' @param ed editor to generate report for. Defaults to all editors.
+#' @param editor editor to generate report for. Defaults to all editors.
 #' @export
-report <- function(articles = active_articles(), ed = NULL) {
+report <- function(articles = active_articles(), editor = NULL) {
   rpt <- do.call("rbind", lapply(articles, report_line))
   rpt <- rpt[order(rpt$date, rpt$ed), ]
   rpt$status <- factor(rpt$status, order_status(rpt$status))
   # Sort by editor, then status, then date
   rpt <- rpt[order(-nchar(rpt$stars), rpt$ed, rpt$status, rpt$date), ]
-  if(!is.null(ed)) {
-    rpt <- rpt[rpt$ed == ed, ]
+  if(!is.null(editor)) {
+    rpt <- rpt[rpt$ed == editor, ]
   }
   structure(rpt, class = c("report", "data.frame"))
 }
