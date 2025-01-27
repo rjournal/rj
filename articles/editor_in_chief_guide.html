@@ -83,7 +83,8 @@ sheet</a>, and a <a href="https://drive.google.com/drive/folders/0B2aFIue-Ar8dfm
 drive</a>. This sheet contains details of the submission, and also a zip
 file with the necessary files; <code><a href="../reference/get_submissions.html">get_submissions()</a></code> will
 authenticate against both.</p>
-<p>On a regular basis, download newly submitted items:</p>
+<p>On a regular (at least weekly) basis, download newly submitted
+items:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_submissions.html">get_submissions</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This will create a new folder in the <code>Submissions</code>
@@ -98,29 +99,26 @@ missing items are the <code>Suppl:</code> line which should list the
 <h2 id="check-relevance-and-reproducibility">Check relevance and reproducibility<a class="anchor" aria-label="anchor" href="#check-relevance-and-reproducibility"></a>
 </h2>
 <p>First check that the paper fits the <a href="https://journal.r-project.org/#article-types" class="external-link">scope of the
-journal</a>). If not, <code><a href="../reference/action.html">reject()</a></code> the paper.</p>
+journal</a>. If not, <code><a href="../reference/action.html">reject()</a></code> the paper.</p>
 <p>Then check that the paper is reproducible by either: (a) compiling
 the <code>Rmd</code> file; or (b) compiling both the LaTeX file and all
 <code>.R</code> files. If there are any problems, request a
 <code><a href="../reference/action.html">resubmission()</a></code> from the authors.</p>
 </div>
 <div class="section level2">
-<h2 id="assigning-articles-to-an-ee">Assigning articles to an EE<a class="anchor" aria-label="anchor" href="#assigning-articles-to-an-ee"></a>
+<h2 id="acknowledge-submission-and-assigning-article-to-an-ee">Acknowledge submission and assigning article to an EE<a class="anchor" aria-label="anchor" href="#acknowledge-submission-and-assigning-article-to-an-ee"></a>
 </h2>
 <p>New articles should be assigned to one of the four EE’s. This is good
 to do at the time of acknowledging the submission, so that the EE can be
-cc’d on the email. The function <code><a href="../reference/acknowledge_submission.html">acknowledge_submission()</a></code> is
-used to generate an automatic email.</p>
-<p>(It helps to have
-<code>options(browser=Sys.getenv('R_BROWSER'))</code> set so that your
-email handler pops up with the message to send.)</p>
-<div class="section level3">
-<h3 id="check-progress-of-all-papers">Check progress of all papers<a class="anchor" aria-label="anchor" href="#check-progress-of-all-papers"></a>
-</h3>
+cc’d on the email. Use
+<code>acknowledge_submission(editor = "XX")</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="check-progress-of-all-papers">Check progress of all papers<a class="anchor" aria-label="anchor" href="#check-progress-of-all-papers"></a>
+</h2>
 <p>The function <code><a href="../reference/report.html">report()</a></code> shows the status of all current
 papers being handled, by author and by status. Anything with 3 stars
 needs urgent attention.</p>
-</div>
 </div>
 <div class="section level2">
 <h2 id="new-executive-editor">New executive editor<a class="anchor" aria-label="anchor" href="#new-executive-editor"></a>

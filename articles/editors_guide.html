@@ -79,14 +79,13 @@ J Hyndman</h4>
 <h2 id="mission">Mission<a class="anchor" aria-label="anchor" href="#mission"></a>
 </h2>
 <p>Each Executive Editor (EE) of the R Journal is the primary article
-handler for about a quarter of submissions per year, responsible
-for:</p>
+handler for about a third of submissions per year, responsible for:</p>
 <ul>
 <li>matching the article with an appropriate Associate Editor (AE) or
 handling obtaining reviews without an AE.</li>
 <li>communicating with AEs on submitted articles, and if necessary
-providing guidance to an AE about use of how GitHub is used, and
-relevant <code>rj</code> functionality.</li>
+providing guidance to an AE about use of GitHub, and relevant
+<code>rj</code> functionality.</li>
 <li>communicating progress and reviews with the corresponding
 author.</li>
 <li>making a final decision if an article should be accepted, or
@@ -98,24 +97,93 @@ AEs.</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="article-assignment-to-ae">Article assignment to AE<a class="anchor" aria-label="anchor" href="#article-assignment-to-ae"></a>
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
-<p>An article repo needs to be created for any new AEs in the for of the
-articles repo, named <code>ae-articles-XX</code>. Initials replace XX
-and match the codes in the <code>csv</code> file.</p>
-<p>The AE should be notified of any new assignment.</p>
+<p>Install the <code>rj</code> package with</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rjournal/rj"</span><span class="op">)</span></span></code></pre></div>
+<p>The package is being updated and revised regularly, so you should
+re-install occasionally.</p>
 </div>
 <div class="section level2">
-<h2 id="communications">Communications<a class="anchor" aria-label="anchor" href="#communications"></a>
+<h2 id="emails-using-the-rj-package">Emails using the <code>rj</code> package<a class="anchor" aria-label="anchor" href="#emails-using-the-rj-package"></a>
 </h2>
+<p>All communications with authors should be generated using the
+<code>rj</code> package to ensure correspondence is recorded in the
+GitHub <code>articles</code> repo.</p>
+<p>To ensure the email functions work correctly, please add the
+following line to your <code>.Rprofile</code> file.</p>
+<pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>browser<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'R_BROWSER'</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="assignments">Assignments<a class="anchor" aria-label="anchor" href="#assignments"></a>
+</h2>
+<p>The EIC will assign submissions to you. Notification is via an email
+to the author, cc’d to you.</p>
+<p>With each submission, you can decide to:</p>
+<ul>
+<li>
+<code><a href="../reference/action.html">reject()</a></code> the paper as unsuitable for the R
+Journal.</li>
+<li>Choose to send it to an AE via <code><a href="../reference/add_ae.html">add_ae()</a></code>, or handle it
+yourself.</li>
+<li>If you handle it yourself, please find suitable reviewers as per the
+<a href="associate_editors_guide.html">Associate Editor Guide</a>.</li>
+</ul>
+<p>Once you have received reports from reviewers or the AE, you can
+decide to:</p>
+<ul>
+<li>
+<code><a href="../reference/action.html">reject()</a></code> the paper</li>
+<li>Request a <code><a href="../reference/action.html">major_revision()</a></code>
+</li>
+<li>Request a <code><a href="../reference/action.html">minor_revision()</a></code>
+</li>
+<li>
+<code><a href="../reference/action.html">accept()</a></code> the paper</li>
+</ul>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:768px;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"is this a new submission?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"2\" [label = \"examine article: should the paper progress to review?\", shape = \"ellipse\", width = \"5\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"3\" [label = \"is there a suitable AE?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"4\" [label = \"update status to be `with AE`, update_status(), copy folder to AEs repo\", shape = \"rectangle\", width = \"5\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"5\" [label = \"message/email AE\", shape = \"rectangle\", width = \"2\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"6\" [label = \"has AE returned reviews and decision?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"7\" [label = \"add_review() to correspondence folder, send decision to author, \n with reviews if appropriate, update_status(), \n notify and thank AE about decision, if appropriate\", shape = \"rectangle\", width = \"4\", fillcolor = \"#FA8072\", fontcolor = \"black\"] \n  \"8\" [label = \"is the revision adequate?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"9\" [label = \"should it go back to AE?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"10\" [label = \"reject(), contact authors\", shape = \"rectangle\", width = \"3\", fillcolor = \"#FA8072\", fontcolor = \"black\"] \n  \"11\" [label = \"act as AE, find reviewers, update status, follow AE flow chart\", shape = \"rectangle\", width = \"4\", fillcolor = \"#40E0D0\", fontcolor = \"black\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \"Y\", color = \"dodgerblue2\"] \n\"3\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"1\"->\"8\" [label = \"N\", color = \"red\"] \n\"8\"->\"9\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"10\" [label = \"N\", color = \"red\"] \n\"9\"->\"7\" [label = \"N\", color = \"red\"] \n\"9\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"10\" [label = \"N\", color = \"red\"] \n\"3\"->\"11\" [label = \"N\", color = \"red\"] \n\"6\"->\"5\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level2">
+<h2 id="article-assignment-to-ae">Article assignment to AE<a class="anchor" aria-label="anchor" href="#article-assignment-to-ae"></a>
+</h2>
+<p>The keywords of a paper should be matched against the keywords of AEs
+available in <code>associate_editors.csv</code>. Also, the function
+<code><a href="../reference/ae_workload.html">ae_workload()</a></code> should be used to ensure that the potential
+AE hasn’t got too many current assignments.</p>
 <p>A newly assigned article for an AE needs to have the directory copied
 from the <code>articles</code> repo to the relevant
 <code>ae-articles-XX</code>. The <code>articles</code> repo is the
 master copy, and once a paper is retrieved from an AE, the
 <code>DESCRIPTION</code> file is updated, and the
 <code>correspondence</code> folder is populated.</p>
-<p>Slack is used for communication, between EIC, EEs and AEs, and
-general information about operations. The channel
+<p>Notify the AE of the assignment. Make sure the AE responds so you can
+be sure they are handling the submission.</p>
+<p>Chase up AEs who have been handling a submission for more than 3
+months to check progress.</p>
+</div>
+<div class="section level2">
+<h2 id="checking-progress">Checking progress<a class="anchor" aria-label="anchor" href="#checking-progress"></a>
+</h2>
+<p>You should check progress of papers you are handling at least
+weekly.</p>
+<ul>
+<li>
+<code>report(editor = "XX")</code> where <code>XX</code> is your
+initials provides a convenient summary of papers allocated to you.
+Submissions with three stars need urgent attention. Submissions with two
+stars may also need attention.</li>
+<li>
+<code>summarise_articles(editor = "XX")</code> provides a more
+detailed summary of each paper.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="communications">Communications<a class="anchor" aria-label="anchor" href="#communications"></a>
+</h2>
+<p>Slack or email is used for communication, between EIC, EEs and AEs,
+and general information about operations. The channel
 <code>editors_private</code> can be used for protected conversations
 between EEs.</p>
 <p>Monthly virtual meetings are held to keep communication between
@@ -124,50 +192,27 @@ editors current.</p>
 not AEs, should communicate with authors.</p>
 </div>
 <div class="section level2">
-<h2 id="workflow-and-operations">Workflow and operations<a class="anchor" aria-label="anchor" href="#workflow-and-operations"></a>
+<h2 id="timeline-for-reviews">Timeline for reviews<a class="anchor" aria-label="anchor" href="#timeline-for-reviews"></a>
 </h2>
-<div class="section level3">
-<h3 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
-</h3>
-<p>Install the <code>rj</code> package with</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rjournal/rj"</span><span class="op">)</span></span></code></pre></div>
-<p>The package is being updated and revised regularly, so you may want
-to re-install occasionally.</p>
-</div>
-<div class="section level3">
-<h3 id="potential-ae">Potential AE<a class="anchor" aria-label="anchor" href="#potential-ae"></a>
-</h3>
-<p>The keywords of a paper should be matched against the keywords of AEs
-available in <code>associate_editors.csv</code>. Also, the function
-<code><a href="../reference/ae_workload.html">ae_workload()</a></code> should be used to ensure that the potential
-AE hasn’t got too many current assignments.</p>
-</div>
-<div class="section level3">
-<h3 id="timeline-for-reviews">Timeline for reviews<a class="anchor" aria-label="anchor" href="#timeline-for-reviews"></a>
-</h3>
 <p>This is what the acknowledgement letter tells authors about the
 timeline for their paper to be handled:</p>
-<pre><code>The submission process proceeds as follows:
-
-* review by editorial board &amp; assignment of associate editor (~1-2 weeks)
-* reviewers solicited (~1-2 weeks)
-* reviews received (~1-2 months)</code></pre>
+<blockquote>
+<p>The submission process proceeds as follows:</p>
+<ul>
+<li>review by editorial board &amp; assignment of associate editor (~2-3
+weeks)</li>
+<li>reviewers solicited (~2-4 weeks)</li>
+<li>reviews received (~2-3 months)</li>
+</ul>
+</blockquote>
 </div>
-<div class="section level3">
-<h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
-</h3>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:768px;height:1152px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"TB\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"is this a new submission?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"2\" [label = \"examine article: should the paper progress to review?\", shape = \"ellipse\", width = \"5\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"3\" [label = \"is there a suitable AE?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"4\" [label = \"update status to be `with AE`, update_status(), copy folder to AEs repo\", shape = \"rectangle\", width = \"5\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"5\" [label = \"message/email AE\", shape = \"rectangle\", width = \"2\", fillcolor = \"#E5E5E5\", fontcolor = \"black\"] \n  \"6\" [label = \"has AE returned reviews and decision?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"7\" [label = \"add_review() to correspondence folder, send decision to author, \n with reviews if appropriate, update_status(), \n notify and thank AE about decision, if appropriate\", shape = \"rectangle\", width = \"4\", fillcolor = \"#FA8072\", fontcolor = \"black\"] \n  \"8\" [label = \"is the revision adequate?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"9\" [label = \"should it go back to AE?\", shape = \"ellipse\", width = \"3\", fillcolor = \"#FFA500\", fontcolor = \"black\"] \n  \"10\" [label = \"reject(), contact authors\", shape = \"rectangle\", width = \"3\", fillcolor = \"#FA8072\", fontcolor = \"black\"] \n  \"11\" [label = \"act as AE, find reviewers, update status, follow AE flow chart\", shape = \"rectangle\", width = \"4\", fillcolor = \"#40E0D0\", fontcolor = \"black\"] \n\"1\"->\"2\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"3\" [label = \"Y\", color = \"dodgerblue2\"] \n\"3\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"4\"->\"5\" [label = \".\", color = \"grey50\"] \n\"5\"->\"6\" [label = \".\", color = \"grey50\"] \n\"6\"->\"7\" [label = \"Y\", color = \"dodgerblue2\"] \n\"1\"->\"8\" [label = \"N\", color = \"red\"] \n\"8\"->\"9\" [label = \"Y\", color = \"dodgerblue2\"] \n\"8\"->\"10\" [label = \"N\", color = \"red\"] \n\"9\"->\"7\" [label = \"N\", color = \"red\"] \n\"9\"->\"4\" [label = \"Y\", color = \"dodgerblue2\"] \n\"2\"->\"10\" [label = \"N\", color = \"red\"] \n\"3\"->\"11\" [label = \"N\", color = \"red\"] \n\"6\"->\"5\" [label = \"N\", color = \"red\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-</div>
-<div class="section level3">
-<h3 id="dealing-with-problematic-authors">Dealing with problematic authors<a class="anchor" aria-label="anchor" href="#dealing-with-problematic-authors"></a>
-</h3>
+<div class="section level2">
+<h2 id="dealing-with-problematic-authors">Dealing with problematic authors<a class="anchor" aria-label="anchor" href="#dealing-with-problematic-authors"></a>
+</h2>
 <p>A few problematic authors are listed in
 <code>vexing_authors.csv</code></p>
 <p>Please advise the EIC if you think anyone needs to be added to this
 list.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
