@@ -227,14 +227,13 @@ get_assignments <- function(editor, folder = "Submissions") {
   # include only "DC"  "CH"  "SU"  "MV" "RH"
   editor_initials <- editors_all[-(1:13)]
 
-  if (editor %in% ae_initials){
-    role <- "AE"
-  } else if (editor %in% editor_initials){
+  if (editor %in% editor_initials) {
     role <- "Editor"
+  } else if (editor %in% ae_initials) {
+    role <- "AE"
   } else {
     cli::cli_abort("{.field {editor}} is neither an editor or an associated editor (ae). ")
   }
-
 
   grep_str <- find_articles(editor, folder, role)
   path <- stringr::str_remove(grep_str, glue::glue("/DESCRIPTION:{role}: .*"))
