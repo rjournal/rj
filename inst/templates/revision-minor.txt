@@ -2,7 +2,6 @@ To: {{email}}
 Subject: [RJournal {{id}}] journal submission
 ---
 TODO: attach review comments
-TODO: change from address
 
 Dear {{name}},
 

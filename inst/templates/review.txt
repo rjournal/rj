@@ -3,7 +3,7 @@ Subject: [RJournal {{id}}] Review invitation
 ---
 
 TODO: attach paper, supplementaries (code and data)
-TODO: attach review template, find at rj:::find_template("review-template")
+TODO: attach review template, find in correspondence folder
 
 Dear {{firstname}},
 
@@ -19,4 +19,3 @@ Please let me know if you are willing to take on this review. I would like to re
 
 With kind regards,
 {{me}}
-
