@@ -139,7 +139,7 @@ todo <- function(x) {
   } else if(status == "with AE") {
     "waiting (AE)"
   } else if (empty(x$reviewers)) {
-    "needs reviewers (editor)"
+    "waiting (editor)"
   } else {
     switch(status,
       "major revision" = "waiting (author)",
@@ -170,7 +170,7 @@ todo <- function(x) {
 # Takes a summary status as input, and returns number of days before it's due
 deadlines <- function(sstatus) {
   if (sstatus %in% final_status) {
-    return(c(Inf, Inf))
+    return(rep(Inf, 3))
   }
 
   # > 1st = *; > 2nd = **; > 3rd = ***
@@ -179,7 +179,9 @@ deadlines <- function(sstatus) {
     "needs reviewers" = c(7L, 14L, 28L),
     "submitted" = c(3L, 7L, 28L),
     "proofed" = c(7L, 14L, 28L),
-    "major revision" = c(60L, 90L, 180L)
+    "major revision" = c(60L, 90L, 180L),
+    "waiting (AE)" = c(60L, 90L, 150L),
+    "waiting (editor)" = c(7L, 14L, 28L)
   )
   if (sstatus %in% names(special)) {
     special[[sstatus]]
