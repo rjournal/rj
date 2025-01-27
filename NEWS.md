@@ -1,3 +1,12 @@
+# rj 0.2.5
+- Fix metadata for pandoc
+- Added texor support in article publishing workflow
+- Added resubmission()
+- All emails now recorded in correspondence folder
+- Updated report()
+- Updated vignettes
+- Updated templates
+
 # rj 0.2.4
 - Changed proofing template email to Simon's
 
@@ -10,16 +19,16 @@
 
 # rj 0.2.28
 
-- Add `check_in_submission_folder()` to verify the article is currently active for actions (major_revision, minor_revision, accept, reject). 
- 
+- Add `check_in_submission_folder()` to verify the article is currently active for actions (major_revision, minor_revision, accept, reject).
+
 # rj 0.2.27
 
 - Added two new functions to create summary plots `article_status_plot()` and `time_to_accept_plot()`
 
 # rj 0.2.26
 
-- Expand `get_assignments()` and `actionable_articles()` to search on AEs and 
-  print out articles in status "with AE". 
+- Expand `get_assignments()` and `actionable_articles()` to search on AEs and
+  print out articles in status "with AE".
 - `match_keywords()` now requires authentication everytime to avoid false positive PERMISSION_DENIED
 
 
@@ -29,13 +38,13 @@
 
 # rj 0.2.24
 
-- Changes to `summarise_articles()`: 
+- Changes to `summarise_articles()`:
    - include the unassigned articles in the beginning, if any
    - now use `tabulate_article()` to produce the output
 
 # rj 0.2.23
 
-- Changed the `ae_workload()` to 
+- Changed the `ae_workload()` to
   - have a default period of 365 days
   - return all AEs where those without assignments as 0
 - `summarise_articles()` now first prints out article(s) not assigned to any editor
@@ -61,19 +70,19 @@
 
 2021-10-04
  - revised add_ae function
- 
+
 2021-09-06
  - Added a function and template to acknowledge revisions
 
-2021-08-25 
+2021-08-25
   - add_ae function added
-  - fixes to get_submissions  
+  - fixes to get_submissions
   - new function to tabulate_articles which helps to count keywords, reviewer loads, ...
   - updates to vignettes on operations
 
 2021-08-10
   - fix to match_keywords
-  
+
 # rj 0.2.19
 
 2021-06-21
@@ -91,7 +100,7 @@
  - removed check on RJournal.sty file being in article directory
  - updated template for minor revision to say "tentatively" accepted
  - Only build article pdf if it doesn't exist already
- 
+
 2021-04-19
  - added a new function to handle format reject
 
@@ -148,7 +157,7 @@
 
 2021-03-15
  - modified the `email_template()` function to use the same text as
-   `valid_status()` for major and minor revision 
+   `valid_status()` for major and minor revision
 
 
 # rj 0.2.18
@@ -158,4 +167,3 @@
 
 2021-02-22
  - getting report function to work, almost there
-
