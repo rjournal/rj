@@ -4,18 +4,22 @@
 #'
 #' @param articles list of articles to generate report for. Defaults to
 #'   all active reports in \file{Submissions/}.
+#' @param ed editor to generate report for. Defaults to all editors.
 #' @export
-report <- function(articles = active_articles()) {
+report <- function(articles = active_articles(), ed = NULL) {
   rpt <- do.call("rbind", lapply(articles, report_line))
   rpt <- rpt[order(rpt$date, rpt$ed), ]
   rpt$status <- factor(rpt$status, order_status(rpt$status))
   # Sort by editor, then status, then date
   rpt <- rpt[order(-nchar(rpt$stars), rpt$ed, rpt$status, rpt$date), ]
+  if(!is.null(ed)) {
+    rpt <- rpt[rpt$ed == ed, ]
+  }
   structure(rpt, class = c("report", "data.frame"))
 }
 
 report_line <- function(x) {
-  message(x$path) # to identify culprit when things go wrong
+  #message(x$path) # to identify culprit when things go wrong
   stopifnot(is.article(x))
 
   todo <- todo(x)
@@ -54,6 +58,8 @@ has_status <- function(x, status) {
 print.report <- function(x, ...) {
   cat("BY STATUS:\n")
   parts <- split(x, x$status)
+  # Omit parts with no rows
+  parts <- parts[lapply(parts, nrow) > 0]
   for (nm in names(parts)) {
     part <- parts[[nm]]
 
@@ -67,21 +73,23 @@ print.report <- function(x, ...) {
     cat(paste(out[-1], collapse = "\n"), "\n\n")
   }
 
-  cat("BY EDITOR:\n")
-  actionable <- x[x$ed != "" &
-    !(x$status %in% c("accepted", "online", "complete")), ]
-  parts <- split(actionable, actionable$ed)
-  for (nm in names(parts)) {
-    part <- parts[[nm]]
+  if(length(unique(x$ed)) > 1L) {
+    cat("BY EDITOR:\n")
+    actionable <- x[x$ed != "" &
+      !(x$status %in% c("accepted", "online", "complete")), ]
+    parts <- split(actionable, actionable$ed)
+    for (nm in names(parts)) {
+      part <- parts[[nm]]
 
-    str_sub(nm, 1, 1) <- toupper(str_sub(nm, 1, 1))
-    cat(str_pad(nm, 60, "right", "-"), "\n")
+      str_sub(nm, 1, 1) <- toupper(str_sub(nm, 1, 1))
+      cat(str_pad(nm, 60, "right", "-"), "\n")
 
-    out <- capture.output(print.data.frame(part[, c("id", "status", "date", "stars")],
-      row.names = FALSE,
-      right = FALSE
-    ))
-    cat(paste(out[-1], collapse = "\n"), "\n\n")
+      out <- capture.output(print.data.frame(part[, c("id", "status", "date", "stars")],
+        row.names = FALSE,
+        right = FALSE
+      ))
+      cat(paste(out[-1], collapse = "\n"), "\n\n")
+    }
   }
 }
 

@@ -4,11 +4,13 @@
 \alias{report}
 \title{Generate a status report.}
 \usage{
-report(articles = active_articles())
+report(articles = active_articles(), ed = NULL)
 }
 \arguments{
 \item{articles}{list of articles to generate report for. Defaults to
 all active reports in \file{Submissions/}.}
+
+\item{ed}{editor to generate report for. Defaults to all editors.}
 }
 \description{
 This should be run weekly.
