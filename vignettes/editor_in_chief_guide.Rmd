@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 Articles are submitted through a [Google form](https://forms.gle/ykj6QcoGQD5ctnA5A) which populates a [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and a [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g). This sheet contains details of the submission, and also a zip file with the necessary files; `get_submissions()` will authenticate against both.
 
-On a regular basis, download newly submitted items:
+On a regular (at least weekly) basis, download newly submitted items:
 
 ```{r get, eval = FALSE, echo=TRUE}
 get_submissions()
@@ -35,17 +35,15 @@ You should check that this file has been constructed correctly, and that the zip
 
 # Check relevance and reproducibility
 
-First check that the paper fits the [scope of the journal](https://journal.r-project.org/#article-types)). If not, `reject()` the paper.
+First check that the paper fits the [scope of the journal](https://journal.r-project.org/#article-types). If not, `reject()` the paper.
 
 Then check that the paper is reproducible by either: (a) compiling the `Rmd` file; or (b) compiling both the LaTeX file and all `.R` files. If there are any problems, request a `resubmission()` from the authors.
 
-# Assigning articles to an EE
+# Acknowledge submission and assigning article to an EE
 
-New articles should be assigned to one of the four EE's. This is good to do at the time of acknowledging the submission, so that the EE can be cc'd on the email. The function `acknowledge_submission()` is used to generate an automatic email.
+New articles should be assigned to one of the four EE's. This is good to do at the time of acknowledging the submission, so that the EE can be cc'd on the email. Use `acknowledge_submission(editor = "XX")`.
 
-(It helps to have `options(browser=Sys.getenv('R_BROWSER'))` set so that your email handler pops up with the message to send.)
-
-## Check progress of all papers
+# Check progress of all papers
 
 The function `report()` shows the status of all current papers being handled, by author and by status. Anything with 3 stars needs urgent attention.
 

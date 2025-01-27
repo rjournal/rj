@@ -38,7 +38,7 @@ Each AE is provided a Github repo for handling papers, with the name in the form
 
 Slack is used for communication between editors and associate editors, and general information about operations. The channel for AEs is `associate-editors` and there are numerous other channels focusing on different aspects of operations, including `rj-software`, `general`, `journal-website`, that you are welcome to join. This is the best place to receive messages from an editor that a paper is assigned to you, and for you to notify that editor when you have received reviews, made your summary and are ready to hand it back.
 
-Meetings with the Editors and Associate Editors will usually be held monthly. The meeting time is set by the Editor-in-Chief.
+Meetings with the Editors and Associate Editors will usually be held every two months. The meeting time is set by the Editor-in-Chief.
 
 Email is usually the best way to communicate with reviewers.
 
