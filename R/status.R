@@ -131,11 +131,14 @@ todo <- function(x) {
   stopifnot(is.article(x))
 
   status <- last_status(x)$status
+  status_date <- last_status(x)$date
   if(status == "resubmission") {
     # Sent back to author to fix before allocating an editor
     "waiting (author)"
-  } else if (empty(x$editor)) {
-    "needs editor (editor-in-chief)"
+  } else if (empty(x$editor) | (status == "revision received" & status_date > "2025-01-01")) {
+    # Needs an editor, or needs a revision acknowledgement.
+    # Ignore unacknowledged revisions before 2025
+    "waiting (editor-in-chief)"
   } else if(status == "with AE") {
     "waiting (AE)"
   } else if (empty(x$reviewers)) {
@@ -181,7 +184,8 @@ deadlines <- function(sstatus) {
     "proofed" = c(7L, 14L, 28L),
     "major revision" = c(60L, 90L, 180L),
     "waiting (AE)" = c(60L, 90L, 150L),
-    "waiting (editor)" = c(7L, 14L, 28L)
+    "waiting (editor)" = c(7L, 14L, 28L),
+    "waiting (editor-in-chief)" = c(7L, 14L, 21L)
   )
   if (sstatus %in% names(special)) {
     special[[sstatus]]
