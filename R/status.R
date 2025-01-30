@@ -135,9 +135,8 @@ todo <- function(x) {
   if(status == "resubmission") {
     # Sent back to author to fix before allocating an editor
     "waiting (author)"
-  } else if (empty(x$editor) | (status == "revision received" & status_date > "2025-01-01")) {
-    # Needs an editor, or needs a revision acknowledgement.
-    # Ignore unacknowledged revisions before 2025
+  } else if (empty(x$editor)) {
+    # Needs an editor
     "waiting (editor-in-chief)"
   } else if(status == "with AE") {
     "waiting (AE)"
