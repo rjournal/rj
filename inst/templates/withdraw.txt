@@ -1,6 +1,6 @@
 To: {{email}}
 CC: {{editor}}
-Subject: Subject: RJ {{id}}: Withdrawn
+Subject: [RJournal {{id}}] withdrawn
 ---
 Dear {{name}},
 
@@ -8,4 +8,4 @@ This email is to acknowledge the withdrawal of your article, "{{title}}", from t
 
 Regards,
 
-
+{{me}}
