@@ -66,6 +66,8 @@ print.report <- function(x, ...) {
     str_sub(nm, 1, 1) <- toupper(str_sub(nm, 1, 1))
     cat(str_pad(nm, 60, "right", "-"), "\n")
 
+    # Reorder by stars and dates
+    part <- part[order(-nchar(part$stars), part$date), ]
     out <- capture.output(print.data.frame(part[, -1],
       row.names = FALSE,
       right = FALSE
