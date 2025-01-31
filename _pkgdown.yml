@@ -42,7 +42,6 @@ reference:
   contents:
   - get_submissions
   - acknowledge_submission
-  - acknowledge_submission_text
   - acknowledge_revision
   - online_metadata
   - active_articles
@@ -67,7 +66,6 @@ reference:
   - article
   - build_latex
   - corr_author
-  - draft_acknowledge_submissions
   - email_template
   - email_text
   - filter_status

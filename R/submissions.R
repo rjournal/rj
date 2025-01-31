@@ -345,44 +345,44 @@ acknowledge_revision <- function(article) {
   save_email(data, email)
   email_text(email)
 }
-
-#' Send submission acknowledgement drafts
 #'
-#' @param drafts list of \code{gmail_draft} objects
-#' @importFrom gmailr send_draft
-#' @export
-draft_acknowledge_submissions <- function(drafts) {
-  for (draft in drafts) {
-    gmailr::send_draft(draft)
-  }
-  for (id in names(drafts)) {
-    update_status(id, "acknowledged", replace=FALSE)
-  }
-  invisible(TRUE)
-}
-
-#' Create an acknowledgement email in correspondence folder
+#' #' Send submission acknowledgement drafts
+#' #'
+#' #' @param drafts list of \code{gmail_draft} objects
+#' #' @importFrom gmailr send_draft
+#' #' @export
+#' draft_acknowledge_submissions <- function(drafts) {
+#'   for (draft in drafts) {
+#'     gmailr::send_draft(draft)
+#'   }
+#'   for (id in names(drafts)) {
+#'     update_status(id, "acknowledged", replace=FALSE)
+#'   }
+#'   invisible(TRUE)
+#' }
 #'
-#' @param article article id
-#' @export
-acknowledge_submission_text <- function(article) {
-  article <- as.article(article)
-
-  dest <- file.path(article$path, "correspondence")
-  if (!file.exists(dest)) dir.create(dest)
-
-  name <- "acknowledge.txt"
-  path <- file.path(dest, name)
-
-  data <- as.data(article)
-  data$name <- stringr::str_split(data$name, " ")[[1]][1]
-  data$date <- format(Sys.Date() + 30, "%d %b %Y")
-
-  template <- find_template("acknowledge")
-  email <- whisker.render(readLines(template), data)
-
-  writeLines(email, path)
-
-  update_status(data$id, "acknowledged", replace=FALSE)
-  invisible(TRUE)
-}
+#' #' Create an acknowledgement email in correspondence folder
+#' #'
+#' #' @param article article id
+#' #' @export
+#' acknowledge_submission_text <- function(article) {
+#'   article <- as.article(article)
+#'
+#'   dest <- file.path(article$path, "correspondence")
+#'   if (!file.exists(dest)) dir.create(dest)
+#'
+#'   name <- "acknowledge.txt"
+#'   path <- file.path(dest, name)
+#'
+#'   data <- as.data(article)
+#'   data$name <- stringr::str_split(data$name, " ")[[1]][1]
+#'   data$date <- format(Sys.Date() + 30, "%d %b %Y")
+#'
+#'   template <- find_template("acknowledge")
+#'   email <- whisker.render(readLines(template), data)
+#'
+#'   writeLines(email, path)
+#'
+#'   update_status(data$id, "acknowledged", replace=FALSE)
+#'   invisible(TRUE)
+#' }
