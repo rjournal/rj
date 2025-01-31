@@ -72,6 +72,9 @@ reject <- function(article, comments = "", date = Sys.Date()) {
   to <- file.path(apath, "Rejected", basename(article$path))
   msg <- paste("Moving", from, "to", to)
   cli::cli_alert_info(msg)
+
+  # Make sure folder is already added to git
+  git("add", from)
   git("mv", from, to)
   article$path <- to
 
