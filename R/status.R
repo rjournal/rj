@@ -135,8 +135,12 @@ todo <- function(x) {
   if(status == "resubmission") {
     # Sent back to author to fix before allocating an editor
     "waiting (author)"
-  } else if (empty(x$editor)) {
-    # Needs an editor
+  } else if (empty(x$editor) |
+             status == "submitted" |
+             (status == "revision received" & status_date > "2025-01-01")
+             ) {
+    # Needs an editor, or needs an acknowledgement.
+    # Ignore unacknowledged revisions before 2025
     "waiting (editor-in-chief)"
   } else if(status == "with AE") {
     "waiting (AE)"
@@ -163,7 +167,6 @@ todo <- function(x) {
       "copy edited" = "waiting (author)",
       "proofed" = "ready for publication (editor-in-chief)",
       "acknowledged" = "needs reviewers (editor)",
-      "submitted" = "needs acknowledgement (editor-in-chief)",
       stop("Unknown status: ", status)
     )
   }
