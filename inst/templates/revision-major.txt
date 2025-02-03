@@ -3,7 +3,7 @@ Subject: [RJournal {{id}}] journal submission
 ---
 Dear {{name}},
 
-Thank you for submitting your submission to the R Journal, titled "{{title}}". The attached reports from expert reviewers request some major revisions.
+Thank you for your submission to the R Journal, titled "{{title}}". The attached reports from expert reviewers request some major revisions.
 
 We would appreciate a revised version and point-by-point response to the reviewers comments within 2 months. Remember, that when responding to the reviewer's comments, your job is to persuade me, the editor, that either you've dealt with the issue, or that it's not relevant. To this end, please produce a single document that includes all the reviewers comments mingled with your responses.
 

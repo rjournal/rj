@@ -3,7 +3,7 @@ Subject: [RJournal {{id}}] journal submission
 ---
 Dear {{name}},
 
-Thank you for submitting your submission to the R Journal, titled "{{title}}". A requirement of the journal before we consider a submission is that it is fully reproducible. I'm getting the following errors:
+Thank you for your submission to the R Journal, titled "{{title}}". A requirement of the journal before we consider a submission is that it is fully reproducible. I'm getting the following errors:
 
 <ADD DETAILS>
 
