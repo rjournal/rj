@@ -1,3 +1,5 @@
+# rj (0.3.1)
+
 # rj 0.3.0
 - Fix metadata for pandoc
 - Added texor support in article publishing workflow
