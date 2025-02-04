@@ -1,11 +1,16 @@
-# rj 0.2.5
+# rj 0.3.0
 - Fix metadata for pandoc
 - Added texor support in article publishing workflow
-- Added resubmission()
-- All emails now recorded in correspondence folder
 - Updated report()
+- Added resubmission()
+- Added assignments()
+- Added late_reviewers()
+- All emails now recorded in correspondence folder
+- Review template added to correspondence folder
+- Templates updated
 - Updated vignettes
 - Updated templates
+- Bug fixes
 
 # rj 0.2.4
 - Changed proofing template email to Simon's
