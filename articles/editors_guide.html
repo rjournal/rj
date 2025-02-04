@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rj</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
                         <h4 data-toc-skip class="author">Di Cook and Rob
 J Hyndman</h4>
             
-            <h4 data-toc-skip class="date">2025-02-03</h4>
+            <h4 data-toc-skip class="date">2025-02-04</h4>
       
 
       <div class="d-none name"><code>editors_guide.Rmd</code></div>
@@ -149,7 +149,7 @@ decide to:</p>
 <h2 id="article-assignment-to-ae">Article assignment to AE<a class="anchor" aria-label="anchor" href="#article-assignment-to-ae"></a>
 </h2>
 <p>The keywords of a paper should be matched against the keywords of AEs
-available in <code>associate_editors.csv</code>. Also, the function
+available in <code>associate-editors.csv</code>. Also, the function
 <code><a href="../reference/ae_workload.html">ae_workload()</a></code> should be used to ensure that the potential
 AE hasn’t got too many current assignments.</p>
 <p>A newly assigned article for an AE needs to have the directory copied
@@ -177,6 +177,9 @@ stars may also need attention.</li>
 <li>
 <code>summarise_articles(editor = "XX")</code> provides a more
 detailed summary of each paper.</li>
+<li>
+<code>late_reviewers(editor = "XX")</code> gives a list of reviewers
+who have not submitted their reviews on time.</li>
 </ul>
 </div>
 <div class="section level2">
