@@ -19,6 +19,7 @@ reference:
   - agree_reviewer
   - decline_reviewer
   - abandon_reviewer
+  - late_reviewers
   - add_review
   - reviewer_status
   - update_status
@@ -41,6 +42,7 @@ reference:
   desc: Functions to assist the EiC extract new submissions, build the article folder
   contents:
   - get_submissions
+  - assignments
   - acknowledge_submission
   - acknowledge_revision
   - online_metadata
