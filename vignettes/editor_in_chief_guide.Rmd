@@ -43,9 +43,12 @@ Then check that the paper is reproducible by either: (a) compiling the `Rmd` fil
 
 New articles should be assigned to one of the four EE's. This is good to do at the time of acknowledging the submission, so that the EE can be cc'd on the email. Use `acknowledge_submission(editor = "XX")`.
 
+To balance EE load, use `assignments()` to see how many papers each EE is currently handling, and what has been assigned to them in recent months.
+
 # Check progress of all papers
 
 The function `report()` shows the status of all current papers being handled, by author and by status. Anything with 3 stars needs urgent attention.
+
 
 # New executive editor
 

@@ -48,10 +48,12 @@ assignments <- function() {
     dplyr::mutate(Assignment = "Last month")
 
   output <- dplyr::bind_rows(active, last12, last3, last1) |>
-    dplyr::select(Assignment, everything())
+    dplyr::select(Assignment, dplyr::everything())
   output[is.na(output)] <- 0
   output <- as.data.frame(output)
   rownames(output) <- output$Assignment
   output$Assignment <- NULL
   return(output)
 }
+
+utils::globalVariables("Assignment")
