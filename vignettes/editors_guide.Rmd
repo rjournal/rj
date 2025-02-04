@@ -109,7 +109,7 @@ render_graph(editor)
 
 # Article assignment to AE
 
-The keywords of a paper should be matched against the keywords of AEs available in `associate_editors.csv`. Also, the function `ae_workload()` should be used to ensure that the potential AE hasn't got too many current assignments.
+The keywords of a paper should be matched against the keywords of AEs available in `associate-editors.csv`. Also, the function `ae_workload()` should be used to ensure that the potential AE hasn't got too many current assignments.
 
 A newly assigned article for an AE needs to have the directory copied from the `articles` repo to the relevant `ae-articles-XX`. The `articles` repo is the master copy, and once a paper is retrieved from an AE, the `DESCRIPTION` file is updated, and the `correspondence` folder is populated.
 

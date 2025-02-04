@@ -71,7 +71,7 @@ Once a new AE is appointed, the following steps take place:
 
 - The EIC informs the other EEs.
 - The EIC sets up a GitHub repo of the form ae-articles-xx where xx is the initials of the AE
-- The new AE is added to the `associate_editors.csv` file in the `inst` folder of the `rj` package.
+- The new AE is added to the `associate-editors.csv` file in the `inst` folder of the `rj` package.
 
 # Handover to new Editor-in-Chief
 
