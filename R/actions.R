@@ -185,8 +185,6 @@ minor_revision <- function(article, comments = "", date = Sys.Date()){
   return(invisible(NULL))
 }
 
-#' @rdname action
-#' @export
 check_in_submission_folder <- function(article){
 
   if (!inherits(article, "article")) cli::cli_abort("Not an article object.")

@@ -8,7 +8,6 @@
 \alias{resubmission}
 \alias{major_revision}
 \alias{minor_revision}
-\alias{check_in_submission_folder}
 \title{Accept, reject, or withdraw an article}
 \usage{
 reject(article, comments = "", date = Sys.Date())
@@ -24,8 +23,6 @@ resubmission(article, comments = "", date = Sys.Date())
 major_revision(article, comments = "", date = Sys.Date())
 
 minor_revision(article, comments = "", date = Sys.Date())
-
-check_in_submission_folder(article)
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
