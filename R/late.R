@@ -39,8 +39,9 @@ late_reviewers <- function(editor) {
   invited_stars <- unlist(lapply(days, function(u) sum(u > c(7L, 14L, 21L))))
   nstars <- (invited_stars * !agreed) + (agreed_stars * agreed)
   output$stars <- stringr::str_dup("*", nstars)
-  output <- dplyr::arrange(output, -nstars)
-  return(output[nstars > 0, ])
+  output <- as.data.frame(dplyr::arrange(output, -nstars))
+  output$status <- stringr::str_extract(output$comment, "[a-zA-Z\\s]*[Agreed|Invited] [0-9]*\\-[0-9]*\\-[0-9]*$")
+  output[nstars > 0, c("id", "name", "status", "stars")]
 }
 
 #' Find late AEs for submissions being handled by a given editor
@@ -70,7 +71,8 @@ late_aes <- function(editor) {
   days <- Sys.Date() - as.Date(articles$date)
   nstars <- unlist(lapply(days, function(u) sum(u > c(12L, 18L, 24L) * 7)))
   articles$stars <- stringr::str_dup("*", nstars)
-  output <- dplyr::arrange(articles, date)
-  output[output$stars != "", c("id", "date", "ae", "title", "stars")]
+  output <- dplyr::arrange(articles, date) |> as.data.frame()
+  rownames(output) <- output$id
+  output[output$stars != "", c("date", "ae", "stars")]
 }
 
