@@ -123,7 +123,8 @@ You should check progress of papers you are handling at least weekly.
 
 * `report(editor = "XX")` where `XX` is your initials provides a convenient summary of papers allocated to you. Submissions with three stars need urgent attention. Submissions with two stars may also need attention.
 * `summarise_articles(editor = "XX")` provides a more detailed summary of each paper.
-* `late_reviewers(editor = "XX")` gives a list of reviewers who have not submitted their reviews on time.
+* `late_aes(editor = "XX")` gives a list of AEs who have not submitted their reviews on time.
+* `late_reviewers(editor = "XX")` gives a list of reviewers who have not responded or submitted their reviews on time.
 
 # Communications
 
