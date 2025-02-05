@@ -70,7 +70,7 @@ late_aes <- function(editor) {
   days <- Sys.Date() - as.Date(articles$date)
   nstars <- unlist(lapply(days, function(u) sum(u > c(12L, 18L, 24L) * 7)))
   articles$stars <- stringr::str_dup("*", nstars)
-  dplyr::arrange(articles, date) |>
-    dplyr::filter(stars != "") |>
-    dplyr::select(id, date, ae, title, stars)
+  output <- dplyr::arrange(articles, date)
+  output[output$stars != "", c("id", "date", "ae", "title", "stars")]
 }
+
