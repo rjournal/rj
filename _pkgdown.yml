@@ -32,10 +32,9 @@ reference:
   - accept
   - reject
   - withdraw
-  - check_in_submission_folder
-  - reviewer_status
+  - report
   - summarise_articles
-  - tabulate_articles
+  - late_aes
   - reviewer_status
   - reviewer_summary
 - title: Primarily Editor-in-Chief functions
@@ -47,6 +46,7 @@ reference:
   - acknowledge_revision
   - online_metadata
   - active_articles
+  - tabulate_articles
   - get_accepted_but_not_online
   - author_emails
 - title: Utilities
@@ -82,7 +82,6 @@ reference:
   - online_metadata_for_article
   - parse_address_list
   - get_accepted_articles
-  - report
   - rj
   - set_articles_path
   - article_status_plot
