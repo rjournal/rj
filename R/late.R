@@ -72,7 +72,6 @@ late_aes <- function(editor) {
   nstars <- unlist(lapply(days, function(u) sum(u > c(12L, 18L, 24L) * 7)))
   articles$stars <- stringr::str_dup("*", nstars)
   output <- dplyr::arrange(articles, date) |> as.data.frame()
-  rownames(output) <- output$id
-  output[output$stars != "", c("date", "ae", "stars")]
+  output[output$stars != "", c("id", "date", "ae", "stars")]
 }
 
