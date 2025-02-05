@@ -68,10 +68,15 @@ late_aes <- function(editor) {
     warning("No articles are with AEs")
     return(NULL)
   }
+  # Add stars
   days <- Sys.Date() - as.Date(articles$date)
   nstars <- unlist(lapply(days, function(u) sum(u > c(12L, 18L, 24L) * 7)))
   articles$stars <- stringr::str_dup("*", nstars)
   output <- dplyr::arrange(articles, date) |> as.data.frame()
+  # Replace AE initials with name
+  aes <- AEs()
+  output$ae <- aes[match(output$ae, aes$initials), "name"]
+  # Return
   output[output$stars != "", c("id", "date", "ae", "stars")]
 }
 
