@@ -41,7 +41,7 @@ late_reviewers <- function(editor) {
   output$stars <- stringr::str_dup("*", nstars)
   output <- as.data.frame(dplyr::arrange(output, -nstars))
   output$status <- stringr::str_extract(output$comment, "[a-zA-Z\\s]*[Agreed|Invited] [0-9]*\\-[0-9]*\\-[0-9]*$")
-  output[nstars > 0, c("id", "name", "status", "stars")]
+  output[output$stars != "", c("id", "name", "status", "stars")]
 }
 
 #' Find late AEs for submissions being handled by a given editor
@@ -79,4 +79,3 @@ late_aes <- function(editor) {
   # Return
   output[output$stars != "", c("id", "date", "ae", "stars")]
 }
-
