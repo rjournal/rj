@@ -31,7 +31,12 @@ late_aes <- function(editor) {
   aes <- AEs()
   output$ae <- aes[match(output$ae, aes$initials), "name"]
   # Return
-  output[output$stars != "", c("id", "date", "ae", "stars")]
+  output <- output[output$stars != "", c("id", "date", "ae", "stars")]
+  if(NROW(output) == 0L) {
+    return(NULL)
+  } else {
+    return(output)
+  }
 }
 
 #' Find all reviewers for submissions being handled by a given editor
@@ -91,7 +96,12 @@ late_reviewers <- function(editor) {
   output$stars <- stringr::str_dup("*", nstars)
   output <- as.data.frame(dplyr::arrange(output, -nstars))
   output$status <- stringr::str_extract(output$comment, "[a-zA-Z\\s]*[Agreed|Invited] [0-9]*\\-[0-9]*\\-[0-9]*$")
-  output[output$stars != "", c("id", "name", "status", "stars")]
+  output <- output[output$stars != "", c("id", "name", "status", "stars")]
+  if(NROW(output) == 0L) {
+    return(NULL)
+  } else {
+    return(output)
+  }
 }
 
 #' Find articles that need reviewers for submissions being handled by a given editor.
@@ -112,10 +122,17 @@ need_reviewers <- function(editor) {
   reviewers <- dplyr::filter(reviewers, !is.na(reviewers$comment))
   # Extract last status
   status <- last_reviewer_status(reviewers$comment)
-  reviewers[!status %in% c("Declined","Abandoned"),] |>
+  output <- reviewers[!status %in% c("Declined","Abandoned"),] |>
     dplyr::select(id) |>
     dplyr::count(id) |>
     dplyr::filter(n < 2)
+  output <- as.data.frame(dplyr::arrange(output, n))
+  colnames(output) <- c("id", "number_reviewers")
+  if(NROW(output) == 0L) {
+    return(NULL)
+  } else {
+    return(output)
+  }
 }
 
 # Extract last reviewer status from string

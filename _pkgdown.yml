@@ -19,7 +19,9 @@ reference:
   - agree_reviewer
   - decline_reviewer
   - abandon_reviewer
+  - get_reviewers
   - late_reviewers
+  - need_reviewers
   - add_review
   - reviewer_status
   - update_status
