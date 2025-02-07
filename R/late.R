@@ -20,7 +20,7 @@ late_aes <- function(editor) {
   articles <- articles[articles$status == "with AE", ]
   if (NROW(articles) == 0L) {
     warning("No articles are with AEs")
-    return(NULL)
+    return(invisible(NULL))
   }
   # Add stars
   days <- Sys.Date() - as.Date(articles$date)
@@ -33,7 +33,7 @@ late_aes <- function(editor) {
   # Return
   output <- output[output$stars != "", c("id", "date", "ae", "stars")]
   if(NROW(output) == 0L) {
-    return(NULL)
+    return(invisible(NULL))
   } else {
     return(output)
   }
@@ -52,7 +52,7 @@ get_reviewers <- function(editor) {
   articles <- articles[articles$status == "out for review", ]
   if (NROW(articles) == 0L) {
     warning("No articles are out for review")
-    return(NULL)
+    return(invisible(NULL))
   } else {
     articles[c("id", "reviewers")] |>
       tidyr::unnest(reviewers)
@@ -80,7 +80,7 @@ get_reviewers <- function(editor) {
 late_reviewers <- function(editor) {
   reviewers <- get_reviewers(editor)
   if(is.null(reviewers)) {
-    return(NULL)
+    return(invisible(NULL))
   }
   status <- last_reviewer_status(reviewers$comment)
   invited <- status == "Invited" & !is.na(reviewers$comment)
@@ -98,7 +98,7 @@ late_reviewers <- function(editor) {
   output$status <- stringr::str_extract(output$comment, "[a-zA-Z\\s]*[Agreed|Invited] [0-9]*\\-[0-9]*\\-[0-9]*$")
   output <- output[output$stars != "", c("id", "name", "status", "stars")]
   if(NROW(output) == 0L) {
-    return(NULL)
+    return(invisible(NULL))
   } else {
     return(output)
   }
@@ -117,7 +117,7 @@ late_reviewers <- function(editor) {
 need_reviewers <- function(editor) {
   reviewers <- get_reviewers(editor)
   if(is.null(reviewers)) {
-    return(NULL)
+    return(invisible(NULL))
   }
   reviewers <- dplyr::filter(reviewers, !is.na(reviewers$comment))
   # Extract last status
@@ -129,7 +129,7 @@ need_reviewers <- function(editor) {
   output <- as.data.frame(dplyr::arrange(output, n))
   colnames(output) <- c("id", "number_reviewers")
   if(NROW(output) == 0L) {
-    return(NULL)
+    return(invisible(NULL))
   } else {
     return(output)
   }
