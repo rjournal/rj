@@ -115,19 +115,28 @@ late_reviewers <- function(editor) {
 #' @export
 
 need_reviewers <- function(editor) {
-  reviewers <- get_reviewers(editor)
-  if(is.null(reviewers)) {
-    return(invisible(NULL))
+  # Find existing reviewers
+  reviewers <- get_reviewers(editor = editor)
+  if(!is.null(reviewers)) {
+    reviewers <- dplyr::filter(reviewers, !is.na(reviewers$comment))
+    # Extract last status
+    status <- last_reviewer_status(reviewers$comment)
+    reviewers <- reviewers[!status %in% c("Declined","Abandoned"),] |>
+      dplyr::select(id) |>
+      dplyr::count(id) |>
+      dplyr::filter(n < 2)
   }
-  reviewers <- dplyr::filter(reviewers, !is.na(reviewers$comment))
-  # Extract last status
-  status <- last_reviewer_status(reviewers$comment)
-  output <- reviewers[!status %in% c("Declined","Abandoned"),] |>
-    dplyr::select(id) |>
-    dplyr::count(id) |>
-    dplyr::filter(n < 2)
+  # Add papers ready for review
+  papers <- report(editor = editor) |>
+    dplyr::filter(status == "needs reviewers (editor)") |>
+    dplyr::mutate(n = 0) |>
+    dplyr::select(id, n) |>
+    tibble::as_tibble()
+  # Combine both lists and sort by number of reviewers
+  output <- bind_rows(reviewers, papers)
   output <- as.data.frame(dplyr::arrange(output, n))
   colnames(output) <- c("id", "number_reviewers")
+
   if(NROW(output) == 0L) {
     return(invisible(NULL))
   } else {
