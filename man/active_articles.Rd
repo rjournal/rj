@@ -5,9 +5,12 @@
 \alias{accepted_articles}
 \title{List articles.}
 \usage{
-active_articles()
+active_articles(include = c("Submissions", "Accepted"))
 
 accepted_articles()
+}
+\arguments{
+\item{include}{A character vector of directories to include.}
 }
 \description{
 List all articles in common directories.

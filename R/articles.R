@@ -23,9 +23,10 @@
 #'  \item \code{active_articles}: \file{Submissions/}, \file{Accepted/}
 #'  \item \code{accepted_articles}: \file{Accepted/}
 #' }
+#' @param include A character vector of directories to include.
 #' @export
-active_articles <- function()
-    .parse.articles(c("Submissions", "Accepted"))
+active_articles <- function(include = c("Submissions", "Accepted"))
+    .parse.articles(include)
 
 #' @rdname active_articles
 #' @export
