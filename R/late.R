@@ -167,3 +167,41 @@ completed_reviews <- function(x) {
   NROW(reviews[reviews$st %in% c("major", "minor", "reject", "accept"), ])
 }
 
+
+#' Find articles that have at least two completed reviews and need a decision
+#'
+#' Returns all articles with at least 2 completed reviews but no decision
+#' This should be run regularly and decisions made if necessary.
+#'
+#' @param editor The editor or associate editor handling the submissions
+#'
+#' @return A data frame of papers needing more reviewers
+#' @export
+
+need_decision <- function(editor) {
+  # Find existing reviewers
+  reviewers <- get_reviewers(editor = editor)
+  ids <- unique(reviewers$id)
+  paths <- paste0(get_articles_path(), "/Submissions/", ids)
+  nreviews <- lapply(paths, function(x) {
+    completed_reviews(as.article(x))
+  }) |>
+    unlist()
+  reviewers <- subset(reviewers, reviewers$id %in% ids[nreviews >= 2])
+  status <- last_reviewer_status(reviewers$comment)
+  reviewers <- reviewers[status %in% c("Major", "Minor", "Accept", "Reject"), ]
+  reviewers$date <- stringr::str_extract(
+    reviewers$comment,
+    "[0-9]*\\-[0-9]*\\-[0-9]*$"
+  ) |>
+    as.Date()
+  output <- reviewers |>
+    dplyr::group_by(id) |>
+    dplyr::summarise(date = max(date)) |>
+    dplyr::arrange(date)
+  days_taken <- difftime(Sys.Date(), output$date, units = "days")
+  output$stars <- unlist(lapply(days_taken, function(u) {
+    str_dup("*", sum(u > deadlines("needs editor")))
+  }))
+  as.data.frame(output)
+}

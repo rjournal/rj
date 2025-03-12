@@ -22,6 +22,7 @@ reference:
   - get_reviewers
   - late_reviewers
   - need_reviewers
+  - need_decision
   - add_review
   - reviewer_status
   - update_status
