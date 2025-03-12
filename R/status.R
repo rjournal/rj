@@ -146,6 +146,8 @@ todo <- function(x) {
     "waiting (AE)"
   } else if (empty(x$reviewers)) {
     "waiting (editor)"
+  } else if(status == "out for review" & completed_reviews(x) >= 2) {
+     "waiting (editor)"
   } else {
     switch(status,
       "major revision" = "waiting (author)",

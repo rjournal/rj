@@ -25,8 +25,8 @@ report_line <- function(x) {
   todo <- todo(x)
   status <- last_status(x)
   last_date <- last_status(x)$date
-
   days_taken <- difftime(Sys.Date(), last_date, "days")
+
   if(todo == "waiting (author)") {
     stars <- 0
   } else {

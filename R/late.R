@@ -32,7 +32,7 @@ late_aes <- function(editor) {
   output$ae <- aes[match(output$ae, aes$initials), "name"]
   # Return
   output <- output[output$stars != "", c("id", "date", "ae", "stars")]
-  if(NROW(output) == 0L) {
+  if (NROW(output) == 0L) {
     return(invisible(NULL))
   } else {
     return(output)
@@ -79,7 +79,7 @@ get_reviewers <- function(editor) {
 
 late_reviewers <- function(editor) {
   reviewers <- get_reviewers(editor)
-  if(is.null(reviewers)) {
+  if (is.null(reviewers)) {
     return(invisible(NULL))
   }
   status <- last_reviewer_status(reviewers$comment)
@@ -95,9 +95,12 @@ late_reviewers <- function(editor) {
   nstars <- (invited_stars * !agreed) + (agreed_stars * agreed)
   output$stars <- stringr::str_dup("*", nstars)
   output <- as.data.frame(dplyr::arrange(output, -nstars))
-  output$status <- stringr::str_extract(output$comment, "[a-zA-Z\\s]*[Agreed|Invited] [0-9]*\\-[0-9]*\\-[0-9]*$")
+  output$status <- stringr::str_extract(
+    output$comment,
+    "[a-zA-Z\\s]*[Agreed|Invited] [0-9]*\\-[0-9]*\\-[0-9]*$"
+  )
   output <- output[output$stars != "", c("id", "name", "status", "stars")]
-  if(NROW(output) == 0L) {
+  if (NROW(output) == 0L) {
     return(invisible(NULL))
   } else {
     return(output)
@@ -117,11 +120,11 @@ late_reviewers <- function(editor) {
 need_reviewers <- function(editor) {
   # Find existing reviewers
   reviewers <- get_reviewers(editor = editor)
-  if(!is.null(reviewers)) {
+  if (!is.null(reviewers)) {
     reviewers <- dplyr::filter(reviewers, !is.na(reviewers$comment))
     # Extract last status
     status <- last_reviewer_status(reviewers$comment)
-    reviewers <- reviewers[!status %in% c("Declined","Abandoned"),] |>
+    reviewers <- reviewers[!status %in% c("Declined", "Abandoned"), ] |>
       dplyr::select(id) |>
       dplyr::count(id) |>
       dplyr::filter(n < 2)
@@ -137,7 +140,7 @@ need_reviewers <- function(editor) {
   output <- as.data.frame(dplyr::arrange(output, n))
   colnames(output) <- c("id", "number_reviewers")
 
-  if(NROW(output) == 0L) {
+  if (NROW(output) == 0L) {
     return(invisible(NULL))
   } else {
     return(output)
@@ -151,3 +154,16 @@ last_reviewer_status <- function(string) {
   # Extract last status
   stringr::str_extract(status, "[a-zA-Z]*$")
 }
+
+
+# Find number of completed reviews for article
+
+completed_reviews <- function(x) {
+  stopifnot(is.article(x))
+  if (is.null(x$reviewers)) {
+    return(0L)
+  }
+  reviews <- reviewer_status(x)
+  NROW(reviews[reviews$st %in% c("major", "minor", "reject", "accept"), ])
+}
+

@@ -267,6 +267,7 @@ add_review <- function(article, reviewer_id, review, recommend = NULL, date = Sy
 }
 
 .review_info <- function(rev, id = "?") {
+  if(is.null(rev$comment)) return(NULL)
   cc <- strsplit(rev$comment, "; *")[[1]]
   st <- tolower(gsub("\\s+.*", "", cc, perl = TRUE))
   dt <- gregexpr("(\\d{4}-\\d{2}-\\d{2})", cc)
@@ -324,6 +325,10 @@ reviewer_status <- function(article) {
     return(d0)
   }
   l <- lapply(article$reviewers, .review_info)
+  # Remove NULLs
+  if(length(l) > 0) {
+    l <- l[!unlist(lapply(l, is.null))]
+  }
   for (i in seq_along(l)) {
     l[[i]]$rid <- i
   }
