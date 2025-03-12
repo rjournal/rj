@@ -190,18 +190,22 @@ need_decision <- function(editor) {
   reviewers <- subset(reviewers, reviewers$id %in% ids[nreviews >= 2])
   status <- last_reviewer_status(reviewers$comment)
   reviewers <- reviewers[status %in% c("Major", "Minor", "Accept", "Reject"), ]
-  reviewers$date <- stringr::str_extract(
-    reviewers$comment,
-    "[0-9]*\\-[0-9]*\\-[0-9]*$"
-  ) |>
+  if (NROW(reviewers) == 0L) {
+    return(invisible(NULL))
+  } else {
+    reviewers$date <- stringr::str_extract(
+      reviewers$comment,
+      "[0-9]*\\-[0-9]*\\-[0-9]*$"
+    ) |>
     as.Date()
-  output <- reviewers |>
-    dplyr::group_by(id) |>
-    dplyr::summarise(date = max(date)) |>
-    dplyr::arrange(date)
-  days_taken <- difftime(Sys.Date(), output$date, units = "days")
-  output$stars <- unlist(lapply(days_taken, function(u) {
-    str_dup("*", sum(u > deadlines("needs editor")))
-  }))
-  as.data.frame(output)
+    output <- reviewers |>
+      dplyr::group_by(id) |>
+      dplyr::summarise(date = max(date)) |>
+      dplyr::arrange(date)
+    days_taken <- difftime(Sys.Date(), output$date, units = "days")
+    output$stars <- unlist(lapply(days_taken, function(u) {
+      str_dup("*", sum(u > deadlines("needs editor")))
+    }))
+    as.data.frame(output)
+  }
 }
