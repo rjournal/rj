@@ -129,6 +129,7 @@ need_reviewers <- function(editor) {
       dplyr::count(id) |>
       dplyr::filter(n < 2)
   }
+
   # Add papers ready for review
   papers <- report(editor = editor) |>
     dplyr::filter(status == "waiting (editor)") |>
@@ -139,6 +140,9 @@ need_reviewers <- function(editor) {
   output <- bind_rows(reviewers, papers)
   output <- as.data.frame(dplyr::arrange(output, n))
   colnames(output) <- c("id", "number_reviewers")
+
+  # Remove papers that need decision
+  output <- output[!(output$id %in% need_decision(editor)$id), ]
 
   if (NROW(output) == 0L) {
     return(invisible(NULL))
@@ -179,6 +183,14 @@ completed_reviews <- function(x) {
 #' @export
 
 need_decision <- function(editor) {
+  # Find papers with AE recommendation as last status
+  all_articles <- get_assignments(editor, "Submissions")
+  latest <- get_latest(all_articles)
+  ae_recommendation <- latest[grep("^AE", latest$status), ] |>
+    unnest(reviewers) |>
+    dplyr::group_by(id, ae, status, date) |>
+    dplyr::summarise(n = dplyr::n())
+
   # Find existing reviewers
   reviewers <- get_reviewers(editor = editor)
   ids <- unique(reviewers$id)
@@ -190,22 +202,24 @@ need_decision <- function(editor) {
   reviewers <- subset(reviewers, reviewers$id %in% ids[nreviews >= 2])
   status <- last_reviewer_status(reviewers$comment)
   reviewers <- reviewers[status %in% c("Major", "Minor", "Accept", "Reject"), ]
-  if (NROW(reviewers) == 0L) {
-    return(invisible(NULL))
-  } else {
+
+  if (NROW(reviewers) > 0L) {
     reviewers$date <- stringr::str_extract(
       reviewers$comment,
       "[0-9]*\\-[0-9]*\\-[0-9]*$"
     ) |>
     as.Date()
-    output <- reviewers |>
+    reviewers <- reviewers |>
       dplyr::group_by(id) |>
-      dplyr::summarise(date = max(date)) |>
+      dplyr::summarise(date = max(date), n = dplyr::n()) |>
       dplyr::arrange(date)
-    days_taken <- difftime(Sys.Date(), output$date, units = "days")
-    output$stars <- unlist(lapply(days_taken, function(u) {
-      str_dup("*", sum(u > deadlines("needs editor")))
-    }))
-    as.data.frame(output)
+    reviewers$status <- "needs decision"
   }
+  output <- as.data.frame(bind_rows(ae_recommendation, reviewers))
+  days_taken <- difftime(Sys.Date(), output$date, units = "days")
+  output$stars <- unlist(lapply(days_taken, function(u) {
+    str_dup("*", sum(u > deadlines("needs editor")))
+  }))
+  output$ae[is.na(output$ae)] <- ""
+  return(output)
 }

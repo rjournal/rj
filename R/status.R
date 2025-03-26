@@ -67,14 +67,19 @@ status <- function(status, date = Sys.Date(), comments = "") {
     if (tolower(status) == tolower(guess)) {
       status <- guess
     } else {
-      stop(status, " is not a known status. ",
-        "Did you mean ", amatch_status(status), "?",
+      stop(
+        status,
+        " is not a known status. ",
+        "Did you mean ",
+        amatch_status(status),
+        "?",
         call. = FALSE
       )
     }
   }
 
-  structure(list(date = date, status = status, comments = comments),
+  structure(
+    list(date = date, status = status, comments = comments),
     class = "status"
   )
 }
@@ -100,7 +105,10 @@ c.status <- c.status_list <- function(..., recursive = FALSE) {
 
 #' @export
 format.status <- function(x, ...) {
-  paste(format(x$date), " ", x$status,
+  paste(
+    format(x$date),
+    " ",
+    x$status,
     if (!empty(x$comments)) paste(" [", x$comments, "]", sep = ""),
     sep = ""
   )
@@ -110,8 +118,11 @@ print.status <- function(x, ...) cat(format(x), "\n")
 
 #' @importFrom utils adist
 amatch_status <- function(status) {
-  ldist <- adist(status, valid_status,
-    ignore.case = TRUE, partial = FALSE,
+  ldist <- adist(
+    status,
+    valid_status,
+    ignore.case = TRUE,
+    partial = FALSE,
     costs = c(ins = 0.5, sub = 1, del = 2)
   )[1, ]
   valid_status[which.min(ldist)]
@@ -132,29 +143,37 @@ todo <- function(x) {
 
   status <- last_status(x)$status
   status_date <- last_status(x)$date
-  if(status == "resubmission") {
-    # Sent back to author to fix before allocating an editor
+  if (
+    status %in%
+      c(
+        "resubmission",
+        "reject and resubmit",
+        "major revision",
+        "minor revision",
+        "accepted",
+        "copy edited"
+      )
+  ) {
     "waiting (author)"
-  } else if (empty(x$editor) |
-             status == "submitted" |
-             (status == "revision received" & status_date > "2025-01-01")
-             ) {
+  } else if (
+    empty(x$editor) |
+      status == "submitted" |
+      (status == "revision received" & status_date > "2025-01-01")
+  ) {
     # Needs an editor, or needs an acknowledgement.
     # Ignore unacknowledged revisions before 2025
     "waiting (editor-in-chief)"
-  } else if(status == "with AE") {
+  } else if (status == "with AE") {
     "waiting (AE)"
   } else if (empty(x$reviewers)) {
     "waiting (editor)"
-  } else if(status == "out for review" & completed_reviews(x) >= 2) {
-     "waiting (editor)"
+  } else if (status == "out for review" & completed_reviews(x) >= 2) {
+    "waiting (editor)"
   } else {
-    switch(status,
-      "major revision" = "waiting (author)",
-      "minor revision" = "waiting (author)",
+    switch(
+      status,
       "out for review" = "waiting (reviewers)",
       "updated" = "waiting (editor)",
-      "reject and resubmit" = "waiting (author)",
       "published" = "needs removal (editor)",
       "withdrawn" = "needs removal (editor)",
       "rejected" = "needs removal (editor)",
@@ -163,10 +182,8 @@ todo <- function(x) {
       "AE: minor revision" = "waiting (editor)",
       "AE: accept" = "waiting (editor)",
       "AE: reject" = "waiting (editor)",
-      "accepted" = "waiting (author)",
       "style checked" = "needs online (editor-in-chief)",
       "online" = "needs copy-editing (editor)",
-      "copy edited" = "waiting (author)",
       "proofed" = "ready for publication (editor-in-chief)",
       "acknowledged" = "needs reviewers (editor)",
       stop("Unknown status: ", status)
@@ -239,7 +256,8 @@ parse_status <- function(x) {
   if (!stringr::str_detect(x, re)) {
     # NM added line
     cat("bad status:", x, "\n")
-    stop("Status must have form 'yyyy-mm-dd status [optional comments]'",
+    stop(
+      "Status must have form 'yyyy-mm-dd status [optional comments]'",
       call. = FALSE
     )
   }
