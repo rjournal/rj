@@ -221,5 +221,9 @@ need_decision <- function(editor) {
     str_dup("*", sum(u > deadlines("needs editor")))
   }))
   output$ae[is.na(output$ae)] <- ""
-  return(output)
+  if(NROW(output) == 0L) {
+    return(invisible(NULL))
+  } else {
+    return(output)
+  }
 }
