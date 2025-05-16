@@ -16,7 +16,7 @@
 #' reviewer_summary(articles)
 #' }
 #' @export
-reviewer_summary <- function(articles, push = FALSE){
+reviewer_summary <- function(articles, push = FALSE) {
   res <- articles %>%
     dplyr::select(.data$id, .data$reviewers) %>%
     tidyr::unnest(.data$reviewers) %>%
@@ -28,10 +28,12 @@ reviewer_summary <- function(articles, push = FALSE){
     dplyr::ungroup() %>%
     tidyr::pivot_wider(names_from = comment, values_from = .data$n, values_fill = 0) %>%
     dplyr::relocate(.data$name, .data$agreed, .data$declined) %>%
-    dplyr::mutate(ratio = .data$agreed / (.data$agreed + .data$declined),
-                  ratio = scales::label_percent()(.data$ratio))
+    dplyr::mutate(
+      ratio = .data$agreed / (.data$agreed + .data$declined),
+      ratio = scales::label_percent()(.data$ratio)
+    )
 
-  if (push){
+  if (push) {
     sheet_raw <- read_reviewer_sheet()
     out <- sheet_raw %>%
       dplyr::left_join(res %>% dplyr::select(.data$name, .data$agreed), by = c("fname" = "name")) %>%
@@ -47,7 +49,7 @@ reviewer_summary <- function(articles, push = FALSE){
 #'
 #' This will examine the DESCRIPTION files for articles in
 #' the Submissions folder, check articles that have status
-#' "with AE". 
+#' "with AE".
 #'
 #' @param articles a tibble summary of articles in the accepted and submissions
 #'   folder. Output of \code{tabulate_articles()}
@@ -64,17 +66,17 @@ reviewer_summary <- function(articles, push = FALSE){
 #' ae_workload()
 #' }
 #' @export
-ae_workload <- function(articles = NULL, day_back = 365, active_only=FALSE) {
-  # select only active AEs 
-  ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj")) 
+ae_workload <- function(articles = NULL, day_back = 365, active_only = FALSE) {
+  # select only active AEs
+  ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj"))
 
-  if ( isTRUE(active_only) ){
-    inactive <- ae_rj$end_year <= as.integer(substr(Sys.Date(),1,4)) |
-                grepl("Finished", ae_rj$comment, ignore.case=TRUE)
+  if (isTRUE(active_only)) {
+    inactive <- ae_rj$end_year < as.integer(substr(Sys.Date(), 1, 4)) |
+      grepl("Finished", ae_rj$comment, ignore.case = TRUE)
     ae_rj <- ae_rj[!inactive, ]
   }
 
-  ae_rj <- ae_rj %>%  
+  ae_rj <- ae_rj %>%
     select(.data$name, .data$initials, .data$email, .data$comment) %>%
     as_tibble() %>%
     rename(status = .data$comment)
@@ -113,10 +115,10 @@ ae_workload <- function(articles = NULL, day_back = 365, active_only=FALSE) {
   # ... which allows us to take all those with full names...
   assignments %>%
     filter(str_length(.data$ae) >= 4) %>%
-    bind_rows(tmp) %>% #... bind on those that had initials
+    bind_rows(tmp) %>% # ... bind on those that had initials
     count(.data$ae, sort = TRUE) %>% # count the assignments by AE
     right_join(ae_rj, by = c("ae" = "name")) %>% # add some some useful info
-    replace_na(list(n=0))
+    replace_na(list(n = 0))
 }
 
 #' @rdname ae_workload
@@ -127,7 +129,7 @@ ae_workload <- function(articles = NULL, day_back = 365, active_only=FALSE) {
 #' get_AE(art)
 #' }
 #' @export
-get_AE <- function(x){
+get_AE <- function(x) {
   list(id = format(x$id), ae = x$ae)
 }
 
@@ -144,25 +146,32 @@ get_AE <- function(x){
 #' @export
 
 
-add_ae <-function (article, name, date = Sys.Date()) {
+add_ae <- function(article, name, date = Sys.Date()) {
   article <- as.article(article)
   ae_list <- filter(read.csv(system.file("associate-editors.csv",
-                                         package = "rj")), .data$end_year >= as.numeric(substr(Sys.Date(),
-                                                                                         1, 4)))
+    package = "rj"
+  )), .data$end_year >= as.numeric(substr(
+    Sys.Date(),
+    1, 4
+  )))
   found <- NA
   found <- which(str_detect(ae_list$initials, name))
-  if (is.na(found))
+  if (is.na(found)) {
     found <- which(str_detect(ae_list$name, name))
-  if (is.na(found))
+  }
+  if (is.na(found)) {
     found <- which(str_detect(ae_list$github, name))
-  if (is.na(found))
+  }
+  if (is.na(found)) {
     found <- which(str_detect(ae_list$email, name))
+  }
   if (!is.na(found)) {
     article$ae <- ae_list$initials[found]
-    update_status(article, "with AE", comments = ae_list$name[found],
-                  date = date)
-  }
-  else {
+    update_status(article, "with AE",
+      comments = ae_list$name[found],
+      date = date
+    )
+  } else {
     cli::cli_alert_warning("No AE found. Input the name as the whole or part of the AE name, github handle, or email")
   }
   return(invisible(article))
@@ -183,18 +192,16 @@ add_ae <-function (article, name, date = Sys.Date()) {
 #' @importFrom purrr pluck map
 #' @importFrom tibble tibble
 #' @export
-corr_author <- function(article){
-
+corr_author <- function(article) {
   article <- as.article(article)
 
   all_authors <- article$authors
   # find the index of the author that provide the email
-  email <- purrr::map(1:length(all_authors), ~purrr::pluck(all_authors, .x)$email)
-  idx <- which(purrr::map_lgl(email, ~!is_null(.x)))
+  email <- purrr::map(1:length(all_authors), ~ purrr::pluck(all_authors, .x)$email)
+  idx <- which(purrr::map_lgl(email, ~ !is_null(.x)))
 
   tibble::tibble(
     corr_author = purrr::pluck(all_authors, idx)$name,
     email = purrr::pluck(all_authors, idx)$email
   )
-
 }
