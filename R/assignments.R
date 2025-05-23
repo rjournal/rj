@@ -17,25 +17,26 @@ smart.cap <- function(x) {
 ## just list_reviewers
 print_sum <- function(arts, status, detail = NULL,
                       glue = "{art$id} ({art$days_since_submission}): {art$title}",
-                      description = if(is.character(status)) smart.cap(status) else "Has AE decision", pre.width = 20) {
-    arts <- arts[if (is.logical(status)) status else arts$status == status, ]
-    if (nrow(arts) == 0)
-        return(invisible(NULL))
+                      description = if (is.character(status)) smart.cap(status) else "Has AE decision", pre.width = 20) {
+  arts <- arts[if (is.logical(status)) status else arts$status == status, ]
+  if (nrow(arts) == 0) {
+    return(invisible(NULL))
+  }
 
-    cli::cli_h1("{description} {nrow(arts)}")
-    arts$title <- str_trunc(arts$title, getOption("width") - pre.width)
-    cli::cli_ul()
-    ## sadly, cannot vectorise, because cli_lu screws up
-    ## the format for simple output as in acknowledged.
-    ## Also cli always calls glue with fixed options,
-    ## so there is no way to override it (really bad design)
-    ## or provide direct (non-glue) output.
-    for (i in seq_len(nrow(arts))) {
-        art <- arts[i, ]
-        cli::cli_li(glue)
-        if (is.function(detail)) detail(art$id)
-        cli::cli_end()
-    }
+  cli::cli_h1("{description} {nrow(arts)}")
+  arts$title <- str_trunc(arts$title, getOption("width") - pre.width)
+  cli::cli_ul()
+  ## sadly, cannot vectorise, because cli_lu screws up
+  ## the format for simple output as in acknowledged.
+  ## Also cli always calls glue with fixed options,
+  ## so there is no way to override it (really bad design)
+  ## or provide direct (non-glue) output.
+  for (i in seq_len(nrow(arts))) {
+    art <- arts[i, ]
+    cli::cli_li(glue)
+    if (is.function(detail)) detail(art$id)
+    cli::cli_end()
+  }
 }
 
 print_rejected <- function(latest) {
@@ -62,10 +63,9 @@ print_with_ae <- function(latest) {
 }
 
 print_ae_decision <- function(latest) {
-
   print_sum(latest, .ae_decision(latest$status),
-            "{art$id} ({art$days_since_submission}, {art$ae}): {art$title}",
-            pre.width = 45
+    "{art$id} ({art$days_since_submission}, {art$ae}): {art$title}",
+    pre.width = 45
   )
 } ## extra space for AE name
 
@@ -108,7 +108,7 @@ print_other <- function(latest) {
   }
 }
 
-print_unassigned <- function(unassigned){
+print_unassigned <- function(unassigned) {
   print_sum(unassigned, "acknowledged", description = "Submitted but not assigned")
 }
 
@@ -221,7 +221,6 @@ actionable_articles <- function(editor, invite = 7, review = 30, verbose = FALSE
 #' @rdname summarise_articles
 #' @export
 get_assignments <- function(editor, folder = "Submissions") {
-
   ae_initials <- read.csv(system.file("associate-editors.csv", package = "rj"))$initials
   editors_all <- read.csv(system.file("editors.csv", package = "rj"))$name
   # include only "DC"  "CH"  "SU"  "MV" "RH"
@@ -235,7 +234,7 @@ get_assignments <- function(editor, folder = "Submissions") {
     cli::cli_abort("{.field {editor}} is neither an editor or an associated editor (ae). ")
   }
 
-  grep_str <- find_articles(editor, folder, role)
+  grep_str <- find_articles(editor, paste0(get_articles_path(), "/", folder), role)
   path <- stringr::str_remove(grep_str, glue::glue("/DESCRIPTION:{role}: .*"))
   id <- stringr::str_remove(path, "^./(Rejected|Submissions)/")
 
@@ -248,7 +247,7 @@ get_assignments <- function(editor, folder = "Submissions") {
 
 #' @rdname summarise_articles
 #' @export
-get_unassigned <- function(){
+get_unassigned <- function() {
   grep_str <- find_articles("'\\s$'", "Submissions", "Editor")
   id <- stringr::str_remove(grep_str, "/DESCRIPTION:Editor:.")
   if (length(id) != 0) purrr::map_dfr(id, tabulate_single)
@@ -257,17 +256,17 @@ get_unassigned <- function(){
 #' @param role string, take value of either "Editor" or "AE"
 #' @rdname summarise_articles
 #' @export
-find_articles <- function(editor, folder, role){
-
+find_articles <- function(editor, folder, role) {
   grep_ae_or_editor <- glue::glue("| xargs grep {role}")
 
   suppressWarnings(
     system2("find",
-            args = c(
-              folder, "-name", "DESCRIPTION", "-print",
-              grep_ae_or_editor,
-              "| grep", editor),
-            stdout = TRUE
+      args = c(
+        folder, "-name", "DESCRIPTION", "-print",
+        grep_ae_or_editor,
+        "| grep", editor
+      ),
+      stdout = TRUE
     )
   )
 }
