@@ -132,7 +132,7 @@ need_reviewers <- function(editor) {
 
   # Add papers ready for review
   papers <- report(editor = editor) |>
-    dplyr::filter(status == "waiting (editor)") |>
+    dplyr::filter(status == "waiting (editor)" | status == "needs reviewers (editor)") |>
     dplyr::mutate(n = 0) |>
     dplyr::select(id, n) |>
     tibble::as_tibble()
@@ -208,7 +208,7 @@ need_decision <- function(editor) {
       reviewers$comment,
       "[0-9]*\\-[0-9]*\\-[0-9]*$"
     ) |>
-    as.Date()
+      as.Date()
     reviewers <- reviewers |>
       dplyr::group_by(id) |>
       dplyr::summarise(date = max(date), n = dplyr::n()) |>
@@ -221,7 +221,7 @@ need_decision <- function(editor) {
     str_dup("*", sum(u > deadlines("needs editor")))
   }))
   output$ae[is.na(output$ae)] <- ""
-  if(NROW(output) == 0L) {
+  if (NROW(output) == 0L) {
     return(invisible(NULL))
   } else {
     return(output)
