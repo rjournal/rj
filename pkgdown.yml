@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.2
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   associate_editors_guide: associate_editors_guide.html
@@ -9,7 +9,7 @@ articles:
   issue_build_guide: issue_build_guide.html
   roles_and_responsibilities: roles_and_responsibilities.html
   website_build_guide: website_build_guide.html
-last_built: 2025-05-23T06:39Z
+last_built: 2025-07-15T10:23Z
 urls:
   reference: https://rjournal.github.io/rj/reference
   article: https://rjournal.github.io/rj/articles
