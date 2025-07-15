@@ -163,7 +163,7 @@ These are the primary functions that are useful for AE operations
 - `agree_reviewer`, `decline_reviewer`
 - `late_reviewers` gives a list of reviewers who have not submitted their reviews on time.
 - `add_review`
-- `update_status` using `AE:major_revision`, `AE:minor_revision`, `AE:major_reject`
+- `update_status` using `AE: reject`, `AE: major revision`, `AE: minor revision`, `AE: accept`
 - `valid_status` lists the available statuses to use
 
 
