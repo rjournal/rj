@@ -26,7 +26,7 @@ As an Associate Editor, you will receive manuscripts from one of the four curren
 1. Read the paper and decide if it needs reviews. If you feel that the article is not sufficient quality for the R Journal, you can provide a review yourself and recommend rejection, without obtaining any other reviews. You can also request (via the Editor) further refinement of the paper before you send it to reviewers.
 2. Find reviewers. If you feel that the paper needs expert reviews, you will need to find at least two reviewers with expertise in the subject area of the submission. (See below for some tips on finding reviewers.) Reviewers are given approximately 1--3 months to review a paper.
 3. Make a recommendation. You should recommend one of the following options: reject, accept with major revisions, accept with minor revisions, or accept as is.
-4. Write a short summary explaining the reason for the recommendation. Ultimately it is the handling editor who makes the final decision on a paper, and manages all communication with authors.
+4. Write a short summary explaining the reason for the recommendation and notify the handling editor. Ultimately it is the handling editor who makes the final decision on a paper, and manages all communication with authors.
 
 The expected workload is 1--2 papers per month.
 
@@ -163,7 +163,7 @@ These are the primary functions that are useful for AE operations
 - `agree_reviewer`, `decline_reviewer`
 - `late_reviewers` gives a list of reviewers who have not submitted their reviews on time.
 - `add_review`
-- `update_status` using `AE:major_revision`, `AE:minor_revision`, `AE:major_reject`
+- `update_status` using `AE: reject`, `AE: major revision`, `AE: minor revision`, `AE: accept`
 - `valid_status` lists the available statuses to use
 
 
