@@ -59,6 +59,7 @@ reference:
   - valid_reviewer_status
 - title: Build an issue
   contents:
+  - llm_copyedit
   - make_proof
   - publish_article
   - publish_issue
