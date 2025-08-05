@@ -8,7 +8,10 @@
 #' The changes are made directly to the files. Please check carefully before
 #' committing them to the git repository.
 #'
-#' @param article Article id, such as "2025-03".
+#' @param articles A vector of article ids, such as "2025-42". Ignored if issue
+#' is provided.
+#' @param issue An issue id, such as "2025-1". If provided, the function will
+#' construct the vector of associated article ids.
 #' @param type Type of files to copyedit. Options are "all" (default), "bib", "tex", or "rmd".
 #' @param ellmer_timeout_s Timeout for the LLM API in seconds. Default is 600 seconds.
 #' @examples
@@ -19,13 +22,34 @@
 #' @export
 #'
 llm_copyedit <- function(
-  article,
+  articles = NULL,
+  issue = NULL,
   type = c("all", "bib", "tex", "rmd"),
   ellmer_timeout_s = 600
 ) {
   type <- match.arg(type)
   options(ellmer_timeout_s = ellmer_timeout_s)
-  article <- as.article(article)
+  if (!is.null(issue)) {
+    if (!is.character(issue) || length(issue) != 1) {
+      stop("Issue must be a single character string, e.g., '2025-1'.")
+    }
+    articles <- list.files(
+      file.path(get_articles_path(), "Proofs", issue),
+      pattern = "\\d{4}-\\d{2}",
+      full.names = TRUE
+    )
+    articles <- basename(articles)
+  } else if (is.null(articles)) {
+    stop("Please provide either article ids or an issue id")
+  }
+  for (article in articles) {
+    article <- as.article(article)
+    message(paste("Processing article:", article$id))
+    llm_copyedit_article(article, type)
+  }
+}
+
+llm_copyedit_article <- function(article, type) {
   bibfiles <- rmdfiles <- texfiles <- character(0)
   if (type %in% c("all", "bib")) {
     bibfiles <- list.files(
