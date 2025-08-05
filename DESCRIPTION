@@ -12,6 +12,7 @@ Depends:
 Imports:
     cli,
     dplyr,
+    ellmer,
     fs,
     glue,
     gmailr,

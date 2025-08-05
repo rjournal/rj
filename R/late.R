@@ -132,7 +132,9 @@ need_reviewers <- function(editor) {
 
   # Add papers ready for review
   papers <- report(editor = editor) |>
-    dplyr::filter(status == "waiting (editor)" | status == "needs reviewers (editor)") |>
+    dplyr::filter(
+      status == "waiting (editor)" | status == "needs reviewers (editor)"
+    ) |>
     dplyr::mutate(n = 0) |>
     dplyr::select(id, n) |>
     tibble::as_tibble()
@@ -227,3 +229,5 @@ need_decision <- function(editor) {
     return(output)
   }
 }
+
+utils::globalVariables(c("reviewers", "ae", "n"))
