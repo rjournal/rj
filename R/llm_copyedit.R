@@ -26,7 +26,6 @@ llm_copyedit <- function(
   type <- match.arg(type)
   options(ellmer_timeout_s = ellmer_timeout_s)
   article <- as.article(article)
-  cat(paste("Copyediting article:", article$id, "\n"))
   bibfiles <- rmdfiles <- texfiles <- character(0)
   if (type %in% c("all", "bib")) {
     bibfiles <- list.files(
@@ -75,6 +74,7 @@ llm_copyedit <- function(
       system_prompt = "Make minimal copy-editing changes to this R Markdown document to fix critical grammatical errors. Only fix errors, do not make other changes. In particular, do not substitute words, change code, comments, indentation, layout, and file paths. Do not add, remove or change any line breaks or empty lines anywhere in the document. Do not insert blank lines. Do not remove blank lines. Do not insert additional blank lines between paragraphs. Do not insert blank lines between items in a bulleted or enumerated list. Do not insert blank lines in markdown tables. Equation environments may start with '$$' and end with '$$'. Or they may start with '\\[' and end with '\\]'. They may also start with '\\begin{equation}' and end with '\\end{equation}'. Do not modify these equation environments in any way. Code chunks are sections that begin with '\\begin{example}` and end with '\\end{example}', each on a new line. Do not change these code chunks in any way. Output the entire document with only the minimal grammatical corrections applied inline, otherwise preserving the original structure and formatting of the document. Your job is only to fix errors, not to make other changes. If there is any doubt, don't make the change. In summary: 1. identify critical grammatical errors only; 2. Correct only those errors inline; 3. Do not change any other content, formatting, or structure of the document; 4. Do not add or remove line breaks or empty lines anywhere in the document. 5. Do not change code chunks or equation environments in any way."
     )
   }
+  invisible()
 }
 
 llm_copyedit_files <- function(files, system_prompt) {
@@ -84,7 +84,7 @@ llm_copyedit_files <- function(files, system_prompt) {
     echo = "none"
   )
   lapply(files, function(file) {
-    cat(paste("  *", basename(file), "\n"))
+    message(paste("  *", basename(file)))
     content <- xfun::read_utf8(file)
     output <- chat$clone()$chat(content)
     clean_output <- strsplit(output, "\\n\\n")[[1L]]
