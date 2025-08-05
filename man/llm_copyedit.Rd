@@ -5,13 +5,18 @@
 \title{Copyedit article files using an LLM}
 \usage{
 llm_copyedit(
-  article,
+  articles = NULL,
+  issue = NULL,
   type = c("all", "bib", "tex", "rmd"),
   ellmer_timeout_s = 600
 )
 }
 \arguments{
-\item{article}{Article id, such as "2025-03".}
+\item{articles}{A vector of article ids, such as "2025-42". Ignored if issue
+is provided.}
+
+\item{issue}{An issue id, such as "2025-1". If provided, the function will
+construct the vector of associated article ids.}
 
 \item{type}{Type of files to copyedit. Options are "all" (default), "bib", "tex", or "rmd".}
 
