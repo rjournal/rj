@@ -54,7 +54,7 @@ llm_copyedit <- function(
       recursive = TRUE,
       full.names = TRUE
     )
-    texfiles <- texfiles[basename(rmdfiles) != "RJwrapper.tex"]
+    texfiles <- texfiles[basename(texfiles) != "RJwrapper.tex"]
     texfiles <- texfiles[!grepl("/history/", texfiles)]
   }
   if (length(bibfiles) > 0) {
