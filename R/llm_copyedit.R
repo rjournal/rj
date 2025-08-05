@@ -109,9 +109,20 @@ llm_copyedit_files <- function(files, system_prompt) {
   )
   lapply(files, function(file) {
     message(paste("  *", basename(file)))
-    content <- xfun::read_utf8(file)
+    content <- remove_empty_lines(xfun::read_utf8(file))
     output <- chat$clone()$chat(content)
     clean_output <- strsplit(output, "\\n\\n")[[1L]]
     xfun::write_utf8(clean_output, file)
   })
+}
+
+# Replace multiple empty lines with a single empty line
+remove_empty_lines <- function(x) {
+  is_empty <- grepl("^\\s*$", x)
+  runs <- rle(is_empty)
+  runs$lengths[runs$values & runs$lengths > 1] <- 1
+  new_is_empty <- inverse.rle(runs)
+  result <- character(length(new_is_empty))
+  result[!new_is_empty] <- x[!is_empty][cumsum(!new_is_empty)[!new_is_empty]]
+  return(result)
 }
