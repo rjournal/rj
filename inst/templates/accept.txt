@@ -12,7 +12,7 @@ Once you've done that, please respond to this email with a full copy of the file
 
 Prior to publication, the paper will be proofed by a copy-editor and requested changes will be sent to you to make, with a short turn-around time.
 
-As an R Journal author, if you are not already, we would be delighted to have your expertise as a reviewer for future submissions; please fill in your details here: https://journal.r-project.org/reviewer.html
+As an R Journal author, if you are not already, we would be delighted to have your expertise as a reviewer for future submissions; please fill in your details here: https://journal.r-project.org/contribute.html#reviewers
 
 Regards,
 
