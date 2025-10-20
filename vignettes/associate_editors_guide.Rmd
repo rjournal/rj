@@ -28,6 +28,8 @@ As an Associate Editor, you will receive manuscripts from one of the four curren
 3. Make a recommendation. You should recommend one of the following options: reject, accept with major revisions, accept with minor revisions, or accept as is.
 4. Write a short summary explaining the reason for the recommendation and notify the handling editor. Ultimately it is the handling editor who makes the final decision on a paper, and manages all communication with authors.
 
+When an Editor assigns you a paper, you are then responsible for that paper until you hand it back to the handling editor. Once you've made a decision on a paper, and are ready to hand the paper back to the handling editor, please update your repository and notify the handling editor via Slack or email.
+
 The expected workload is 1--2 papers per month.
 
 Terms are for three years, with an opportunity to renew.
@@ -36,9 +38,9 @@ Terms are for three years, with an opportunity to renew.
 
 Each AE is provided a Github repo for handling papers, with the name in the form of `ae-articles-XX`. When you receive an article from an editor, you will find it in the `Submissions` folder of your repo.
 
-Slack is used for communication between editors and associate editors, and general information about operations. The channel for AEs is `associate-editors` and there are numerous other channels focusing on different aspects of operations, including `rj-software`, `general`, `journal-website`, that you are welcome to join. This is the best place to receive messages from an editor that a paper is assigned to you, and for you to notify that editor when you have received reviews, made your summary and are ready to hand it back.
+Slack or email is used for communication between editors and associate editors, and general information about operations. The Slack channel for AEs is `associate-editors` and there are numerous other channels focusing on different aspects of operations, including `rj-software`, `general`, `journal-website`, that you are welcome to join. 
 
-Meetings with the Editors and Associate Editors will usually be held every two months. The meeting time is set by the Editor-in-Chief.
+Meetings with the Editors and Associate Editors will usually be held every few months. The meeting time is set by the Editor-in-Chief.
 
 Email is usually the best way to communicate with reviewers.
 
