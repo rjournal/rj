@@ -195,15 +195,17 @@ need_decision <- function(editor) {
 
   # Find existing reviewers
   reviewers <- get_reviewers(editor = editor)
-  ids <- unique(reviewers$id)
-  paths <- paste0(get_articles_path(), "/Submissions/", ids)
-  nreviews <- lapply(paths, function(x) {
-    completed_reviews(as.article(x))
-  }) |>
-    unlist()
-  reviewers <- subset(reviewers, reviewers$id %in% ids[nreviews >= 2])
-  status <- last_reviewer_status(reviewers$comment)
-  reviewers <- reviewers[status %in% c("Major", "Minor", "Accept", "Reject"), ]
+  if(NROW(reviewers) > 0L) {
+    ids <- unique(reviewers$id)
+    paths <- paste0(get_articles_path(), "/Submissions/", ids)
+    nreviews <- lapply(paths, function(x) {
+      completed_reviews(as.article(x))
+    }) |>
+      unlist()
+    reviewers <- subset(reviewers, reviewers$id %in% ids[nreviews >= 2])
+    status <- last_reviewer_status(reviewers$comment)
+    reviewers <- reviewers[status %in% c("Major", "Minor", "Accept", "Reject"), ]
+  }
 
   if (NROW(reviewers) > 0L) {
     reviewers$date <- stringr::str_extract(
