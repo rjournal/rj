@@ -366,7 +366,7 @@ move_article_web <- function(from, to, volume, issue) {
     function(x) {
       rmd_output <- partition_rmd(x)$front_matter$output
       if(is.list(rmd_output)) rmd_output <- names(rmd_output)
-      any(c("rjtools::rjournal_web_article", "rjtools::rjournal_article") %in% rmd_output)
+      any(c("rjtools::rjournal_web_article", "rjtools::rjournal_pdf_article", "rjtools::rjournal_article") %in% rmd_output)
     },
     rmd_file
   )
