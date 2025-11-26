@@ -1,0 +1,49 @@
+# Copyedit article files using an LLM
+
+This function applies LLM-based copyediting to all relevant source files
+in an article directory. It will process BibTeX files, R Markdown files,
+and LaTeX files (the latter only if there are no R Markdown files).
+OpenAI's ChapGPT 4.1 is used with the \`ellmer\` package to perform the
+copyediting. You will need an OpenAI API key set in the environment
+variable \`OPENAI_API_KEY\`. The changes are made directly to the files.
+Please check carefully before committing them to the git repository.
+
+## Usage
+
+``` r
+llm_copyedit(
+  articles = NULL,
+  issue = NULL,
+  type = c("all", "bib", "tex", "rmd"),
+  ellmer_timeout_s = 600
+)
+```
+
+## Arguments
+
+- articles:
+
+  A vector of article ids, such as "2025-42". Ignored if issue is
+  provided.
+
+- issue:
+
+  An issue id, such as "2025-1". If provided, the function will
+  construct the vector of associated article ids.
+
+- type:
+
+  Type of files to copyedit. Options are "all" (default), "bib", "tex",
+  or "rmd".
+
+- ellmer_timeout_s:
+
+  Timeout for the LLM API in seconds. Default is 600 seconds.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+llm_copyedit("2025-05")
+} # }
+```

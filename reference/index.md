@@ -1,0 +1,176 @@
+# Package index
+
+## Primarily AE article management functions
+
+Functions needed in the AE workflow
+
+- [`match_keywords()`](https://rjournal.github.io/rj/reference/match_keywords.md)
+  : Find reviewers through keywords matching
+- [`add_reviewer()`](https://rjournal.github.io/rj/reference/add_reviewer.md)
+  : Invite an reviewer
+- [`decline_reviewer()`](https://rjournal.github.io/rj/reference/decline_reviewer.md)
+  [`agree_reviewer()`](https://rjournal.github.io/rj/reference/decline_reviewer.md)
+  [`abandon_reviewer()`](https://rjournal.github.io/rj/reference/decline_reviewer.md)
+  : Update reviewer's response to invite
+- [`get_reviewers()`](https://rjournal.github.io/rj/reference/get_reviewers.md)
+  : Find all reviewers for submissions being handled by a given editor
+- [`late_reviewers()`](https://rjournal.github.io/rj/reference/late_reviewers.md)
+  : Find late reviewers for submissions being handled by a given editor
+- [`need_reviewers()`](https://rjournal.github.io/rj/reference/need_reviewers.md)
+  : Find articles that need reviewers for submissions being handled by a
+  given editor.
+- [`need_decision()`](https://rjournal.github.io/rj/reference/need_decision.md)
+  : Find articles that have at least two completed reviews and need a
+  decision
+- [`add_review()`](https://rjournal.github.io/rj/reference/add_review.md)
+  : Add the review file received from the reviewer
+- [`list_reviewers()`](https://rjournal.github.io/rj/reference/reviewer_status.md)
+  [`reviewer_status()`](https://rjournal.github.io/rj/reference/reviewer_status.md)
+  : Summarise reviewers' progression of an article
+- [`update_status()`](https://rjournal.github.io/rj/reference/update_status.md)
+  : Update the article status
+
+## Primarily Editor article management functions
+
+Functions to assist the Editors handle submissions
+
+- [`ae_workload()`](https://rjournal.github.io/rj/reference/ae_workload.md)
+  [`get_AE()`](https://rjournal.github.io/rj/reference/ae_workload.md) :
+  Check the number of articles an AE is currently working on
+- [`add_ae()`](https://rjournal.github.io/rj/reference/add_ae.md) : Add
+  AE to the DESCRIPTION
+- [`update_status()`](https://rjournal.github.io/rj/reference/update_status.md)
+  : Update the article status
+- [`reject()`](https://rjournal.github.io/rj/reference/action.md)
+  [`reject_format()`](https://rjournal.github.io/rj/reference/action.md)
+  [`accept()`](https://rjournal.github.io/rj/reference/action.md)
+  [`withdraw()`](https://rjournal.github.io/rj/reference/action.md)
+  [`resubmission()`](https://rjournal.github.io/rj/reference/action.md)
+  [`major_revision()`](https://rjournal.github.io/rj/reference/action.md)
+  [`minor_revision()`](https://rjournal.github.io/rj/reference/action.md)
+  : Accept, reject, or withdraw an article
+- [`report()`](https://rjournal.github.io/rj/reference/report.md) :
+  Generate a status report.
+- [`summarise_articles()`](https://rjournal.github.io/rj/reference/summarise_articles.md)
+  [`get_assignments()`](https://rjournal.github.io/rj/reference/summarise_articles.md)
+  [`get_unassigned()`](https://rjournal.github.io/rj/reference/summarise_articles.md)
+  [`find_articles()`](https://rjournal.github.io/rj/reference/summarise_articles.md)
+  [`get_latest()`](https://rjournal.github.io/rj/reference/summarise_articles.md)
+  : Summarise editors current in-tray
+- [`late_aes()`](https://rjournal.github.io/rj/reference/late_aes.md) :
+  Find late AEs for submissions being handled by a given editor
+- [`list_reviewers()`](https://rjournal.github.io/rj/reference/reviewer_status.md)
+  [`reviewer_status()`](https://rjournal.github.io/rj/reference/reviewer_status.md)
+  : Summarise reviewers' progression of an article
+- [`reviewer_summary()`](https://rjournal.github.io/rj/reference/reviewer_summary.md)
+  : Summarise the reviewer's agree/decline ratio based on past invites
+
+## Primarily Editor-in-Chief functions
+
+Functions to assist the EiC extract new submissions, build the article
+folder
+
+- [`get_submissions()`](https://rjournal.github.io/rj/reference/get_submissions.md)
+  : Download submissions.
+- [`assignments()`](https://rjournal.github.io/rj/reference/assignments.md)
+  : Generate a summary of current and recent assignments to each editor
+- [`acknowledge_submission()`](https://rjournal.github.io/rj/reference/acknowledge_submission.md)
+  : Send submission acknowledgements
+- [`acknowledge_revision()`](https://rjournal.github.io/rj/reference/acknowledge_revision.md)
+  : Send revision received acknowledgement
+- [`online_metadata()`](https://rjournal.github.io/rj/reference/online_metadata.md)
+  : Generate metadata needed for website.
+- [`active_articles()`](https://rjournal.github.io/rj/reference/active_articles.md)
+  [`accepted_articles()`](https://rjournal.github.io/rj/reference/active_articles.md)
+  : List articles.
+- [`tabulate_articles()`](https://rjournal.github.io/rj/reference/tabulate_articles.md)
+  : Tabulate article descriptions
+- [`get_accepted_but_not_online()`](https://rjournal.github.io/rj/reference/get_accepted_but_not_online.md)
+  : Get articles to go online
+- [`author_emails()`](https://rjournal.github.io/rj/reference/author_emails.md)
+  : Extract email from leading author of an issue for emailing
+
+## Utilities
+
+Vectors of valid status
+
+- [`valid_status`](https://rjournal.github.io/rj/reference/valid_status.md)
+  : A list of all valid statuses.
+- [`valid_reviewer_status`](https://rjournal.github.io/rj/reference/valid_reviewer_status.md)
+  : A list of all valid reviewer statuses.
+
+## Build an issue
+
+- [`llm_copyedit()`](https://rjournal.github.io/rj/reference/llm_copyedit.md)
+  : Copyedit article files using an LLM
+- [`make_proof()`](https://rjournal.github.io/rj/reference/make_proof.md)
+  : Make a proof of an issue
+- [`publish_article()`](https://rjournal.github.io/rj/reference/publish_article.md)
+  : Publish an individual article
+- [`publish_issue()`](https://rjournal.github.io/rj/reference/publish_issue.md)
+  : Publish an issue
+- [`publish_news()`](https://rjournal.github.io/rj/reference/publish_news.md)
+  : Publish a news article
+
+## Misc
+
+- [`AEs()`](https://rjournal.github.io/rj/reference/AEs.md)
+  [`detect_AE()`](https://rjournal.github.io/rj/reference/AEs.md)
+  [`AE()`](https://rjournal.github.io/rj/reference/AEs.md)
+  [`is_AE()`](https://rjournal.github.io/rj/reference/AEs.md) :
+  Associate editor (AE) functions
+- [`actionable_articles()`](https://rjournal.github.io/rj/reference/actionable_articles.md)
+  : Show articles that require attention with the corresponding action
+- [`address()`](https://rjournal.github.io/rj/reference/address.md) : An
+  S3 class to represent email addresses.
+- [`article()`](https://rjournal.github.io/rj/reference/article.md)
+  [`as.article()`](https://rjournal.github.io/rj/reference/article.md) :
+  S3 class for article objects
+- [`build_latex()`](https://rjournal.github.io/rj/reference/build_latex.md)
+  : Build article from LaTeX
+- [`corr_author()`](https://rjournal.github.io/rj/reference/corr_author.md)
+  : Extract corresponding author from an article
+- [`email_template()`](https://rjournal.github.io/rj/reference/email_template.md)
+  : Send an email template.
+- [`email_text()`](https://rjournal.github.io/rj/reference/email_text.md)
+  : Generate an email template.
+- [`filter_status()`](https://rjournal.github.io/rj/reference/filter_status.md)
+  : Find articles with a given status.
+- [`future_ids()`](https://rjournal.github.io/rj/reference/future_ids.md)
+  : Generate a new id value.
+- [`get_article_keywords()`](https://rjournal.github.io/rj/reference/get_article_keywords.md)
+  : Extract keywords from a submitted article
+- [`get_articles_path()`](https://rjournal.github.io/rj/reference/get_articles_path.md)
+  : Get the directory of the articles repository, either as set by
+  set_articles_path() or using git to determine repository root
+- [`get_md_from_pdf()`](https://rjournal.github.io/rj/reference/get_md_from_pdf.md)
+  : Get metadata from a PDF file
+- [`get_reviewer_keywords()`](https://rjournal.github.io/rj/reference/get_reviewer_keywords.md)
+  : Extract keywords from reviewer list
+- [`git_user()`](https://rjournal.github.io/rj/reference/git_user.md) :
+  Detect user name and e-mail from GIT
+- [`invite_reviewers()`](https://rjournal.github.io/rj/reference/invite_reviewers.md)
+  [`invite_reviewer()`](https://rjournal.github.io/rj/reference/invite_reviewers.md)
+  : Invite reviewer(s).
+- [`new_id()`](https://rjournal.github.io/rj/reference/new_id.md) :
+  Generate a new id value.
+- [`online_metadata_for_article()`](https://rjournal.github.io/rj/reference/online_metadata_for_article.md)
+  : Generate metadata for one article.
+- [`parse_address_list()`](https://rjournal.github.io/rj/reference/parse_address_list.md)
+  : Parse a string into a rfc822 address list.
+- [`get_accepted_articles()`](https://rjournal.github.io/rj/reference/proofing.md)
+  [`draft_proofing()`](https://rjournal.github.io/rj/reference/proofing.md)
+  [`proofing_article()`](https://rjournal.github.io/rj/reference/proofing.md)
+  [`proofing_article_text()`](https://rjournal.github.io/rj/reference/proofing.md)
+  : Functions for proofing articles
+- [`rj-package`](https://rjournal.github.io/rj/reference/rj.md)
+  [`rj`](https://rjournal.github.io/rj/reference/rj.md) : R Journal
+  Package
+- [`set_articles_path()`](https://rjournal.github.io/rj/reference/set_articles_path.md)
+  : Set the directory of the articles repository
+- [`article_status_plot()`](https://rjournal.github.io/rj/reference/article_status_plot.md)
+  : Generates a status plot for articles submitted in the last few
+  years.
+- [`time_to_accept_plot()`](https://rjournal.github.io/rj/reference/time_to_accept_plot.md)
+  : Generates a plot of acceptance times for articles published in the
+  last few years.

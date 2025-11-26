@@ -1,0 +1,51 @@
+# Guide to Building an Issue
+
+## Articles to include
+
+All articles accepted up to the publication dates: Mar 31, Jun 30, Oct
+31, Dec 31, should be included. (Traditionally these articles would
+first be made available online, but with the increased frequency of
+publication we are not at the moment performing this step.)
+
+## Preparation
+
+- Copy editing
+- Collect news items
+
+## Building an issue
+
+### Steps
+
+1.  Copy from Accepted into Proofs (`rj:::make_proof()`):
+
+- It will filter accepted articles that have the current status
+  “proofed”.
+- You need to provide the issue number, eg “2022-2”.
+- This will also create the zip file of supplementary material from the
+  list of files in the DESCRIPTION
+
+2.  Copy news, News_items, into Proofs which is done manually.
+3.  Copy files across to `rjournal.github.io`, using
+    `rj:::publish_issue()` or `rj:::publish_article()`. Publish news
+    with `rj:::publish_news()`
+
+- This will also assign a “slug” the id of the published article, which
+  is added to the DESCRIPTION file in the Proofs folder.
+- This slug will be used for the folder name in the `rjournal.github.io`
+  “\_articles” folder.
+- Also builds file `volume_issue.Rmd` in the “\_issues”.
+
+4.  Build the issue, using the file `volume_issue.Rmd` in the “\_issues”
+    folder. Make the pdfs/html for each article (using
+    [`rjtools::rjournal_web_issue()`](https://rdrr.io/pkg/rjtools/man/rjournal_issue.html)
+    and
+    [`rjtools::rjournal_pdf_issue()`](https://rdrr.io/pkg/rjtools/man/rjournal_issue.html))
+
+- It generates a folder within “\_issues” with the information on
+  organising the articles in the issue
+- This will also generate the `doi.xml` used for the DOI of each
+  article.
+
+5.  Register DOIs with <https://doi.crossref.org/> using username `rfou`
+    and password provided by previous editor. Click on “Upload
+    submissions”, then “Metadata” and upload the file.

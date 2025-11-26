@@ -1,0 +1,171 @@
+# Associate Editors' Guide
+
+## Mission
+
+As an Associate Editor, you will receive manuscripts from one of the
+four current Editors. You will be responsible for the following steps.
+
+1.  Read the paper and decide if it needs reviews. If you feel that the
+    article is not sufficient quality for the R Journal, you can provide
+    a review yourself and recommend rejection, without obtaining any
+    other reviews. You can also request (via the Editor) further
+    refinement of the paper before you send it to reviewers.
+2.  Find reviewers. If you feel that the paper needs expert reviews, you
+    will need to find at least two reviewers with expertise in the
+    subject area of the submission. (See below for some tips on finding
+    reviewers.) Reviewers are given approximately 1–3 months to review a
+    paper.
+3.  Make a recommendation. You should recommend one of the following
+    options: reject, accept with major revisions, accept with minor
+    revisions, or accept as is.
+4.  Write a short summary explaining the reason for the recommendation
+    and notify the handling editor. Ultimately it is the handling editor
+    who makes the final decision on a paper, and manages all
+    communication with authors.
+
+When an Editor assigns you a paper, you are then responsible for that
+paper until you hand it back to the handling editor. Once you’ve made a
+decision on a paper, and are ready to hand the paper back to the
+handling editor, please update your repository and notify the handling
+editor via Slack or email.
+
+The expected workload is 1–2 papers per month.
+
+Terms are for three years, with an opportunity to renew.
+
+## Communication
+
+Each AE is provided a Github repo for handling papers, with the name in
+the form of `ae-articles-XX`. When you receive an article from an
+editor, you will find it in the `Submissions` folder of your repo.
+
+Slack or email is used for communication between editors and associate
+editors, and general information about operations. The Slack channel for
+AEs is `associate-editors` and there are numerous other channels
+focusing on different aspects of operations, including `rj-software`,
+`general`, `journal-website`, that you are welcome to join.
+
+Meetings with the Editors and Associate Editors will usually be held
+every few months. The meeting time is set by the Editor-in-Chief.
+
+Email is usually the best way to communicate with reviewers.
+
+Please do not communicate directly with authors. The Editor is
+responsible for all communication with authors. You should only be
+communicating with reviewers and with the handling editor who allocated
+you the paper.
+
+## Workflow and operations
+
+### Getting started
+
+Install the `rj` package with
+
+``` r
+remotes::install_github("rjournal/rj")
+```
+
+The package is being updated and revised regularly, so you may want to
+re-install occasionally.
+
+### Workflow
+
+All submissions you are handling will be in your Github repository, in
+the `Submissions` folder. Each submission is in a separate folder named
+with the ID of the article; e.g., `2024-12`. This folder will contain a
+number of files:
+
+- article files: `RJwrapper.tex`, `.tex`, `.bib`, and possibly `.R`,
+  `.Rmd`, data and figure files.
+- our operation files:
+  - `DESCRIPTION`: contains up to date information about the state of
+    the article. It is plain text but you should use the `rj` function
+    to modify it, if possible.
+  - `correspondence` folder, usually containing `motivating-letter.pdf`.
+    This is also where the invitations to each reviewer will be added,
+    and the reviews will be stored once they have been returned by
+    reviewers.
+
+### Potential reviewers
+
+There are several ways to find reviewers for a paper.
+
+1.  Match keywords against the reviewer database.
+
+    We have a list of potential reviewers that has been collected using
+    this [form for people to volunteer to review for the R
+    Journal](https://docs.google.com/forms/d/e/1FAIpQLSf8EmpF85ASWqPHXqV0vdQd-GHhNBaAZZEYf4qxO3gTl-eGyA/viewform).
+    Please complete this form yourself.
+
+    This form populates a
+    [spreadsheet](https://docs.google.com/spreadsheets/d/1stC58tDHHzjhf63f7PhgfiHJTJkorvAQGgzdYL5NTUQ/edit#gid=1594007907)
+    that is used to match keywords between articles and reviewers. Once
+    you are set up as an AE, you need access to this sheet in order to
+    use the
+    [`rj::match_keywords()`](https://rjournal.github.io/rj/reference/match_keywords.md)
+    function. You can request access from the assigning editor if it
+    isn’t visible to you.
+
+2.  Look for authors of related R packages. The submission may cite some
+    similar packages, or you may find similar packages on a [CRAN Task
+    View](https://cran.r-project.org/web/views/). Authors of similar
+    packages are often the best reviewers, and are usually motivated to
+    review a paper that is related to their own work.
+
+3.  Look for authors of recent related papers. These may be papers cited
+    in the submission, or papers that you find via a Google Scholar
+    search. Restrict your search to papers that are published in the
+    last few years.
+
+4.  Once you have a list of a few potential reviewers, check their
+    websites to determine (a) how active they are in the area; (b) how
+    senior they are; and (c) whether they appear to be R users. The
+    ideal reviewer is someone who is actively working in the area, uses
+    R, and does not have substantial management responsibilities.
+    Post-docs or junior faculty are often the best reviewers, as they
+    have more time than senior academics, and more experience than PhD
+    students. Someone with substantial expertise in the topic, but who
+    is not an R user, may still be able to provide helpful comments on
+    the paper, but they are less likely to be able to provide useful
+    comments on the code.
+
+5.  Rank your reviewers in preference order. You will need to invite at
+    least two reviewers, and it is best to have some in reserve in case
+    one of the first two declines. Think about who is most likely to
+    agree; e.g., someone is more likely to agree if they know you.
+
+6.  Where possible, try to find reviewers with different expertise. For
+    example, one may have stronger expertise in the statistical methods,
+    with the other having greater expertise in writing R packages.
+
+7.  Before sending them, edit the review-request emails to explain why
+    you’re asking them to review the submission. For example, “As the
+    author of package X, I’d be interested in your thoughts on this
+    submission.” Or “I’m aware of your JRSSB paper on XXX, so I’m keen
+    to get your thoughts on this submission which takes a different
+    approach to the same problem.” Or “The authors compare their package
+    against the method you developed in XXX, so I’d like to know your
+    views on this submission.” If they know why you asked them, they are
+    more likely to respond positively.
+
+8.  If you only manage to get one review, you may need to provide a
+    review yourself.
+
+### Package usage
+
+These are the primary functions that are useful for AE operations
+
+- `match_keywords`
+- `add_reviewer`
+- `invite_reviewers`
+- `agree_reviewer`, `decline_reviewer`
+- `late_reviewers` gives a list of reviewers who have not submitted
+  their reviews on time.
+- `add_review`
+- `update_status` using `AE: reject`, `AE: major revision`,
+  `AE: minor revision`, `AE: accept`
+- `valid_status` lists the available statuses to use
+
+## Resources
+
+This document is provided as a vignette to the `rj` package.
