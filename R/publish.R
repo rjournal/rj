@@ -414,6 +414,7 @@ move_article_web <- function(from, to, volume, issue) {
     if(utils::menu(c("Yes", "No")) != 1) {
       cli::cli_abort("RJwrapper.tex not found for a legacy article, so article could not be migrated.")
     }
+    article_files <- get_article_files(from)
     wrapper_input <- xfun::sans_ext(article_files[xfun::file_ext(article_files)=="tex"])
     if(length(wrapper_input) != 1) {
       cli::cli_abort("Could not automatically identify appropriate article tex file. Check that exactly 1 input tex file exists for the wrapper.")
