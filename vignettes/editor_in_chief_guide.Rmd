@@ -76,6 +76,7 @@ Once a new AE is appointed, the following steps take place:
 * Update the [R Journal Wikipedia page](https://en.wikipedia.org/wiki/The_R_Journal) with the change of editors.
 * Ask Martin Maechler to forward r-journal@r-project.org to the new EIC's preferred email address.
 * Grant permission to the new EIC to access the [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g) used for submissions.
+* Hand over the `rjournal.submission` Google account. This account owns the google forms and spreadsheets used by the editors.
 
 # Archives
 
