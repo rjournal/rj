@@ -39,16 +39,22 @@ there are any problems, request a
 [`resubmission()`](https://rjournal.github.io/rj/reference/action.md)
 from the authors.
 
-## Acknowledge submission and assigning article to an EE
+## Acknowledge submission and assigning a new article to an EE
 
-New articles should be assigned to one of the four EE’s. This is good to
-do at the time of acknowledging the submission, so that the EE can be
-cc’d on the email. Use `acknowledge_submission(editor = "XX")`.
+For revisions, use
+[`acknowledge_revision()`](https://rjournal.github.io/rj/reference/acknowledge_revision.md)
+to send an acknowledgement email to the authors, cc’ing the handling
+editor.
 
-To balance EE load, use
+For new submissions, choose one of the three active EE’s (i.e., not the
+previous EIC). To balance EE load, use
 [`assignments()`](https://rjournal.github.io/rj/reference/assignments.md)
 to see how many papers each EE is currently handling, and what has been
-assigned to them in recent months.
+assigned to them in recent months. As far as possible, take account of
+the relative expertise of each EE so that papers are assigned to the
+most appropriate person. Use `acknowledge_submission(editor = "XX")`. to
+send an acknowledgement email to the authors, cc’ing the chosen handling
+editor.
 
 ## Check progress of all papers
 
@@ -60,11 +66,11 @@ Anything with 3 stars needs urgent attention.
 ## New executive editor
 
 The EIC is responsible to navigating the search for a new EE. The search
-for a new editorial board member should begin in September, giving
-enough time to find a replacement before the outgoing member leaves at
-the end of December. Nominations for the new member are discussed by the
-editorial board first, and then preferably also with the advisory
-committee so that they can provide historical perspective.
+for a new editorial board member should begin in the middle of the year,
+giving enough time to find a replacement before the outgoing member
+leaves at the end of December. Nominations for the new member are
+discussed by the editorial board first, and then preferably also with
+the advisory committee so that they can provide historical perspective.
 
 Once a shortlist of candidates is created, but before approaching anyone
 on the list, it should be sent to the R Foundation Board members
@@ -74,14 +80,8 @@ someone agrees, the EIC informs the members of the R Foundation
 (<R-foundation-members@r-project.org>). The new editor is formally
 appointed by the R Foundation president.
 
-Once a new member is found, the following steps take place:
+Once a new EE is found, the following steps take place:
 
-- The EIC informs Martin Maechler of the new board member
-- The incoming board member requests access to the mailing lists by
-  visiting <https://stat.ethz.ch/mailman/listinfo/r-journal-editors> and
-  <https://stat.ethz.ch/mailman/listinfo/r-journal-advisory>.
-- The outgoing member unsubscribes from r-journal-editors by visiting
-  the web page above, but should remain subscribed to r-journal-advisory
 - The new EE is added to the Editors team at
   `https://github.com/rjournal` and to the `rjournal.slack.com`
   organisation.

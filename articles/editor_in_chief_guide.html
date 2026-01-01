@@ -63,10 +63,9 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Editor-in-Chief's Guide</h1>
-                        <h4 data-toc-skip class="author">Di Cook and Rob
-J Hyndman</h4>
             
-            <h4 data-toc-skip class="date">2025-11-26</h4>
+            <h4 data-toc-skip class="date">Last updated: 2 January
+2026</h4>
       
 
       <div class="d-none name"><code>editor_in_chief_guide.Rmd</code></div>
@@ -106,15 +105,19 @@ the <code>Rmd</code> file; or (b) compiling both the LaTeX file and all
 <code><a href="../reference/action.html">resubmission()</a></code> from the authors.</p>
 </div>
 <div class="section level2">
-<h2 id="acknowledge-submission-and-assigning-article-to-an-ee">Acknowledge submission and assigning article to an EE<a class="anchor" aria-label="anchor" href="#acknowledge-submission-and-assigning-article-to-an-ee"></a>
+<h2 id="acknowledge-submission-and-assigning-a-new-article-to-an-ee">Acknowledge submission and assigning a new article to an EE<a class="anchor" aria-label="anchor" href="#acknowledge-submission-and-assigning-a-new-article-to-an-ee"></a>
 </h2>
-<p>New articles should be assigned to one of the four EE’s. This is good
-to do at the time of acknowledging the submission, so that the EE can be
-cc’d on the email. Use
-<code>acknowledge_submission(editor = "XX")</code>.</p>
-<p>To balance EE load, use <code><a href="../reference/assignments.html">assignments()</a></code> to see how many
-papers each EE is currently handling, and what has been assigned to them
-in recent months.</p>
+<p>For revisions, use <code><a href="../reference/acknowledge_revision.html">acknowledge_revision()</a></code> to send an
+acknowledgement email to the authors, cc’ing the handling editor.</p>
+<p>For new submissions, choose one of the three active EE’s (i.e., not
+the previous EIC). To balance EE load, use <code><a href="../reference/assignments.html">assignments()</a></code> to
+see how many papers each EE is currently handling, and what has been
+assigned to them in recent months. As far as possible, take account of
+the relative expertise of each EE so that papers are assigned to the
+most appropriate person. Use
+<code>acknowledge_submission(editor = "XX")</code>. to send an
+acknowledgement email to the authors, cc’ing the chosen handling
+editor.</p>
 </div>
 <div class="section level2">
 <h2 id="check-progress-of-all-papers">Check progress of all papers<a class="anchor" aria-label="anchor" href="#check-progress-of-all-papers"></a>
@@ -127,9 +130,9 @@ needs urgent attention.</p>
 <h2 id="new-executive-editor">New executive editor<a class="anchor" aria-label="anchor" href="#new-executive-editor"></a>
 </h2>
 <p>The EIC is responsible to navigating the search for a new EE. The
-search for a new editorial board member should begin in September,
-giving enough time to find a replacement before the outgoing member
-leaves at the end of December. Nominations for the new member are
+search for a new editorial board member should begin in the middle of
+the year, giving enough time to find a replacement before the outgoing
+member leaves at the end of December. Nominations for the new member are
 discussed by the editorial board first, and then preferably also with
 the advisory committee so that they can provide historical
 perspective.</p>
@@ -140,15 +143,8 @@ and approval. People on the list are then approached by the EIC or an
 EE, and once someone agrees, the EIC informs the members of the R
 Foundation (<a href="mailto:R-foundation-members@r-project.org" class="email">R-foundation-members@r-project.org</a>). The new editor is
 formally appointed by the R Foundation president.</p>
-<p>Once a new member is found, the following steps take place:</p>
+<p>Once a new EE is found, the following steps take place:</p>
 <ul>
-<li>The EIC informs Martin Maechler of the new board member</li>
-<li>The incoming board member requests access to the mailing lists by
-visiting <a href="https://stat.ethz.ch/mailman/listinfo/r-journal-editors" class="external-link uri">https://stat.ethz.ch/mailman/listinfo/r-journal-editors</a>
-and <a href="https://stat.ethz.ch/mailman/listinfo/r-journal-advisory" class="external-link uri">https://stat.ethz.ch/mailman/listinfo/r-journal-advisory</a>.</li>
-<li>The outgoing member unsubscribes from r-journal-editors by visiting
-the web page above, but should remain subscribed to
-r-journal-advisory</li>
 <li>The new EE is added to the Editors team at
 <code>https://github.com/rjournal</code> and to the
 <code>rjournal.slack.com</code> organisation.</li>
