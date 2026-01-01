@@ -118,6 +118,8 @@ Once a new AE is appointed, the following steps take place:
   and [Google
   drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g)
   used for submissions.
+- Hand over the `rjournal.submission` Google account. This account owns
+  the google forms and spreadsheets used by the editors.
 
 ## Archives
 
