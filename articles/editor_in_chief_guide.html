@@ -74,8 +74,11 @@
     
     
 <div class="section level2">
-<h2 id="downloading-new-submissions-and-revisions">Downloading new submissions and revisions<a class="anchor" aria-label="anchor" href="#downloading-new-submissions-and-revisions"></a>
+<h2 id="new-submissions-and-revisions">New submissions and revisions<a class="anchor" aria-label="anchor" href="#new-submissions-and-revisions"></a>
 </h2>
+<div class="section level3">
+<h3 id="downloading-new-submissions-and-revisions">Downloading new submissions and revisions<a class="anchor" aria-label="anchor" href="#downloading-new-submissions-and-revisions"></a>
+</h3>
 <p>Articles are submitted through a <a href="https://forms.gle/ykj6QcoGQD5ctnA5A" class="external-link">Google form</a> which
 populates a <a href="https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370" class="external-link">Google
 sheet</a>, and a <a href="https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g" class="external-link">Google
@@ -94,9 +97,9 @@ that the zip file has unpacked into the top level of the folder. Common
 missing items are the <code>Suppl:</code> line which should list the
 <code>.R</code> files and any data needed to reproduce the paper.</p>
 </div>
-<div class="section level2">
-<h2 id="check-relevance-and-reproducibility">Check relevance and reproducibility<a class="anchor" aria-label="anchor" href="#check-relevance-and-reproducibility"></a>
-</h2>
+<div class="section level3">
+<h3 id="check-relevance-and-reproducibility">Check relevance and reproducibility<a class="anchor" aria-label="anchor" href="#check-relevance-and-reproducibility"></a>
+</h3>
 <p>First check that the paper fits the <a href="https://journal.r-project.org/#article-types" class="external-link">scope of the
 journal</a>. If not, <code><a href="../reference/action.html">reject()</a></code> the paper.</p>
 <p>Then check that the paper is reproducible by either: (a) compiling
@@ -104,9 +107,9 @@ the <code>Rmd</code> file; or (b) compiling both the LaTeX file and all
 <code>.R</code> files. If there are any problems, request a
 <code><a href="../reference/action.html">resubmission()</a></code> from the authors.</p>
 </div>
-<div class="section level2">
-<h2 id="acknowledge-submission-and-assigning-a-new-article-to-an-ee">Acknowledge submission and assigning a new article to an EE<a class="anchor" aria-label="anchor" href="#acknowledge-submission-and-assigning-a-new-article-to-an-ee"></a>
-</h2>
+<div class="section level3">
+<h3 id="acknowledge-submission-and-assigning-a-new-article-to-an-ee">Acknowledge submission and assigning a new article to an EE<a class="anchor" aria-label="anchor" href="#acknowledge-submission-and-assigning-a-new-article-to-an-ee"></a>
+</h3>
 <p>For revisions, use <code><a href="../reference/acknowledge_revision.html">acknowledge_revision()</a></code> to send an
 acknowledgement email to the authors, cc’ing the handling editor.</p>
 <p>For new submissions, choose one of the three active EE’s (i.e., not
@@ -119,16 +122,30 @@ most appropriate person. Use
 acknowledgement email to the authors, cc’ing the chosen handling
 editor.</p>
 </div>
-<div class="section level2">
-<h2 id="check-progress-of-all-papers">Check progress of all papers<a class="anchor" aria-label="anchor" href="#check-progress-of-all-papers"></a>
-</h2>
+<div class="section level3">
+<h3 id="check-progress-of-all-papers">Check progress of all papers<a class="anchor" aria-label="anchor" href="#check-progress-of-all-papers"></a>
+</h3>
 <p>The function <code><a href="../reference/report.html">report()</a></code> shows the status of all current
 papers being handled, by author and by status. Anything with 3 stars
 needs urgent attention.</p>
 </div>
+</div>
 <div class="section level2">
-<h2 id="new-executive-editor">New executive editor<a class="anchor" aria-label="anchor" href="#new-executive-editor"></a>
+<h2 id="meetings">Meetings<a class="anchor" aria-label="anchor" href="#meetings"></a>
 </h2>
+<p>The editors meet roughly every month. The EIC is responsible for
+organizing these at mutually convenient times, taking account of the
+different timezones.</p>
+<p>The associate editors meet roughly every 3–4 months. The EIC is also
+responsible for organizing these meetings. It is best to organize two
+meetings, 12 hours apart, to allow for different timezones.</p>
+</div>
+<div class="section level2">
+<h2 id="new-editors">New editors<a class="anchor" aria-label="anchor" href="#new-editors"></a>
+</h2>
+<div class="section level3">
+<h3 id="new-executive-editor">New executive editor<a class="anchor" aria-label="anchor" href="#new-executive-editor"></a>
+</h3>
 <p>The EIC is responsible to navigating the search for a new EE. The
 search for a new editorial board member should begin in the middle of
 the year, giving enough time to find a replacement before the outgoing
@@ -154,9 +171,9 @@ formally appointed by the R Foundation president.</p>
 <p>The EIC may take on outstanding handling editor duties of the
 outgoing member.</p>
 </div>
-<div class="section level2">
-<h2 id="new-associate-editors">New associate editors<a class="anchor" aria-label="anchor" href="#new-associate-editors"></a>
-</h2>
+<div class="section level3">
+<h3 id="new-associate-editors">New associate editors<a class="anchor" aria-label="anchor" href="#new-associate-editors"></a>
+</h3>
 <p>The EIC is responsible for recruiting new AEs, after discussion with
 all editors. Ideally, keywords of submissions over the past year are
 summarised, and compared with keywords of current AEs. New AEs should be
@@ -169,6 +186,7 @@ the initials of the AE</li>
 <li>The new AE is added to the <code>associate-editors.csv</code> file
 in the <code>inst</code> folder of the <code>rj</code> package.</li>
 </ul>
+</div>
 </div>
 <div class="section level2">
 <h2 id="handover-to-new-editor-in-chief">Handover to new Editor-in-Chief<a class="anchor" aria-label="anchor" href="#handover-to-new-editor-in-chief"></a>

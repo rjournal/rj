@@ -1,6 +1,8 @@
 # Editor-in-Chief's Guide
 
-## Downloading new submissions and revisions
+## New submissions and revisions
+
+### Downloading new submissions and revisions
 
 Articles are submitted through a [Google
 form](https://forms.gle/ykj6QcoGQD5ctnA5A) which populates a [Google
@@ -26,7 +28,7 @@ the zip file has unpacked into the top level of the folder. Common
 missing items are the `Suppl:` line which should list the `.R` files and
 any data needed to reproduce the paper.
 
-## Check relevance and reproducibility
+### Check relevance and reproducibility
 
 First check that the paper fits the [scope of the
 journal](https://journal.r-project.org/#article-types). If not,
@@ -39,7 +41,7 @@ there are any problems, request a
 [`resubmission()`](https://rjournal.github.io/rj/reference/action.md)
 from the authors.
 
-## Acknowledge submission and assigning a new article to an EE
+### Acknowledge submission and assigning a new article to an EE
 
 For revisions, use
 [`acknowledge_revision()`](https://rjournal.github.io/rj/reference/acknowledge_revision.md)
@@ -56,14 +58,26 @@ most appropriate person. Use `acknowledge_submission(editor = "XX")`. to
 send an acknowledgement email to the authors, cc’ing the chosen handling
 editor.
 
-## Check progress of all papers
+### Check progress of all papers
 
 The function
 [`report()`](https://rjournal.github.io/rj/reference/report.md) shows
 the status of all current papers being handled, by author and by status.
 Anything with 3 stars needs urgent attention.
 
-## New executive editor
+## Meetings
+
+The editors meet roughly every month. The EIC is responsible for
+organizing these at mutually convenient times, taking account of the
+different timezones.
+
+The associate editors meet roughly every 3–4 months. The EIC is also
+responsible for organizing these meetings. It is best to organize two
+meetings, 12 hours apart, to allow for different timezones.
+
+## New editors
+
+### New executive editor
 
 The EIC is responsible to navigating the search for a new EE. The search
 for a new editorial board member should begin in the middle of the year,
@@ -91,7 +105,7 @@ Once a new EE is found, the following steps take place:
 The EIC may take on outstanding handling editor duties of the outgoing
 member.
 
-## New associate editors
+### New associate editors
 
 The EIC is responsible for recruiting new AEs, after discussion with all
 editors. Ideally, keywords of submissions over the past year are
