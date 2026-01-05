@@ -1,7 +1,6 @@
 ---
 title: "Associate Editors' Guide"
-author: "Di Cook and Rob J Hyndman"
-date: "`r format(Sys.Date(), '%e %B %Y')`"
+date: "Last updated: 20 October 2025"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Associate Editor's Guide}

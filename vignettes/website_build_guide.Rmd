@@ -1,7 +1,6 @@
 ---
 title: "Guide to Building the New Distill Web Site"
-author: "Di Cook"
-date: "`r Sys.Date()`"
+date: "Last updated: 7 April 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Guide to Building the New Distill Web Site}

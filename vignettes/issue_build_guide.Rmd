@@ -1,7 +1,6 @@
 ---
-title: "Guide to Building an Issue"
-author: "Di Cook"
-date: "`r Sys.Date()`"
+title: "Guide to building an issue"
+date: "Last updated: 5 January 2026"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Guide to Building an Issue}

@@ -1,7 +1,6 @@
 ---
 title: "Editors' Guide"
-author: "Di Cook and Rob J Hyndman"
-date: "`r Sys.Date()`"
+date: "Last updated: 5 February 2025"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Operating procedures for the editors}

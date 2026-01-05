@@ -1,7 +1,6 @@
 ---
 title: "Roles and Responsibilities"
-author: "Mark van der Loo and Rob J Hyndman"
-date: "`r Sys.Date()`"
+date: "Last updated: 23 January 2025"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Roles and Responsibilities}

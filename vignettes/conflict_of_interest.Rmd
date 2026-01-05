@@ -1,7 +1,6 @@
 ---
 title: "Conflict of Interest"
-author: "Mark van der Loo"
-date: "`r Sys.Date()`"
+date: "Last updated: 23 January 2025"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Conflict of Interest}
