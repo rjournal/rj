@@ -28,7 +28,6 @@ knitr::opts_chunk$set(
   rj::update_status("<article_id>", "proofed")`
   ```
 
-* For each article, check that the supplementary file list is correct.
 * Copy included articles into `Proofs` folder using 
 
   ```r
@@ -36,7 +35,6 @@ knitr::opts_chunk$set(
   ```
 
   The `issue number` is of the form `YYYY-N` where `N` is the issue number within the year. e.g., `2026-1` for the first issue of 2026.
-* For each article, this will also create a zip file of supplementary material from the list of files in the DESCRIPTION.
 
 # News items
 
@@ -59,6 +57,8 @@ knitr::opts_chunk$set(
 For each article in the issue:
 
   * Move any correspondence to correspondence folder (e.g., motivation letter, rejoinder, etc.)
+  * Check that the supplementary file list is correct.
+
   * Copyedit using 
     ```r
     rj::llm_copyedit(<article_id>)
@@ -90,7 +90,8 @@ For each article in the issue:
     ```r
     rj::publish_article("<article_id>", <volume>, <issue>)
     ```
-    This will also assign a "slug" (the id of the published article), which is added to the DESCRIPTION file. This slug will be used for the folder name in the `rjournal.github.io` "_articles" folder.
+    This will also assign a "slug" (the id of the published article), which is added to the DESCRIPTION file. This slug will be used for the folder name in the `rjournal.github.io` "_articles" folder. It will also create a zip file of supplementary material from the list of files in the DESCRIPTION.
+
   * For any news item: 
     ```r
     rj::publish_news("<folder path>", <volume>, <issue>)
