@@ -75,7 +75,7 @@ For each article in the issue:
   create the Rmd
 
   ``` r
-  texor::latex_to_web("<path to tex file>")
+  texor::latex_to_web("<path to article folder>")
   ```
 
   - The conversion to Rmd can be fragile, especially if authors have
