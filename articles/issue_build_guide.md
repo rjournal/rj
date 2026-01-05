@@ -9,7 +9,7 @@
 - Set the status of each included article to “proofed” using
 
   ``` r
-  rj::update_status("<article_id>", "proofed")`
+  rj::update_status("<article_id>", "proofed")
   ```
 
 - Copy included articles into `Proofs` folder using
