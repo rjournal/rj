@@ -129,24 +129,26 @@ news every second issue.</p></li>
 <li><p>Move any correspondence to correspondence folder (e.g.,
 motivation letter, rejoinder, etc.)</p></li>
 <li><p>Check that the supplementary file list is correct.</p></li>
-<li><p>Copyedit using
-<code>r     rj::llm_copyedit(&lt;article_id&gt;)</code> This needs an
-OpenAI API key stored in <code>.Renviron</code> as
+<li>
+<p>Copyedit using</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>rj<span class="sc">::</span><span class="fu">llm_copyedit</span>(<span class="sc">&lt;</span>article_id<span class="sc">&gt;</span>)</span></code></pre></div>
+<p>This needs an OpenAI API key stored in <code>.Renviron</code> as
 <code>OPENAI_API_KEY</code>. Check the copyediting carefully, as the AI
 can make mistakes. It is usually pretty good on the main article, but
-often messes up the bib file.</p></li>
+often messes up the bib file.</p>
+</li>
 <li>
 <p>For articles with an Rmd file, make sure it renders to both pdf
 and html. output should be set to</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="at">  rjtools:</span><span class="fu">:rjournal_article</span><span class="kw">:</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="at">    </span><span class="fu">self_contained</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="at">  rjtools:</span><span class="fu">:rjournal_article</span><span class="kw">:</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="at">    </span><span class="fu">self_contained</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span></code></pre></div>
 </li>
 <li>
 <p>For articles containing a tex file, but no Rmd file, use texor to
 create the Rmd</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">texor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texor/man/latex_to_web.html" class="external-link">latex_to_web</a></span><span class="op">(</span><span class="st">"&lt;path to tex file&gt;"</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>The conversion to Rmd can be fragile, especially if authors have
@@ -164,21 +166,29 @@ Technical Editor for assistance.</p></li>
 <h2 id="assembling-the-issue">Assembling the issue<a class="anchor" aria-label="anchor" href="#assembling-the-issue"></a>
 </h2>
 <ul>
-<li><p>When an article is ready, copy to the
-<code>rjournal.github.io</code> repo using
-<code>r     rj::publish_article("&lt;article_id&gt;", &lt;volume&gt;, &lt;issue&gt;)</code>
-This will also assign a “slug” (the id of the published article), which
-is added to the DESCRIPTION file. This slug will be used for the folder
-name in the <code>rjournal.github.io</code> “_articles” folder. It will
-also create a zip file of supplementary material from the list of files
-in the DESCRIPTION.</p></li>
-<li><p>For any news item:
-<code>r     rj::publish_news("&lt;folder path&gt;", &lt;volume&gt;, &lt;issue&gt;)</code></p></li>
-<li><p>When all articles and news items are copied over, build the issue
-using <code>r     rj::publish_issue("&lt;issue id&gt;")</code> This will
-create the issue folder in the <code>rjournal.github.io</code> repo, and
-generates the issue page with links to all articles and news
-items.</p></li>
+<li>
+<p>When an article is ready, copy to the
+<code>rjournal.github.io</code> repo using</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>rj<span class="sc">::</span><span class="fu">publish_article</span>(<span class="st">"&lt;article_id&gt;"</span>, <span class="sc">&lt;</span>volume<span class="sc">&gt;</span>, <span class="sc">&lt;</span>issue<span class="sc">&gt;</span>)</span></code></pre></div>
+<p>This will also assign a “slug” (the id of the published article),
+which is added to the DESCRIPTION file. This slug will be used for the
+folder name in the <code>rjournal.github.io</code> “_articles” folder.
+It will also create a zip file of supplementary material from the list
+of files in the DESCRIPTION.</p>
+</li>
+<li>
+<p>For any news item:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>rj<span class="sc">::</span><span class="fu">publish_news</span>(<span class="st">"&lt;folder path&gt;"</span>, <span class="sc">&lt;</span>volume<span class="sc">&gt;</span>, <span class="sc">&lt;</span>issue<span class="sc">&gt;</span>)</span></code></pre></div>
+</li>
+<li>
+<p>When all articles and news items are copied over, build the issue
+using</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rj</span><span class="fu">::</span><span class="fu"><a href="../reference/publish_issue.html">publish_issue</a></span><span class="op">(</span><span class="st">"&lt;issue id&gt;"</span><span class="op">)</span></span></code></pre></div>
+<p>This will create the issue folder in the
+<code>rjournal.github.io</code> repo, and generates the issue page with
+links to all articles and news items.</p>
+</li>
 <li><p>Build the issue by rendering
 <code>_issues/&lt;issue id&gt;.Rmd</code> in the
 <code>rjournal.github.io</code> repo. This publishes to the

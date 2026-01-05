@@ -50,10 +50,16 @@ For each article in the issue:
 
 - Check that the supplementary file list is correct.
 
-- Copyedit using `r rj::llm_copyedit(<article_id>)` This needs an OpenAI
-  API key stored in `.Renviron` as `OPENAI_API_KEY`. Check the
-  copyediting carefully, as the AI can make mistakes. It is usually
-  pretty good on the main article, but often messes up the bib file.
+- Copyedit using
+
+  ``` r
+  rj::llm_copyedit(<article_id>)
+  ```
+
+  This needs an OpenAI API key stored in `.Renviron` as
+  `OPENAI_API_KEY`. Check the copyediting carefully, as the AI can make
+  mistakes. It is usually pretty good on the main article, but often
+  messes up the bib file.
 
 - For articles with an Rmd file, make sure it renders to both pdf and
   html. output should be set to
@@ -84,20 +90,33 @@ For each article in the issue:
 ## Assembling the issue
 
 - When an article is ready, copy to the `rjournal.github.io` repo using
-  `r rj::publish_article("<article_id>", <volume>, <issue>)` This will
-  also assign a “slug” (the id of the published article), which is added
-  to the DESCRIPTION file. This slug will be used for the folder name in
-  the `rjournal.github.io` “\_articles” folder. It will also create a
-  zip file of supplementary material from the list of files in the
-  DESCRIPTION.
+
+  ``` r
+  rj::publish_article("<article_id>", <volume>, <issue>)
+  ```
+
+  This will also assign a “slug” (the id of the published article),
+  which is added to the DESCRIPTION file. This slug will be used for the
+  folder name in the `rjournal.github.io` “\_articles” folder. It will
+  also create a zip file of supplementary material from the list of
+  files in the DESCRIPTION.
 
 - For any news item:
-  `r rj::publish_news("<folder path>", <volume>, <issue>)`
+
+  ``` r
+  rj::publish_news("<folder path>", <volume>, <issue>)
+  ```
 
 - When all articles and news items are copied over, build the issue
-  using `r rj::publish_issue("<issue id>")` This will create the issue
-  folder in the `rjournal.github.io` repo, and generates the issue page
-  with links to all articles and news items.
+  using
+
+  ``` r
+  rj::publish_issue("<issue id>")
+  ```
+
+  This will create the issue folder in the `rjournal.github.io` repo,
+  and generates the issue page with links to all articles and news
+  items.
 
 - Build the issue by rendering `_issues/<issue id>.Rmd` in the
   `rjournal.github.io` repo. This publishes to the `_web` folder.
