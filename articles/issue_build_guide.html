@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Guide to Building an Issue • rj</title>
+<title>Guide to building an issue • rj</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Guide to Building an Issue">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Guide to building an issue">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -39,7 +39,7 @@
     <li><a class="dropdown-item" href="../articles/editor_in_chief_guide.html">Editor-in-Chief's Guide</a></li>
     <li><a class="dropdown-item" href="../articles/editors_guide.html">Editors' Guide</a></li>
     <li><a class="dropdown-item" href="../articles/associate_editors_guide.html">Associate Editors' Guide</a></li>
-    <li><a class="dropdown-item" href="../articles/issue_build_guide.html">Guide to Building an Issue</a></li>
+    <li><a class="dropdown-item" href="../articles/issue_build_guide.html">Guide to building an issue</a></li>
     <li><a class="dropdown-item" href="../articles/website_build_guide.html">Guide to Building the New Distill Web Site</a></li>
   </ul>
 </li>
@@ -62,10 +62,10 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Guide to Building an Issue</h1>
-                        <h4 data-toc-skip class="author">Di Cook</h4>
+      <h1>Guide to building an issue</h1>
             
-            <h4 data-toc-skip class="date">2026-01-01</h4>
+            <h4 data-toc-skip class="date">Last updated: 5 January
+2026</h4>
       
 
       <div class="d-none name"><code>issue_build_guide.Rmd</code></div>
@@ -74,72 +74,158 @@
     
     
 <div class="section level2">
-<h2 id="articles-to-include">Articles to include<a class="anchor" aria-label="anchor" href="#articles-to-include"></a>
+<h2 id="select-articles">Select articles<a class="anchor" aria-label="anchor" href="#select-articles"></a>
 </h2>
-<p>All articles accepted up to the publication dates: Mar 31, Jun 30,
-Oct 31, Dec 31, should be included. (Traditionally these articles would
-first be made available online, but with the increased frequency of
-publication we are not at the moment performing this step.)</p>
+<ul>
+<li><p>Identify articles to include in the new issue. Normally, all
+articles accepted up to the publication dates: Mar 31, Jun 30, Oct 31,
+Dec 31, should be included.</p></li>
+<li>
+<p>Set the status of each included article to “proofed” using</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>rj<span class="sc">::</span><span class="fu">update_status</span>(<span class="st">"&lt;article_id&gt;"</span>, <span class="st">"proofed"</span>)<span class="st">`</span></span></code></pre></div>
+</li>
+<li><p>For each article, check that the supplementary file list is
+correct.</p></li>
+<li>
+<p>Copy included articles into <code>Proofs</code> folder using</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>rj<span class="sc">:::</span><span class="fu">make_proof</span>(<span class="sc">&lt;</span>issue number<span class="sc">&gt;</span>)</span></code></pre></div>
+<p>The <code>issue number</code> is of the form <code>YYYY-N</code>
+where <code>N</code> is the issue number within the year. e.g.,
+<code>2026-1</code> for the first issue of 2026.</p>
+</li>
+<li><p>For each article, this will also create a zip file of
+supplementary material from the list of files in the
+DESCRIPTION.</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="news-items">News items<a class="anchor" aria-label="anchor" href="#news-items"></a>
+</h2>
+<ul>
+<li>
+<p>Contact the following people for news items (give them each a
+couple of weeks):</p>
+<ul>
+<li>Changes on CRAN: &lt;Achim.Zeileis at r-project.org&gt;</li>
+<li>News from R Core: &lt;Tomas.Kalibera at r-project.org&gt;</li>
+<li>BioConductor: &lt;maintainer at bioconductor.org&gt;</li>
+<li>R Foundation: &lt;Torsten.Hothorn at r-project.org&gt;</li>
+<li>R Forwards: &lt;Heather.Turner at r-project.org&gt;</li>
+</ul>
+</li>
+<li><p>Copy received news items into the news folder of the issue. Only
+a subset of the above will be received for each issue. Most will send
+news every second issue.</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="editorial">Editorial<a class="anchor" aria-label="anchor" href="#editorial"></a>
+</h2>
+<ul>
+<li>Write the editorial for the issue. This should be saved as
+<code>&lt;issue&gt;/news/editorial/editorial.Rmd</code>.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="preparation">Preparation<a class="anchor" aria-label="anchor" href="#preparation"></a>
 </h2>
+<p>For each article in the issue:</p>
 <ul>
-<li>Copy editing</li>
-<li>Collect news items</li>
+<li><p>Move any correspondence to correspondence folder (e.g.,
+motivation letter, rejoinder, etc.)</p></li>
+<li><p>Copyedit using
+<code>r     rj::llm_copyedit(&lt;article_id&gt;)</code> This needs an
+OpenAI API key stored in <code>.Renviron</code> as
+<code>OPENAI_API_KEY</code>. Check the copyediting carefully, as the AI
+can make mistakes. It is usually pretty good on the main article, but
+often messes up the bib file.</p></li>
+<li>
+<p>For articles with an Rmd file, make sure it renders to both pdf
+and html. output should be set to</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="at">  rjtools:</span><span class="fu">:rjournal_article</span><span class="kw">:</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="at">    </span><span class="fu">self_contained</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span></code></pre></div>
+</li>
+<li>
+<p>For articles containing a tex file, but no Rmd file, use texor to
+create the Rmd</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">texor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texor/man/latex_to_web.html" class="external-link">latex_to_web</a></span><span class="op">(</span><span class="st">"&lt;path to tex file&gt;"</span><span class="op">)</span></span></code></pre></div>
+<ul>
+<li>The conversion to Rmd can be fragile, especially if authors have
+defined their own LaTeX macros, or use additional packages. Also tables,
+equations and equation cross-referencing can need fixing.</li>
+<li>This should only produce an html output. The original tex file is
+used to produce the pdf output.</li>
+</ul>
+</li>
+<li><p>If you encounter problems that you can’t solve yourself, ask the
+Technical Editor for assistance.</p></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="building-an-issue">Building an issue<a class="anchor" aria-label="anchor" href="#building-an-issue"></a>
+<h2 id="assembling-the-issue">Assembling the issue<a class="anchor" aria-label="anchor" href="#assembling-the-issue"></a>
 </h2>
-<div class="section level3">
-<h3 id="steps">Steps<a class="anchor" aria-label="anchor" href="#steps"></a>
-</h3>
-<ol style="list-style-type: decimal">
-<li>Copy from Accepted into Proofs
-(<code>rj:::make_proof()</code>):</li>
-</ol>
 <ul>
-<li>It will filter accepted articles that have the current status
-“proofed”.</li>
-<li>You need to provide the issue number, eg “2022-2”.</li>
-<li>This will also create the zip file of supplementary material from
-the list of files in the DESCRIPTION</li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
-<li>Copy news, News_items, into Proofs which is done manually.</li>
-<li>Copy files across to <code>rjournal.github.io</code>, using
-<code>rj:::publish_issue()</code> or
-<code>rj:::publish_article()</code>. Publish news with
-<code>rj:::publish_news()</code>
+<li>When an article is ready, copy to the
+<code>rjournal.github.io</code> repo using
+<code>r     rj::publish_article("&lt;article_id&gt;", &lt;volume&gt;, &lt;issue&gt;)</code>
+This will also assign a “slug” (the id of the published article), which
+is added to the DESCRIPTION file. This slug will be used for the folder
+name in the <code>rjournal.github.io</code> “_articles” folder.</li>
+<li>For any news item:
+<code>r     rj::publish_news("&lt;folder path&gt;", &lt;volume&gt;, &lt;issue&gt;)</code>
 </li>
-</ol>
-<ul>
-<li>This will also assign a “slug” the id of the published article,
-which is added to the DESCRIPTION file in the Proofs folder.</li>
-<li>This slug will be used for the folder name in the
-<code>rjournal.github.io</code> “_articles” folder.</li>
-<li>Also builds file <code>volume_issue.Rmd</code> in the
-“_issues”.</li>
+<li>When all articles and news items are copied over, build the issue
+using <code>r     rj::publish_issue("&lt;issue id&gt;")</code> This will
+create the issue folder in the <code>rjournal.github.io</code> repo, and
+generates the issue page with links to all articles and news items.</li>
+<li>Build the issue by rendering
+<code>_issues/&lt;issue id&gt;.Rmd</code> in the
+<code>rjournal.github.io</code> repo. This publishes to the
+<code>_web</code> folder.</li>
+<li>Commit and push the changes to the <code>rjournal.github.io</code>
+repo, to automatically trigger deployment to
+<code>rjournal.github.io</code>
+</li>
 </ul>
-<ol start="4" style="list-style-type: decimal">
-<li>Build the issue, using the file <code>volume_issue.Rmd</code> in the
-“_issues” folder. Make the pdfs/html for each article (using
-<code><a href="https://rdrr.io/pkg/rjtools/man/rjournal_issue.html" class="external-link">rjtools::rjournal_web_issue()</a></code> and
-<code><a href="https://rdrr.io/pkg/rjtools/man/rjournal_issue.html" class="external-link">rjtools::rjournal_pdf_issue()</a></code>)</li>
-</ol>
-<ul>
-<li>It generates a folder within “_issues” with the information on
-organising the articles in the issue</li>
-<li>This will also generate the <code>doi.xml</code> used for the DOI of
-each article.</li>
-</ul>
-<ol start="5" style="list-style-type: decimal">
-<li>Register DOIs with <a href="https://doi.crossref.org/" class="external-link uri">https://doi.crossref.org/</a> using username
-<code>rfou</code> and password provided by previous editor. Click on
-“Upload submissions”, then “Metadata” and upload the file.</li>
-</ol>
 </div>
+<div class="section level2">
+<h2 id="checking">Checking<a class="anchor" aria-label="anchor" href="#checking"></a>
+</h2>
+<ul>
+<li>Check the issue carefully yourself at <a href="https://rjournal.github.io/issues/" class="external-link uri">https://rjournal.github.io/issues/</a><issue id>.</issue>
+</li>
+<li>Ask the executive editors to check the issue.</li>
+<li>Ask each author to check their own proofs.</li>
+<li>Fix any issues found. Ask the Technical Editor for help where
+necessary.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="publishing-the-issue">Publishing the issue<a class="anchor" aria-label="anchor" href="#publishing-the-issue"></a>
+</h2>
+<ul>
+<li>The Technical Editor will issue a pull request to merge the master
+branch of the repo into the published branch. Once approved, this will
+then trigger a cron job to update <a href="https://journal.r-project.org" class="external-link uri">https://journal.r-project.org</a>.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="final-steps">Final steps<a class="anchor" aria-label="anchor" href="#final-steps"></a>
+</h2>
+<ul>
+<li>Once papers are online, register DOIs with <a href="https://doi.crossref.org/" class="external-link uri">https://doi.crossref.org/</a> using username
+<code>rfou</code> and password provided by previous editor. Click on
+“Upload submissions”, then “Metadata” and upload the
+<code>doi.xml</code> file located in the
+<code>_issues/&lt;issue_id&gt;</code> folder.</li>
+<li>Update <code>RJournal.bib</code> using <code>update_bib.R</code> in
+the <code>rjournal.github.io</code> repo.</li>
+<li>Announce the new issue on any social media channels used by the R
+Journal.</li>
+</ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
