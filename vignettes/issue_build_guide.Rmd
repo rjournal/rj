@@ -78,7 +78,7 @@ For each article in the issue:
   * For articles containing a tex file, but no Rmd file, use texor to create the Rmd
 
     ```r
-    texor::latex_to_web("<path to tex file>")
+    texor::latex_to_web("<path to article folder>")
     ```
     
     - The conversion to Rmd can be fragile, especially if authors have defined their own LaTeX macros, or use additional packages. Also tables, equations and equation cross-referencing can need fixing.
