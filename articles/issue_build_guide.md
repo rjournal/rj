@@ -12,8 +12,6 @@
   rj::update_status("<article_id>", "proofed")`
   ```
 
-- For each article, check that the supplementary file list is correct.
-
 - Copy included articles into `Proofs` folder using
 
   ``` r
@@ -22,9 +20,6 @@
 
   The `issue number` is of the form `YYYY-N` where `N` is the issue
   number within the year. e.g., `2026-1` for the first issue of 2026.
-
-- For each article, this will also create a zip file of supplementary
-  material from the list of files in the DESCRIPTION.
 
 ## News items
 
@@ -52,6 +47,8 @@ For each article in the issue:
 
 - Move any correspondence to correspondence folder (e.g., motivation
   letter, rejoinder, etc.)
+
+- Check that the supplementary file list is correct.
 
 - Copyedit using `r rj::llm_copyedit(<article_id>)` This needs an OpenAI
   API key stored in `.Renviron` as `OPENAI_API_KEY`. Check the
@@ -90,15 +87,21 @@ For each article in the issue:
   `r rj::publish_article("<article_id>", <volume>, <issue>)` This will
   also assign a “slug” (the id of the published article), which is added
   to the DESCRIPTION file. This slug will be used for the folder name in
-  the `rjournal.github.io` “\_articles” folder.
+  the `rjournal.github.io` “\_articles” folder. It will also create a
+  zip file of supplementary material from the list of files in the
+  DESCRIPTION.
+
 - For any news item:
   `r rj::publish_news("<folder path>", <volume>, <issue>)`
+
 - When all articles and news items are copied over, build the issue
   using `r rj::publish_issue("<issue id>")` This will create the issue
   folder in the `rjournal.github.io` repo, and generates the issue page
   with links to all articles and news items.
+
 - Build the issue by rendering `_issues/<issue id>.Rmd` in the
   `rjournal.github.io` repo. This publishes to the `_web` folder.
+
 - Commit and push the changes to the `rjournal.github.io` repo, to
   automatically trigger deployment to `rjournal.github.io`
 

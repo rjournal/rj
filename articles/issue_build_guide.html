@@ -84,8 +84,6 @@ Dec 31, should be included.</p></li>
 <p>Set the status of each included article to “proofed” using</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>rj<span class="sc">::</span><span class="fu">update_status</span>(<span class="st">"&lt;article_id&gt;"</span>, <span class="st">"proofed"</span>)<span class="st">`</span></span></code></pre></div>
 </li>
-<li><p>For each article, check that the supplementary file list is
-correct.</p></li>
 <li>
 <p>Copy included articles into <code>Proofs</code> folder using</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>rj<span class="sc">:::</span><span class="fu">make_proof</span>(<span class="sc">&lt;</span>issue number<span class="sc">&gt;</span>)</span></code></pre></div>
@@ -93,9 +91,6 @@ correct.</p></li>
 where <code>N</code> is the issue number within the year. e.g.,
 <code>2026-1</code> for the first issue of 2026.</p>
 </li>
-<li><p>For each article, this will also create a zip file of
-supplementary material from the list of files in the
-DESCRIPTION.</p></li>
 </ul>
 </div>
 <div class="section level2">
@@ -133,6 +128,7 @@ news every second issue.</p></li>
 <ul>
 <li><p>Move any correspondence to correspondence folder (e.g.,
 motivation letter, rejoinder, etc.)</p></li>
+<li><p>Check that the supplementary file list is correct.</p></li>
 <li><p>Copyedit using
 <code>r     rj::llm_copyedit(&lt;article_id&gt;)</code> This needs an
 OpenAI API key stored in <code>.Renviron</code> as
@@ -168,27 +164,28 @@ Technical Editor for assistance.</p></li>
 <h2 id="assembling-the-issue">Assembling the issue<a class="anchor" aria-label="anchor" href="#assembling-the-issue"></a>
 </h2>
 <ul>
-<li>When an article is ready, copy to the
+<li><p>When an article is ready, copy to the
 <code>rjournal.github.io</code> repo using
 <code>r     rj::publish_article("&lt;article_id&gt;", &lt;volume&gt;, &lt;issue&gt;)</code>
 This will also assign a “slug” (the id of the published article), which
 is added to the DESCRIPTION file. This slug will be used for the folder
-name in the <code>rjournal.github.io</code> “_articles” folder.</li>
-<li>For any news item:
-<code>r     rj::publish_news("&lt;folder path&gt;", &lt;volume&gt;, &lt;issue&gt;)</code>
-</li>
-<li>When all articles and news items are copied over, build the issue
+name in the <code>rjournal.github.io</code> “_articles” folder. It will
+also create a zip file of supplementary material from the list of files
+in the DESCRIPTION.</p></li>
+<li><p>For any news item:
+<code>r     rj::publish_news("&lt;folder path&gt;", &lt;volume&gt;, &lt;issue&gt;)</code></p></li>
+<li><p>When all articles and news items are copied over, build the issue
 using <code>r     rj::publish_issue("&lt;issue id&gt;")</code> This will
 create the issue folder in the <code>rjournal.github.io</code> repo, and
-generates the issue page with links to all articles and news items.</li>
-<li>Build the issue by rendering
+generates the issue page with links to all articles and news
+items.</p></li>
+<li><p>Build the issue by rendering
 <code>_issues/&lt;issue id&gt;.Rmd</code> in the
 <code>rjournal.github.io</code> repo. This publishes to the
-<code>_web</code> folder.</li>
-<li>Commit and push the changes to the <code>rjournal.github.io</code>
-repo, to automatically trigger deployment to
-<code>rjournal.github.io</code>
-</li>
+<code>_web</code> folder.</p></li>
+<li><p>Commit and push the changes to the
+<code>rjournal.github.io</code> repo, to automatically trigger
+deployment to <code>rjournal.github.io</code></p></li>
 </ul>
 </div>
 <div class="section level2">
