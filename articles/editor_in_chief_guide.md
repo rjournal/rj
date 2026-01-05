@@ -122,6 +122,8 @@ Once a new AE is appointed, the following steps take place:
 
 ## Handover to new Editor-in-Chief
 
+- Update the editorial board on the [R Journal
+  website](https://rjournal.github.io/editors.html).
 - Update the [R Journal Wikipedia
   page](https://en.wikipedia.org/wiki/The_R_Journal) with the change of
   editors.
@@ -134,6 +136,8 @@ Once a new AE is appointed, the following steps take place:
   used for submissions.
 - Hand over the `rjournal.submission` Google account. This account owns
   the google forms and spreadsheets used by the editors.
+- Update the front page of the [R Journal
+  website](https://journal.r-project.org/) with the latest graphics.
 
 ## Archives
 
