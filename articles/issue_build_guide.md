@@ -62,7 +62,7 @@ For each article in the issue:
   messes up the bib file.
 
 - For articles with an Rmd file, make sure it renders to both pdf and
-  html. output should be set to
+  html. output should be set to:
 
   ``` yaml
   output:
@@ -71,8 +71,11 @@ For each article in the issue:
       self_contained: yes
   ```
 
+  Many authors include LaTeX-specific or html-specific elements that
+  cause problems. These need to be converted to work in both outputs.
+
 - For articles containing a tex file, but no Rmd file, use texor to
-  create the Rmd
+  create the Rmd file:
 
   ``` r
   texor::latex_to_web("<path to article folder>")
@@ -81,8 +84,8 @@ For each article in the issue:
   - The conversion to Rmd can be fragile, especially if authors have
     defined their own LaTeX macros, or use additional packages. Also
     tables, equations and equation cross-referencing can need fixing.
-  - This should only produce an html output. The original tex file is
-    used to produce the pdf output.
+  - The Rmd file created only generates an html output. The original tex
+    file is used to produce the pdf output.
 
 - If you encounter problems that you can’t solve yourself, ask the
   Technical Editor for assistance.

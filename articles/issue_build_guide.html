@@ -140,23 +140,26 @@ often messes up the bib file.</p>
 </li>
 <li>
 <p>For articles with an Rmd file, make sure it renders to both pdf
-and html. output should be set to</p>
+and html. output should be set to:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="at">  rjtools:</span><span class="fu">:rjournal_article</span><span class="kw">:</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="at">    </span><span class="fu">self_contained</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span></code></pre></div>
+<p>Many authors include LaTeX-specific or html-specific elements that
+cause problems. These need to be converted to work in both
+outputs.</p>
 </li>
 <li>
 <p>For articles containing a tex file, but no Rmd file, use texor to
-create the Rmd</p>
+create the Rmd file:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">texor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texor/man/latex_to_web.html" class="external-link">latex_to_web</a></span><span class="op">(</span><span class="st">"&lt;path to article folder&gt;"</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>The conversion to Rmd can be fragile, especially if authors have
 defined their own LaTeX macros, or use additional packages. Also tables,
 equations and equation cross-referencing can need fixing.</li>
-<li>This should only produce an html output. The original tex file is
-used to produce the pdf output.</li>
+<li>The Rmd file created only generates an html output. The original tex
+file is used to produce the pdf output.</li>
 </ul>
 </li>
 <li><p>If you encounter problems that you can’t solve yourself, ask the
