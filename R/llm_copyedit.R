@@ -103,7 +103,7 @@ llm_copyedit_article <- function(article, type) {
 
 llm_copyedit_files <- function(files, system_prompt) {
   chat <- ellmer::chat_openai(
-    model = "gpt-4.1",
+    model = "gpt-5.1",
     system_prompt = system_prompt,
     echo = "none"
   )
