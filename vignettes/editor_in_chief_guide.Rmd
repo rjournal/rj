@@ -22,7 +22,9 @@ knitr::opts_chunk$set(
 
 ## Downloading new submissions and revisions
 
-Articles are submitted through a [Google form](https://forms.gle/ykj6QcoGQD5ctnA5A) which populates a [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and a [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g). This sheet contains details of the submission, and also a zip file with the necessary files; `get_submissions()` will authenticate against both.
+Articles are submitted through a [Google form](https://forms.gle/Eqkf6cFJM3mjuxZUA) which populates a [Google sheet](https://docs.google.com/spreadsheets/d/1Snt4SDkfyceoX_PPGm-9cB29DAw-dvnCjWHHOt5jS38), and a [Google drive](https://drive.google.com/drive/folders/1azJouPrcOS9HxI2LCjBLHTWj6dx_OBqxiVgW30Zu7uUHD2c-Ge7ras_cLJlxT93NlaxpMd8i). This sheet contains details of the submission, and also a zip file with the necessary files; `get_submissions()` will authenticate against both.
+
+Pre-2026 form, sheet and submission files can be found in the following links: [Google form](https://forms.gle/ykj6QcoGQD5ctnA5A), [Google sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370), and [Google drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g). These ones were owned by different individuals, so it is advised not to use these and should not be required unless searching for historical submissions.
 
 On a regular (at least weekly) basis, download newly submitted items:
 
