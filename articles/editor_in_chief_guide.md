@@ -21,7 +21,12 @@ and [Google
 drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g).
 These ones were owned by different individuals, so it is advised not to
 use these and should not be required unless searching for historical
-submissions.
+submissions. Note that if you are creating a new form, then you must
+manually add a column in Google sheet named “Submission ID”, change
+“Email Address” to “Email address” and the sheet name “Form Responses 1”
+to “Form responses 1” for the
+[`get_submissions()`](https://rjournal.github.io/rj/reference/get_submissions.md)
+to work. It is sensitive cases and changes to the column nmaes.
 
 On a regular (at least weekly) basis, download newly submitted items:
 
