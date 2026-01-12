@@ -110,11 +110,12 @@ appointed by the R Foundation president.
 
 Once a new EE is found, the following steps take place:
 
-- The new EE is added to the Editors team at
-  `https://github.com/rjournal` and to the `rjournal.slack.com`
+- The new EE is added to the Editors team, with role changed as owner,
+  at `https://github.com/rjournal` and to the `rjournal.slack.com`
   organisation.
 - The new EE is added to the `editors.csv` file in the `inst` folder of
   the `rj` package.
+- Onboard the new EE.
 
 The EIC may take on outstanding handling editor duties of the outgoing
 member.
@@ -144,9 +145,9 @@ Once a new AE is appointed, the following steps take place:
 - Ask Martin Maechler to forward <r-journal@r-project.org> to the new
   EIC’s preferred email address.
 - Grant permission to the new EIC to access the [Google
-  sheet](https://docs.google.com/spreadsheets/d/15Tem82ikjHhNVccZGrHFVdzVjoxAmwaiNwaBE95wu6k/edit#gid=1671813370),
+  sheet](https://docs.google.com/spreadsheets/d/1Snt4SDkfyceoX_PPGm-9cB29DAw-dvnCjWHHOt5jS38),
   and [Google
-  drive](https://drive.google.com/drive/folders/0B2aFIue-Ar8dfmdVdHlpTnRndWhxQnNtR0o2YnoycDU1cVVzRlRaM0VSQWU1YUlnZlkyZEk?resourcekey=0-pzsHNE5mUiKuzB-VFmGD7g)
+  drive](https://drive.google.com/drive/folders/1azJouPrcOS9HxI2LCjBLHTWj6dx_OBqxiVgW30Zu7uUHD2c-Ge7ras_cLJlxT93NlaxpMd8i)
   used for submissions.
 - Hand over the `rjournal.submission` Google account. This account owns
   the google forms and spreadsheets used by the editors.
