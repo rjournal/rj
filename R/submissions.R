@@ -78,7 +78,7 @@ create_submission_directory <- function(id) {
 }
 
 as.article.gmail_message <- function(msg, ...) {
-  txt <- sub("\\[.*", "", gmailr::body(msg)[[1L]])
+  txt <- sub("\\[.*", "", gmailr::gm_body(msg)[[1L]])
   txt <- gsub("\r\n(\r\n)+", "\n", txt)
   dcf <- read.dcf(textConnection(txt))
   dcf <- setNames(dcf, tolower(colnames(dcf)))
@@ -270,16 +270,16 @@ download_submission_file <- function(url, path = get_articles_path()) {
 
 consume_submissions <- function(subs) {
   for (msgid in names(subs)) {
-    gmailr::modify_message(msgid, remove_labels = "UNREAD")
+    gmailr::gm_modify_message(msgid, remove_labels = "UNREAD")
   }
 }
 
-#' @importFrom gmailr mime create_draft
+#' @importFrom gmailr gm_mime gm_create_draft
 draft_acknowledgements <- function(subs) {
   authorize(c("read_only", "modify", "compose"))
   acknowledge_sub <- function(sub) {
     body <- render_template(sub, "gmail_acknowledge")
-    email <- gmailr::mime(
+    email <- gmailr::gm_mime(
       From = "rjournal.submission@gmail.com",
       To = sub$authors[[1L]]$email,
       Subject = paste(
@@ -288,7 +288,7 @@ draft_acknowledgements <- function(subs) {
       ),
       body = body
     )
-    gmailr::create_draft(email)
+    gmailr::gm_create_draft(email)
   }
   ans <- lapply(subs, acknowledge_sub)
   names(ans) <- vapply(subs, function(s) format(s$id),
@@ -349,11 +349,11 @@ acknowledge_revision <- function(article) {
 #' #' Send submission acknowledgement drafts
 #' #'
 #' #' @param drafts list of \code{gmail_draft} objects
-#' #' @importFrom gmailr send_draft
+#' #' @importFrom gmailr gm_send_draft
 #' #' @export
 #' draft_acknowledge_submissions <- function(drafts) {
 #'   for (draft in drafts) {
-#'     gmailr::send_draft(draft)
+#'     gmailr::gm_send_draft(draft)
 #'   }
 #'   for (id in names(drafts)) {
 #'     update_status(id, "acknowledged", replace=FALSE)
