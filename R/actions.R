@@ -241,12 +241,12 @@ draft_proofing <- function(article, update=TRUE) {
 #    body <- render_template(acc, "gmail_proofing")
 #    acc_meta <- as.data(as.article(acc))
 # Note this should be from current editor's address
-#    email <- gmailr::mime(From = "dicook.rj@@gmail.com",
+#    email <- gmailr::gm_mime(From = "dicook.rj@@gmail.com",
 #                          To = acc_meta$email,
 #                          Subject = paste("R Journal article proofing",
 #                                          format(acc_meta$id)),
 #                          body = body)
-#    gmailr::create_draft(email)
+#    gmailr::gm_create_draft(email)
 #
 #
 #  }
@@ -259,12 +259,12 @@ draft_proofing <- function(article, update=TRUE) {
 
 
 #' @param drafts list of \code{gmail_draft} objects
-#' @importFrom gmailr send_draft
+#' @importFrom gmailr gm_send_draft
 #' @export
 #' @rdname proofing
 proofing_article <- function(drafts) {
   for (draft in drafts) {
-    gmailr::send_draft(draft)
+    gmailr::gm_send_draft(draft)
   }
   for (id in names(drafts)) {
     update_status(id, "out for proofing")
