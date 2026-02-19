@@ -8,7 +8,7 @@ Congratulations, your submission to the R journal is now accepted. The RJournal 
 
 Please check your paper against the checklist provided at https://rjournal.github.io/rjtools/articles/check_functions.html and also that the formatting adheres to the advice at https://rjournal.github.io/rjtools/articles/format-details.html
 
-Once you've done that, please respond to this email with a full copy of the files for your article as a zip archive.
+Once you've done that, please respond to this email with a full copy of the files for your article as a zip archive **within two weeks**.
 
 Prior to publication, the paper will be copyedited and you will be asked to check the proof with a short turn-around time.
 
