@@ -127,11 +127,21 @@ editors. Ideally, keywords of submissions over the past year are
 summarised, and compared with keywords of current AEs. New AEs should be
 recruited for topics where there is the most need.
 
+To invite a new AE, the EIC should send an email to the candidate, with
+a brief description of the journal and the role, asking if they would be
+interested in joining the editorial board as an AE. If they agree, the
+EIC should ask them to complete the onboarding form
+[here](https://github.com/rjournal/ae-articles-template). This form is
+associated with the <rjournal.submission@gmail.com> and responses can be
+found
+[here](https://docs.google.com/spreadsheets/d/1_J7rawwkXjjO3BbhTwoSBiwwevHEEJWaSQZ2RMdcA0Y/edit?resourcekey=&gid=914313391#gid=914313391).
+
 Once a new AE is appointed, the following steps take place:
 
 - The EIC informs the other EEs.
 - The EIC sets up a GitHub repo of the form ae-articles-xx where xx is
-  the initials of the AE
+  the initials of the AE using the template at
+  <https://github.com/rjournal/ae-articles-template>
 - The new AE is added to the `associate-editors.csv` file in the `inst`
   folder of the `rj` package.
 
