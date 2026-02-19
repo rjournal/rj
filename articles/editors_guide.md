@@ -126,6 +126,12 @@ for their paper to be handled:
 > - reviewers solicited (~2-4 weeks)
 > - reviews received (~2-3 months)
 
+## Accepted articles
+
+Once accepted, the authors should submit the final version within two
+weeks. Once submitted, add this to the Accepted article and mark it as
+proofed using `rj::update_status("<article_id>", "proofed")`.
+
 ## Dealing with problematic authors
 
 A few problematic authors are listed in `vexing_authors.csv`
