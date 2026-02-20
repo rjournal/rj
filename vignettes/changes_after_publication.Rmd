@@ -1,0 +1,37 @@
+---
+title: "Changes to article after publication"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Changes to article after publication}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Once an article is published, it becomes the version of record. Any changes to the article after publication must be made in a transparent way. Any cosmetic changes (as described below) do not require a formal notice but should follow the process outlined below. Any non-cosmetic changes should be discussed with the editorial team to determine the appropriate course of action. The type of notice will depend on the nature and severity of the issue being addressed. The editorial team may like to consult the [Committee on Publication Ethics (COPE)](https://publicationethics.org/resources/guidelines) provides guidelines for handling post-publication changes.
+
+## Cosmetic changes
+
+Cosmetic changes, which do not affect the meaning or interpretation of the text, are limited to:
+
+- typographical errors,
+- formatting issues,
+- minor grammatical errors,
+- author name or affiliation corrections,
+- broken links, and
+- amending acknowledgements or funding information.
+
+Cosmetic changes may be made without a formal notice, but should be documented in a transparent way via a single, isolated GitHub commit with a meaningful message. The commit message should clearly describe the change made, and the reason for the change. The commit should be made by the corresponding author or editor, and should be reviewed and approved by at least one other editorial team member before being merged into the main branch.
+
+## Non-cosmetic changes 
+
+A non-cosmetic change is any post-publication change that doesn't fall under the category of cosmetic changes. All non-cosmetic changes should be discussed with the editorial team to determine the appropriate category of change:
+
+- **Minor** - any non-cosmetic changes that do not affect the scientific content, interpretation, or conclusions of the article (e.g. adding a missing reference or updating a dataset),
+- **Erratum** — publisher error (e.g. typesetting error or publisher's mistake in the production process),
+- **Corrigendum** — author error (e.g. error in data analysis, misinterpretation of results, or incorrect information provided by the authors),
+- **Addendum** — additional information or clarification (e.g. new data, updated analysis, or additional discussion that enhances the original article but does not change its conclusions),
+- **Expression of Concern** — potential integrity issues under investigation (e.g. suspected misconduct, ethical concerns, or issues with the validity of the findings that are being investigated but have not yet been resolved),
+- **Retraction** — major flaws or misconduct invalidating the work.
+
+ If the change is deemed **minor**, it may be made without a formal notice but should be documented in a transparent way in the same manner for cosmetic changes. However, if the changes was deemed **otherwise**, a formal notice should be made on the corresponding article page with exact changes for erratum, corrigendum and addendum. Erratum, corrigendum, addendum, and retraction notices should also be listed in a future issue of the R journal. For expression of concern, a notice on the corresponding article page should include a clear statement of the concerns and the ongoing investigation. The notice should be updated as the investigation progresses, and a final resolution should be provided once the investigation is complete.
+ 
