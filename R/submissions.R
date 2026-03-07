@@ -154,7 +154,7 @@ download_submissions <- function(dry_run) {
                  })
 
         # Combine author fields
-        authors <- str_glue_data(form, "{`Your name`} <{`Email address`}>")
+        authors <- str_glue_data(form, "{`Your name`} <{`Email Address`}>")
         other_authors <- form[["Names of other"]]
         if (!is.na(other_authors)) {
           other_authors <- str_trim(str_split(other_authors, ",")[[1]])
@@ -191,7 +191,7 @@ download_submissions <- function(dry_run) {
         matches_title <- art$title == form$`Article title`
         matches_email <- art$authors[[1]]$email == form$`Email Address`
         if (!matches_title && !matches_email) {
-          cli::cli_alert_danger("Re-submission for {id} does not match original title and email. Contact {form$`Email address`} to clarify.")
+          cli::cli_alert_danger("Re-submission for {id} does not match original title and email. Contact {form$`Email Address`} to clarify.")
           return(FALSE)
         }
 
