@@ -189,7 +189,7 @@ download_submissions <- function(dry_run) {
 
         # 2. Check that the metadata matches
         matches_title <- art$title == form$`Article title`
-        matches_email <- art$authors[[1]]$email == form$`Email address`
+        matches_email <- art$authors[[1]]$email == form$`Email Address`
         if (!matches_title && !matches_email) {
           cli::cli_alert_danger("Re-submission for {id} does not match original title and email. Contact {form$`Email address`} to clarify.")
           return(FALSE)
