@@ -90,13 +90,20 @@ For each article in the issue:
 
 # Assembling the issue
 
+  * Make sure to clone the `rjournal.github.io` repo parallel to the `articles` repo.
+
+    ```
+    |-- articles
+    |-- rjournal.github.io
+    ```
+
   * When an article is ready, copy to the `rjournal.github.io` repo using 
 
     ```r
     rj::publish_article("<article_id>", <volume>, <issue>)
     ```
 
-    This will also assign a "slug" (the id of the published article), which is added to the DESCRIPTION file. This slug will be used for the folder name in the `rjournal.github.io` "_articles" folder. It will also create a zip file of supplementary material from the list of files in the DESCRIPTION.
+    Note that the volume is the current year minus 2008. This will also assign a "slug" (the id of the published article), which is added to the DESCRIPTION file. This slug will be used for the folder name in the `rjournal.github.io` "_articles" folder. It will also create a zip file of supplementary material from the list of files in the DESCRIPTION. 
 
   * For any news item: 
     
@@ -116,7 +123,7 @@ For each article in the issue:
 
 # Checking
 
-  * Check the issue carefully yourself at https://rjournal.github.io/issues/<issue id>.
+  * Check the issue carefully yourself at `https://rjournal.github.io/issues/<issue id>`.
   * Ask the executive editors to check the issue.
   * Ask each author to check their own proofs. 
   * Fix any issues found. Ask the Technical Editor for help where necessary.
