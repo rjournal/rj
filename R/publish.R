@@ -332,31 +332,24 @@ move_article_web <- function(from, to, volume, issue) {
 
   # collect metadata
 
+  first_of_month <- as.Date(paste(volume + 2008, issue * 3, "01"), format = "%Y %m %d")
+  last_of_month <- seq(first_of_month, by = "month", length.out = 2L)[2L] - 1
   article_metadata <- if(file.exists(file.path(from, "DESCRIPTION"))) {
     art <- load_article(file.path(from, "DESCRIPTION"))
-    online_date <- Filter(function(x) x$status == "online", art$status)
-    online_date <- if (length(online_date) == 0) {
-      Sys.Date()
-    } else {
-      online_date[[1]]$date
-    }
-
     first_acknowledged <- Filter(function(x) x$status == "acknowledged", art$status)
     if(length(first_acknowledged) == 0) first_acknowledged <- list(art$status[[1]])
-
     list(
       slug = slug,
       acknowledged = first_acknowledged[[1]]$date,
-      online = online_date
+      online = last_of_month
     )
-
   } else {
     # Produce minimal article metadata for news
     issue_year <- volume + 2008
     issue_month <- if(issue_year < 2022) issue * 6 else issue * 3
     list(
       slug = basename(to),
-      online = as.Date(paste(volume + 2008, issue_month, "01"), format = "%Y %m %d")
+      online = last_of_month
     )
   }
 
