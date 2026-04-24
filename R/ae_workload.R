@@ -57,6 +57,7 @@ reviewer_summary <- function(articles, push = FALSE) {
 #'   workload. Retains any article where any status entry for an article is
 #'   newer than `day_back` days ago.
 #' @param active_only Toggle to show only active AEs (filtered by end year and comment field).
+#' @param keywords logical; if `TRUE`, include the keywords column from the AE file. Default is `FALSE`.
 #'
 #' @importFrom dplyr select count left_join right_join filter distinct rename bind_rows
 #' @importFrom tidyr unnest replace_na
@@ -66,7 +67,7 @@ reviewer_summary <- function(articles, push = FALSE) {
 #' ae_workload()
 #' }
 #' @export
-ae_workload <- function(articles = NULL, day_back = 365, active_only = FALSE) {
+ae_workload <- function(articles = NULL, day_back = 365, active_only = FALSE, keywords = FALSE) {
   # select only active AEs
   ae_rj <- read.csv(system.file("associate-editors.csv", package = "rj"))
 
@@ -76,8 +77,11 @@ ae_workload <- function(articles = NULL, day_back = 365, active_only = FALSE) {
     ae_rj <- ae_rj[!inactive, ]
   }
 
+  ae_cols <- c("name", "initials", "email", "comment")
+  if (isTRUE(keywords)) ae_cols <- c(ae_cols, "keywords")
+
   ae_rj <- ae_rj %>%
-    select(.data$name, .data$initials, .data$email, .data$comment) %>%
+    select(dplyr::all_of(ae_cols)) %>%
     as_tibble() %>%
     rename(status = .data$comment)
 

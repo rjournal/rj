@@ -5,7 +5,12 @@
 \alias{get_AE}
 \title{Check the number of articles an AE is currently working on}
 \usage{
-ae_workload(articles = NULL, day_back = 365, active_only = FALSE)
+ae_workload(
+  articles = NULL,
+  day_back = 365,
+  active_only = FALSE,
+  keywords = FALSE
+)
 
 get_AE(x)
 }
@@ -18,6 +23,8 @@ workload. Retains any article where any status entry for an article is
 newer than `day_back` days ago.}
 
 \item{active_only}{Toggle to show only active AEs (filtered by end year and comment field).}
+
+\item{keywords}{logical; if `TRUE`, include the keywords column from the AE file. Default is `FALSE`.}
 
 \item{x}{a single article, i.e. as.article("Submissions/2020-114")}
 }

@@ -1,5 +1,7 @@
 # rj (0.3.1)
 
+- ae_workloads(keywords=FALSE) new argument
+
 # rj 0.3.0
 - Fix metadata for pandoc
 - Added texor support in article publishing workflow
