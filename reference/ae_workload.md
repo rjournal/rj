@@ -6,7 +6,12 @@ folder, check articles that have status "with AE".
 ## Usage
 
 ``` r
-ae_workload(articles = NULL, day_back = 365, active_only = FALSE)
+ae_workload(
+  articles = NULL,
+  day_back = 365,
+  active_only = FALSE,
+  keywords = FALSE
+)
 
 get_AE(x)
 ```
@@ -29,6 +34,11 @@ get_AE(x)
 
   Toggle to show only active AEs (filtered by end year and comment
   field).
+
+- keywords:
+
+  logical; if \`TRUE\`, include the keywords column from the AE file.
+  Default is \`FALSE\`.
 
 - x:
 
