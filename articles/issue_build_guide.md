@@ -9,6 +9,7 @@
 - Set the status of each included article to “proofed” using
 
   ``` r
+
   rj::update_status("<article_id>", "proofed")
   ```
 
@@ -48,6 +49,9 @@ For each article in the issue:
 - Move any correspondence to correspondence folder (e.g., motivation
   letter, rejoinder, etc.)
 
+- Check that author affiliations and emails are included in Rmd and/or
+  tex
+
 - Check that the supplementary file list is correct.
 
 - Copyedit using
@@ -78,6 +82,7 @@ For each article in the issue:
   create the Rmd file:
 
   ``` r
+
   texor::latex_to_web("<path to article folder>")
   ```
 
@@ -121,6 +126,7 @@ For each article in the issue:
   using
 
   ``` r
+
   rj::publish_issue("<issue id>")
   ```
 
@@ -155,6 +161,9 @@ For each article in the issue:
   using username `rfou` and password provided by previous editor. Click
   on “Upload submissions”, then “Metadata” and upload the `doi.xml` file
   located in the `_issues/<issue_id>` folder.
+- Check that the doi works. If there is an issue in XML file, crossref
+  can fail. If it emails, it sends the fail message to
+  <r-foundation@r-project.org>.
 - Update `RJournal.bib` using `update_bib.R` in the `rjournal.github.io`
   repo.
 - Announce the new issue on any social media channels used by the R

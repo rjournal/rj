@@ -62,6 +62,7 @@ you the paper.
 Install the `rj` package with
 
 ``` r
+
 remotes::install_github("rjournal/rj")
 ```
 

@@ -22,6 +22,7 @@ handler for about a third of submissions per year, responsible for:
 Install the `rj` package with
 
 ``` r
+
 remotes::install_github("rjournal/rj")
 ```
 
