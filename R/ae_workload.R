@@ -148,12 +148,12 @@ get_AE <- function(x) {
 #' @param name a name used to match AE, can be AE initials, name, github handle, or email
 #' @param date the date for updating status
 #' @param active logical, whether to only consider AEs who are active (i.e., end_year >= current year). Default is TRUE.
+#' @param checkin the number of days after assignment to checkin. The default is 4 weeks, followed by 8 weeks.
 #' @export
-
-
-add_ae <- function(article, name, date = Sys.Date(), active = TRUE) {
+add_ae <- function(article, name, date = Sys.Date(), active = TRUE, checkin = c(28, 56)) {
   article <- as.article(article)
   ae_list <- read.csv(system.file("associate-editors.csv", package = "rj"))
+  
   if (isTRUE(active)) {
     ae_list <- filter(ae_list, .data$end_year >= as.numeric(substr(
       Sys.Date(),
@@ -177,9 +177,35 @@ add_ae <- function(article, name, date = Sys.Date(), active = TRUE) {
       comments = ae_list$name[found],
       date = date
     )
+
+    
+    editor <- filter(editor_list, .data$name == article$editor)
+
+    checkin_path <- file.path(article$path, "correspondence", "ae-checkin.csv")
+    checkin_new_data <- data.frame(article_id = as.character(article$id), 
+                                   article_title = article$title,
+                                   ae_initial = article$ae,
+                                   ae_name = ae_list$name[found],
+                                   ae_email = ae_list$email[found],
+                                   ae_github = ae_list$github[found],
+                                   editor_name = editor$name,
+                                   editor_email = editor$email,
+                                   date_added = as.character(Sys.Date()), 
+                                   date_checkin = as.character(Sys.Date() + checkin),
+                                   sent = NA)
+    
+    if (!file.exists(checkin_path)) {
+      checkin_data <- checkin_new_data
+    } else {
+      checkin_data <-  dplyr::bind_rows(read.csv(checkin_path), checkin_new_data)
+    }
+
+    write.csv(checkin_data, checkin_path, row.names = FALSE)
+  
   } else {
     cli::cli_alert_warning("No AE found. Input the name as the whole or part of the AE name, github handle, or email")
   }
+
   return(invisible(article))
 }
 
