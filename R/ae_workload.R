@@ -147,17 +147,19 @@ get_AE <- function(x) {
 #' @param article article id
 #' @param name a name used to match AE, can be AE initials, name, github handle, or email
 #' @param date the date for updating status
+#' @param active logical, whether to only consider AEs who are active (i.e., end_year >= current year). Default is TRUE.
 #' @export
 
 
-add_ae <- function(article, name, date = Sys.Date()) {
+add_ae <- function(article, name, date = Sys.Date(), active = TRUE) {
   article <- as.article(article)
-  ae_list <- filter(read.csv(system.file("associate-editors.csv",
-    package = "rj"
-  )), .data$end_year >= as.numeric(substr(
-    Sys.Date(),
-    1, 4
-  )))
+  ae_list <- read.csv(system.file("associate-editors.csv", package = "rj"))
+  if (isTRUE(active)) {
+    ae_list <- filter(ae_list, .data$end_year >= as.numeric(substr(
+      Sys.Date(),
+      1, 4
+    )))
+  }
   found <- NA
   found <- which(str_detect(ae_list$initials, name))
   if (is.na(found)) {
