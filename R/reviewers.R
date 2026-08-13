@@ -130,17 +130,20 @@ add_reviewer <- function(article, name, email, invite = TRUE) {
 #' 1 for the first reviewer, 2 for the second
 #' @param prefix Prefix added to start file name - used to distinguish
 #'   between multiple rounds of reviewers (if needed)
+#' @param due The days for review. Default is 30 days.
+#' @param reminders The number of days before/after due date for reminder. A negative value means before and positive value after.
+#' The default is 7 days before due date and on the due date.
 #' @export
-invite_reviewers <- function(article, prefix = "1") {
+invite_reviewers <- function(article, prefix = "1", due = 30, remind = c(-7, 0)) {
   article <- as.article(article)
   for (i in seq_along(article$reviewers)) {
-    invite_reviewer(article, i, prefix = prefix)
+    invite_reviewer(article, i, prefix = prefix, due = due, remind = remind)
   }
 }
 
 #' @rdname invite_reviewers
 #' @export
-invite_reviewer <- function(article, reviewer_id, prefix = "1") {
+invite_reviewer <- function(article, reviewer_id, prefix = "1", due = 30, remind = c(-7, 0)) {
   article <- as.article(article)
 
   dest <- file.path(article$path, "correspondence")
@@ -155,7 +158,7 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
     data$email <- reviewer$email
     data$name <- reviewer$name
     data$firstname <- stringr::str_split(reviewer$name, " ")[[1]][1]
-    data$date <- format(Sys.Date() + 30, "%d %b %Y")
+    data$date <- format(Sys.Date() + due, "%d %b %Y")
 
     template <- find_template("review")
     email <- whisker.render(readLines(template), data)
@@ -165,6 +168,27 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1") {
     cli::cli_alert_info("Already invited - resending")
     email <- paste0(readLines(path), collapse = "\n")
   }
+  if(length(remind)) {
+    reminder_path <- file.path(dest, "reviewer-reminders.csv")
+    reminder_new_data <- data.frame(article_id = as.character(article$id), 
+                                    article_title = article$title,
+                                    reviewer_id = as.numeric(reviewer_id), 
+                                    reviewer_name = reviewer$name, 
+                                    reviewer_email = reviewer$email, 
+                                    date_invited = as.character(Sys.Date()),
+                                    date_reminder = as.character(Sys.Date() + due + remind),
+                                    date_due = as.character(Sys.Date() + due),
+                                    sent = NA)
+    
+    if (!file.exists(reminder_path)) {
+      reminder_data <- reminder_new_data
+    } else {
+      reminder_data <-  dplyr::bind_rows(read.csv(reminder_path), reminder_new_data)
+    }
+
+    write.csv(reminder_data, reminder_path, row.names = FALSE)
+  }
+
 
   # Update reviewer comment
   comment <- article$reviewers[[reviewer_id]]$comment
