@@ -153,13 +153,20 @@ get_AE <- function(x) {
 add_ae <- function(article, name, date = Sys.Date(), active = TRUE, checkin = c(28, 56)) {
   article <- as.article(article)
   ae_list <- read.csv(system.file("associate-editors.csv", package = "rj"))
-  
+  editor_list <- read.csv(system.file("editors.csv", package = "rj"))
   if (isTRUE(active)) {
     ae_list <- filter(ae_list, .data$end_year >= as.numeric(substr(
       Sys.Date(),
       1, 4
     )))
+    editor_list <- slice_tail(editor_list, n = 4)  # remove past editors
   }
+  # include editors in the list of AEs to match against
+  editor_list <- filter(select(editor_list, name = real, initials = name, github_handle = github, email),
+    !initials %in% ae_list$initials
+  )
+  ae_list <- bind_rows(ae_list, editor_list)
+
   found <- NA
   found <- which(str_detect(ae_list$initials, name))
   if (is.na(found)) {
