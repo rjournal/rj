@@ -159,13 +159,13 @@ add_ae <- function(article, name, date = Sys.Date(), active = TRUE, checkin = c(
       Sys.Date(),
       1, 4
     )))
-    editor_list <- slice_tail(editor_list, n = 4)  # remove past editors
+    editor_list <- dplyr::slice_tail(editor_list, n = 4)  # remove past editors
   }
   # include editors in the list of AEs to match against
-  editor_list <- filter(select(editor_list, name = real, initials = name, github_handle = github, email),
-    !initials %in% ae_list$initials
-  )
-  ae_list <- bind_rows(ae_list, editor_list)
+  ae_list <- bind_rows(ae_list, 
+                       filter(select(editor_list, name = real, initials = name, github_handle = github, email),
+                        !initials %in% ae_list$initials
+                       ))
 
   found <- NA
   found <- which(str_detect(ae_list$initials, name))
@@ -184,7 +184,6 @@ add_ae <- function(article, name, date = Sys.Date(), active = TRUE, checkin = c(
       comments = ae_list$name[found],
       date = date
     )
-
     
     editor <- filter(editor_list, .data$name == article$editor)
 
