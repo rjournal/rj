@@ -43,13 +43,27 @@ decline_reviewer <- function(article, reviewer_id) {
 
 #' @rdname decline_reviewer
 #' @export
-agree_reviewer <- function(article, reviewer_id) {
+agree_reviewer <- function(article, reviewer_id, due_date = NULL) {
   check_dup_comment(article, reviewer_id, "Agreed")
   comment <- paste("Agreed", Sys.Date())
-  add_reviewer_comment(article,
+  article <- add_reviewer_comment(article,
     reviewer_id = reviewer_id,
     comment = comment
   )
+  dest <- file.path(article$path, "correspondence")
+  reminder_path <- file.path(dest, "reviewer-reminders.csv")
+  if(file.exists(reminder_path)) {
+    reminder_data <- read.csv(reminder_path)
+    select_row <- reminder_data$article_id == as.character(article$id) & as.character(reminder_data$reviewer_id) == as.character(reviewer_id)
+    reminder_data$agreed[select_row] <- "yes"
+    if(!is.null(due_date)) {
+      original_due_date <- as.Date(reminder_data$date_due[select_row])
+      reminder_data$date_due[select_row] <- as.character(due_date)
+      reminder_data$date_reminder[select_row] <- as.character(as.Date(reminder_data$date_reminder[select_row]) + (as.Date(due_date) - original_due_date))
+    }
+    write.csv(reminder_data, reminder_path, row.names = FALSE)
+  }
+  invisible(article)
 }
 
 #' @rdname decline_reviewer
