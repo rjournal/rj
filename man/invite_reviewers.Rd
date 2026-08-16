@@ -5,9 +5,15 @@
 \alias{invite_reviewer}
 \title{Invite reviewer(s).}
 \usage{
-invite_reviewers(article, prefix = "1")
+invite_reviewers(article, prefix = "1", due = 30, remind = c(-7, 0))
 
-invite_reviewer(article, reviewer_id, prefix = "1")
+invite_reviewer(
+  article,
+  reviewer_id,
+  prefix = "1",
+  due = 30,
+  remind = c(-7, 0)
+)
 }
 \arguments{
 \item{article}{Article id, like \code{"2014-01"}}
@@ -15,8 +21,13 @@ invite_reviewer(article, reviewer_id, prefix = "1")
 \item{prefix}{Prefix added to start file name - used to distinguish
 between multiple rounds of reviewers (if needed)}
 
+\item{due}{The days for review. Default is 30 days.}
+
 \item{reviewer_id}{Numeric, the index of the intended reviewer in the Reviewer field.
 1 for the first reviewer, 2 for the second}
+
+\item{reminders}{The number of days before/after due date for reminder. A negative value means before and positive value after.
+The default is 7 days before due date and on the due date.}
 }
 \description{
 Once you have added reviewers to the DESCRIPTION file, you can use
