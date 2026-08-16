@@ -178,6 +178,7 @@ invite_reviewer <- function(article, reviewer_id, prefix = "1", due = 30, remind
                                     date_invited = as.character(Sys.Date()),
                                     date_reminder = as.character(Sys.Date() + due + remind),
                                     date_due = as.character(Sys.Date() + due),
+                                    agreed = "no",
                                     sent = NA)
     
     if (!file.exists(reminder_path)) {
