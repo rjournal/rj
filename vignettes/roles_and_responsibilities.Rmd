@@ -16,6 +16,7 @@ details, in particular:
 - [Editor-in-Chief Guide](editor_in_chief_guide.html)
 - [Executive Editor Guide](executive_editors_guide.html)
 - [Associate Editor Guide](associate_editors_guide.html)
+- [Editorial Advisory Board Guide](advisory_guide.html)
 
 ## Roles and responsibilities in the editorial team
 
@@ -66,6 +67,19 @@ An AE is responsible for:
 - ensuring that both the article contents and the code are sufficiently reviewed;
 - ensuring timely handling of papers under their responsibility;
 - advising the EE on the recommended editorial decision (Accept/Minor/Major/Reject).
+
+### Editorial Advisory Board
+
+The Editorial Advisory Board (EAB) does not handle individual submissions.
+Instead, it provides the editorial team with independent, longer-term advice
+and historical perspective. An EAB member is responsible for:
+
+- providing feedback and advice on the strategic direction of the journal, including editorial policy, scope, and process changes;
+- offering historical perspective on nominations for new Executive Editors;
+- assisting the EIC in resolving conflicts between authors and the Journal, where requested;
+- responding in a timely manner to requests for input from the editorial team.
+
+EAB members serve one-year terms with the EIC.
 
 ----
 
