@@ -4,6 +4,8 @@
 
 - [Roles and
   Responsibilities](https://rjournal.github.io/rj/articles/roles_and_responsibilities.md):
+- [A Guide for the Editorial Advisory
+  Board](https://rjournal.github.io/rj/articles/advisory_guide.md):
 - [Conflict of
   Interest](https://rjournal.github.io/rj/articles/conflict_of_interest.md):
 - [Editor-in-Chief's
