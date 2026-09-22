@@ -96,6 +96,7 @@ articles:
   navbar: ~
   contents:
   - roles_and_responsibilities
+  - advisory_guide
   - conflict_of_interest
   - editor_in_chief_guide
   - editors_guide
