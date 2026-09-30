@@ -28,8 +28,8 @@ status(status, date = Sys.Date(), comments = "")
 
 ``` r
 status("rejected")
-#> 2026-09-26 rejected 
+#> 2026-09-30 rejected 
 c(status("rejected"), status("accepted"))
-#> 2026-09-26 rejected
-#> 2026-09-26 accepted
+#> 2026-09-30 rejected
+#> 2026-09-30 accepted
 ```
