@@ -71,6 +71,23 @@ extract_files <- function(files, dest) {
   }
 }
 
+# Save the AI and conflict of interest declarations from the submission form
+# to the correspondence folder
+save_declarations <- function(form, path) {
+  dir <- file.path(path, "correspondence")
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  date <- format(as.Date(form$Timestamp))
+  declarations <- c(
+    "declaration-AI-" = "Please indicate",
+    "declaration-conflict-" = "Excluding obvious",
+    "declaration-type-" = "Article type"
+  )
+  for (prefix in names(declarations)) {
+    text <- form[[declarations[[prefix]]]] %NA% ""
+    writeLines(as.character(text), file.path(dir, paste0(prefix, date, ".md")))
+  }
+}
+
 create_submission_directory <- function(id) {
   dir <- file.path(get_articles_path(), "Submissions", format(id))
   dir_create(dir)
@@ -173,6 +190,8 @@ download_submissions <- function(dry_run) {
           otherids = form[[resub_field]] %NA% ""
         )
 
+        save_declarations(form, path)
+
         update_status(art, status = "submitted", date = as.Date(form$Timestamp), replace=FALSE)
         cli::cli_alert_success("New submission with ID {id} successfully processed.")
         return(TRUE)
@@ -213,6 +232,7 @@ download_submissions <- function(dry_run) {
         # 4. Obtain new submission
         files <- download_submission_file(form[["Upload submission"]], path = path)
         extract_files(files, path)
+        save_declarations(form, path)
 
         # 5. Update article DESCRIPTION
         update_status(art, status = "revision received", date = as.Date(form$Timestamp), replace=FALSE)
