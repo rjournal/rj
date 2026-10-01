@@ -77,14 +77,17 @@ save_declarations <- function(form, path) {
   dir <- file.path(path, "correspondence")
   if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
   date <- format(as.Date(form$Timestamp))
-  declarations <- c(
+  declarations <- list(
     "declaration-AI-" = "Please indicate",
     "declaration-conflict-" = "Excluding obvious",
-    "declaration-type-" = "Article type"
+    "declaration-type-" = c("Article type", "If your submission")
   )
   for (prefix in names(declarations)) {
-    text <- form[[declarations[[prefix]]]] %NA% ""
-    writeLines(as.character(text), file.path(dir, paste0(prefix, date, ".md")))
+    text <- vapply(declarations[[prefix]], function(field) {
+      as.character(form[[field]])
+    }, character(1L))
+    text <- text[!is.na(text)]
+    writeLines(text, file.path(dir, paste0(prefix, date, ".md")))
   }
 }
 
