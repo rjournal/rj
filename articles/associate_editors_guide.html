@@ -67,8 +67,8 @@
 
       <h1>Associate Editors' Guide</h1>
             
-            <h4 data-toc-skip class="date">Last updated: 20 October
-2025</h4>
+            <h4 data-toc-skip class="date">Last updated: 7 October
+2026</h4>
       
 
       <div class="d-none name"><code>associate_editors_guide.Rmd</code></div>
@@ -223,6 +223,50 @@ respond positively.</p></li>
 <li><p>If you only manage to get one review, you may need to provide a
 review yourself.</p></li>
 </ol>
+</div>
+<div class="section level3">
+<h3 id="revisions">Revisions<a class="anchor" aria-label="anchor" href="#revisions"></a>
+</h3>
+<p>When the authors submit a revised version, the handling editor may
+send it back to you. The new files replace the old ones in the article
+folder, and the previous version is zipped into the <code>history</code>
+folder. Usually you will ask the original reviewers to look at the
+revision, as they are best placed to check whether their comments have
+been addressed.</p>
+<p>There are two ways to record that a reviewer has been invited
+again.</p>
+<ol style="list-style-type: decimal">
+<li>
+<p><strong>Re-invite the existing reviewer (preferred).</strong> Use
+<code><a href="../reference/invite_reviewers.html">invite_reviewer()</a></code> with the reviewer’s existing index and a
+new <code>prefix</code> for the round, e.g.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rj</span><span class="fu">::</span><span class="fu"><a href="../reference/invite_reviewers.html">invite_reviewer</a></span><span class="op">(</span><span class="st">"2024-12"</span>, reviewer_id <span class="op">=</span> <span class="fl">1</span>, prefix <span class="op">=</span> <span class="st">"2"</span><span class="op">)</span></span></code></pre></div>
+<p>This appends another <code>Invited &lt;date&gt;</code> entry to that
+reviewer’s comments in the <code>DESCRIPTION</code>, so the full history
+for each reviewer stays in one place. It also drafts an invitation
+(<code>2-invite-1.txt</code>) from the template, but rather than sending
+that, it is often easier to reply to your original email to the
+reviewer, so they have the earlier correspondence to hand. Attach the
+revised paper and the authors’ response to the reviews.</p>
+</li>
+<li><p><strong>Add the reviewer again.</strong> If a reviewer’s line in
+the <code>DESCRIPTION</code> has become too long to read easily, you can
+add them as a new entry with <code><a href="../reference/add_reviewer.html">add_reviewer()</a></code>. This means the
+same person appears more than once in the reviewer list, with a new
+index, so make sure you use the new index for
+<code><a href="../reference/decline_reviewer.html">agree_reviewer()</a></code>, <code><a href="../reference/decline_reviewer.html">decline_reviewer()</a></code> and
+<code><a href="../reference/add_review.html">add_review()</a></code> in this round.</p></li>
+</ol>
+<p>After that, the process is the same as for the first round: use
+<code><a href="../reference/decline_reviewer.html">agree_reviewer()</a></code> or <code><a href="../reference/decline_reviewer.html">decline_reviewer()</a></code> when
+they respond, and <code><a href="../reference/add_review.html">add_review()</a></code> when the review comes in.
+<code><a href="../reference/add_review.html">add_review()</a></code> numbers review files by round automatically,
+so a second review from reviewer 1 is saved as <code>2-review-1</code>.
+Then make your recommendation with <code><a href="../reference/update_status.html">update_status()</a></code> and
+notify the handling editor as before.</p>
+<p>For minor revisions, you may decide that you can check the changes
+yourself, without going back to the reviewers.</p>
 </div>
 <div class="section level3">
 <h3 id="package-usage">Package usage<a class="anchor" aria-label="anchor" href="#package-usage"></a>

@@ -152,6 +152,63 @@ There are several ways to find reviewers for a paper.
 8.  If you only manage to get one review, you may need to provide a
     review yourself.
 
+### Revisions
+
+When the authors submit a revised version, the handling editor may send
+it back to you. The new files replace the old ones in the article
+folder, and the previous version is zipped into the `history` folder.
+Usually you will ask the original reviewers to look at the revision, as
+they are best placed to check whether their comments have been
+addressed.
+
+There are two ways to record that a reviewer has been invited again.
+
+1.  **Re-invite the existing reviewer (preferred).** Use
+    [`invite_reviewer()`](https://rjournal.github.io/rj/reference/invite_reviewers.md)
+    with the reviewer’s existing index and a new `prefix` for the round,
+    e.g.
+
+    ``` r
+
+    rj::invite_reviewer("2024-12", reviewer_id = 1, prefix = "2")
+    ```
+
+    This appends another `Invited <date>` entry to that reviewer’s
+    comments in the `DESCRIPTION`, so the full history for each reviewer
+    stays in one place. It also drafts an invitation (`2-invite-1.txt`)
+    from the template, but rather than sending that, it is often easier
+    to reply to your original email to the reviewer, so they have the
+    earlier correspondence to hand. Attach the revised paper and the
+    authors’ response to the reviews.
+
+2.  **Add the reviewer again.** If a reviewer’s line in the
+    `DESCRIPTION` has become too long to read easily, you can add them
+    as a new entry with
+    [`add_reviewer()`](https://rjournal.github.io/rj/reference/add_reviewer.md).
+    This means the same person appears more than once in the reviewer
+    list, with a new index, so make sure you use the new index for
+    [`agree_reviewer()`](https://rjournal.github.io/rj/reference/decline_reviewer.md),
+    [`decline_reviewer()`](https://rjournal.github.io/rj/reference/decline_reviewer.md)
+    and
+    [`add_review()`](https://rjournal.github.io/rj/reference/add_review.md)
+    in this round.
+
+After that, the process is the same as for the first round: use
+[`agree_reviewer()`](https://rjournal.github.io/rj/reference/decline_reviewer.md)
+or
+[`decline_reviewer()`](https://rjournal.github.io/rj/reference/decline_reviewer.md)
+when they respond, and
+[`add_review()`](https://rjournal.github.io/rj/reference/add_review.md)
+when the review comes in.
+[`add_review()`](https://rjournal.github.io/rj/reference/add_review.md)
+numbers review files by round automatically, so a second review from
+reviewer 1 is saved as `2-review-1`. Then make your recommendation with
+[`update_status()`](https://rjournal.github.io/rj/reference/update_status.md)
+and notify the handling editor as before.
+
+For minor revisions, you may decide that you can check the changes
+yourself, without going back to the reviewers.
+
 ### Package usage
 
 These are the primary functions that are useful for AE operations
