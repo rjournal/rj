@@ -3,13 +3,13 @@
 ## Mission
 
 The Editorial Advisory Board (EAB) provides independent, longer-term
-guidance to the R Journal’s editorial team (the Editor-in-Chief (EIC),
-Executive Editors (EEs), and Associate Editors (AEs)). Unlike the
-editorial team, EAB members do not typically handle individual
-submissions. Instead, the Board acts as a source of continuity,
-historical perspective, and strategic advice, helping the editorial team
-steer the journal’s direction, policies, and standing within the R
-community.
+guidance to the R Journal’s editorial team (the Executive Editors (EEs),
+one of whom is the Editor-in-Chief (EIC), and the Associate Editors
+(AEs)). Unlike the editorial team, EAB members do not typically handle
+individual submissions. Instead, the Board acts as a source of
+continuity, historical perspective, and strategic advice, helping the
+editorial team steer the journal’s direction, policies, and standing
+within the R community.
 
 Members are expected to draw on their experience with the R Journal, the
 R community, and academic publishing more broadly to support the
@@ -31,20 +31,26 @@ As a member of the Editorial Advisory Board, you are expected to:
     when requested by the EIC, particularly in cases that the editorial
     team feels are better handled with independent input.
 4.  **Respond in a timely manner** to requests for input from the
-    editorial team, whether by email or Slack. Advice from the Board is
-    most useful when it arrives while a decision is still open.
+    editorial team, whether by email or Slack/Zulip. Advice from the
+    Board is most useful when it arrives while a decision is still open.
+    Members are expected to reply within one week or by an otherwise
+    explicitly stated deadline, or to let the EIC know by that deadline
+    that they are unavailable or need longer.
 5.  **Be available as a sounding board** between meetings for
     occasional, lower-frequency questions from the EIC or EEs.
 
 Members are not expected to review papers, manage submissions, or take
-on operational responsibilities of the editorial team.
+on operational responsibilities of the editorial team. EAB members
+follow the journal’s conflict of interest policy and recuse themselves
+from matters where they have a conflict.
 
 ## Communication
 
 The EIC is the main point of contact for the advisory board and will
-reach out by email or Slack when input is needed. EAB members are
+reach out by email or Slack/Zulip when input is needed. EAB members are
 welcome to raise topics with the editorial team proactively as well,
-rather than waiting to be asked.
+rather than waiting to be asked. The EIC organizes an annual meeting
+with the Board.
 
 ## Appointment
 
@@ -54,5 +60,5 @@ EIC.
 
 ## Term
 
-EAB members serve for one year with the EIC with a possibility of
-renewal by mutual agreement.
+EAB members serve for three years with a possibility of renewal by
+mutual agreement.

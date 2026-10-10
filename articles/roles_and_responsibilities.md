@@ -82,20 +82,13 @@ An AE is responsible for:
 ### Editorial Advisory Board
 
 The Editorial Advisory Board (EAB) does not handle individual
-submissions. Instead, it provides the editorial team with independent,
-longer-term advice and historical perspective. An EAB member is
-responsible for:
-
-- providing feedback and advice on the strategic direction of the
-  journal, including editorial policy, scope, and process changes;
-- offering historical perspective on nominations for new Executive
-  Editors;
-- assisting the EIC in resolving conflicts between authors and the
-  Journal, where requested;
-- responding in a timely manner to requests for input from the editorial
-  team.
-
-EAB members serve one-year terms with the EIC.
+submissions. It provides the editorial team with independent,
+longer-term advice, continuity and historical perspective. EAB members
+are nominated by the EIC in consultation with the EEs and the existing
+EAB, and serve three-year terms, renewable by mutual agreement. Members’
+responsibilities and how the Board works with the editorial team are
+described in the [Editorial Advisory Board
+Guide](https://rjournal.github.io/rj/articles/advisory_guide.md).
 
 ------------------------------------------------------------------------
 
