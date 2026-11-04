@@ -54,6 +54,15 @@ will reach out by email or Slack/Zulip when input is needed. EAB members are wel
 
 # Appointment
 
+The group should be have three or four members, and with these constraints: 
+
+- At least one past EIC, who has served within the last 5 years
+- At least one member who has served on the Editorial board of JSS, in the last 5 years
+- At least one member is a current R Foundation member
+- No member is currently on the Editorial board
+- Ideally one member is also active in Bioconductor 
+- Diversity needs to be considered with new appointments.
+
 EAB members are nominated by the EIC, in consultation with the
 EEs and the existing advisory board. The final decisions are to be made by the EIC.
 
